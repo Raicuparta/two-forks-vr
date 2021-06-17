@@ -12,7 +12,7 @@ namespace Raicuparta.UnityVRCameraReparent
     public class UnityVRCameraReparent : MelonMod
     {
 
-        Transform rightHand;
+        static Transform rightHand;
         Transform leftHand;
         Transform playerBody;
 
@@ -51,6 +51,7 @@ namespace Raicuparta.UnityVRCameraReparent
                 var handPrefab = LoadHandPrefab();
                 SetupHands(handPrefab);
                 SetUpUI();
+                SetUpHandLaser();
             }
 
             if (rightHand)
@@ -92,7 +93,6 @@ namespace Raicuparta.UnityVRCameraReparent
                 canvas.transform.SetParent(Camera.main.transform, false);
                 canvas.transform.localPosition = Vector3.forward * 0.5f;
                 canvas.transform.localScale = Vector3.one * 0.0004f;
-
             });
         }
 
@@ -139,38 +139,67 @@ namespace Raicuparta.UnityVRCameraReparent
             var vrCameraParent = new GameObject().transform;
             vrCameraParent.SetParent(mainCamera.parent, false);
             mainCamera.SetParent(vrCameraParent);
-            vrCameraParent.localPosition = Vector3.down;
+            vrCameraParent.localPosition = Vector3.down * 1.2f;
         }
-    }
 
-    [HarmonyPatch(typeof(vgCameraController), "LeanUp")]
-    public class PatchLeanUp
-    {
-        [HarmonyPrefix]
-        public static bool Prefix()
+        private void SetUpHandLaser()
         {
-            return false;
+            var laser = new GameObject("Laser").transform;
+            laser.transform.SetParent(rightHand, false);
+            //laser.localPosition = new Vector3(0f, -0.05f, 0.01f);
+            //laser.localRotation = Quaternion.Euler(45f, 0, 0);
+
+            var lineRenderer = laser.gameObject.AddComponent<LineRenderer>();
+            lineRenderer.useWorldSpace = false;
+            lineRenderer.SetPositions(new[] { Vector3.zero, Vector3.forward });
+            lineRenderer.startWidth = 0.005f;
+            lineRenderer.endWidth = 0.001f;
+            lineRenderer.endColor = new Color(1, 1, 1, 0.3f);
+            lineRenderer.startColor = Color.clear;
+            lineRenderer.material.shader = Shader.Find("Particles/Alpha Blended Premultiply");
+            lineRenderer.material.SetColor("_Color", new Color(0.8f, 0.8f, 0.8f));
         }
-    }
 
-    [HarmonyPatch(typeof(vgCameraController), "LeanDown")]
-    public class PatchLeanDown
-    {
-        [HarmonyPrefix]
-        public static bool Prefix()
+        [HarmonyPatch(typeof(vgCameraController), "LeanUp")]
+        public class PatchLeanUp
         {
-            return false;
+            [HarmonyPrefix]
+            public static bool Prefix()
+            {
+                return false;
+            }
         }
-    }
 
-    [HarmonyPatch(typeof(vgCameraController), "LeanVertical")]
-    public class PatchGetRoll
-    {
-        [HarmonyPrefix]
-        public static bool Prefix()
+        [HarmonyPatch(typeof(vgCameraController), "LeanDown")]
+        public class PatchLeanDown
         {
-            MelonLogger.Msg("Prefix");
-            return false;
+            [HarmonyPrefix]
+            public static bool Prefix()
+            {
+                return false;
+            }
+        }
+
+        [HarmonyPatch(typeof(vgCameraController), "LeanVertical")]
+        public class PatchGetRoll
+        {
+            [HarmonyPrefix]
+            public static bool Prefix()
+            {
+                MelonLogger.Msg("Prefix");
+                return false;
+            }
+        }
+
+        [HarmonyPatch(typeof(vgPlayerTargeting), "UpdateTarget")]
+        public class PatchUpdateTarget
+        {
+            [HarmonyPrefix]
+            public static void Prefix(ref Vector3 cameraFacing, ref Vector3 cameraOrigin)
+            {
+                cameraFacing = rightHand.forward;
+                cameraOrigin = rightHand.position;
+            }
         }
     }
 }
