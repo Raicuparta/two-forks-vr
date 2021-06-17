@@ -12,7 +12,6 @@ namespace Raicuparta.UnityVRCameraReparent
     {
 
         Transform hand;
-        Camera camera;
 
         public override void OnApplicationStart()
         {
@@ -22,6 +21,7 @@ namespace Raicuparta.UnityVRCameraReparent
 
         public override void OnSceneWasInitialized(int buildIndex, string sceneName)
         {
+            VRSettings.enabled = false;
             base.OnSceneWasInitialized(buildIndex, sceneName);
 
             MelonLogger.Msg("OnSceneWasInitialized");
@@ -42,12 +42,17 @@ namespace Raicuparta.UnityVRCameraReparent
         {
             if (Input.GetKeyDown(KeyCode.F2))
             {
-                Camera.main.enabled = false;
-                camera = new GameObject().AddComponent<Camera>();
-                camera.nearClipPlane = 0.0001f;
-                camera.farClipPlane = 100f;
+
+                var camera = Camera.main;
+                camera.transform.localPosition = Vector3.zero;
+                camera.transform.localRotation = Quaternion.identity;
+                VRSettings.enabled = true;
+                //camera.nearClipPlane = 0.0001f;
+                //camera.farClipPlane = 100f;
+
+
+                ReparentCamera();
                 LoadAssetBundle();
-                //ReparentCamera();
             }
 
             if (hand)
@@ -60,7 +65,7 @@ namespace Raicuparta.UnityVRCameraReparent
 
         private void LoadAssetBundle()
         {
-            var myLoadedAssetBundle = AssetBundle.LoadFromFile(@"C:\Users\rai\Repos\FirewatchCode\Unity\globalgamemanagers\Assets\AssetBundles\hand");
+            var myLoadedAssetBundle = AssetBundle.LoadFromFile(@"C:\Users\rai\Repos\FirewatchCode\Empty\FirewatchHelper\Assets\AssetBundles\hand");
             if (myLoadedAssetBundle == null)
             {
                 MelonLogger.Error("Failed to load AssetBundle!");
@@ -70,11 +75,15 @@ namespace Raicuparta.UnityVRCameraReparent
 
             var prefab = myLoadedAssetBundle.LoadAsset<GameObject>("Hand");
             var instance = UnityEngine.Object.Instantiate(prefab);
-            hand = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
-            hand.localScale = Vector3.one * 0.1f;
-            //hand.SetParent(camera.transform, false);
-            instance.transform.SetParent(hand, false);
-            VRDevice.SetTrackingSpaceType(TrackingSpaceType.Stationary);
+            hand = instance.transform;
+            //hand.localScale = Vector3.one * 0.05f;
+            hand.SetParent(Camera.main.transform.parent, false);
+            //hand.Find("hand").GetComponent<MeshRenderer>().materials = GameObject.FindObjectOfType<vgPlayerController>().GetComponentInChildren<SkinnedMeshRenderer>().materials;
+            var meshRenderer = GameObject.Find("Player Prefab").transform.Find("PlayerModel/henry/body").GetComponent<SkinnedMeshRenderer>();
+            MelonLogger.Msg("after finding mesh renderer");
+            hand.Find("hand").GetComponent<MeshRenderer>().material = meshRenderer.materials[2];
+            //instance.transform.SetParent(hand, false);
+            //VRDevice.SetTrackingSpaceType(TrackingSpaceType.Stationary);
             //InputTracking.disablePositionalTracking = true;
 
             //var pose = instance.AddComponent<TrackedPoseDriver>();
@@ -88,7 +97,7 @@ namespace Raicuparta.UnityVRCameraReparent
         {
             MelonLogger.Msg("Reparenting camera");
 
-            var mainCamera = camera.transform;
+            var mainCamera = Camera.main.transform;
             var vrCameraParent = new GameObject().transform;
             vrCameraParent.SetParent(mainCamera.parent, false);
             mainCamera.SetParent(vrCameraParent);
