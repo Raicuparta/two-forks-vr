@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.VR;
+using System.Linq;
 
 namespace Raicuparta.UnityVRCameraReparent
 {
@@ -48,6 +49,7 @@ namespace Raicuparta.UnityVRCameraReparent
                 ReparentCamera();
                 var handPrefab = LoadHandPrefab();
                 SetupHands(handPrefab);
+                SetupUI();
             }
 
             if (rightHand)
@@ -66,6 +68,25 @@ namespace Raicuparta.UnityVRCameraReparent
             camera.transform.localRotation = Quaternion.identity;
             camera.nearClipPlane = 0.03f;
             VRSettings.enabled = true;
+        }
+
+        private void SetupUI()
+        {
+            var canvases = GameObject.FindObjectsOfType<Canvas>().Where(canvas => canvas.renderMode == RenderMode.ScreenSpaceOverlay);
+            canvases.Do(canvas =>
+            {
+                if (canvas.name == "BlackBars")
+                {
+                    canvas.enabled = false;
+                    return;
+                }
+                canvas.worldCamera = Camera.main;
+                canvas.renderMode = RenderMode.WorldSpace;
+                canvas.transform.SetParent(Camera.main.transform, false);
+                canvas.transform.localPosition = Vector3.forward * 0.5f;
+                canvas.transform.localScale = Vector3.one * 0.0004f;
+
+            });
         }
 
         private void SetupHands(GameObject prefab)
