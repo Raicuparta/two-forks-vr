@@ -14,6 +14,7 @@ namespace Raicuparta.UnityVRCameraReparent
 
         Transform rightHand;
         Transform leftHand;
+        Transform playerBody;
 
         public override void OnApplicationStart()
         {
@@ -44,12 +45,12 @@ namespace Raicuparta.UnityVRCameraReparent
         {
             if (Input.GetKeyDown(KeyCode.F2))
             {
-
-                SetupCamera();
+                SetUpPlayerBody();
+                SetUpCamera();
                 ReparentCamera();
                 var handPrefab = LoadHandPrefab();
                 SetupHands(handPrefab);
-                SetupUI();
+                SetUpUI();
             }
 
             if (rightHand)
@@ -61,7 +62,13 @@ namespace Raicuparta.UnityVRCameraReparent
             }
         }
 
-        private void SetupCamera()
+        private void SetUpPlayerBody()
+        {
+            playerBody = GameObject.Find("Player Prefab").transform.Find("PlayerModel/henry/body");
+            playerBody.gameObject.SetActive(false);
+        }
+
+        private void SetUpCamera()
         {
             var camera = Camera.main;
             camera.transform.localPosition = Vector3.zero;
@@ -70,7 +77,7 @@ namespace Raicuparta.UnityVRCameraReparent
             VRSettings.enabled = true;
         }
 
-        private void SetupUI()
+        private void SetUpUI()
         {
             var canvases = GameObject.FindObjectsOfType<Canvas>().Where(canvas => canvas.renderMode == RenderMode.ScreenSpaceOverlay);
             canvases.Do(canvas =>
@@ -100,7 +107,7 @@ namespace Raicuparta.UnityVRCameraReparent
             var instance = UnityEngine.Object.Instantiate(prefab);
             var hand = instance.transform;
             hand.SetParent(Camera.main.transform.parent, false);
-            var meshRenderer = GameObject.Find("Player Prefab").transform.Find("PlayerModel/henry/body").GetComponent<SkinnedMeshRenderer>();
+            var meshRenderer = playerBody.GetComponent<SkinnedMeshRenderer>();
             MelonLogger.Msg("after finding mesh renderer");
             hand.Find("hand").GetComponent<MeshRenderer>().material = meshRenderer.materials[2];
 
