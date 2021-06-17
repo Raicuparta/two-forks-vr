@@ -100,6 +100,10 @@ namespace Raicuparta.UnityVRCameraReparent
         {
             rightHand = CreateHand(prefab);
             leftHand = CreateHand(prefab, true);
+
+            // Update pickupAttachTransform to hand.
+            GameObject.FindObjectOfType<vgInventoryController>().CachePlayerVariables();
+            
         }
 
         private Transform CreateHand(GameObject prefab, bool isLeft = false)
@@ -160,37 +164,6 @@ namespace Raicuparta.UnityVRCameraReparent
             lineRenderer.material.SetColor("_Color", new Color(0.8f, 0.8f, 0.8f));
         }
 
-        [HarmonyPatch(typeof(vgCameraController), "LeanUp")]
-        public class PatchLeanUp
-        {
-            [HarmonyPrefix]
-            public static bool Prefix()
-            {
-                return false;
-            }
-        }
-
-        [HarmonyPatch(typeof(vgCameraController), "LeanDown")]
-        public class PatchLeanDown
-        {
-            [HarmonyPrefix]
-            public static bool Prefix()
-            {
-                return false;
-            }
-        }
-
-        [HarmonyPatch(typeof(vgCameraController), "LeanVertical")]
-        public class PatchGetRoll
-        {
-            [HarmonyPrefix]
-            public static bool Prefix()
-            {
-                MelonLogger.Msg("Prefix");
-                return false;
-            }
-        }
-
         [HarmonyPatch(typeof(vgPlayerTargeting), "UpdateTarget")]
         public class PatchUpdateTarget
         {
@@ -199,6 +172,16 @@ namespace Raicuparta.UnityVRCameraReparent
             {
                 cameraFacing = rightHand.forward;
                 cameraOrigin = rightHand.position;
+            }
+        }
+
+        [HarmonyPatch(typeof(vgInventoryController), "CachePlayerVariables")]
+        public class PatchCachePlayerVariables
+        {
+            [HarmonyPostfix]
+            public static void Postfix(ref Transform ___pickupAttachTransform)
+            {
+                ___pickupAttachTransform = rightHand;
             }
         }
     }
