@@ -11,7 +11,8 @@ namespace Raicuparta.UnityVRCameraReparent
     public class UnityVRCameraReparent : MelonMod
     {
 
-        Transform hand;
+        Transform rightHand;
+        Transform leftHand;
 
         public override void OnApplicationStart()
         {
@@ -43,54 +44,63 @@ namespace Raicuparta.UnityVRCameraReparent
             if (Input.GetKeyDown(KeyCode.F2))
             {
 
-                var camera = Camera.main;
-                camera.transform.localPosition = Vector3.zero;
-                camera.transform.localRotation = Quaternion.identity;
-                VRSettings.enabled = true;
-                //camera.nearClipPlane = 0.0001f;
-                //camera.farClipPlane = 100f;
-
-
+                SetupCamera();
                 ReparentCamera();
-                LoadAssetBundle();
+                var handPrefab = LoadHandPrefab();
+                SetupHands(handPrefab);
             }
 
-            if (hand)
+            if (rightHand)
             {
-                hand.localPosition = InputTracking.GetLocalPosition(VRNode.RightHand);
-                hand.localRotation = InputTracking.GetLocalRotation(VRNode.RightHand);
-                //camera.transform.localPosition = InputTracking.GetLocalPosition(VRNode.CenterEye);
+                rightHand.localPosition = InputTracking.GetLocalPosition(VRNode.RightHand);
+                rightHand.localRotation = InputTracking.GetLocalRotation(VRNode.RightHand);
+                leftHand.localPosition = InputTracking.GetLocalPosition(VRNode.LeftHand);
+                leftHand.localRotation = InputTracking.GetLocalRotation(VRNode.LeftHand);
             }
         }
 
-        private void LoadAssetBundle()
+        private void SetupCamera()
+        {
+            var camera = Camera.main;
+            camera.transform.localPosition = Vector3.zero;
+            camera.transform.localRotation = Quaternion.identity;
+            camera.nearClipPlane = 0.03f;
+            VRSettings.enabled = true;
+        }
+
+        private void SetupHands(GameObject prefab)
+        {
+            rightHand = CreateHand(prefab);
+            leftHand = CreateHand(prefab, true);
+        }
+
+        private Transform CreateHand(GameObject prefab, bool isLeft = false)
+        {
+            var instance = UnityEngine.Object.Instantiate(prefab);
+            var hand = instance.transform;
+            hand.SetParent(Camera.main.transform.parent, false);
+            var meshRenderer = GameObject.Find("Player Prefab").transform.Find("PlayerModel/henry/body").GetComponent<SkinnedMeshRenderer>();
+            MelonLogger.Msg("after finding mesh renderer");
+            hand.Find("hand").GetComponent<MeshRenderer>().material = meshRenderer.materials[2];
+
+            if (isLeft)
+            {
+                hand.localScale = new Vector3(-hand.localScale.x, hand.localScale.y, hand.localScale.z);
+            }
+
+            return hand;
+        }
+
+        private GameObject LoadHandPrefab()
         {
             var myLoadedAssetBundle = AssetBundle.LoadFromFile(@"C:\Users\rai\Repos\FirewatchCode\Empty\FirewatchHelper\Assets\AssetBundles\hand");
             if (myLoadedAssetBundle == null)
             {
                 MelonLogger.Error("Failed to load AssetBundle!");
-                return;
+                return null;
             }
 
-
-            var prefab = myLoadedAssetBundle.LoadAsset<GameObject>("Hand");
-            var instance = UnityEngine.Object.Instantiate(prefab);
-            hand = instance.transform;
-            //hand.localScale = Vector3.one * 0.05f;
-            hand.SetParent(Camera.main.transform.parent, false);
-            //hand.Find("hand").GetComponent<MeshRenderer>().materials = GameObject.FindObjectOfType<vgPlayerController>().GetComponentInChildren<SkinnedMeshRenderer>().materials;
-            var meshRenderer = GameObject.Find("Player Prefab").transform.Find("PlayerModel/henry/body").GetComponent<SkinnedMeshRenderer>();
-            MelonLogger.Msg("after finding mesh renderer");
-            hand.Find("hand").GetComponent<MeshRenderer>().material = meshRenderer.materials[2];
-            //instance.transform.SetParent(hand, false);
-            //VRDevice.SetTrackingSpaceType(TrackingSpaceType.Stationary);
-            //InputTracking.disablePositionalTracking = true;
-
-            //var pose = instance.AddComponent<TrackedPoseDriver>();
-            //pose.SetPoseSource(TrackedPoseDriver.DeviceType.GenericXRController, TrackedPoseDriver.TrackedPose.RightPose);
-            //pose.UseRelativeTransform = false;
-            //instance.transform.position = camera.transform.position + Vector3.forward;
-
+            return myLoadedAssetBundle.LoadAsset<GameObject>("Hand");
         }
 
         private void ReparentCamera()
