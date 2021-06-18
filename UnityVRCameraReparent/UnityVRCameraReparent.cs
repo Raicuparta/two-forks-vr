@@ -184,5 +184,16 @@ namespace Raicuparta.UnityVRCameraReparent
                 ___pickupAttachTransform = rightHand;
             }
         }
+
+        [HarmonyPatch(typeof(vgInventoryController), "TossStart")]
+        public class PatchTossAnimation
+        {
+            [HarmonyPrefix]
+            public static bool Prefix(vgInventoryController __instance)
+            {
+                __instance.OnToss();
+                return false;
+            }
+        }
     }
 }
