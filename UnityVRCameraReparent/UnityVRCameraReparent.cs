@@ -13,7 +13,7 @@ namespace Raicuparta.UnityVRCameraReparent
     {
 
         static Transform rightHand;
-        Transform leftHand;
+        static Transform leftHand;
         Transform playerBody;
 
         public override void OnApplicationStart()
@@ -52,6 +52,7 @@ namespace Raicuparta.UnityVRCameraReparent
                 SetupHands(handPrefab);
                 SetUpUI();
                 SetUpHandLaser();
+                SetUpLeftHandAttachment();
             }
 
             if (rightHand)
@@ -67,6 +68,11 @@ namespace Raicuparta.UnityVRCameraReparent
         {
             playerBody = GameObject.Find("Player Prefab").transform.Find("PlayerModel/henry/body");
             playerBody.gameObject.SetActive(false);
+        }
+
+        private void SetUpLeftHandAttachment()
+        {
+            GameObject.Find("henryHandLeftAttachment").transform.SetParent(leftHand, false);
         }
 
         private void SetUpCamera()
@@ -167,7 +173,6 @@ namespace Raicuparta.UnityVRCameraReparent
         [HarmonyPatch(typeof(vgPlayerTargeting), "UpdateTarget")]
         public class PatchUpdateTarget
         {
-            [HarmonyPrefix]
             public static void Prefix(ref Vector3 cameraFacing, ref Vector3 cameraOrigin)
             {
                 cameraFacing = rightHand.forward;
@@ -178,7 +183,6 @@ namespace Raicuparta.UnityVRCameraReparent
         [HarmonyPatch(typeof(vgInventoryController), "CachePlayerVariables")]
         public class PatchCachePlayerVariables
         {
-            [HarmonyPostfix]
             public static void Postfix(ref Transform ___pickupAttachTransform)
             {
                 ___pickupAttachTransform = rightHand;
@@ -188,7 +192,6 @@ namespace Raicuparta.UnityVRCameraReparent
         [HarmonyPatch(typeof(vgInventoryController), "TossStart")]
         public class PatchTossAnimation
         {
-            [HarmonyPrefix]
             public static bool Prefix(vgInventoryController __instance)
             {
                 __instance.OnToss();
