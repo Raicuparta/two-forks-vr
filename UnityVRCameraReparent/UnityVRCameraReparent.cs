@@ -72,7 +72,11 @@ namespace Raicuparta.UnityVRCameraReparent
 
         private void SetUpLeftHandAttachment()
         {
-            GameObject.Find("henryHandLeftAttachment").transform.SetParent(leftHand, false);
+            var itemSocket = leftHand.Find("itemSocket");
+            var socket = GameObject.Find("henryHandLeftAttachment").transform;
+            socket.SetParent(itemSocket, false);
+            itemSocket.localPosition = new Vector3(-0.08f, -0.06f, -0.056f);
+            itemSocket.localEulerAngles = new Vector3(8.3794f, 341.5249f, 179.2709f);
         }
 
         private void SetUpCamera()
@@ -105,7 +109,7 @@ namespace Raicuparta.UnityVRCameraReparent
         private void SetUpWeddingRing(Transform hand)
         {
             var weddingRing = GameObject.Find("HenryWeddingRing 1").transform;
-            var socket = hand.Find("weddingRingSocket");
+            var socket = hand.Find("handModel/weddingRingSocket");
             weddingRing.SetParent(socket);
             weddingRing.localPosition = Vector3.zero;
             weddingRing.localRotation = Quaternion.identity;
@@ -129,11 +133,12 @@ namespace Raicuparta.UnityVRCameraReparent
             hand.SetParent(Camera.main.transform.parent, false);
             var meshRenderer = playerBody.GetComponent<SkinnedMeshRenderer>();
             MelonLogger.Msg("after finding mesh renderer");
-            hand.Find("hand").GetComponent<MeshRenderer>().material = meshRenderer.materials[2];
+            hand.Find("handModel/hand").GetComponent<MeshRenderer>().material = meshRenderer.materials[2];
 
             if (isLeft)
             {
-                hand.localScale = new Vector3(-hand.localScale.x, hand.localScale.y, hand.localScale.z);
+                var handModel = hand.Find("handModel");
+                handModel.localScale = new Vector3(-handModel.localScale.x, handModel.localScale.y, handModel.localScale.z);
                 SetUpWeddingRing(hand);
             }
 
