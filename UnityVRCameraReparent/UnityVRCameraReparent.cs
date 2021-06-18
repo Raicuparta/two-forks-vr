@@ -49,10 +49,11 @@ namespace Raicuparta.UnityVRCameraReparent
                 SetUpCamera();
                 ReparentCamera();
                 var handPrefab = LoadHandPrefab();
-                SetupHands(handPrefab);
+                SetUpHands(handPrefab);
                 SetUpUI();
                 SetUpHandLaser();
                 SetUpLeftHandAttachment();
+                SetUpWeddingRing();
             }
 
             if (rightHand)
@@ -102,7 +103,12 @@ namespace Raicuparta.UnityVRCameraReparent
             });
         }
 
-        private void SetupHands(GameObject prefab)
+        private void SetUpWeddingRing()
+        {
+            GameObject.Find("HenryWeddingRing 1").transform.SetParent(leftHand, false);
+        }
+
+        private void SetUpHands(GameObject prefab)
         {
             rightHand = CreateHand(prefab);
             leftHand = CreateHand(prefab, true);
@@ -115,6 +121,7 @@ namespace Raicuparta.UnityVRCameraReparent
         private Transform CreateHand(GameObject prefab, bool isLeft = false)
         {
             var instance = UnityEngine.Object.Instantiate(prefab);
+            instance.name = isLeft ? "Left VR Hand" : "Right VR Hand";
             var hand = instance.transform;
             hand.SetParent(Camera.main.transform.parent, false);
             var meshRenderer = playerBody.GetComponent<SkinnedMeshRenderer>();
@@ -146,7 +153,7 @@ namespace Raicuparta.UnityVRCameraReparent
             MelonLogger.Msg("Reparenting camera");
 
             var mainCamera = Camera.main.transform;
-            var vrCameraParent = new GameObject().transform;
+            var vrCameraParent = new GameObject("VR Stage").transform;
             vrCameraParent.SetParent(mainCamera.parent, false);
             mainCamera.SetParent(vrCameraParent);
             vrCameraParent.localPosition = Vector3.down * 1.2f;
@@ -154,7 +161,7 @@ namespace Raicuparta.UnityVRCameraReparent
 
         private void SetUpHandLaser()
         {
-            var laser = new GameObject("Laser").transform;
+            var laser = new GameObject("VR Laser").transform;
             laser.transform.SetParent(rightHand, false);
             //laser.localPosition = new Vector3(0f, -0.05f, 0.01f);
             //laser.localRotation = Quaternion.Euler(45f, 0, 0);
