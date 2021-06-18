@@ -106,9 +106,6 @@ namespace Raicuparta.UnityVRCameraReparent
         {
             var weddingRing = GameObject.Find("HenryWeddingRing 1").transform;
             var socket = hand.Find("weddingRingSocket");
-
-            //var weddingRing = GameObject.Instantiate(originalRing).transform;
-            //originalRing.SetActive(false);
             weddingRing.SetParent(socket);
             weddingRing.localPosition = Vector3.zero;
             weddingRing.localRotation = Quaternion.identity;
