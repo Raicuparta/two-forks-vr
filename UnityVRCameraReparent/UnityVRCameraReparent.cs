@@ -53,6 +53,7 @@ namespace Raicuparta.UnityVRCameraReparent
                 SetUpUI();
                 SetUpHandLaser();
                 SetUpLeftHandAttachment();
+                SetUpRightHandAttachment();
             }
 
             if (rightHand)
@@ -73,10 +74,20 @@ namespace Raicuparta.UnityVRCameraReparent
         private void SetUpLeftHandAttachment()
         {
             var itemSocket = leftHand.Find("itemSocket");
-            var socket = GameObject.Find("henryHandLeftAttachment").transform;
-            socket.SetParent(itemSocket, false);
+            var handAttachment = GameObject.Find("henryHandLeftAttachment").transform;
+            handAttachment.SetParent(itemSocket, false);
             itemSocket.localPosition = new Vector3(-0.08f, -0.06f, -0.056f);
             itemSocket.localEulerAngles = new Vector3(8.3794f, 341.5249f, 179.2709f);
+        }
+
+        private void SetUpRightHandAttachment()
+        {
+            var itemSocket = rightHand.Find("itemSocket");
+            var handAttachment = GameObject.Find("henryHandRightAttachment").transform;
+            handAttachment.SetParent(itemSocket, false);
+            itemSocket.localScale = Vector3.one;
+            itemSocket.localPosition = new Vector3(0.0551f, -0.0229f, -0.131f);
+            itemSocket.localEulerAngles = new Vector3(54.1782f, 224.7767f, 139.0415f);
         }
 
         private void SetUpCamera()
