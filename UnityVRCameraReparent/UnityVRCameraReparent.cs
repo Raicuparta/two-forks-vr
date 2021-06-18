@@ -53,7 +53,6 @@ namespace Raicuparta.UnityVRCameraReparent
                 SetUpUI();
                 SetUpHandLaser();
                 SetUpLeftHandAttachment();
-                SetUpWeddingRing();
             }
 
             if (rightHand)
@@ -103,9 +102,16 @@ namespace Raicuparta.UnityVRCameraReparent
             });
         }
 
-        private void SetUpWeddingRing()
+        private void SetUpWeddingRing(Transform hand)
         {
-            GameObject.Find("HenryWeddingRing 1").transform.SetParent(leftHand, false);
+            var weddingRing = GameObject.Find("HenryWeddingRing 1").transform;
+            var socket = hand.Find("weddingRingSocket");
+
+            //var weddingRing = GameObject.Instantiate(originalRing).transform;
+            //originalRing.SetActive(false);
+            weddingRing.SetParent(socket);
+            weddingRing.localPosition = Vector3.zero;
+            weddingRing.localRotation = Quaternion.identity;
         }
 
         private void SetUpHands(GameObject prefab)
@@ -131,6 +137,7 @@ namespace Raicuparta.UnityVRCameraReparent
             if (isLeft)
             {
                 hand.localScale = new Vector3(-hand.localScale.x, hand.localScale.y, hand.localScale.z);
+                SetUpWeddingRing(hand);
             }
 
             return hand;
