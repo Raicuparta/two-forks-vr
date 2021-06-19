@@ -17,6 +17,7 @@ namespace Raicuparta.TwoForksVR
         {
             base.OnApplicationStart();
             HarmonyInstance.Create("Raicuparta.FirewatchVR").PatchAll();
+            VRAssetLoader.LoadAssets();
         }
 
         public override void OnSceneWasInitialized(int buildIndex, string sceneName)

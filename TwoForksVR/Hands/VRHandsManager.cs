@@ -18,11 +18,11 @@ namespace Raicuparta.TwoForksVR
 
         private void Start()
         {
-            var prefab = LoadHandPrefab();
+            var handPrefab = VRAssetLoader.Hand;
 
             var handMaterial = GetHandMaterial();
-            RightHand = CreateHand(prefab, handMaterial);
-            LeftHand = CreateHand(prefab, handMaterial, true);
+            RightHand = CreateHand(handPrefab, handMaterial);
+            LeftHand = CreateHand(handPrefab, handMaterial, true);
             SetUpHandAttachment(
                 RightHand,
                 "Right",
@@ -43,18 +43,6 @@ namespace Raicuparta.TwoForksVR
         private Material GetHandMaterial()
         {
             return PlayerBody.GetComponent<SkinnedMeshRenderer>().materials[2];
-        }
-
-        private GameObject LoadHandPrefab()
-        {
-            var myLoadedAssetBundle = AssetBundle.LoadFromFile(Directory.GetCurrentDirectory() + "/Mods/TwoForksVR/hand");
-            if (myLoadedAssetBundle == null)
-            {
-                MelonLogger.Error("Failed to load AssetBundle!");
-                return null;
-            }
-
-            return myLoadedAssetBundle.LoadAsset<GameObject>("Hand");
         }
 
         private Transform CreateHand(GameObject prefab, Material material, bool isLeft = false)
