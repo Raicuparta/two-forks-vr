@@ -37,28 +37,9 @@ namespace Raicuparta.TwoForksVR
         [HarmonyPatch(typeof(vgCompass), "Start")]
         public class PatchCompassStart
         {
-            private static void CreateLine(Color color, Transform parent, Vector3 destination)
-            {
-                var line = new GameObject("debugLine").transform;
-                line.transform.SetParent(parent, false);
-
-                var lineRenderer = line.gameObject.AddComponent<LineRenderer>();
-                lineRenderer.useWorldSpace = false;
-                lineRenderer.SetPositions(new[] { Vector3.zero, destination });
-                lineRenderer.startWidth = 0.005f;
-                lineRenderer.endWidth = 0.005f;
-                lineRenderer.endColor = color;
-                lineRenderer.startColor = color;
-                lineRenderer.material.shader = Shader.Find("Particles/Alpha Blended Premultiply");
-                lineRenderer.material.SetColor("_Color", color);
-            }
-
             public static void Postfix(vgCompass __instance)
             {
-                var transform = __instance.transform.parent;
-                CreateLine(Color.red, transform, Vector3.right);
-                CreateLine(Color.green, transform, Vector3.forward);
-                CreateLine(Color.blue, transform, Vector3.up);
+                __instance.transform.parent.gameObject.AddComponent<DebugAxes>();
             }
         }
     }
