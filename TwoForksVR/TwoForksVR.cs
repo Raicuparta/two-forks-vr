@@ -37,6 +37,7 @@ namespace Raicuparta.TwoForksVR
         {
             isInitialized = false;
             new GameObject().AddComponent<VRCameraManager>();
+            new GameObject().AddComponent<VRUIManager>();
         }
 
         private void SetUpGameScene()
