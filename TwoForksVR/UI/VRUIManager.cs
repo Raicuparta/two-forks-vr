@@ -11,12 +11,16 @@ namespace Raicuparta.TwoForksVR
     {
         private void Start()
         {
-            SetUpUI();
+            var hudManager = GameObject.Find("_OnlyLoadOnce").transform.Find("HUD Manager");
+            SetUpUI(hudManager);
         }
 
-        private void SetUpUI()
+        private static void SetUpUI(Transform root)
         {
-            var canvases = GameObject.FindObjectsOfType<Canvas>().Where(canvas => canvas.renderMode == RenderMode.ScreenSpaceOverlay);
+            root.SetParent(Camera.main.transform, false);
+            root.localPosition = Vector3.forward * 0.5f;
+            root.localScale = Vector3.one * 0.0004f;
+            var canvases = root.GetComponentsInChildren<Canvas>(true).Where(canvas => canvas.renderMode == RenderMode.ScreenSpaceOverlay);
             canvases.Do(canvas =>
             {
                 if (canvas.name == "BlackBars")
@@ -26,9 +30,9 @@ namespace Raicuparta.TwoForksVR
                 }
                 canvas.worldCamera = Camera.main;
                 canvas.renderMode = RenderMode.WorldSpace;
-                canvas.transform.SetParent(Camera.main.transform, false);
-                canvas.transform.localPosition = Vector3.forward * 0.5f;
-                canvas.transform.localScale = Vector3.one * 0.0004f;
+                canvas.transform.localPosition = Vector3.zero;
+                canvas.transform.localRotation = Quaternion.identity;
+                canvas.transform.localScale = Vector3.one;
             });
         }
 
@@ -38,6 +42,15 @@ namespace Raicuparta.TwoForksVR
             public static void Prefix(ref bool blur)
             {
                 blur = false;
+            }
+        }
+
+        [HarmonyPatch(typeof(vgSettingsMenuController), "Start")]
+        public class PastSettingsMenuStart
+        {
+            public static void Postfix(vgSettingsMenuController __instance)
+            {
+                SetUpUI(__instance.transform);
             }
         }
     }
