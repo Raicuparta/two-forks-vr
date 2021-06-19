@@ -11,14 +11,14 @@ namespace Raicuparta.TwoForksVR
 {
     public class VRHandManager: MonoBehaviour
     {
-        public static Transform RightHand;
-        public static Transform LeftHand;
         public Transform PlayerBody; // TODO get this some other way.
+
+        private static Transform LeftHand;
+        private static Transform RightHand;
 
         private void Start()
         {
             var prefab = LoadHandPrefab();
-
 
             var handMaterial = GetHandMaterial();
             RightHand = CreateHand(prefab, handMaterial);
