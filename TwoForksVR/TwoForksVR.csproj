@@ -48,16 +48,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DebugAxes.cs" />
+    <Compile Include="Body\VRBodyManager.cs" />
+    <Compile Include="Debug\DebugAxes.cs" />
     <Compile Include="Helpers\MathHelper.cs" />
     <Compile Include="TwoForksVR.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VRCamera.cs" />
-    <Compile Include="VRCompass.cs" />
-    <Compile Include="VRHand.cs" />
-    <Compile Include="VRHandLaser.cs" />
-    <Compile Include="VRHandManager.cs" />
-    <Compile Include="VRCanvasManager.cs" />
+    <Compile Include="Camera\VRCameraManager.cs" />
+    <Compile Include="Items\VRCompass.cs" />
+    <Compile Include="Hands\VRHand.cs" />
+    <Compile Include="Hands\VRHandLaser.cs" />
+    <Compile Include="Hands\VRHandsManager.cs" />
+    <Compile Include="UI\VRUIManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

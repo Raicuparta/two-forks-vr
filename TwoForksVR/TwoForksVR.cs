@@ -11,7 +11,6 @@ namespace Raicuparta.TwoForksVR
 {
     public class TwoForksVR : MelonMod
     {
-        Transform playerBody;
         private bool isVrInitialized = false;
 
         public override void OnApplicationStart()
@@ -41,17 +40,9 @@ namespace Raicuparta.TwoForksVR
         private void SetUpGameScene()
         {
             isVrInitialized = true;
-            SetUpPlayerBody();
             new GameObject().AddComponent<VRCameraManager>();
             new GameObject().AddComponent<VRUIManager>();
-            var handManager = new GameObject().AddComponent<VRHandsManager>();
-            handManager.PlayerBody = playerBody;
-        }
-
-        private void SetUpPlayerBody()
-        {
-            playerBody = GameObject.Find("Player Prefab").transform.Find("PlayerModel/henry/body");
-            playerBody.gameObject.SetActive(false);
+            new GameObject().AddComponent<VRBodyManager>();
         }
     }
 }
