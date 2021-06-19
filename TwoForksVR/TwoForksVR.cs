@@ -7,9 +7,9 @@ using UnityEngine;
 using UnityEngine.VR;
 using System.Linq;
 
-namespace Raicuparta.UnityVRCameraReparent
+namespace Raicuparta.TwoForksVR
 {
-    public class UnityVRCameraReparent : MelonMod
+    public class TwoForksVR : MelonMod
     {
 
         static Transform rightHand;

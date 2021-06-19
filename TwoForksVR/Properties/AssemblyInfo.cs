@@ -2,19 +2,19 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using MelonLoader;
-using Raicuparta.UnityVRCameraReparent;
+using Raicuparta.TwoForksVR;
 
-[assembly: MelonInfo(typeof(UnityVRCameraReparent), "UnityVRCameraReparent", "0.1.0", "Raicuparta")]
+[assembly: MelonInfo(typeof(TwoForksVR), "TwoForksVR", "0.1.0", "Raicuparta")]
 [assembly: MelonGame(null, null)]
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("UnityVRCameraReparent")]
+[assembly: AssemblyTitle("TwoForksVR")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("UnityVRCameraReparent")]
+[assembly: AssemblyProduct("TwoForksVR")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
