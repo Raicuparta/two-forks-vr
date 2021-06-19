@@ -51,6 +51,7 @@
     <Compile Include="TwoForksVR.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VRHand.cs" />
+    <Compile Include="VRHandLaser.cs" />
     <Compile Include="VRHandManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

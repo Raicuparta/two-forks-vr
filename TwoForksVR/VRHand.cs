@@ -24,6 +24,10 @@ namespace Raicuparta.TwoForksVR
                 var handModel = transform.Find("handModel");
                 handModel.localScale = new Vector3(-handModel.localScale.x, handModel.localScale.y, handModel.localScale.z);
                 SetUpWeddingRing();
+            } else
+            {
+                var handLaser = new GameObject().AddComponent<VRHandLaser>().transform;
+                handLaser.SetParent(transform, false);
             }
         }
 

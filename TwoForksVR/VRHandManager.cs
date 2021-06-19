@@ -75,24 +75,6 @@ namespace Raicuparta.TwoForksVR
             itemSocket.localEulerAngles = new Vector3(54.1782f, 224.7767f, 139.0415f);
         }
 
-        private void SetUpHandLaser()
-        {
-            var laser = new GameObject("VR Laser").transform;
-            laser.transform.SetParent(RightHand, false);
-            //laser.localPosition = new Vector3(0f, -0.05f, 0.01f);
-            //laser.localRotation = Quaternion.Euler(45f, 0, 0);
-
-            var lineRenderer = laser.gameObject.AddComponent<LineRenderer>();
-            lineRenderer.useWorldSpace = false;
-            lineRenderer.SetPositions(new[] { Vector3.zero, Vector3.forward });
-            lineRenderer.startWidth = 0.005f;
-            lineRenderer.endWidth = 0.001f;
-            lineRenderer.endColor = new Color(1, 1, 1, 0.3f);
-            lineRenderer.startColor = Color.clear;
-            lineRenderer.material.shader = Shader.Find("Particles/Alpha Blended Premultiply");
-            lineRenderer.material.SetColor("_Color", new Color(0.8f, 0.8f, 0.8f));
-        }
-
 
         [HarmonyPatch(typeof(vgPlayerTargeting), "UpdateTarget")]
         public class PatchUpdateTarget
