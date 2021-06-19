@@ -53,6 +53,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /y "$(TargetPath)" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\Mods\VR.dll"</PostBuildEvent>
+    <PostBuildEvent>copy /y "$(TargetPath)" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\Mods"
+
+xcopy /y /i "$(SolutionDir)\HelperUnityProject\AssetBundles" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\Mods\$(ProjectName)"</PostBuildEvent>
   </PropertyGroup>
 </Project>
