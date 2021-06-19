@@ -32,7 +32,6 @@ namespace Raicuparta.TwoForksVR
                 isVrInitialized = true;
                 SetUpPlayerBody();
                 new GameObject().AddComponent<VRCamera>();
-                ReparentCamera();
                 SetUpUI();
                 var handManager = new GameObject().AddComponent<VRHandManager>();
                 handManager.PlayerBody = playerBody;
@@ -61,15 +60,6 @@ namespace Raicuparta.TwoForksVR
                 canvas.transform.localPosition = Vector3.forward * 0.5f;
                 canvas.transform.localScale = Vector3.one * 0.0004f;
             });
-        }
-
-        private void ReparentCamera()
-        {
-            var mainCamera = Camera.main.transform;
-            var vrCameraParent = new GameObject("VR Stage").transform;
-            vrCameraParent.SetParent(mainCamera.parent, false);
-            mainCamera.SetParent(vrCameraParent);
-            vrCameraParent.localPosition = Vector3.down * 1.2f;
         }
 
         [HarmonyPatch(typeof(vgInventoryController), "TossStart")]

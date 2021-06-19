@@ -15,6 +15,7 @@ namespace Raicuparta.TwoForksVR
         {
             SetUpCamera();
             LimitVerticalRotation();
+            ReparentCamera();
         }
 
         private void SetUpCamera()
@@ -42,6 +43,15 @@ namespace Raicuparta.TwoForksVR
                 tuning.minVerticalAngle = 0;
                 tuning.maxVerticalAngle = 0;
             });
+        }
+
+        private void ReparentCamera()
+        {
+            var mainCamera = Camera.main.transform;
+            var vrCameraParent = new GameObject("VR Stage").transform;
+            vrCameraParent.SetParent(mainCamera.parent, false);
+            mainCamera.SetParent(vrCameraParent);
+            vrCameraParent.localPosition = Vector3.down * 1.2f;
         }
     }
 }
