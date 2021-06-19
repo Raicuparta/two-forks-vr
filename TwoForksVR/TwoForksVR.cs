@@ -11,9 +11,6 @@ namespace Raicuparta.TwoForksVR
 {
     public class TwoForksVR : MelonMod
     {
-
-        static Transform rightHand;
-        static Transform leftHand;
         Transform playerBody;
         static bool isVrInitialized;
 
@@ -52,20 +49,9 @@ namespace Raicuparta.TwoForksVR
                 SetUpPlayerBody();
                 SetUpCamera();
                 ReparentCamera();
-                var handPrefab = LoadHandPrefab();
-                SetUpHands(handPrefab);
                 SetUpUI();
-                SetUpHandLaser();
-                SetUpLeftHandAttachment();
-                SetUpRightHandAttachment();
-            }
-
-            if (rightHand)
-            {
-                rightHand.localPosition = InputTracking.GetLocalPosition(VRNode.RightHand);
-                rightHand.localRotation = InputTracking.GetLocalRotation(VRNode.RightHand);
-                leftHand.localPosition = InputTracking.GetLocalPosition(VRNode.LeftHand);
-                leftHand.localRotation = InputTracking.GetLocalRotation(VRNode.LeftHand);
+                var handManager = new GameObject().AddComponent<VRHandManager>();
+                handManager.PlayerBody = playerBody;
             }
         }
 
@@ -73,25 +59,6 @@ namespace Raicuparta.TwoForksVR
         {
             playerBody = GameObject.Find("Player Prefab").transform.Find("PlayerModel/henry/body");
             playerBody.gameObject.SetActive(false);
-        }
-
-        private void SetUpLeftHandAttachment()
-        {
-            var itemSocket = leftHand.Find("itemSocket");
-            var handAttachment = GameObject.Find("henryHandLeftAttachment").transform;
-            handAttachment.SetParent(itemSocket, false);
-            itemSocket.localPosition = new Vector3(-0.08f, -0.06f, -0.056f);
-            itemSocket.localEulerAngles = new Vector3(8.3794f, 341.5249f, 179.2709f);
-        }
-
-        private void SetUpRightHandAttachment()
-        {
-            var itemSocket = rightHand.Find("itemSocket");
-            var handAttachment = GameObject.Find("henryHandRightAttachment").transform;
-            handAttachment.SetParent(itemSocket, false);
-            itemSocket.localScale = Vector3.one;
-            itemSocket.localPosition = new Vector3(0.0551f, -0.0229f, -0.131f);
-            itemSocket.localEulerAngles = new Vector3(54.1782f, 224.7767f, 139.0415f);
         }
 
         private void SetUpCamera()
@@ -125,55 +92,7 @@ namespace Raicuparta.TwoForksVR
             });
         }
 
-        private void SetUpWeddingRing(Transform hand)
-        {
-            var weddingRing = GameObject.Find("HenryWeddingRing 1").transform;
-            var socket = hand.Find("handModel/weddingRingSocket");
-            weddingRing.SetParent(socket);
-            weddingRing.localPosition = Vector3.zero;
-            weddingRing.localRotation = Quaternion.identity;
-        }
 
-        private void SetUpHands(GameObject prefab)
-        {
-            rightHand = CreateHand(prefab);
-            leftHand = CreateHand(prefab, true);
-
-            // Update pickupAttachTransform to hand.
-            GameObject.FindObjectOfType<vgInventoryController>().CachePlayerVariables();
-            
-        }
-
-        private Transform CreateHand(GameObject prefab, bool isLeft = false)
-        {
-            var instance = UnityEngine.Object.Instantiate(prefab);
-            instance.name = isLeft ? "Left VR Hand" : "Right VR Hand";
-            var hand = instance.transform;
-            hand.SetParent(Camera.main.transform.parent, false);
-            var meshRenderer = playerBody.GetComponent<SkinnedMeshRenderer>();
-            hand.Find("handModel/hand").GetComponent<MeshRenderer>().material = meshRenderer.materials[2];
-
-            if (isLeft)
-            {
-                var handModel = hand.Find("handModel");
-                handModel.localScale = new Vector3(-handModel.localScale.x, handModel.localScale.y, handModel.localScale.z);
-                SetUpWeddingRing(hand);
-            }
-
-            return hand;
-        }
-
-        private GameObject LoadHandPrefab()
-        {
-            var myLoadedAssetBundle = AssetBundle.LoadFromFile(Directory.GetCurrentDirectory() + "/Mods/TwoForksVR/hand");
-            if (myLoadedAssetBundle == null)
-            {
-                MelonLogger.Error("Failed to load AssetBundle!");
-                return null;
-            }
-
-            return myLoadedAssetBundle.LoadAsset<GameObject>("Hand");
-        }
 
         private void ReparentCamera()
         {
@@ -182,43 +101,6 @@ namespace Raicuparta.TwoForksVR
             vrCameraParent.SetParent(mainCamera.parent, false);
             mainCamera.SetParent(vrCameraParent);
             vrCameraParent.localPosition = Vector3.down * 1.2f;
-        }
-
-        private void SetUpHandLaser()
-        {
-            var laser = new GameObject("VR Laser").transform;
-            laser.transform.SetParent(rightHand, false);
-            //laser.localPosition = new Vector3(0f, -0.05f, 0.01f);
-            //laser.localRotation = Quaternion.Euler(45f, 0, 0);
-
-            var lineRenderer = laser.gameObject.AddComponent<LineRenderer>();
-            lineRenderer.useWorldSpace = false;
-            lineRenderer.SetPositions(new[] { Vector3.zero, Vector3.forward });
-            lineRenderer.startWidth = 0.005f;
-            lineRenderer.endWidth = 0.001f;
-            lineRenderer.endColor = new Color(1, 1, 1, 0.3f);
-            lineRenderer.startColor = Color.clear;
-            lineRenderer.material.shader = Shader.Find("Particles/Alpha Blended Premultiply");
-            lineRenderer.material.SetColor("_Color", new Color(0.8f, 0.8f, 0.8f));
-        }
-
-        [HarmonyPatch(typeof(vgPlayerTargeting), "UpdateTarget")]
-        public class PatchUpdateTarget
-        {
-            public static void Prefix(ref Vector3 cameraFacing, ref Vector3 cameraOrigin)
-            {
-                cameraFacing = rightHand.forward;
-                cameraOrigin = rightHand.position;
-            }
-        }
-
-        [HarmonyPatch(typeof(vgInventoryController), "CachePlayerVariables")]
-        public class PatchCachePlayerVariables
-        {
-            public static void Postfix(ref Transform ___pickupAttachTransform)
-            {
-                ___pickupAttachTransform = rightHand;
-            }
         }
 
         [HarmonyPatch(typeof(vgInventoryController), "TossStart")]

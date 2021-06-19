@@ -7,7 +7,7 @@
     <ProjectGuid>{4FAEDEC8-3D86-4350-B42D-DAD4414E69D1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TwoForksVR</RootNamespace>
+    <RootNamespace>Raicuparta.TwoForksVR</RootNamespace>
     <AssemblyName>TwoForksVR</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -50,6 +50,8 @@
   <ItemGroup>
     <Compile Include="TwoForksVR.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VRHand.cs" />
+    <Compile Include="VRHandManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
