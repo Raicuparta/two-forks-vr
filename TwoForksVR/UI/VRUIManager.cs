@@ -31,5 +31,14 @@ namespace Raicuparta.TwoForksVR
                 canvas.transform.localScale = Vector3.one * 0.0004f;
             });
         }
+
+        [HarmonyPatch(typeof(vgScrimManager), "ShowScrim")]
+        public class PatchScrimManagerShow
+        {
+            public static void Prefix(ref bool blur)
+            {
+                blur = false;
+            }
+        }
     }
 }
