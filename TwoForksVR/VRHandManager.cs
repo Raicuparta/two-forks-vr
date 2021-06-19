@@ -83,5 +83,15 @@ namespace Raicuparta.TwoForksVR
                 ___pickupAttachTransform = RightHand;
             }
         }
+
+        [HarmonyPatch(typeof(vgInventoryController), "TossStart")]
+        public class PatchTossAnimation
+        {
+            public static bool Prefix(vgInventoryController __instance)
+            {
+                __instance.OnToss();
+                return false;
+            }
+        }
     }
 }
