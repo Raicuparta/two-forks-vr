@@ -12,7 +12,7 @@ namespace Raicuparta.TwoForksVR
     public class TwoForksVR : MelonMod
     {
         Transform playerBody;
-        static bool isVrInitialized;
+        private bool isVrInitialized = false;
 
         public override void OnApplicationStart()
         {
@@ -22,32 +22,16 @@ namespace Raicuparta.TwoForksVR
 
         public override void OnSceneWasInitialized(int buildIndex, string sceneName)
         {
-            if (!isVrInitialized)
-            {
-                VRSettings.enabled = false;
-            }
             base.OnSceneWasInitialized(buildIndex, sceneName);
 
-            MelonLogger.Msg("OnSceneWasInitialized");
-
-            var cameraController = GameObject.FindObjectOfType<vgCameraController>();
-            if (!cameraController)
+            if (sceneName == "Main_Menu")
             {
-                return;
-            }
-
-            cameraController.defaultCameraTuning.ForEach(tuning => {
-                tuning.minVerticalAngle = 0;
-                tuning.maxVerticalAngle = 0;
-            });
-        }
-
-        public override void OnUpdate()
-        {
-            if (!isVrInitialized && Input.GetKeyDown(KeyCode.F2))
+                VRSettings.enabled = false;
+            } else if (sceneName.StartsWith("TeenLoop") && !isVrInitialized)
             {
+                isVrInitialized = true;
                 SetUpPlayerBody();
-                SetUpCamera();
+                new GameObject().AddComponent<VRCamera>();
                 ReparentCamera();
                 SetUpUI();
                 var handManager = new GameObject().AddComponent<VRHandManager>();
@@ -59,19 +43,6 @@ namespace Raicuparta.TwoForksVR
         {
             playerBody = GameObject.Find("Player Prefab").transform.Find("PlayerModel/henry/body");
             playerBody.gameObject.SetActive(false);
-        }
-
-        private void SetUpCamera()
-        {
-            var camera = Camera.main;
-            camera.transform.localPosition = Vector3.zero;
-            camera.transform.localRotation = Quaternion.identity;
-            camera.nearClipPlane = 0.03f;
-            if (!isVrInitialized)
-            {
-                VRSettings.enabled = true;
-                isVrInitialized = true;
-            }
         }
 
         private void SetUpUI()
@@ -91,8 +62,6 @@ namespace Raicuparta.TwoForksVR
                 canvas.transform.localScale = Vector3.one * 0.0004f;
             });
         }
-
-
 
         private void ReparentCamera()
         {

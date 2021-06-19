@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="TwoForksVR.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VRCamera.cs" />
     <Compile Include="VRHand.cs" />
     <Compile Include="VRHandLaser.cs" />
     <Compile Include="VRHandManager.cs" />
