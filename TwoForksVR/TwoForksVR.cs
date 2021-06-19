@@ -42,9 +42,9 @@ namespace Raicuparta.TwoForksVR
         {
             isVrInitialized = true;
             SetUpPlayerBody();
-            new GameObject().AddComponent<VRCamera>();
-            new GameObject().AddComponent<VRCanvasManager>();
-            var handManager = new GameObject().AddComponent<VRHandManager>();
+            new GameObject().AddComponent<VRCameraManager>();
+            new GameObject().AddComponent<VRUIManager>();
+            var handManager = new GameObject().AddComponent<VRHandsManager>();
             handManager.PlayerBody = playerBody;
         }
 

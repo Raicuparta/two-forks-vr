@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Raicuparta.TwoForksVR
 {
-    class VRCanvasManager: MonoBehaviour
+    class VRUIManager: MonoBehaviour
     {
         private void Start()
         {

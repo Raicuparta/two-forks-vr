@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Raicuparta.TwoForksVR
 {
-    public class VRHandManager: MonoBehaviour
+    public class VRHandsManager: MonoBehaviour
     {
         public Transform PlayerBody; // TODO get this some other way.
 

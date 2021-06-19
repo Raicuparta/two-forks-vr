@@ -7,7 +7,7 @@ using UnityEngine.VR;
 
 namespace Raicuparta.TwoForksVR
 {
-    public class VRCamera: MonoBehaviour
+    public class VRCameraManager: MonoBehaviour
     {
         private bool isInitialized;
 
