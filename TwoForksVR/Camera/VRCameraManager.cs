@@ -13,6 +13,7 @@ namespace Raicuparta.TwoForksVR
 
         private void Start()
         {
+            VRSettings.enabled = false;
             SetUpCamera();
             LimitVerticalRotation();
             ReparentCamera();

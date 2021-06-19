@@ -11,7 +11,7 @@ namespace Raicuparta.TwoForksVR
 {
     public class TwoForksVR : MelonMod
     {
-        private bool isVrInitialized = false;
+        private bool isInitialized = false;
 
         public override void OnApplicationStart()
         {
@@ -26,7 +26,7 @@ namespace Raicuparta.TwoForksVR
             if (sceneName == "Main_Menu")
             {
                 SetUpMenuScene();
-            } else if (sceneName.StartsWith("TeenLoop") && !isVrInitialized)
+            } else if (sceneName.StartsWith("TeenLoop") && !isInitialized)
             {
                 SetUpGameScene();
             }
@@ -34,12 +34,13 @@ namespace Raicuparta.TwoForksVR
 
         private void SetUpMenuScene()
         {
-            VRSettings.enabled = false;
+            isInitialized = false;
+            new GameObject().AddComponent<VRCameraManager>();
         }
 
         private void SetUpGameScene()
         {
-            isVrInitialized = true;
+            isInitialized = true;
             new GameObject().AddComponent<VRCameraManager>();
             new GameObject().AddComponent<VRUIManager>();
             new GameObject().AddComponent<VRBodyManager>();
