@@ -23,8 +23,18 @@ namespace Raicuparta.TwoForksVR
             var handMaterial = GetHandMaterial();
             RightHand = CreateHand(prefab, handMaterial);
             LeftHand = CreateHand(prefab, handMaterial, true);
-            SetUpLeftHandAttachment();
-            SetUpRightHandAttachment();
+            SetUpHandAttachment(
+                RightHand,
+                "Right",
+                new Vector3(0.0551f, -0.0229f, -0.131f),
+                new Vector3(54.1782f, 224.7767f, 139.0415f)
+            );
+            SetUpHandAttachment(
+                LeftHand,
+                "Left",
+                new Vector3(-0.08f, -0.06f, -0.056f),
+                new Vector3(8.3794f, 341.5249f, 179.2709f)
+            );
 
             // Update pickupAttachTransform to hand.
             GameObject.FindObjectOfType<vgInventoryController>().CachePlayerVariables();
@@ -56,23 +66,13 @@ namespace Raicuparta.TwoForksVR
             return hand.transform;
         }
 
-        private void SetUpLeftHandAttachment()
+        private void SetUpHandAttachment(Transform hand, string handName, Vector3 position, Vector3 eulerAngles)
         {
-            var itemSocket = LeftHand.Find("itemSocket");
-            var handAttachment = GameObject.Find("henryHandLeftAttachment").transform;
+            var itemSocket = hand.Find("itemSocket");
+            var handAttachment = GameObject.Find($"henryHand{handName}Attachment").transform;
             handAttachment.SetParent(itemSocket, false);
-            itemSocket.localPosition = new Vector3(-0.08f, -0.06f, -0.056f);
-            itemSocket.localEulerAngles = new Vector3(8.3794f, 341.5249f, 179.2709f);
-        }
-
-        private void SetUpRightHandAttachment()
-        {
-            var itemSocket = RightHand.Find("itemSocket");
-            var handAttachment = GameObject.Find("henryHandRightAttachment").transform;
-            handAttachment.SetParent(itemSocket, false);
-            itemSocket.localScale = Vector3.one;
-            itemSocket.localPosition = new Vector3(0.0551f, -0.0229f, -0.131f);
-            itemSocket.localEulerAngles = new Vector3(54.1782f, 224.7767f, 139.0415f);
+            itemSocket.localPosition = position;
+            itemSocket.localEulerAngles = eulerAngles;
         }
 
         [HarmonyPatch(typeof(vgInventoryController), "CachePlayerVariables")]
