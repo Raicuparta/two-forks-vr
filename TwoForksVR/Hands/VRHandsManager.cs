@@ -32,7 +32,7 @@ namespace Raicuparta.TwoForksVR
             SetUpHandAttachment(
                 LeftHand,
                 "Left",
-                new Vector3(-0.08f, -0.06f, -0.056f),
+                new Vector3(0.0157f, -0.0703f, -0.0755f),
                 new Vector3(8.3794f, 341.5249f, 179.2709f)
             );
 
