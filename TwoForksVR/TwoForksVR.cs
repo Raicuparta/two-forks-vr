@@ -44,7 +44,7 @@ namespace Raicuparta.TwoForksVR
 
         public override void OnUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.F2))
+            if (!isVrInitialized && Input.GetKeyDown(KeyCode.F2))
             {
                 SetUpPlayerBody();
                 SetUpCamera();

@@ -75,17 +75,6 @@ namespace Raicuparta.TwoForksVR
             itemSocket.localEulerAngles = new Vector3(54.1782f, 224.7767f, 139.0415f);
         }
 
-
-        [HarmonyPatch(typeof(vgPlayerTargeting), "UpdateTarget")]
-        public class PatchUpdateTarget
-        {
-            public static void Prefix(ref Vector3 cameraFacing, ref Vector3 cameraOrigin)
-            {
-                cameraFacing = RightHand.forward;
-                cameraOrigin = RightHand.position;
-            }
-        }
-
         [HarmonyPatch(typeof(vgInventoryController), "CachePlayerVariables")]
         public class PatchCachePlayerVariables
         {
