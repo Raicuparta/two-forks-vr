@@ -165,7 +165,7 @@ namespace Raicuparta.TwoForksVR
 
         private GameObject LoadHandPrefab()
         {
-            var myLoadedAssetBundle = AssetBundle.LoadFromFile(@"C:\Users\rai\Repos\FirewatchCode\Empty\FirewatchHelper\Assets\AssetBundles\hand");
+            var myLoadedAssetBundle = AssetBundle.LoadFromFile(@"C:\Users\rai\Repos\two-forks-vr\HelperUnityProject\Assets\AssetBundles\hand");
             if (myLoadedAssetBundle == null)
             {
                 MelonLogger.Error("Failed to load AssetBundle!");

@@ -1,0 +1,28 @@
+ManifestFileVersion: 0
+CRC: 4029246168
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c8d23e86659164824919cfab15751598
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: cabdba1f47cfa18d989066811dbb64a2
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Hand.prefab
+Dependencies: []
