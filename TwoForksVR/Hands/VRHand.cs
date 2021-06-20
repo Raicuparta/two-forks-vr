@@ -23,7 +23,6 @@ namespace Raicuparta.TwoForksVR
             transform.SetParent(Camera.main.transform.parent, false); // TODO make sure camera is initialized?
             vrNode = IsLeft ? VRNode.LeftHand : VRNode.RightHand;
             var pose = gameObject.AddComponent<SteamVR_Behaviour_Pose>();
-            pose.poseAction = SteamVR_Actions.default_Pose;
 
             if (IsLeft)
             {
@@ -32,11 +31,13 @@ namespace Raicuparta.TwoForksVR
                 SetUpWeddingRing();
                 SetUpMap();
                 pose.inputSource = SteamVR_Input_Sources.LeftHand;
+                pose.poseAction = SteamVR_Actions.default_PoseLeftHand;
             } else
             {
                 var handLaser = new GameObject().AddComponent<VRHandLaser>().transform;
                 handLaser.SetParent(transform, false);
                 pose.inputSource = SteamVR_Input_Sources.RightHand;
+                pose.poseAction = SteamVR_Actions.default_PoseRightHand;
             }
             gameObject.SetActive(true);
         }

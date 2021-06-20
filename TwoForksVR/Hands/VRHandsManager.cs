@@ -19,9 +19,6 @@ namespace Raicuparta.TwoForksVR
 
         private void Start()
         {
-            // TODO relative path
-            OpenVR.Input.SetActionManifestPath(@"C:\Users\rai\Repos\two-forks-vr\HelperUnityProject\Build\Helper_Data\StreamingAssets\SteamVR\actions.json");
-
             var handPrefab = VRAssetLoader.Hand;
 
             var handMaterial = GetHandMaterial();

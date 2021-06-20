@@ -1,23 +1,11 @@
 {
   "actions": [
     {
-      "name": "/actions/default/in/InteractUI",
+      "name": "/actions/default/in/Interact",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/Teleport",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/default/in/GrabPinch",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/default/in/GrabGrip",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/default/in/Pose",
+      "name": "/actions/default/in/PoseRightHand",
       "type": "pose"
     },
     {
@@ -31,22 +19,28 @@
       "skeleton": "/skeleton/hand/right"
     },
     {
-      "name": "/actions/default/in/Squeeze",
-      "type": "vector1",
-      "requirement": "optional"
-    },
-    {
       "name": "/actions/default/in/HeadsetOnHead",
       "type": "boolean",
       "requirement": "optional"
     },
     {
-      "name": "/actions/default/in/SnapTurnLeft",
-      "type": "boolean",
-      "requirement": "suggested"
+      "name": "/actions/default/in/PoseLeftHand",
+      "type": "pose"
     },
     {
-      "name": "/actions/default/in/SnapTurnRight",
+      "name": "/actions/default/in/Move",
+      "type": "vector2"
+    },
+    {
+      "name": "/actions/default/in/Rotate",
+      "type": "vector2"
+    },
+    {
+      "name": "/actions/default/in/Jog",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/Flashlight",
       "type": "boolean"
     },
     {
@@ -57,7 +51,7 @@
   "action_sets": [
     {
       "name": "/actions/default",
-      "usage": "single"
+      "usage": "leftright"
     }
   ],
   "default_bindings": [
@@ -117,17 +111,18 @@
   "localization": [
     {
       "language_tag": "en_US",
-      "/actions/default/in/GrabGrip": "Grab Grip",
-      "/actions/default/in/GrabPinch": "Grab Pinch",
       "/actions/default/in/HeadsetOnHead": "Headset on head (proximity sensor)",
-      "/actions/default/in/InteractUI": "Interact With UI",
-      "/actions/default/in/Pose": "Pose",
       "/actions/default/in/SkeletonLeftHand": "Skeleton (Left)",
       "/actions/default/in/SkeletonRightHand": "Skeleton (Right)",
-      "/actions/default/in/Teleport": "Teleport",
       "/actions/default/out/Haptic": "Haptic",
-      "/actions/default/in/SnapTurnLeft": "Snap Turn (Left)",
-      "/actions/default/in/SnapTurnRight": "Snap Turn (Right)"
+      "/actions/default/in/interact": "Interact",
+      "/actions/default/in/Interact": "Interact",
+      "/actions/default/in/PoseRightHand": "Pose (Right)",
+      "/actions/default/in/PoseLeftHand": "Pose (Left)",
+      "/actions/default/in/Move": "Move",
+      "/actions/default/in/Rotate": "Rotate",
+      "/actions/default/in/Jog": "Jog",
+      "/actions/default/in/Flashlight": "Flashlight"
     }
   ]
 }

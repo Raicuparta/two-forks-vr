@@ -6,6 +6,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.VR;
 using System.Linq;
+using Valve.VR;
 
 namespace Raicuparta.TwoForksVR
 {
@@ -39,6 +40,7 @@ namespace Raicuparta.TwoForksVR
             new GameObject().AddComponent<VRCameraManager>();
             new GameObject().AddComponent<VRUIManager>();
             new GameObject().AddComponent<VRHandsManager>();
+            new GameObject().AddComponent<VRInputManager>();
         }
 
         private void SetUpGameScene()
