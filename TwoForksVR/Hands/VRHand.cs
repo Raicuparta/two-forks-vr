@@ -53,7 +53,14 @@ namespace Raicuparta.TwoForksVR
 
         public void SetMaterial(Material material)
         {
-            transform.Find("handModel/hand").GetComponent<MeshRenderer>().material = material;
+            var renderer = transform.Find("handModel/hand").GetComponent<MeshRenderer>();
+            if (material)
+            {
+                renderer.material = material;
+            } else
+            {
+                renderer.material.shader = Shader.Find("Standard");
+            }
         }
 
         private void LateUpdate()

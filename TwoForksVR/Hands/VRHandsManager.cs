@@ -42,6 +42,10 @@ namespace Raicuparta.TwoForksVR
 
         private Material GetHandMaterial()
         {
+            if (!PlayerBody)
+            {
+                return null;
+            }
             return PlayerBody.GetComponent<SkinnedMeshRenderer>().materials[2];
         }
 
