@@ -55,6 +55,7 @@
     <Compile Include="Body\VRBodyManager.cs" />
     <Compile Include="Debug\DebugAxes.cs" />
     <Compile Include="Helpers\MathHelper.cs" />
+    <Compile Include="Input\VRInputManager.cs" />
     <Compile Include="Items\VRMap.cs" />
     <Compile Include="TwoForksVR.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
