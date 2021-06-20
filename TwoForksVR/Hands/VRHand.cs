@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.VR;
+// using Valve.VR;
 
 namespace Raicuparta.TwoForksVR
 {
@@ -18,6 +19,7 @@ namespace Raicuparta.TwoForksVR
             name = $"{(IsLeft ? "Left" : "Right")} Hand";
             transform.SetParent(Camera.main.transform.parent, false); // TODO make sure camera is initialized?
             vrNode = IsLeft ? VRNode.LeftHand : VRNode.RightHand;
+            // var pose = gameObject.AddComponent<SteamVR_Behaviour_Pose>();
 
             if (IsLeft)
             {
@@ -25,10 +27,12 @@ namespace Raicuparta.TwoForksVR
                 handModel.localScale = new Vector3(-handModel.localScale.x, handModel.localScale.y, handModel.localScale.z);
                 SetUpWeddingRing();
                 SetUpMap();
+                // pose.inputSource = SteamVR_Input_Sources.LeftHand;
             } else
             {
                 var handLaser = new GameObject().AddComponent<VRHandLaser>().transform;
                 handLaser.SetParent(transform, false);
+                // pose.inputSource = SteamVR_Input_Sources.RightHand;
             }
         }
 
