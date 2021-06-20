@@ -75,11 +75,5 @@ namespace Raicuparta.TwoForksVR
                 renderer.material.shader = Shader.Find("Standard");
             }
         }
-
-        //private void LateUpdate()
-        //{
-        //    transform.localPosition = InputTracking.GetLocalPosition(vrNode);
-        //    transform.localRotation = InputTracking.GetLocalRotation(vrNode);
-        //}
     }
 }
