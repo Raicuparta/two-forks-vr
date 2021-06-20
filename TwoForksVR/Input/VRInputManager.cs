@@ -22,6 +22,30 @@ namespace Raicuparta.TwoForksVR
         public class PatchTossAnimation
         {
 
+            private static SteamVR_Action_Boolean.ChangeHandler OnChangeBoolean(vgInputManager.InputDelegate callback)
+            {
+                return (SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource, bool newState) =>
+                {
+                    callback(newState ? 1f : 0f);
+                };
+            }
+
+            private static SteamVR_Action_Vector2.ChangeHandler OnChangeVector2Horizontal(vgInputManager.InputDelegate callback)
+            {
+                return (SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta) =>
+                {
+                    callback(axis.x);
+                };
+            }
+
+            private static SteamVR_Action_Vector2.ChangeHandler OnChangeVector2Vertical(vgInputManager.InputDelegate callback)
+            {
+                return (SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta) =>
+                {
+                    callback(axis.y);
+                };
+            }
+
             public static bool Prefix(string commandName, vgInputManager.InputDelegate callback)
             {
                 var command = (InputCommand) Enum.Parse(typeof(InputCommand), commandName);
@@ -30,34 +54,32 @@ namespace Raicuparta.TwoForksVR
                 switch (command) {
                     case InputCommand.Use:
                     {
-                        actionSet.Interact.onChange += (SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource, bool newState) =>
-                        {
-                            callback(newState ? 1f : 0f);
-                        };
+                        actionSet.Interact.onChange += OnChangeBoolean(callback);
                         return false;
                     }
                     case InputCommand.MoveForward:
                     {
-                        actionSet.Move.onChange += (SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta) =>
-                        {
-                            callback(axis.y);
-                        };
+                        actionSet.Move.onChange += OnChangeVector2Vertical(callback);
                         return false;
                     }
                     case InputCommand.MoveStrafe:
                     {
-                        actionSet.Move.onChange += (SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta) =>
-                        {
-                            callback(axis.x);
-                        };
+                        actionSet.Move.onChange += OnChangeVector2Horizontal(callback);
                         return false;
                     }
                     case InputCommand.LookHorizontal_Stick:
                     {
-                        actionSet.Rotate.onChange += (SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta) =>
-                        {
-                            callback(axis.x);
-                        };
+                        actionSet.Rotate.onChange += OnChangeVector2Horizontal(callback);
+                        return false;
+                    }
+                    case InputCommand.ToggleJog:
+                    {
+                        actionSet.Jog.onChange += OnChangeBoolean(callback);
+                        return false;
+                    }
+                    case InputCommand.Flashlight:
+                    {
+                        actionSet.Flashlight.onChange += OnChangeBoolean(callback);
                         return false;
                     }
                     default:
