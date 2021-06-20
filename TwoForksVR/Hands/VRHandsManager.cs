@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using Valve.VR;
 
 namespace Raicuparta.TwoForksVR
 {
@@ -18,6 +19,10 @@ namespace Raicuparta.TwoForksVR
 
         private void Start()
         {
+            var error = OpenVR.Input.SetActionManifestPath(@"C:\Users\rai\Repos\two-forks-vr\HelperUnityProject\Build\Helper_Data\StreamingAssets\SteamVR\actions.json");
+            MelonLogger.Msg(error.ToString());
+
+
             var handPrefab = VRAssetLoader.Hand;
 
             var handMaterial = GetHandMaterial();
