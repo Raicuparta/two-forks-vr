@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MelonLoader;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,12 +44,20 @@ namespace Raicuparta.TwoForksVR
         private void SetUpMap()
         {
             var mapInHand = transform.Find("itemSocket/henryHandLeftAttachment/MapRiggedPosedPrefab(Clone)/MapRoot/MapInHand");
+            if (!mapInHand)
+            {
+                return;
+            }
             mapInHand.gameObject.AddComponent<VRMap>();
         }
 
         private void SetUpWeddingRing()
         {
-            var weddingRing = GameObject.Find("HenryWeddingRing 1").transform;
+            var weddingRing = GameObject.Find("HenryWeddingRing 1")?.transform;
+            if (!weddingRing)
+            {
+                return;
+            }
             var socket = transform.Find("handModel/weddingRingSocket");
             weddingRing.SetParent(socket);
             weddingRing.localPosition = Vector3.zero;
