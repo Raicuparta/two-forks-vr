@@ -49,8 +49,13 @@
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\TextureLoader.cs" />
     <Compile Include="Assets\VRAssetLoader.cs" />
     <Compile Include="Body\VRBodyManager.cs" />
     <Compile Include="Debug\DebugAxes.cs" />
