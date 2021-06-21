@@ -29,11 +29,11 @@ namespace Raicuparta.TwoForksVR
             //var material = gameObject.GetComponent<SkinnedMeshRenderer>().material;
             //material.mainTexture = texture;
 
-            //var mapBase = GameObject.Find("MapBase");
+            var mapBase = GameObject.Find("MapBase");
 
-            //var tex = Raicuparta.TwoForksVR.TextureLoader.LoadSprite(@"C:\Users\rai\Repos\FirewatchCode\ExportedAssets\Texture2D\map.png");
+            var tex = Raicuparta.TwoForksVR.TextureLoader.LoadSprite(@"C:\Users\rai\Repos\two-forks-vr\TwoForksVR\Items\edited-map.png");
 
-            //mapBase.GetComponent<Image>().overrideSprite = tex;
+            mapBase.GetComponent<Image>().overrideSprite = tex;
 
         }
 
