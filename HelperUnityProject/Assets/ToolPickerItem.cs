@@ -32,4 +32,9 @@ public class ToolPickerItem : MonoBehaviour
         isSelected = false;
         transform.localScale = Vector3.one;
     }
+
+    public void PickTool()
+    {
+        transform.SetParent(null);
+    }
 }

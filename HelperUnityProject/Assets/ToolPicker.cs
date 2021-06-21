@@ -65,26 +65,31 @@ public class ToolPicker : MonoBehaviour {
 		}
 		if (input.stateDown)
         {
-			ShowToolPicker();
+			OpenToolPicker();
 		}
 		if (input.stateUp)
 		{
-			HideToolPicker();
+			CloseToolPicker();
 		}
 	}
 
-	private void ShowToolPicker()
+	private void OpenToolPicker()
     {
 		ToolsContainer.gameObject.SetActive(true);
 		ToolsContainer.SetParent(ParentWhileActive);
 		ToolsContainer.LookAt(Camera.main.transform);
 	}
 
-	private void HideToolPicker()
+	private void CloseToolPicker()
     {
 		ToolsContainer.gameObject.SetActive(false);
 		ToolsContainer.SetParent(ParentWhileInactive);
 		ToolsContainer.localPosition = Vector3.zero;
 		ToolsContainer.localRotation = Quaternion.identity;
+
+		if (selectedTool)
+        {
+			selectedTool.PickTool();
+        }
 	}
 }
