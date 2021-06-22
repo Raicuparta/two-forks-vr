@@ -62,6 +62,8 @@
     <Compile Include="Helpers\MathHelper.cs" />
     <Compile Include="Input\InputCommand.cs" />
     <Compile Include="Input\VRInputManager.cs" />
+    <Compile Include="Items\VRToolPickerItem.cs" />
+    <Compile Include="Items\VRToolPicker.cs" />
     <Compile Include="Items\VRMap.cs" />
     <Compile Include="TwoForksVR.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

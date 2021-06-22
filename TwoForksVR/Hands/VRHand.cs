@@ -38,6 +38,10 @@ namespace Raicuparta.TwoForksVR
                 handLaser.SetParent(transform, false);
                 pose.inputSource = SteamVR_Input_Sources.RightHand;
                 pose.poseAction = SteamVR_Actions.default_PoseRightHand;
+
+                var toolPicker = gameObject.AddComponent<VRToolPicker>();
+                toolPicker.ParentWhileActive = Camera.main.transform.parent;
+                toolPicker.Hand = transform;
             }
             gameObject.SetActive(true);
         }

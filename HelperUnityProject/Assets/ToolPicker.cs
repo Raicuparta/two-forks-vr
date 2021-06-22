@@ -10,20 +10,37 @@ public class ToolPicker : MonoBehaviour {
 	private ToolPickerItem[] tools;
 	private SteamVR_Action_Boolean input = SteamVR_Actions.default_Flashlight;
 	private ToolPickerItem selectedTool;
+	private string[] toolNames = new[]
+	{
+		"Radio",
+		"Map",
+		"Compass",
+	};
 
 	public Transform ParentWhileActive;
 	public Transform ParentWhileInactive;
 	public Transform ToolsContainer;
 	public Transform Hand;
 
-	private void Awake () {
+	private void Start()
+    {
+		CreateItems();
 		SetUpToolsList();
 	}
 
-	private void Start()
+	private void CreateItems()
     {
-		PlaceToolsAroundCircle();
-	}
+		foreach (var toolName in toolNames)
+        {
+			var toolWrapper = new GameObject(toolName).transform;
+			toolWrapper.SetParent(ToolsContainer, false);
+			var tool = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
+			tool.localScale = Vector3.one * 0.1f;
+			tool.SetParent(toolWrapper);
+			tool.name = toolName;
+			tool.gameObject.AddComponent<ToolPickerItem>();
+        }
+    }
 
 	private void SetUpToolsList()
     {
@@ -34,11 +51,6 @@ public class ToolPicker : MonoBehaviour {
 			float angle = i * Mathf.PI * 2f / tools.Length;
 			tool.transform.localPosition = new Vector3(Mathf.Cos(angle) * circleRadius, Mathf.Sin(angle) * circleRadius, 0);
 		}
-	}
-
-	private void PlaceToolsAroundCircle()
-	{
-
 	}
 
 	private float GetSquareDistance(Vector3 pointA, Vector3 pointB)

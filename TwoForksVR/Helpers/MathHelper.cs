@@ -18,5 +18,11 @@ namespace Raicuparta.TwoForksVR
             float sign = Mathf.Sign(axis.x * cross_x + axis.y * cross_y + axis.z * cross_z);
             return unsignedAngle * sign;
         }
+
+        public static Vector3 PositionAroundCircle(int index, int totalCount, float circleRadius)
+        {
+			float angle = index * Mathf.PI * 2f / totalCount;
+			return new Vector3(Mathf.Cos(angle) * circleRadius, Mathf.Sin(angle) * circleRadius, 0);
+		}
     }
 }
