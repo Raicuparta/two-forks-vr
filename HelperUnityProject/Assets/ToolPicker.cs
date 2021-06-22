@@ -8,7 +8,7 @@ public class ToolPicker : MonoBehaviour {
 	private const float minSquareDistance = 0.03f;
 
 	private ToolPickerItem[] tools;
-	private SteamVR_Action_Boolean input = SteamVR_Actions.default_Flashlight;
+	private SteamVR_Action_Boolean input = SteamVR_Actions.default_ToolPicker;
 	private ToolPickerItem selectedTool;
 	private string[] toolNames = new[]
 	{

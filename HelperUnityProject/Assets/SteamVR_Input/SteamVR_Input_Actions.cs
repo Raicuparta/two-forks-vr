@@ -35,7 +35,13 @@ namespace Valve.VR
         
         private static SteamVR_Action_Boolean p_default_Jog;
         
-        private static SteamVR_Action_Boolean p_default_Flashlight;
+        private static SteamVR_Action_Boolean p_default_ToolPicker;
+        
+        private static SteamVR_Action_Boolean p_default_NextPage;
+        
+        private static SteamVR_Action_Boolean p_default_PreviousPage;
+        
+        private static SteamVR_Action_Boolean p_default_Cancel;
         
         private static SteamVR_Action_Vibration p_default_Haptic;
         
@@ -111,11 +117,35 @@ namespace Valve.VR
             }
         }
         
-        public static SteamVR_Action_Boolean default_Flashlight
+        public static SteamVR_Action_Boolean default_ToolPicker
         {
             get
             {
-                return SteamVR_Actions.p_default_Flashlight.GetCopy <SteamVR_Action_Boolean>();
+                return SteamVR_Actions.p_default_ToolPicker.GetCopy <SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean default_NextPage
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_NextPage.GetCopy <SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean default_PreviousPage
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_PreviousPage.GetCopy <SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean default_Cancel
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_Cancel.GetCopy <SteamVR_Action_Boolean>();
             }
         }
         
@@ -140,7 +170,10 @@ namespace Valve.VR
                     SteamVR_Actions.default_Move,
                     SteamVR_Actions.default_Rotate,
                     SteamVR_Actions.default_Jog,
-                    SteamVR_Actions.default_Flashlight,
+                    SteamVR_Actions.default_ToolPicker,
+                    SteamVR_Actions.default_NextPage,
+                    SteamVR_Actions.default_PreviousPage,
+                    SteamVR_Actions.default_Cancel,
                     SteamVR_Actions.default_Haptic};
             Valve.VR.SteamVR_Input.actionsIn = new Valve.VR.ISteamVR_Action_In[]
             {
@@ -153,7 +186,10 @@ namespace Valve.VR
                     SteamVR_Actions.default_Move,
                     SteamVR_Actions.default_Rotate,
                     SteamVR_Actions.default_Jog,
-                    SteamVR_Actions.default_Flashlight};
+                    SteamVR_Actions.default_ToolPicker,
+                    SteamVR_Actions.default_NextPage,
+                    SteamVR_Actions.default_PreviousPage,
+                    SteamVR_Actions.default_Cancel};
             Valve.VR.SteamVR_Input.actionsOut = new Valve.VR.ISteamVR_Action_Out[]
             {
                     SteamVR_Actions.default_Haptic};
@@ -169,7 +205,10 @@ namespace Valve.VR
                     SteamVR_Actions.default_Interact,
                     SteamVR_Actions.default_HeadsetOnHead,
                     SteamVR_Actions.default_Jog,
-                    SteamVR_Actions.default_Flashlight};
+                    SteamVR_Actions.default_ToolPicker,
+                    SteamVR_Actions.default_NextPage,
+                    SteamVR_Actions.default_PreviousPage,
+                    SteamVR_Actions.default_Cancel};
             Valve.VR.SteamVR_Input.actionsSingle = new Valve.VR.SteamVR_Action_Single[0];
             Valve.VR.SteamVR_Input.actionsVector2 = new Valve.VR.SteamVR_Action_Vector2[]
             {
@@ -187,7 +226,10 @@ namespace Valve.VR
                     SteamVR_Actions.default_Move,
                     SteamVR_Actions.default_Rotate,
                     SteamVR_Actions.default_Jog,
-                    SteamVR_Actions.default_Flashlight};
+                    SteamVR_Actions.default_ToolPicker,
+                    SteamVR_Actions.default_NextPage,
+                    SteamVR_Actions.default_PreviousPage,
+                    SteamVR_Actions.default_Cancel};
         }
         
         private static void PreInitActions()
@@ -201,7 +243,10 @@ namespace Valve.VR
             SteamVR_Actions.p_default_Move = ((SteamVR_Action_Vector2)(SteamVR_Action.Create <SteamVR_Action_Vector2>("/actions/default/in/Move")));
             SteamVR_Actions.p_default_Rotate = ((SteamVR_Action_Vector2)(SteamVR_Action.Create <SteamVR_Action_Vector2>("/actions/default/in/Rotate")));
             SteamVR_Actions.p_default_Jog = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/Jog")));
-            SteamVR_Actions.p_default_Flashlight = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/Flashlight")));
+            SteamVR_Actions.p_default_ToolPicker = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/ToolPicker")));
+            SteamVR_Actions.p_default_NextPage = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/NextPage")));
+            SteamVR_Actions.p_default_PreviousPage = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/PreviousPage")));
+            SteamVR_Actions.p_default_Cancel = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/Cancel")));
             SteamVR_Actions.p_default_Haptic = ((SteamVR_Action_Vibration)(SteamVR_Action.Create <SteamVR_Action_Vibration>("/actions/default/out/Haptic")));
         }
     }

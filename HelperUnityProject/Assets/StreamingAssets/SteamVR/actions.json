@@ -40,7 +40,19 @@
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/Flashlight",
+      "name": "/actions/default/in/ToolPicker",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/NextPage",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/PreviousPage",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/Cancel",
       "type": "boolean"
     },
     {
@@ -122,7 +134,10 @@
       "/actions/default/in/Move": "Move",
       "/actions/default/in/Rotate": "Rotate",
       "/actions/default/in/Jog": "Jog",
-      "/actions/default/in/Flashlight": "Flashlight"
+      "/actions/default/in/NextPage": "Next Page",
+      "/actions/default/in/PreviousPage": "Previous Page",
+      "/actions/default/in/Cancel": "Cancel",
+      "/actions/default/in/ToolPicker": "Tool Picker"
     }
   ]
 }

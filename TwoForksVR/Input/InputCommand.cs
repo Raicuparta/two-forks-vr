@@ -84,5 +84,7 @@ namespace Raicuparta.TwoForksVR
         UIDown,
         UILeft,
         UIRight,
+        NextMenu,
+        PreviousMenu
     }
 }

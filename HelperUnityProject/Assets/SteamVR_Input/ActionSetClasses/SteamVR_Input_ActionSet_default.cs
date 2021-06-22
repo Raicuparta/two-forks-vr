@@ -89,11 +89,35 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Boolean Flashlight
+        public virtual SteamVR_Action_Boolean ToolPicker
         {
             get
             {
-                return SteamVR_Actions.default_Flashlight;
+                return SteamVR_Actions.default_ToolPicker;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean NextPage
+        {
+            get
+            {
+                return SteamVR_Actions.default_NextPage;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean PreviousPage
+        {
+            get
+            {
+                return SteamVR_Actions.default_PreviousPage;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean Cancel
+        {
+            get
+            {
+                return SteamVR_Actions.default_Cancel;
             }
         }
         
