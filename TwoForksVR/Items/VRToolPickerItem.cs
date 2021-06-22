@@ -34,12 +34,12 @@ namespace Raicuparta.TwoForksVR
             transform.localScale = Vector3.one;
         }
 
-        public void PickTool()
+        public void EquipTool()
         {
             OnEquipTool?.Invoke();
         }
 
-        public void PutToolAway()
+        public void UnequipTool()
         {
             OnUnequipTool?.Invoke();
         }

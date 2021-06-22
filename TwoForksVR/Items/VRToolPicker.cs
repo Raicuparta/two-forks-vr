@@ -17,6 +17,7 @@ namespace Raicuparta.TwoForksVR
 		private List<VRToolPickerItem> toolPickerItems = new List<VRToolPickerItem>();
 		private SteamVR_Action_Boolean input = SteamVR_Actions.default_ToolPicker;
 		private VRToolPickerItem selectedItem;
+		private VRToolPickerItem equipedItem;
 
 		public Transform ParentWhileActive;
 		public Transform Hand;
@@ -68,7 +69,11 @@ namespace Raicuparta.TwoForksVR
 
 			if (selectedItem)
 			{
-				selectedItem.PickTool();
+				selectedItem.EquipTool();
+				equipedItem = selectedItem;
+			} else if (equipedItem)
+            {
+				equipedItem.UnequipTool();
 			}
 		}
 
