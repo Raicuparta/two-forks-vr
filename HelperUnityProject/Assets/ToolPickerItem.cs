@@ -19,7 +19,7 @@ public class ToolPickerItem : MonoBehaviour
         }
 
         isSelected = true;
-        transform.localScale = Vector3.one * 1.5f;
+        transform.localScale *= 1.5f;
     }
 
     public void Deselect()
@@ -30,11 +30,11 @@ public class ToolPickerItem : MonoBehaviour
         }
 
         isSelected = false;
-        transform.localScale = Vector3.one;
+        transform.localScale = transform.localScale / 1.5f;
     }
 
     public void PickTool()
     {
-        transform.SetParent(null);
+        //transform.SetParent(null);
     }
 }

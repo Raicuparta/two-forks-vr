@@ -115,14 +115,16 @@ namespace Raicuparta.TwoForksVR
             {
 				return;
             }
-			var originalRadioModel = radioController.radio.transform.Find("RadioGeo");
-			var radioModel = Instantiate(originalRadioModel);
-			var renderers = radioModel.GetComponentsInChildren<MeshRenderer>(true);
+			var originalRadio = radioController.radio.transform;
+			var originalModel = originalRadio.Find("RadioGeo");
+			var clonedRadio = Instantiate(originalModel);
+
+			var renderers = clonedRadio.GetComponentsInChildren<MeshRenderer>(true);
 			foreach (var renderer in renderers)
             {
 				renderer.enabled = true;
             }
-			AddToolItem(radioModel);
+			AddToolItem(clonedRadio);
 		}
 
 		private void UpdateSelectedItem()
@@ -157,11 +159,11 @@ namespace Raicuparta.TwoForksVR
 
 		private void Update()
 		{
-			//if (input.state)
-			//{
-			//	UpdateSelectedItem();
-			//}
-			if (input.stateDown)
+            if (input.state)
+            {
+                UpdateSelectedItem();
+            }
+            if (input.stateDown)
 			{
 				OpenToolPicker();
 			}
