@@ -1,4 +1,5 @@
-﻿using MelonLoader;
+﻿using Harmony;
+using MelonLoader;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,14 +11,7 @@ namespace Raicuparta.TwoForksVR
 	{
 		private const float circleRadius = 0.25f;
 		private const float minSquareDistance = 0.03f;
-		private readonly string[] toolNames = new[]
-		{
-		"Radio",
-		"Map",
-		"Compass",
-		"Backpack",
-		"Something else",
-	};
+		private static VRToolPicker instance;
 
 		private Transform toolsContainer;
 		private List<VRToolPickerItem> toolPickerItems = new List<VRToolPickerItem>();
@@ -29,33 +23,22 @@ namespace Raicuparta.TwoForksVR
 
 		private void Awake()
 		{
+			instance = this;
 			SetUpToolsContainer();
-			SetUpItems();
+			//SetUpItems();
+
+			AddRadio();
+			AddRadio();
+			AddRadio();
+			AddRadio();
+			AdjustItemPositions();
 		}
 
 		private void SetUpToolsContainer()
         {
 			toolsContainer = new GameObject("VRToolsContainer").transform;
 			toolsContainer.SetParent(transform, false);
-        }
-
-		private void SetUpItems()
-		{
-			for (var i = 0; i < toolNames.Length; i++)
-			{
-				var toolWrapper = new GameObject(toolNames[i]).transform;
-				toolWrapper.SetParent(toolsContainer, false);
-				toolWrapper.transform.localPosition = MathHelper.PositionAroundCircle(i, toolNames.Length, circleRadius);
-				
-				var item = toolWrapper.gameObject.AddComponent<VRToolPickerItem>();
-				toolPickerItems.Add(item);
-
-				var tool = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
-				tool.name = toolNames[i];
-				tool.SetParent(toolWrapper, false);
-				tool.localScale = Vector3.one * 0.1f;
-				tool.GetComponent<Collider>().isTrigger = true;
-			}
+			CloseToolPicker();
 		}
 
 
@@ -87,6 +70,59 @@ namespace Raicuparta.TwoForksVR
 			{
 				selectedItem.PickTool();
 			}
+		}
+
+		private void AddToolItem(Transform toolItem)
+        {
+			if (!toolsContainer)
+            {
+				SetUpToolsContainer();
+			}
+
+			var toolWrapper = new GameObject($"VRToolWrapper-{toolItem.name}").transform;
+			toolWrapper.SetParent(toolsContainer, false);
+			//toolWrapper.transform.localPosition = Vector3.zero;
+			var count = toolPickerItems.Count;
+			MelonLogger.Msg("Gonna add tool item " + count);
+            //toolWrapper.transform.localPosition = MathHelper.PositionAroundCircle(count, 4, circleRadius);
+
+            var item = toolWrapper.gameObject.AddComponent<VRToolPickerItem>();
+			toolPickerItems.Add(item);
+
+			toolItem.SetParent(toolWrapper, false);
+			toolItem.localPosition = Vector3.zero;
+			toolItem.localRotation = Quaternion.identity;
+
+
+
+			//AdjustItemPositions();
+		}
+
+		private void AdjustItemPositions()
+        {
+			MelonLogger.Msg("##### AdjustItemPositions");
+			for (var i = 0; i < toolPickerItems.Count; i++)
+			{
+				toolPickerItems[i].transform.localPosition = MathHelper.PositionAroundCircle(i, toolPickerItems.Count, circleRadius);
+				MelonLogger.Msg("##### AdjustItemPositions " + MathHelper.PositionAroundCircle(i, toolPickerItems.Count, circleRadius));
+			}
+        }
+
+		private void AddRadio()
+        {
+			var radioController = FindObjectOfType<vgPlayerRadioControl>();
+			if (!radioController)
+            {
+				return;
+            }
+			var originalRadioModel = radioController.radio.transform.Find("RadioGeo");
+			var radioModel = Instantiate(originalRadioModel);
+			var renderers = radioModel.GetComponentsInChildren<MeshRenderer>(true);
+			foreach (var renderer in renderers)
+            {
+				renderer.enabled = true;
+            }
+			AddToolItem(radioModel);
 		}
 
 		private void UpdateSelectedItem()
@@ -121,10 +157,10 @@ namespace Raicuparta.TwoForksVR
 
 		private void Update()
 		{
-			if (input.state)
-			{
-				UpdateSelectedItem();
-			}
+			//if (input.state)
+			//{
+			//	UpdateSelectedItem();
+			//}
 			if (input.stateDown)
 			{
 				OpenToolPicker();
@@ -133,6 +169,15 @@ namespace Raicuparta.TwoForksVR
 			{
 				CloseToolPicker();
 			}
+		}
+
+		[HarmonyPatch(typeof(vgPlayerRadioControl), "Start")]
+		public class PatchRadioStart
+		{
+			//public static void Postfix(GameObject ___radio)
+			//{
+			//	instance.AddToolItem(___radio);
+			//}
 		}
 	}
 }
