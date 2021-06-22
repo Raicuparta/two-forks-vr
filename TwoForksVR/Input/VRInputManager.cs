@@ -1,4 +1,5 @@
 ﻿using Harmony;
+using MelonLoader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,10 @@ namespace Raicuparta.TwoForksVR
             {
                 return (SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource, bool newState) =>
                 {
-                    callback(newState ? 1f : 0f);
+                    if (newState)
+                    {
+                        callback();
+                    }
                 };
             }
 
@@ -52,16 +56,20 @@ namespace Raicuparta.TwoForksVR
                 var actionSet = SteamVR_Actions._default;
 
                 switch (command) {
+                    case InputCommand.UIClick:
+                    case InputCommand.UISubmit:
                     case InputCommand.Use:
                     {
                         actionSet.Interact.onChange += OnChangeBoolean(callback);
                         return false;
                     }
+                    case InputCommand.UIVertical:
                     case InputCommand.MoveForward:
                     {
                         actionSet.Move.onChange += OnChangeVector2Vertical(callback);
                         return false;
                     }
+                    case InputCommand.UIHorizontal:
                     case InputCommand.MoveStrafe:
                     {
                         actionSet.Move.onChange += OnChangeVector2Horizontal(callback);
@@ -72,6 +80,21 @@ namespace Raicuparta.TwoForksVR
                         actionSet.Rotate.onChange += OnChangeVector2Horizontal(callback);
                         return false;
                     }
+                    case InputCommand.NextMenu:
+                    {
+                        actionSet.NextPage.onChange += OnChangeBoolean(callback);
+                        return false;
+                    }
+                    case InputCommand.PreviousMenu:
+                    {
+                        actionSet.PreviousPage.onChange += OnChangeBoolean(callback);
+                        return false;
+                    }
+                    case InputCommand.UICancel:
+                    {
+                        actionSet.Cancel.onChange += OnChangeBoolean(callback);
+                        return false;
+                    }
                     case InputCommand.ToggleJog:
                     {
                         actionSet.Jog.onChange += OnChangeBoolean(callback);
@@ -79,7 +102,7 @@ namespace Raicuparta.TwoForksVR
                     }
                     case InputCommand.Flashlight:
                     {
-                        actionSet.Flashlight.onChange += OnChangeBoolean(callback);
+                        actionSet.ToolPicker.onChange += OnChangeBoolean(callback);
                         return false;
                     }
                     default:

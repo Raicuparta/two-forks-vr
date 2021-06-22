@@ -21,7 +21,7 @@ namespace Raicuparta.TwoForksVR
 
 		private Transform toolsContainer;
 		private List<VRToolPickerItem> toolPickerItems = new List<VRToolPickerItem>();
-		private SteamVR_Action_Boolean input = SteamVR_Actions.default_Flashlight;
+		private SteamVR_Action_Boolean input = SteamVR_Actions.default_ToolPicker;
 		private VRToolPickerItem selectedItem;
 
 		public Transform ParentWhileActive;

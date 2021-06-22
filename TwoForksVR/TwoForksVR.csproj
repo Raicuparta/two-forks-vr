@@ -37,7 +37,8 @@
     <Reference Include="MelonLoader">
       <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\MelonLoader\MelonLoader.dll</HintPath>
     </Reference>
-    <Reference Include="SteamVR">
+    <Reference Include="SteamVR, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SteamVR.dll</HintPath>
     </Reference>
     <Reference Include="System" />
