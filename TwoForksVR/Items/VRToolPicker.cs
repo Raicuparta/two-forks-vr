@@ -72,7 +72,7 @@ namespace Raicuparta.TwoForksVR
 			}
 		}
 
-		private void AddToolItem(Transform toolItem)
+		private VRToolPickerItem AddToolItem(Transform toolItem)
         {
 			if (!toolsContainer)
             {
@@ -93,9 +93,7 @@ namespace Raicuparta.TwoForksVR
 			toolItem.localPosition = Vector3.zero;
 			toolItem.localRotation = Quaternion.identity;
 
-
-
-			//AdjustItemPositions();
+			return item;
 		}
 
 		private void AdjustItemPositions()
@@ -124,7 +122,15 @@ namespace Raicuparta.TwoForksVR
             {
 				renderer.enabled = true;
             }
-			AddToolItem(clonedRadio);
+			var toolItem = AddToolItem(clonedRadio);
+			toolItem.OnEquipTool = () =>
+			{
+				radioController.OnRadioUp();
+			};
+			toolItem.OnUnequipTool = () =>
+			{
+				radioController.OnRadioDown();
+			};
 		}
 
 		private void UpdateSelectedItem()

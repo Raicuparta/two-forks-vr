@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,12 +7,10 @@ namespace Raicuparta.TwoForksVR
 {
     public class VRToolPickerItem : MonoBehaviour
     {
-        private bool isSelected = false;
+        public Action OnEquipTool;
+        public Action OnUnequipTool;
 
-        private void OnTriggerEnter(Collider collider)
-        {
-            Debug.Log("collider " + collider);
-        }
+        private bool isSelected = false;
 
         public void Select()
         {
@@ -37,7 +36,12 @@ namespace Raicuparta.TwoForksVR
 
         public void PickTool()
         {
-            transform.SetParent(null);
+            OnEquipTool?.Invoke();
+        }
+
+        public void PutToolAway()
+        {
+            OnUnequipTool?.Invoke();
         }
     }
 }
