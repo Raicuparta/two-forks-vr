@@ -25,16 +25,16 @@ namespace Raicuparta.TwoForksVR
             RightHand = CreateHand(handPrefab, handMaterial);
             LeftHand = CreateHand(handPrefab, handMaterial, true);
             SetUpHandAttachment(
-                RightHand,
-                "Right",
-                new Vector3(0.0551f, -0.0229f, -0.131f),
-                new Vector3(54.1782f, 224.7767f, 139.0415f)
-            );
-            SetUpHandAttachment(
                 LeftHand,
                 "Left",
                 new Vector3(0.0157f, -0.0703f, -0.0755f),
                 new Vector3(8.3794f, 341.5249f, 179.2709f)
+            );
+            SetUpHandAttachment(
+                RightHand,
+                "Right",
+                new Vector3(0.0551f, -0.0229f, -0.131f),
+                new Vector3(54.1782f, 224.7767f, 139.0415f)
             );
 
             // Update pickupAttachTransform to hand.

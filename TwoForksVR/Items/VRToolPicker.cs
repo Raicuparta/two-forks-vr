@@ -11,6 +11,7 @@ namespace Raicuparta.TwoForksVR
 	{
 		private const float circleRadius = 0.25f;
 		private const float minSquareDistance = 0.03f;
+
 		private static VRToolPicker instance;
 
 		private Transform toolsContainer;
@@ -29,11 +30,8 @@ namespace Raicuparta.TwoForksVR
 			//SetUpItems();
 
 			AddRadio();
-			AddRadio();
-			AddRadio();
-			AddRadio();
-			AdjustItemPositions();
-		}
+            AddMap();
+        }
 
 		private void SetUpToolsContainer()
         {
@@ -78,9 +76,11 @@ namespace Raicuparta.TwoForksVR
 		}
 
 		private VRToolPickerItem AddToolItem(Transform toolItem)
-        {
+		{
+			MelonLogger.Msg("AddToolItem");
 			if (!toolsContainer)
             {
+				MelonLogger.Error("Tried to AddToolItem with null toolItem");
 				SetUpToolsContainer();
 			}
 
@@ -97,6 +97,8 @@ namespace Raicuparta.TwoForksVR
 			toolItem.SetParent(toolWrapper, false);
 			toolItem.localPosition = Vector3.zero;
 			toolItem.localRotation = Quaternion.identity;
+
+			AdjustItemPositions();
 
 			return item;
 		}
@@ -135,6 +137,27 @@ namespace Raicuparta.TwoForksVR
 			toolItem.OnUnequipTool = () =>
 			{
 				radioController.OnRadioDown();
+			};
+		}
+
+		protected void AddMap()
+		{
+			var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
+			if (!mapController)
+			{
+				return;
+			}
+			var originalMap = Hand.Find("itemSocket/henryHandLeftAttachment/MapRiggedPosedPrefab(Clone)/MapRoot/MapInHand");
+			var clonedMap = Instantiate(originalMap);
+
+			var toolItem = AddToolItem(clonedMap);
+			toolItem.OnEquipTool = () =>
+			{
+				mapController.OnEquipMap();
+			};
+			toolItem.OnUnequipTool = () =>
+			{
+				mapController.OnUnequipMap();
 			};
 		}
 
@@ -184,13 +207,19 @@ namespace Raicuparta.TwoForksVR
 			}
 		}
 
-		[HarmonyPatch(typeof(vgPlayerRadioControl), "Start")]
+		[HarmonyPatch(typeof(vgMapController), "Start")]
 		public class PatchRadioStart
 		{
-			//public static void Postfix(GameObject ___radio)
-			//{
-			//	instance.AddToolItem(___radio);
+   //         public static void Postfix()
+   //         {
+			//	if (!instance)
+   //             {
+			//		MelonLogger.Error("VRToolPicker singleton instance not defined");
+   //             }
+			//	MelonLogger.Msg("##### vgMapController Postfix");
+			//	instance.AddMap();
+
 			//}
-		}
+        }
 	}
 }
