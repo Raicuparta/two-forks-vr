@@ -14,14 +14,11 @@ namespace Raicuparta.TwoForksVR
     {
         public bool IsLeft = false;
 
-        private VRNode vrNode;
-
         private void Start()
         {
             gameObject.SetActive(false);
             name = $"{(IsLeft ? "Left" : "Right")} Hand";
             transform.SetParent(Camera.main.transform.parent, false); // TODO make sure camera is initialized?
-            vrNode = IsLeft ? VRNode.LeftHand : VRNode.RightHand;
             var pose = gameObject.AddComponent<SteamVR_Behaviour_Pose>();
 
             var toolPicker = SetUpToolPicker();
