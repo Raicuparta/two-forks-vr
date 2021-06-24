@@ -4,37 +4,29 @@ using UnityEngine;
 
 public class ToolPickerItem : MonoBehaviour
 {
-    private bool isSelected = false;
+    public ToolPicker.VRToolItem ItemType;
 
-	private void OnTriggerEnter(Collider collider)
-    {
-        Debug.Log("collider " + collider);
-    }
+    private bool isHovered = false;
 
-    public void Select()
+    public void StartHover()
     {
-        if (isSelected)
+        if (isHovered)
         {
             return;
         }
 
-        isSelected = true;
+        isHovered = true;
         transform.localScale *= 1.5f;
     }
 
-    public void Deselect()
+    public void EndHover()
     {
-        if (!isSelected)
+        if (!isHovered)
         {
             return;
         }
 
-        isSelected = false;
+        isHovered = false;
         transform.localScale = transform.localScale / 1.5f;
-    }
-
-    public void PickTool()
-    {
-        //transform.SetParent(null);
     }
 }

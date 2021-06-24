@@ -1,46 +1,46 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
 
 public class ToolPicker : MonoBehaviour {
-	private const float circleRadius = 0.25f;
-	private const float minSquareDistance = 0.03f;
-
-	private ToolPickerItem[] tools;
-	private SteamVR_Action_Boolean input = SteamVR_Actions.default_ToolPicker;
-	private ToolPickerItem selectedTool;
-	private string[] toolNames = new[]
+	public enum VRToolItem
 	{
-		"Radio",
-		"Map",
-		"Compass",
-	};
+		Radio,
+		Map,
+		Compass,
+		Flashlight,
+	}
 
 	public Transform ParentWhileActive;
 	public Transform ParentWhileInactive;
 	public Transform ToolsContainer;
 	public Transform Hand;
+	public Action<VRToolItem> OnSelectItem;
+	public Action<VRToolItem> OnDeselectItem;
+
+	private const float circleRadius = 0.25f;
+	private const float minSquareDistance = 0.03f;
+
+	private ToolPickerItem[] tools;
+	private SteamVR_Action_Boolean input = SteamVR_Actions.default_ToolPicker;
+	private ToolPickerItem hoveredTool;
+	private ToolPickerItem selectedTool;
 
 	private void Start()
     {
-		CreateItems();
 		SetUpToolsList();
-	}
 
-	private void CreateItems()
-    {
-		foreach (var toolName in toolNames)
-        {
-			var toolWrapper = new GameObject(toolName).transform;
-			toolWrapper.SetParent(ToolsContainer, false);
-			var tool = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
-			tool.localScale = Vector3.one * 0.1f;
-			tool.SetParent(toolWrapper);
-			tool.name = toolName;
-			tool.gameObject.AddComponent<ToolPickerItem>();
-        }
-    }
+		OnSelectItem += (VRToolItem item) =>
+		{
+			Debug.Log("selecting " + item);
+		};
+		OnDeselectItem += (VRToolItem item) =>
+		{
+			Debug.Log("deselecting " + item);
+		};
+	}
 
 	private void SetUpToolsList()
     {
@@ -63,11 +63,29 @@ public class ToolPicker : MonoBehaviour {
 		return GetSquareDistance(compareTransform.position, Hand.position);
 	}
 
+	private void DeselectCurrentlySelectedTool()
+    {
+		if (!selectedTool || OnDeselectItem == null) return;
+
+		OnDeselectItem(selectedTool.ItemType);
+		selectedTool = null;
+	}
+
+	private void selectCurrentlyHoveredTool()
+    {
+		if (!hoveredTool || OnSelectItem == null) return;
+
+		OnSelectItem(hoveredTool.ItemType);
+		selectedTool = hoveredTool;
+		hoveredTool = null;
+	}
+
 	private void OpenToolPicker()
 	{
 		ToolsContainer.gameObject.SetActive(true);
 		ToolsContainer.SetParent(ParentWhileActive);
 		ToolsContainer.LookAt(Camera.main.transform);
+		DeselectCurrentlySelectedTool();
 	}
 
 	private void CloseToolPicker()
@@ -76,11 +94,7 @@ public class ToolPicker : MonoBehaviour {
 		ToolsContainer.SetParent(ParentWhileInactive);
 		ToolsContainer.localPosition = Vector3.zero;
 		ToolsContainer.localRotation = Quaternion.identity;
-
-		if (selectedTool)
-		{
-			selectedTool.PickTool();
-		}
+		selectCurrentlyHoveredTool();
 	}
 
 	private void UpdateSelectedTool()
@@ -98,19 +112,19 @@ public class ToolPicker : MonoBehaviour {
 				selectedToolDistance = distance;
 			}
         }
-		if (nextSelectedTool == selectedTool)
+		if (nextSelectedTool == hoveredTool)
         {
 			return;
         }
-		if (selectedTool)
+		if (hoveredTool)
         {
-			selectedTool.Deselect();
-			selectedTool = null;
+			hoveredTool.EndHover();
+			hoveredTool = null;
         }
 		if (nextSelectedTool)
         {
-			selectedTool = nextSelectedTool;
-			nextSelectedTool.Select();
+			hoveredTool = nextSelectedTool;
+			nextSelectedTool.StartHover();
         }
 	}
 
