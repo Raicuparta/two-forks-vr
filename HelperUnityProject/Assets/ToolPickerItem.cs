@@ -2,31 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToolPickerItem : MonoBehaviour
+namespace Raicuparta.TwoForksVR.UnityHelper
 {
-    public ToolPicker.VRToolItem ItemType;
-
-    private bool isHovered = false;
-
-    public void StartHover()
+    public class ToolPickerItem : MonoBehaviour
     {
-        if (isHovered)
+        public ToolPicker.VRToolItem ItemType;
+
+        private bool isHovered = false;
+
+        public void StartHover()
         {
-            return;
+            if (isHovered)
+            {
+                return;
+            }
+
+            isHovered = true;
+            transform.localScale *= 1.5f;
         }
 
-        isHovered = true;
-        transform.localScale *= 1.5f;
-    }
-
-    public void EndHover()
-    {
-        if (!isHovered)
+        public void EndHover()
         {
-            return;
-        }
+            if (!isHovered)
+            {
+                return;
+            }
 
-        isHovered = false;
-        transform.localScale = transform.localScale / 1.5f;
+            isHovered = false;
+            transform.localScale = transform.localScale / 1.5f;
+        }
     }
 }

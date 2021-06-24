@@ -33,10 +33,19 @@ namespace Raicuparta.TwoForksVR
                 pose.inputSource = SteamVR_Input_Sources.LeftHand;
                 pose.poseAction = SteamVR_Actions.default_PoseLeftHand;
 
-                var toolPicker = gameObject.AddComponent<VRToolPicker>();
+                var toolPicker = transform.Find("ToolPicker").gameObject.AddComponent<UnityHelper.ToolPicker>();
                 toolPicker.ParentWhileActive = Camera.main.transform.parent;
+                toolPicker.ParentWhileInactive = toolPicker.transform;
                 toolPicker.Hand = transform;
-            } else
+                toolPicker.ToolsContainer = toolPicker.transform.Find("Tools");
+
+                foreach (Transform child in toolPicker.ToolsContainer)
+                {
+                    var toolPickerItem = child.gameObject.AddComponent<UnityHelper.ToolPickerItem>();
+                    toolPickerItem.ItemType = (UnityHelper.ToolPicker.VRToolItem) Enum.Parse(typeof(UnityHelper.ToolPicker.VRToolItem), child.name);
+                }
+            }
+            else
             {
                 var handLaser = new GameObject().AddComponent<VRHandLaser>().transform;
                 handLaser.SetParent(transform, false);
