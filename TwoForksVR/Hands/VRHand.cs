@@ -38,6 +38,8 @@ namespace Raicuparta.TwoForksVR
                 toolPicker.ParentWhileInactive = toolPicker.transform;
                 toolPicker.Hand = transform;
                 toolPicker.ToolsContainer = toolPicker.transform.Find("Tools");
+                toolPicker.OnSelectItem += HandleSelectItem;
+                toolPicker.OnDeselectItem += HandleDeselectItem;
 
                 foreach (Transform child in toolPicker.ToolsContainer)
                 {
@@ -54,6 +56,63 @@ namespace Raicuparta.TwoForksVR
 
             }
             gameObject.SetActive(true);
+        }
+
+        private void HandleSelectItem(UnityHelper.ToolPicker.VRToolItem item)
+        {
+            MelonLogger.Msg("####### HandleSelectItem " + item);
+            switch (item)
+            {
+                case UnityHelper.ToolPicker.VRToolItem.Map:
+                {
+                    var mapControllers = Resources.FindObjectsOfTypeAll<vgMapController>();
+
+                    foreach (var mapController in mapControllers)
+                    {
+                        if (!mapController)
+                        {
+                            MelonLogger.Msg("mapController not found");
+                            return;
+                        }
+
+                        MelonLogger.Msg("selecting map");
+                        mapController.OnEquipMap();
+                    }
+
+                    return;
+                }
+                case UnityHelper.ToolPicker.VRToolItem.Radio:
+                {
+                    var radioController = FindObjectOfType<vgPlayerRadioControl>();
+                    if (!radioController) return;
+                    radioController.OnRadioUp();
+                    return;
+                }
+            }
+        }
+
+        private void HandleDeselectItem(UnityHelper.ToolPicker.VRToolItem item)
+        {
+            MelonLogger.Msg("####### HandleDeselectItem " + item);
+            switch (item)
+            {
+                case UnityHelper.ToolPicker.VRToolItem.Map:
+                {
+                    var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
+                    if (!mapController) return;
+
+                    mapController.OnUnequipMap();
+
+                    return;
+                }
+                case UnityHelper.ToolPicker.VRToolItem.Radio:
+                {
+                    var radioController = FindObjectOfType<vgPlayerRadioControl>();
+                    if (!radioController) return;
+                    radioController.OnRadioDown();
+                    return;
+                }
+            }
         }
 
         private void SetUpMap()

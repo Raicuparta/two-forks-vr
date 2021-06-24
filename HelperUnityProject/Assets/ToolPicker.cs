@@ -34,15 +34,6 @@ namespace Raicuparta.TwoForksVR.UnityHelper
 		private void Start()
 		{
 			SetUpToolsList();
-
-			OnSelectItem += (VRToolItem item) =>
-			{
-				Debug.Log("selecting " + item);
-			};
-			OnDeselectItem += (VRToolItem item) =>
-			{
-				Debug.Log("deselecting " + item);
-			};
 		}
 
 		private void SetUpToolsList()
@@ -85,6 +76,10 @@ namespace Raicuparta.TwoForksVR.UnityHelper
 
 		private void OpenToolPicker()
 		{
+			if (ToolsContainer.gameObject.activeSelf) return;
+
+			Debug.Log("OpenToolPicker");
+
 			ToolsContainer.gameObject.SetActive(true);
 			ToolsContainer.SetParent(ParentWhileActive);
 			ToolsContainer.LookAt(Camera.main.transform);
@@ -93,6 +88,10 @@ namespace Raicuparta.TwoForksVR.UnityHelper
 
 		private void CloseToolPicker()
 		{
+			if (!ToolsContainer.gameObject.activeSelf) return;
+
+			Debug.Log("CloseToolPicker");
+
 			ToolsContainer.gameObject.SetActive(false);
 			ToolsContainer.SetParent(ParentWhileInactive);
 			ToolsContainer.localPosition = Vector3.zero;
