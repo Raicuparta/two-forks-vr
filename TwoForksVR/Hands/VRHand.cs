@@ -44,6 +44,35 @@ namespace Raicuparta.TwoForksVR
             gameObject.SetActive(true);
         }
 
+        private void SetUpHandAttachment(Transform hand, string handName, Vector3 position, Vector3 eulerAngles)
+        {
+            var itemSocket = hand.Find("itemSocket");
+            var handAttachment = GameObject.Find($"henryHand{handName}Attachment").transform;
+            handAttachment.SetParent(itemSocket, false);
+            itemSocket.localPosition = position;
+            itemSocket.localEulerAngles = eulerAngles;
+        }
+
+        private void SetRightHandAttachment()
+        {
+            SetUpHandAttachment(
+                transform,
+                "Right",
+                new Vector3(0.0551f, -0.0229f, -0.131f),
+                new Vector3(54.1782f, 224.7767f, 139.0415f)
+            );
+        }
+
+        private void SetLeftHandAttachment()
+        {
+            SetUpHandAttachment(
+                transform,
+                "Left",
+                new Vector3(0.0157f, -0.0703f, -0.0755f),
+                new Vector3(8.3794f, 341.5249f, 179.2709f)
+            );
+        }
+
         private UnityHelper.ToolPicker SetUpToolPicker()
         {
             var toolPicker = transform.Find("ToolPicker").gameObject.AddComponent<UnityHelper.ToolPicker>();
@@ -82,6 +111,8 @@ namespace Raicuparta.TwoForksVR
 
                         MelonLogger.Msg("selecting map");
                         mapController.OnEquipMap();
+                        mapController.OnUnequipCompass();
+                        SetLeftHandAttachment();
                     }
 
                     return;
@@ -91,6 +122,7 @@ namespace Raicuparta.TwoForksVR
                     var radioController = FindObjectOfType<vgPlayerRadioControl>();
                     if (!radioController) return;
                     radioController.OnRadioUp();
+                    SetLeftHandAttachment();
                     return;
                 }
             }
