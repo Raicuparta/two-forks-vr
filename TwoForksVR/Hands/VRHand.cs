@@ -24,6 +24,8 @@ namespace Raicuparta.TwoForksVR
             vrNode = IsLeft ? VRNode.LeftHand : VRNode.RightHand;
             var pose = gameObject.AddComponent<SteamVR_Behaviour_Pose>();
 
+            var toolPicker = SetUpToolPicker();
+
             if (IsLeft)
             {
                 var handModel = transform.Find("handModel");
@@ -32,20 +34,7 @@ namespace Raicuparta.TwoForksVR
                 SetUpMap();
                 pose.inputSource = SteamVR_Input_Sources.LeftHand;
                 pose.poseAction = SteamVR_Actions.default_PoseLeftHand;
-
-                var toolPicker = transform.Find("ToolPicker").gameObject.AddComponent<UnityHelper.ToolPicker>();
-                toolPicker.ParentWhileActive = Camera.main.transform.parent;
-                toolPicker.ParentWhileInactive = toolPicker.transform;
-                toolPicker.Hand = transform;
-                toolPicker.ToolsContainer = toolPicker.transform.Find("Tools");
-                toolPicker.OnSelectItem += HandleSelectItem;
-                toolPicker.OnDeselectItem += HandleDeselectItem;
-
-                foreach (Transform child in toolPicker.ToolsContainer)
-                {
-                    var toolPickerItem = child.gameObject.AddComponent<UnityHelper.ToolPickerItem>();
-                    toolPickerItem.ItemType = (UnityHelper.ToolPicker.VRToolItem) Enum.Parse(typeof(UnityHelper.ToolPicker.VRToolItem), child.name);
-                }
+                toolPicker.InputSource = SteamVR_Input_Sources.LeftHand;
             }
             else
             {
@@ -53,9 +42,28 @@ namespace Raicuparta.TwoForksVR
                 handLaser.SetParent(transform, false);
                 pose.inputSource = SteamVR_Input_Sources.RightHand;
                 pose.poseAction = SteamVR_Actions.default_PoseRightHand;
-
+                toolPicker.InputSource = SteamVR_Input_Sources.RightHand;
             }
             gameObject.SetActive(true);
+        }
+
+        private UnityHelper.ToolPicker SetUpToolPicker()
+        {
+            var toolPicker = transform.Find("ToolPicker").gameObject.AddComponent<UnityHelper.ToolPicker>();
+            toolPicker.ParentWhileActive = Camera.main.transform.parent;
+            toolPicker.ParentWhileInactive = toolPicker.transform;
+            toolPicker.Hand = transform;
+            toolPicker.ToolsContainer = toolPicker.transform.Find("Tools");
+            toolPicker.OnSelectItem += HandleSelectItem;
+            toolPicker.OnDeselectItem += HandleDeselectItem;
+
+            foreach (Transform child in toolPicker.ToolsContainer)
+            {
+                var toolPickerItem = child.gameObject.AddComponent<UnityHelper.ToolPickerItem>();
+                toolPickerItem.ItemType = (UnityHelper.ToolPicker.VRToolItem)Enum.Parse(typeof(UnityHelper.ToolPicker.VRToolItem), child.name);
+            }
+
+            return toolPicker;
         }
 
         private void HandleSelectItem(UnityHelper.ToolPicker.VRToolItem item)

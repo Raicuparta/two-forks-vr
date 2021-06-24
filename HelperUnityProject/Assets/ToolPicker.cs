@@ -20,6 +20,7 @@ namespace Raicuparta.TwoForksVR.UnityHelper
 		public Transform ParentWhileInactive;
 		public Transform ToolsContainer;
 		public Transform Hand;
+		public SteamVR_Input_Sources InputSource;
 		public Action<VRToolItem> OnSelectItem;
 		public Action<VRToolItem> OnDeselectItem;
 
@@ -132,15 +133,15 @@ namespace Raicuparta.TwoForksVR.UnityHelper
 
 		private void Update()
 		{
-			if (input.state)
+			if (input.GetState(InputSource))
 			{
 				UpdateSelectedTool();
 			}
-			if (input.stateDown)
+			if (input.GetStateDown(InputSource))
 			{
 				OpenToolPicker();
 			}
-			if (input.stateUp)
+			if (input.GetStateUp(InputSource))
 			{
 				CloseToolPicker();
 			}
