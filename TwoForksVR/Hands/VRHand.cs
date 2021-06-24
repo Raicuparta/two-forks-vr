@@ -125,6 +125,17 @@ namespace Raicuparta.TwoForksVR
                     SetLeftHandAttachment();
                     return;
                 }
+                case UnityHelper.ToolPicker.VRToolItem.Compass:
+                {
+                    var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
+                    if (!mapController) return;
+
+                    mapController.OnEquipCompass();
+                    SetRightHandAttachment();
+
+                    return;
+                }
+
             }
         }
 
@@ -147,6 +158,15 @@ namespace Raicuparta.TwoForksVR
                     var radioController = FindObjectOfType<vgPlayerRadioControl>();
                     if (!radioController) return;
                     radioController.OnRadioDown();
+                    return;
+                }
+                case UnityHelper.ToolPicker.VRToolItem.Compass:
+                {
+                    var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
+                    if (!mapController) return;
+
+                    mapController.OnUnequipCompass();
+
                     return;
                 }
             }
