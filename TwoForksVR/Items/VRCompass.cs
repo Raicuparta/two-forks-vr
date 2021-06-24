@@ -20,13 +20,4 @@ namespace Raicuparta.TwoForksVR
             return false;
         }
     }
-
-    [HarmonyPatch(typeof(vgCompass), "Start")]
-    public class PatchCompassStart
-    {
-        public static void Postfix(vgCompass __instance)
-        {
-            __instance.transform.parent.gameObject.AddComponent<DebugAxes>();
-        }
-    }
 }
