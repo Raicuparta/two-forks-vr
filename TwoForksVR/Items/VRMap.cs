@@ -40,5 +40,32 @@ namespace Raicuparta.TwoForksVR
         {
             ForceHighResolutionMap();
         }
+
+        [HarmonyPatch(typeof(vgMapController), "OnEquipMap")]
+        public class PatchEquipMap
+        {
+            private static bool originalFlag = false;
+
+            public static void Prefix(ref bool ___compassEquipped)
+            {       
+                originalFlag = ___compassEquipped;
+                ___compassEquipped = true;
+            }
+
+            public static void Postfix(ref bool ___compassEquipped)
+            {
+                ___compassEquipped = originalFlag;
+            }
+        }
+
+        [HarmonyPatch(typeof(vgMapController), "OnUnequipMap")]
+        public class patchUnequipMap
+        {
+            public static bool Prefix(vgMapController __instance, float axis)
+            {
+                __instance.UnEquipMap(axis);
+                return false;
+            }
+        }
     }
 }
