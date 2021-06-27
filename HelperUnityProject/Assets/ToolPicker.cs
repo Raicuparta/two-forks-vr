@@ -66,11 +66,12 @@ namespace Raicuparta.TwoForksVR.UnityHelper
 			selectedTool = null;
 		}
 
-		private void selectCurrentlyHoveredTool()
+		private void SelectCurrentlyHoveredTool()
 		{
 			if (!hoveredTool || OnSelectItem == null) return;
 
 			OnSelectItem(hoveredTool.ItemType);
+			hoveredTool.EndHover();
 			selectedTool = hoveredTool;
 			hoveredTool = null;
 		}
@@ -97,7 +98,7 @@ namespace Raicuparta.TwoForksVR.UnityHelper
 			ToolsContainer.SetParent(ParentWhileInactive);
 			ToolsContainer.localPosition = Vector3.zero;
 			ToolsContainer.localRotation = Quaternion.identity;
-			selectCurrentlyHoveredTool();
+			SelectCurrentlyHoveredTool();
 		}
 
 		private void UpdateSelectedTool()
