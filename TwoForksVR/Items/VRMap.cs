@@ -23,33 +23,22 @@ namespace Raicuparta.TwoForksVR
             var cloth = gameObject.GetComponent<Cloth>();
             cloth.enabled = false;
             cloth.enabled = true;
-
-            //var texture = TextureLoader.LoadPNG(@"C:\Users\rai\Repos\FirewatchCode\ExportedAssets\Texture2D\TrailheadMap - HighRez.png");
-
-            //var material = gameObject.GetComponent<SkinnedMeshRenderer>().material;
-            //material.mainTexture = texture;
-
-            //var mapBase = GameObject.Find("MapBase");
-
-            //var tex = Raicuparta.TwoForksVR.TextureLoader.LoadSprite(@"C:\Users\rai\Repos\two-forks-vr\TwoForksVR\Items\edited-map.png");
-
-            //mapBase.GetComponent<Image>().overrideSprite = tex;
-
         }
 
-        //[HarmonyPatch(typeof(vgMapManager), "Awake")]
-        //public class PatchMapManagerAwake
-        //{
-        //    public static void Prefix(ref RenderTexture ___lowResRenderTarget, ref RenderTexture ___highResRenderTarget)
-        //    {
-        //        // Forces the map to stay at high resolution, even when not zoomed,
-        //        // since there's no "zoom" action in VR.
-        //        ___lowResRenderTarget = ___highResRenderTarget;
+        // In base game, map resolution changes depending on zoom. In VR there's no zoom,
+        // so we need to always have high resolution. For whatever reason I don't seem to be
+        // able to patch the IsZoomingMap method, so I'm forcing it on LateUpdate instead.
+        private void ForceHighResolutionMap()
+        {
+            var mapController = vgMapManager.Instance?.mapController;
+            if (!mapController) return;
 
-        //        ___lowResRenderTarget.Release();
-        //        ___highResRenderTarget.Release();
-        //        ___lowResRenderTarget = ___highResRenderTarget = new RenderTexture(4096, 4096, 24);
-        //    }
-        //}
+            mapController.isZoomingMap = true;
+        }
+
+        private void LateUpdate()
+        {
+            ForceHighResolutionMap();
+        }
     }
 }
