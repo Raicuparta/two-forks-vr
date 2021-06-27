@@ -94,26 +94,15 @@ namespace Raicuparta.TwoForksVR
 
         private void HandleSelectItem(UnityHelper.ToolPicker.VRToolItem item)
         {
-            MelonLogger.Msg("####### HandleSelectItem " + item);
             switch (item)
             {
                 case UnityHelper.ToolPicker.VRToolItem.Map:
                 {
-                    var mapControllers = Resources.FindObjectsOfTypeAll<vgMapController>();
+                    var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
+                    if (!mapController || mapController.mapEquipped) return;
 
-                    foreach (var mapController in mapControllers)
-                    {
-                        if (!mapController)
-                        {
-                            MelonLogger.Msg("mapController not found");
-                            return;
-                        }
-
-                        MelonLogger.Msg("selecting map");
-                        mapController.OnEquipMap();
-                        mapController.OnUnequipCompass();
-                        SetLeftHandAttachment();
-                    }
+                    mapController.OnToggleMap();
+                    SetLeftHandAttachment();
 
                     return;
                 }
@@ -121,6 +110,7 @@ namespace Raicuparta.TwoForksVR
                 {
                     var radioController = FindObjectOfType<vgPlayerRadioControl>();
                     if (!radioController) return;
+
                     radioController.OnRadioUp();
                     SetLeftHandAttachment();
                     return;
@@ -141,15 +131,14 @@ namespace Raicuparta.TwoForksVR
 
         private void HandleDeselectItem(UnityHelper.ToolPicker.VRToolItem item)
         {
-            MelonLogger.Msg("####### HandleDeselectItem " + item);
             switch (item)
             {
                 case UnityHelper.ToolPicker.VRToolItem.Map:
                 {
                     var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
-                    if (!mapController) return;
+                    if (!mapController || !mapController.mapEquipped) return;
 
-                    mapController.OnUnequipMap();
+                    mapController.OnToggleMap();
 
                     return;
                 }
@@ -157,6 +146,7 @@ namespace Raicuparta.TwoForksVR
                 {
                     var radioController = FindObjectOfType<vgPlayerRadioControl>();
                     if (!radioController) return;
+
                     radioController.OnRadioDown();
                     return;
                 }
