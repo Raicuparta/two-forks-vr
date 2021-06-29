@@ -118,9 +118,9 @@ namespace Raicuparta.TwoForksVR
                 case UnityHelper.ToolPicker.VRToolItem.Compass:
                 {
                     var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
-                    if (!mapController) return;
+                    if (!mapController || mapController.compassEquipped) return;
 
-                    mapController.OnEquipCompass();
+                    mapController.OnToggleCompass();
                     SetRightHandAttachment();
 
                     return;
@@ -153,9 +153,9 @@ namespace Raicuparta.TwoForksVR
                 case UnityHelper.ToolPicker.VRToolItem.Compass:
                 {
                     var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
-                    if (!mapController) return;
+                    if (!mapController || !mapController.compassEquipped) return;
 
-                    mapController.OnUnequipCompass();
+                    mapController.OnToggleCompass();
 
                     return;
                 }
