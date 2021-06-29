@@ -80,6 +80,12 @@ namespace Raicuparta.TwoForksVR
                         actionSet.Rotate.onChange += OnChangeVector2Horizontal(callback);
                         return false;
                     }
+                    case InputCommand.DialogSelectionScroll:
+                    {
+
+                        actionSet.Rotate.onChange += OnChangeVector2Vertical(callback);
+                        return false;
+                    }
                     case InputCommand.NextMenu:
                     {
                         actionSet.NextPage.onChange += OnChangeBoolean(callback);
