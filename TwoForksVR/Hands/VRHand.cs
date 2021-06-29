@@ -96,13 +96,13 @@ namespace Raicuparta.TwoForksVR
         {
             switch (item)
             {
+                case UnityHelper.ToolPicker.VRToolItem.Compass:
                 case UnityHelper.ToolPicker.VRToolItem.Map:
                 {
                     var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
                     if (!mapController || mapController.mapEquipped) return;
 
                     mapController.OnToggleMap();
-                    SetLeftHandAttachment();
 
                     return;
                 }
@@ -112,20 +112,9 @@ namespace Raicuparta.TwoForksVR
                     if (!radioController) return;
 
                     radioController.OnRadioUp();
-                    SetLeftHandAttachment();
-                    return;
-                }
-                case UnityHelper.ToolPicker.VRToolItem.Compass:
-                {
-                    var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
-                    if (!mapController || mapController.compassEquipped) return;
-
-                    mapController.OnToggleCompass();
-                    SetRightHandAttachment();
 
                     return;
                 }
-
             }
         }
 
@@ -134,6 +123,7 @@ namespace Raicuparta.TwoForksVR
             switch (item)
             {
                 case UnityHelper.ToolPicker.VRToolItem.Map:
+                case UnityHelper.ToolPicker.VRToolItem.Compass:
                 {
                     var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
                     if (!mapController || !mapController.mapEquipped) return;
@@ -148,15 +138,6 @@ namespace Raicuparta.TwoForksVR
                     if (!radioController) return;
 
                     radioController.OnRadioDown();
-                    return;
-                }
-                case UnityHelper.ToolPicker.VRToolItem.Compass:
-                {
-                    var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
-                    if (!mapController || !mapController.compassEquipped) return;
-
-                    mapController.OnToggleCompass();
-
                     return;
                 }
             }
