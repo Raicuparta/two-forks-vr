@@ -97,6 +97,8 @@ namespace Raicuparta.TwoForksVR
                         return false;
                     }
                     case InputCommand.UICancel:
+                    case InputCommand.Pause:
+                    case InputCommand.UnPause:
                     {
                         actionSet.Cancel.onChange += OnChangeBoolean(callback);
                         return false;
