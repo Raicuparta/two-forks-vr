@@ -115,6 +115,14 @@ namespace Raicuparta.TwoForksVR
 
                     return;
                 }
+                case UnityHelper.ToolPicker.VRToolItem.Flashlight:
+                {
+                    var flashlightController = FindObjectOfType<vgFlashlightController>();
+                    if (!flashlightController) return;
+
+                    flashlightController.ToggleFlashlight();
+                    return;
+                }
             }
         }
 

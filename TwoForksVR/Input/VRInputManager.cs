@@ -108,11 +108,6 @@ namespace Raicuparta.TwoForksVR
                         actionSet.Jog.onChange += OnChangeBoolean(callback);
                         return false;
                     }
-                    case InputCommand.Flashlight:
-                    {
-                        actionSet.ToolPicker.onChange += OnChangeBoolean(callback);
-                        return false;
-                    }
                     default:
                     {
                         return true;
