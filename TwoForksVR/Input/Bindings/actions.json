@@ -1,0 +1,155 @@
+{
+  "actions": [
+    {
+      "name": "/actions/default/in/Interact",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/PoseRightHand",
+      "type": "pose"
+    },
+    {
+      "name": "/actions/default/in/SkeletonLeftHand",
+      "type": "skeleton",
+      "skeleton": "/skeleton/hand/left"
+    },
+    {
+      "name": "/actions/default/in/SkeletonRightHand",
+      "type": "skeleton",
+      "skeleton": "/skeleton/hand/right"
+    },
+    {
+      "name": "/actions/default/in/HeadsetOnHead",
+      "type": "boolean",
+      "requirement": "optional"
+    },
+    {
+      "name": "/actions/default/in/PoseLeftHand",
+      "type": "pose"
+    },
+    {
+      "name": "/actions/default/in/Move",
+      "type": "vector2"
+    },
+    {
+      "name": "/actions/default/in/Rotate",
+      "type": "vector2"
+    },
+    {
+      "name": "/actions/default/in/Jog",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/ToolPicker",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/NextPage",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/PreviousPage",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/Cancel",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/UIUp",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/UIDown",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/out/Haptic",
+      "type": "vibration"
+    }
+  ],
+  "action_sets": [
+    {
+      "name": "/actions/default",
+      "usage": "leftright"
+    }
+  ],
+  "default_bindings": [
+    {
+      "controller_type": "vive_controller",
+      "binding_url": "bindings_vive_controller.json"
+    },
+    {
+      "controller_type": "oculus_touch",
+      "binding_url": "bindings_oculus_touch.json"
+    },
+    {
+      "controller_type": "knuckles",
+      "binding_url": "bindings_knuckles.json"
+    },
+    {
+      "controller_type": "holographic_controller",
+      "binding_url": "bindings_holographic_controller.json"
+    },
+    {
+      "controller_type": "vive_cosmos_controller",
+      "binding_url": "bindings_vive_cosmos_controller.json"
+    },
+    {
+      "controller_type": "logitech_stylus",
+      "binding_url": "bindings_logitech_stylus.json"
+    },
+    {
+      "controller_type": "vive_cosmos",
+      "binding_url": "binding_vive_cosmos.json"
+    },
+    {
+      "controller_type": "vive",
+      "binding_url": "binding_vive.json"
+    },
+    {
+      "controller_type": "indexhmd",
+      "binding_url": "binding_index_hmd.json"
+    },
+    {
+      "controller_type": "vive_pro",
+      "binding_url": "binding_vive_pro.json"
+    },
+    {
+      "controller_type": "rift",
+      "binding_url": "binding_rift.json"
+    },
+    {
+      "controller_type": "holographic_hmd",
+      "binding_url": "binding_holographic_hmd.json"
+    },
+    {
+      "controller_type": "vive_tracker_camera",
+      "binding_url": "binding_vive_tracker_camera.json"
+    }
+  ],
+  "localization": [
+    {
+      "language_tag": "en_US",
+      "/actions/default/in/HeadsetOnHead": "Headset on head (proximity sensor)",
+      "/actions/default/in/SkeletonLeftHand": "Skeleton (Left)",
+      "/actions/default/in/SkeletonRightHand": "Skeleton (Right)",
+      "/actions/default/out/Haptic": "Haptic",
+      "/actions/default/in/interact": "Interact",
+      "/actions/default/in/Interact": "Interact",
+      "/actions/default/in/PoseRightHand": "Pose (Right)",
+      "/actions/default/in/PoseLeftHand": "Pose (Left)",
+      "/actions/default/in/Move": "Move",
+      "/actions/default/in/Rotate": "Rotate",
+      "/actions/default/in/Jog": "Jog",
+      "/actions/default/in/NextPage": "Next Page",
+      "/actions/default/in/PreviousPage": "Previous Page",
+      "/actions/default/in/Cancel": "Cancel",
+      "/actions/default/in/ToolPicker": "Tool Picker",
+      "/actions/default/in/UiUp": "UI Up",
+      "/actions/default/in/UiDown": "UiDown",
+      "/actions/default/in/UIUp": "UI Up",
+      "/actions/default/in/UIDown": "UI Down"
+    }
+  ]
+}

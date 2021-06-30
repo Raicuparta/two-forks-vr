@@ -74,6 +74,22 @@
     <Compile Include="Hands\VRHandsManager.cs" />
     <Compile Include="UI\VRUIManager.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Input\Bindings\actions.json" />
+    <None Include="Input\Bindings\bindings_holographic_controller.json" />
+    <None Include="Input\Bindings\bindings_knuckles.json" />
+    <None Include="Input\Bindings\bindings_logitech_stylus.json" />
+    <None Include="Input\Bindings\bindings_oculus_touch.json" />
+    <None Include="Input\Bindings\bindings_vive_controller.json" />
+    <None Include="Input\Bindings\bindings_vive_cosmos_controller.json" />
+    <None Include="Input\Bindings\binding_holographic_hmd.json" />
+    <None Include="Input\Bindings\binding_index_hmd.json" />
+    <None Include="Input\Bindings\binding_rift.json" />
+    <None Include="Input\Bindings\binding_vive.json" />
+    <None Include="Input\Bindings\binding_vive_cosmos.json" />
+    <None Include="Input\Bindings\binding_vive_pro.json" />
+    <None Include="Input\Bindings\binding_vive_tracker_camera.json" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /y "$(TargetPath)" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\Mods"

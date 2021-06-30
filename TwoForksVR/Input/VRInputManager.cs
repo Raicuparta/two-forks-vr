@@ -19,7 +19,7 @@ namespace Raicuparta.TwoForksVR
             DontDestroyOnLoad(gameObject);
 
             // TODO relative path
-            OpenVR.Input.SetActionManifestPath(@"C:\Users\rai\Repos\two-forks-vr\HelperUnityProject\Build\Helper_Data\StreamingAssets\SteamVR\actions.json");
+            OpenVR.Input.SetActionManifestPath(@"C:\Users\rai\Repos\two-forks-vr\TwoForksVR\Input\Bindings\actions.json");
         }
 
         [HarmonyPatch(typeof(vgInputManager), "RegisterForInputCallback")]
