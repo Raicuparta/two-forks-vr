@@ -1,19 +1,26 @@
 ﻿using Harmony;
+using MelonLoader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Raicuparta.TwoForksVR
 {
     class VRUIManager: MonoBehaviour
     {
-        private void Start()
+        private VRUIManager()
         {
-            var hudManager = GameObject.Find("_OnlyLoadOnce").transform.Find("HUD Manager");
-            SetUpUI(hudManager);
+
         }
+
+        //private void Start()
+        //{
+        //    var hudManager = GameObject.Find("_OnlyLoadOnce").transform.Find("HUD Manager");
+        //    SetUpUI(hudManager);
+        //}
 
         private static void SetUpUI(Transform root)
         {
@@ -45,10 +52,19 @@ namespace Raicuparta.TwoForksVR
             }
         }
 
-        [HarmonyPatch(typeof(vgSettingsMenuController), "Start")]
-        public class PastSettingsMenuStart
+        //[HarmonyPatch(typeof(vgSettingsMenuController), "Start")]
+        //public class PastSettingsMenuStart
+        //{
+        //    public static void Postfix(vgSettingsMenuController __instance)
+        //    {
+        //        SetUpUI(__instance.transform);
+        //    }
+        //}
+
+        [HarmonyPatch(typeof(CanvasScaler), "OnEnable")]
+        public class PatchCanvasStart
         {
-            public static void Postfix(vgSettingsMenuController __instance)
+            public static void Prefix(CanvasScaler __instance)
             {
                 SetUpUI(__instance.transform);
             }
