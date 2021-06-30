@@ -56,6 +56,14 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/UIUp",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/UIDown",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     }
@@ -137,7 +145,11 @@
       "/actions/default/in/NextPage": "Next Page",
       "/actions/default/in/PreviousPage": "Previous Page",
       "/actions/default/in/Cancel": "Cancel",
-      "/actions/default/in/ToolPicker": "Tool Picker"
+      "/actions/default/in/ToolPicker": "Tool Picker",
+      "/actions/default/in/UiUp": "UI Up",
+      "/actions/default/in/UiDown": "UiDown",
+      "/actions/default/in/UIUp": "UI Up",
+      "/actions/default/in/UIDown": "UI Down"
     }
   ]
 }

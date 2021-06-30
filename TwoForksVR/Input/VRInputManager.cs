@@ -63,7 +63,6 @@ namespace Raicuparta.TwoForksVR
                         actionSet.Interact.onChange += OnChangeBoolean(callback);
                         return false;
                     }
-                    case InputCommand.UIVertical:
                     case InputCommand.MoveForward:
                     {
                         actionSet.Move.onChange += OnChangeVector2Vertical(callback);
@@ -78,12 +77,6 @@ namespace Raicuparta.TwoForksVR
                     case InputCommand.LookHorizontal_Stick:
                     {
                         actionSet.Rotate.onChange += OnChangeVector2Horizontal(callback);
-                        return false;
-                    }
-                    case InputCommand.DialogSelectionScroll:
-                    {
-
-                        actionSet.Rotate.onChange += OnChangeVector2Vertical(callback);
                         return false;
                     }
                     case InputCommand.NextMenu:
@@ -106,6 +99,18 @@ namespace Raicuparta.TwoForksVR
                     case InputCommand.ToggleJog:
                     {
                         actionSet.Jog.onChange += OnChangeBoolean(callback);
+                        return false;
+                    }
+                    case InputCommand.UIUp:
+                    case InputCommand.DialogSelectionUp:
+                    {
+                        actionSet.UIUp.onChange += OnChangeBoolean(callback);
+                        return false;
+                    }
+                    case InputCommand.UIDown:
+                    case InputCommand.DialogSelectionDown:
+                    {
+                        actionSet.UIDown.onChange += OnChangeBoolean(callback);
                         return false;
                     }
                     default:
