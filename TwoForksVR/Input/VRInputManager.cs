@@ -261,23 +261,24 @@ namespace Raicuparta.TwoForksVR
 
 /**
 
-select: tab
-start: escape
-A: space, enter
-X: r
-Y: q
-B: e, escape
-dpad up: DPadVertical
-dpad right: DPadHorizontal
-right stick click: f, enter
-left stick click: r
-left stick y: MoveForward
-left stick x: MoveStrafe
-right stick y: LookVertical_Stick
-right stick x: LookHorizontal_Stick
-rt: RightTrigger
-lt: LeftTrigger
-rb: up, e
-lb: mouse 1, q
+select (notes): tab
+start (pause): escape
+A (climb): space, enter
+X (jog): r
+Y (read note text): q
+B (keep held item): e, escape
+dpad up (map): DPadVertical -> these two are the same?
+dpad up (compass): DPadVertical -> these two are the same?
+dpad right (camera): DPadHorizontal
+right stick click (flashlight): f, enter
+left stick click (jog): r
+left stick y (move): MoveForward
+left stick x (move): MoveStrafe
+right stick y (look): LookVertical_Stick
+right stick x (look): LookHorizontal_Stick
+rt (choose dialogue / use): RightTrigger
+lt (radio): LeftTrigger
+rb (choose dialogue): up, e
+lb (zoom / examine held item): mouse 1, q
 
 **/
