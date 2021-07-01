@@ -229,5 +229,55 @@ namespace Raicuparta.TwoForksVR
                 }
             }
         }
+
+        [HarmonyPatch(typeof(vgAxisData), MethodType.Constructor, new Type[] { typeof(string), typeof(float) })]
+        public class PatchAddKey
+        {
+            public static void Prefix(string name)
+            {
+                MelonLogger.Msg("#### yoyoyo this is addkey SINGLE " + name);
+            }
+        }
+
+        [HarmonyPatch(typeof(vgAxisData), MethodType.Constructor, new Type[] { typeof(List<string>), typeof(float) })]
+        public class PatchAddKeyList
+        {
+            public static void Prefix(List<string> names)
+            {
+                MelonLogger.Msg("#### yoyoyo this is addkey LIST " + String.Join(", ", names.ToArray()));
+            }
+        }
+
+        [HarmonyPatch(typeof(vgKeyBind), "UpdatePressCommands")]
+        public class PatchTriggerCommand
+        {
+            public static void Prefix(vgKeyData keyToCheck)
+            {
+                MelonLogger.Msg("#### yoyoyo this is TriggerCommand " + keyToCheck.names[0]);
+            }
+        }
     }
 }
+
+/**
+
+select: tab
+start: escape
+A: space, enter
+X: r
+Y: q
+B: e, escape
+dpad up: DPadVertical
+dpad right: DPadHorizontal
+right stick click: f, enter
+left stick click: r
+left stick y: MoveForward
+left stick x: MoveStrafe
+right stick y: LookVertical_Stick
+right stick x: LookHorizontal_Stick
+rt: RightTrigger
+lt: LeftTrigger
+rb: up, e
+lb: mouse 1, q
+
+**/
