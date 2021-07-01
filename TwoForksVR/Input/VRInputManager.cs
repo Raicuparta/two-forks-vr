@@ -261,6 +261,8 @@ namespace Raicuparta.TwoForksVR
 
 /**
 
+from vgKeyBind.UpdatePressCommands
+
 select (notes): tab
 start (pause): escape
 A (climb): space, enter
