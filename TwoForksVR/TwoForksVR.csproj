@@ -63,6 +63,7 @@
     <Compile Include="Debug\DebugAxes.cs" />
     <Compile Include="Helpers\MathHelper.cs" />
     <Compile Include="Input\InputCommand.cs" />
+    <Compile Include="Input\InputThing.cs" />
     <Compile Include="Input\VRInputManager.cs" />
     <Compile Include="Items\VRMap.cs" />
     <Compile Include="TwoForksVR.cs" />
