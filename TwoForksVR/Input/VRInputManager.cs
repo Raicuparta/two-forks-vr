@@ -56,7 +56,7 @@ namespace Raicuparta.TwoForksVR
                         ___axisValue = vector2XActionMap[name].axis.x;
                         ___axisValueLastFrame = vector2XActionMap[name].lastAxis.x;
                     }
-                    if (vector2YActionMap.ContainsKey(name))
+                    else if (vector2YActionMap.ContainsKey(name))
                     {
                         ___axisValue = vector2YActionMap[name].axis.y;
                         ___axisValueLastFrame = vector2YActionMap[name].lastAxis.y;
