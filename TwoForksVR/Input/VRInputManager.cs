@@ -62,23 +62,6 @@ namespace Raicuparta.TwoForksVR
                         ___axisValueLastFrame = vector2YActionMap[name].lastAxis.y;
                     }
                 }
-
-
-                switch(___names[0])
-                {
-                    case (InputThing.MoveForward):
-                    {
-                        ___axisValue = actionSet.Move.axis.y;
-                        ___axisValueLastFrame = actionSet.Move.lastAxis.y;
-                        return;
-                    }
-                    case (InputThing.MoveStrafe):
-                    {
-                        ___axisValue = actionSet.Move.axis.x;
-                        ___axisValueLastFrame = actionSet.Move.lastAxis.x;
-                        return;
-                    }
-                }
             }
         }
 
