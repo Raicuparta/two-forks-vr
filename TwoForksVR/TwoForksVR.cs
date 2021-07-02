@@ -17,8 +17,36 @@ namespace Raicuparta.TwoForksVR
         public override void OnApplicationStart()
         {
             base.OnApplicationStart();
-            HarmonyInstance.Create("Raicuparta.FirewatchVR").PatchAll();
+            //HarmonyInstance.Create("Raicuparta.FirewatchVR").PatchAll();
             VRAssetLoader.LoadAssets();
+
+            Application.logMessageReceived += OnUnityLog;
+        }
+
+        private void OnUnityLog(string condition, string stackTrace, LogType type)
+        {
+            switch (type)
+            {
+                case LogType.Exception:
+                case LogType.Error:
+                {
+                    MelonLogger.Error("error condition: " + condition);
+                    MelonLogger.Error("error stack trace: " + stackTrace);
+                    return;
+                }
+                case LogType.Warning:
+                {
+                    MelonLogger.Warning("error condition: " + condition);
+                    MelonLogger.Warning("error stack trace: " + stackTrace);
+                    return;
+                }
+                default:
+                {
+                    MelonLogger.Msg("error condition: " + condition);
+                    MelonLogger.Msg("error stack trace: " + stackTrace);
+                    return;
+                }
+            }
         }
 
         public override void OnSceneWasInitialized(int buildIndex, string sceneName)
@@ -37,10 +65,10 @@ namespace Raicuparta.TwoForksVR
         private void SetUpMenuScene()
         {
             isInitialized = false;
-            new GameObject().AddComponent<VRCameraManager>();
-            new GameObject().AddComponent<VRUIManager>();
-            new GameObject().AddComponent<VRHandsManager>();
-            new GameObject().AddComponent<VRInputManager>();
+            //new GameObject().AddComponent<VRCameraManager>();
+            //new GameObject().AddComponent<VRUIManager>();
+            //new GameObject().AddComponent<VRHandsManager>();
+            //new GameObject().AddComponent<VRInputManager>();
         }
 
         private void SetUpGameScene()
