@@ -11,13 +11,26 @@ namespace Raicuparta.TwoForksVR
 {
     public class VRInputManager : MonoBehaviour
     {
-        private static SteamVR_Input_ActionSet_default actionSet = SteamVR_Actions._default;
+        private static SteamVR_Input_ActionSet_default actionSet;
         private static Dictionary<vgInputManager.InputDelegate, SteamVR_Action_Boolean.ChangeHandler> booleanDelegateHandlerMap = new Dictionary<vgInputManager.InputDelegate, SteamVR_Action_Boolean.ChangeHandler>();
         private static Dictionary<vgInputManager.InputDelegate, SteamVR_Action_Vector2.ChangeHandler> vector2DelegateHandlerMap = new Dictionary<vgInputManager.InputDelegate, SteamVR_Action_Vector2.ChangeHandler>();
 
+
+        private static Dictionary<string, SteamVR_Action_Boolean> booleanActionMap;
+
         private void Start()
         {
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
+
+            actionSet = SteamVR_Actions._default;
+            booleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>()
+            {
+                { InputThing.Climb, actionSet.Interact },
+                { InputThing.ChooseUp, actionSet.UIUp },
+                { InputThing.ChooseDown, actionSet.UIDown },
+                { InputThing.Jog, actionSet.Jog },
+                { InputThing.Pause, actionSet.Cancel },
+            };
 
             // TODO relative path
             MelonLogger.Msg("$$$$$ gonna try to");
@@ -245,6 +258,12 @@ namespace Raicuparta.TwoForksVR
         {
             public static void Postfix(List<string> ___names, ref float ___axisValue, ref float ___axisValueLastFrame)
             {
+                if (actionSet == null)
+                {
+                    actionSet = SteamVR_Actions._default;
+                    return;
+                }
+
                 switch(___names[0])
                 {
                     case (InputThing.MoveForward):
@@ -266,15 +285,6 @@ namespace Raicuparta.TwoForksVR
         [HarmonyPatch(typeof(vgButtonData), "Update")]
         public class PatchButtonDataUpdate
         {
-            private static Dictionary<string, SteamVR_Action_Boolean> booleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>()
-            {
-                { InputThing.Climb, actionSet.Interact },
-                { InputThing.ChooseUp, actionSet.UIUp },
-                { InputThing.ChooseDown, actionSet.UIDown },
-                { InputThing.Jog, actionSet.Jog },
-                { InputThing.Pause, actionSet.Cancel },
-
-            };
 
             public static void Postfix(
                 List<string> ___names,
@@ -283,6 +293,21 @@ namespace Raicuparta.TwoForksVR
 
             )
             {
+                if (booleanActionMap == null)
+                {
+                    MelonLogger.Msg("### null "); 
+                    actionSet = SteamVR_Actions._default;
+                    booleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>()
+                    {
+                        { InputThing.Climb, actionSet.Interact },
+                        { InputThing.ChooseUp, actionSet.UIUp },
+                        { InputThing.ChooseDown, actionSet.UIDown },
+                        { InputThing.Jog, actionSet.Jog },
+                        { InputThing.Pause, actionSet.Cancel },
+                    };
+                    return;
+                }
+
                 foreach (var name in ___names)
                 {
                     if (booleanActionMap.ContainsKey(name))

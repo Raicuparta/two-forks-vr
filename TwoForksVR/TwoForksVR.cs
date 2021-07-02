@@ -17,7 +17,7 @@ namespace Raicuparta.TwoForksVR
         public override void OnApplicationStart()
         {
             base.OnApplicationStart();
-            //HarmonyInstance.Create("Raicuparta.FirewatchVR").PatchAll();
+            HarmonyInstance.Create("Raicuparta.FirewatchVR").PatchAll();
             VRAssetLoader.LoadAssets();
 
             Application.logMessageReceived += OnUnityLog;
@@ -65,10 +65,10 @@ namespace Raicuparta.TwoForksVR
         private void SetUpMenuScene()
         {
             isInitialized = false;
-            //new GameObject().AddComponent<VRCameraManager>();
-            //new GameObject().AddComponent<VRUIManager>();
-            //new GameObject().AddComponent<VRHandsManager>();
-            //new GameObject().AddComponent<VRInputManager>();
+            new GameObject().AddComponent<VRCameraManager>();
+            new GameObject().AddComponent<VRUIManager>();
+            new GameObject().AddComponent<VRHandsManager>();
+            new GameObject().AddComponent<VRInputManager>();
         }
 
         private void SetUpGameScene()
