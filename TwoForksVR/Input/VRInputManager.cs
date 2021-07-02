@@ -24,6 +24,7 @@ namespace Raicuparta.TwoForksVR
                 { InputThing.ChooseDown, actionSet.UIDown },
                 { InputThing.Jog, actionSet.Jog },
                 { InputThing.Pause, actionSet.Cancel },
+                { InputThing.Interact, actionSet.Interact },
             };
             vector2XActionMap = new Dictionary<string, SteamVR_Action_Vector2>()
             {

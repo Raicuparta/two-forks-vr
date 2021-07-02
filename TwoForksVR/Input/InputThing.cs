@@ -21,9 +21,10 @@ namespace Raicuparta.TwoForksVR
         public const string MoveStrafe = "MoveStrafe";
         public const string LookVertical = "LookVertical_Stick";
         public const string LookHorizontal = "LookHorizontal_Stick";
-        public const string ChooseDown = "RightTrigger";
+        public const string ChooseDown = "down";
         public const string Radio = "LeftTrigger";
         public const string ChooseUp = "up";
         public const string Zoom = "q";
+        public const string Interact = "mouse 0";
     }
 }
