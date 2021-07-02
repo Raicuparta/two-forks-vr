@@ -11,6 +11,7 @@ namespace Raicuparta.TwoForksVR
 {
     public class VRInputManager : MonoBehaviour
     {
+        private static SteamVR_Input_ActionSet_default actionSet = SteamVR_Actions._default;
         private static Dictionary<vgInputManager.InputDelegate, SteamVR_Action_Boolean.ChangeHandler> booleanDelegateHandlerMap = new Dictionary<vgInputManager.InputDelegate, SteamVR_Action_Boolean.ChangeHandler>();
         private static Dictionary<vgInputManager.InputDelegate, SteamVR_Action_Vector2.ChangeHandler> vector2DelegateHandlerMap = new Dictionary<vgInputManager.InputDelegate, SteamVR_Action_Vector2.ChangeHandler>();
 
@@ -19,7 +20,16 @@ namespace Raicuparta.TwoForksVR
             DontDestroyOnLoad(gameObject);
 
             // TODO relative path
-            OpenVR.Input.SetActionManifestPath(@"C:\Users\rai\Repos\two-forks-vr\TwoForksVR\Input\Bindings\actions.json");
+            MelonLogger.Msg("$$$$$ gonna try to");
+            try
+            {
+            var error = OpenVR.Input.SetActionManifestPath(@"C:\Users\rai\Repos\two-forks-vr\TwoForksVR\Input\Bindings\actions.json");
+            MelonLogger.Msg("???? error ???? " + error);
+
+            } catch (Exception error)
+            {
+                MelonLogger.Msg("????? exception ???? " + error);
+            }
         }
 
         //[HarmonyPatch(typeof(vgInputManager), "RegisterForInputCallback")]
@@ -230,45 +240,11 @@ namespace Raicuparta.TwoForksVR
         //    }
         //}
 
-        [HarmonyPatch(typeof(vgAxisData), MethodType.Constructor, new Type[] { typeof(string), typeof(float) })]
-        public class PatchAddKey
-        {
-            public static void Prefix(string name)
-            {
-                MelonLogger.Msg("#### yoyoyo this is addkey SINGLE " + name);
-            }
-        }
-
-        [HarmonyPatch(typeof(vgAxisData), MethodType.Constructor, new Type[] { typeof(List<string>), typeof(float) })]
-        public class PatchAddKeyList
-        {
-            public static void Prefix(List<string> names)
-            {
-                MelonLogger.Msg("#### yoyoyo this is addkey LIST " + String.Join(", ", names.ToArray()));
-            }
-        }
-
-        [HarmonyPatch(typeof(vgKeyBind), "UpdatePressCommands")]
-        public class PatchTriggerCommand
-        {
-            public static void Prefix(vgKeyData keyToCheck)
-            {
-                MelonLogger.Msg("#### yoyoyo this is TriggerCommand " + String.Join(", ", keyToCheck.names.ToArray()));
-            }
-        }
-
         [HarmonyPatch(typeof(vgAxisData), "Update")]
         public class PatchKeyDataUpdate
         {
-            Dictionary<string, SteamVR_Action_Vector2> vector2ActionMap = new Dictionary<string, SteamVR_Action_Vector2>()
-            {
-
-            };
-
             public static void Postfix(List<string> ___names, ref float ___axisValue, ref float ___axisValueLastFrame)
             {
-                var actionSet = SteamVR_Actions._default;
-
                 switch(___names[0])
                 {
                     case (InputThing.MoveForward):
@@ -290,6 +266,16 @@ namespace Raicuparta.TwoForksVR
         [HarmonyPatch(typeof(vgButtonData), "Update")]
         public class PatchButtonDataUpdate
         {
+            private static Dictionary<string, SteamVR_Action_Boolean> booleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>()
+            {
+                { InputThing.Climb, actionSet.Interact },
+                { InputThing.ChooseUp, actionSet.UIUp },
+                { InputThing.ChooseDown, actionSet.UIDown },
+                { InputThing.Jog, actionSet.Jog },
+                { InputThing.Pause, actionSet.Cancel },
+
+            };
+
             public static void Postfix(
                 List<string> ___names,
                 ref bool ___keyUp,
@@ -297,13 +283,13 @@ namespace Raicuparta.TwoForksVR
 
             )
             {
-                var actionSet = SteamVR_Actions._default;
-
-                if (___names.Contains(InputThing.Climb))
+                foreach (var name in ___names)
                 {
-                    ___keyUp = actionSet.Interact.stateUp;
-                    ___keyDown = actionSet.Interact.stateDown;
-                    return;
+                    if (booleanActionMap.ContainsKey(name))
+                    {
+                        ___keyUp = booleanActionMap[name].stateUp;
+                        ___keyDown = booleanActionMap[name].stateDown;
+                    }
                 }
             }
         }
