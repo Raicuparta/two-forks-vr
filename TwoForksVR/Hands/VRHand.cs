@@ -96,6 +96,14 @@ namespace Raicuparta.TwoForksVR
             switch (item)
             {
                 case UnityHelper.ToolPicker.VRToolItem.Compass:
+                {
+                    var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
+                    if (!mapController || mapController.compassEquipped) return;
+
+                    mapController.OnToggleCompass();
+
+                    return;
+                }
                 case UnityHelper.ToolPicker.VRToolItem.Map:
                 {
                     var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
@@ -129,8 +137,16 @@ namespace Raicuparta.TwoForksVR
         {
             switch (item)
             {
-                case UnityHelper.ToolPicker.VRToolItem.Map:
                 case UnityHelper.ToolPicker.VRToolItem.Compass:
+                {
+                    var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
+                    if (!mapController || !mapController.compassEquipped) return;
+
+                    mapController.OnToggleCompass();
+
+                    return;
+                }
+                case UnityHelper.ToolPicker.VRToolItem.Map:
                 {
                     var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
                     if (!mapController || !mapController.mapEquipped) return;
