@@ -28,6 +28,7 @@ namespace Raicuparta.TwoForksVR
                 handModel.localScale = new Vector3(-handModel.localScale.x, handModel.localScale.y, handModel.localScale.z);
                 SetUpWeddingRing();
                 SetUpMap();
+                SetUpRadio();
                 pose.inputSource = SteamVR_Input_Sources.LeftHand;
                 pose.poseAction = SteamVR_Actions.default_PoseLeftHand;
                 toolPicker.InputSource = SteamVR_Input_Sources.LeftHand;
@@ -182,6 +183,17 @@ namespace Raicuparta.TwoForksVR
                 return;
             }
             mapInHand.gameObject.AddComponent<VRMap>();
+        }
+
+        private void SetUpRadio()
+        {
+            var radio = transform.Find("itemSocket/henryHandLeftAttachment/Radio(Clone)");
+            if (!radio)
+            {
+                return;
+            }
+            radio.localPosition = new Vector3(-0.01f, -0.09f, 0.03f);
+            radio.localEulerAngles = new Vector3(291.0985f, 133.8764f, 30.9742f);
         }
 
         private void SetUpWeddingRing()
