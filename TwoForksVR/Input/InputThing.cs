@@ -26,5 +26,7 @@ namespace Raicuparta.TwoForksVR
         public const string ChooseUp = "up";
         public const string Zoom = "q";
         public const string Interact = "mouse 0";
+        public const string NextPage = "e";
+        public const string PreviousPage = "q";
     }
 }

@@ -25,6 +25,8 @@ namespace Raicuparta.TwoForksVR
                 { InputThing.Jog, actionSet.Jog },
                 { InputThing.Pause, actionSet.Cancel },
                 { InputThing.Interact, actionSet.Interact },
+                { InputThing.NextPage, actionSet.NextPage },
+                { InputThing.PreviousPage, actionSet.PreviousPage },
             };
             vector2XActionMap = new Dictionary<string, SteamVR_Action_Vector2>()
             {
@@ -92,6 +94,34 @@ namespace Raicuparta.TwoForksVR
                 }
             }
         }
+
+        [HarmonyPatch(typeof(vgKeyBind), "UpdatePressCommands")]
+        public class PatchPressCommands
+        {
+
+            public static void Prefix(vgKeyData keyToCheck)
+            {
+                MelonLogger.Msg("## Press" + String.Join(", ", keyToCheck.names.ToArray()));
+            }
+        }
+        [HarmonyPatch(typeof(vgKeyBind), "UpdateReleaseCommands")]
+        public class PatchReleaseCommands
+        {
+
+            public static void Prefix(vgKeyData keyToCheck)
+            {
+                MelonLogger.Msg("## Release" + String.Join(", ", keyToCheck.names.ToArray()));
+            }
+        }
+        //[HarmonyPatch(typeof(vgKeyBind), "UpdateOtherCommands")]
+        //public class PatchOtherCommands
+        //{
+
+        //    public static void Prefix(vgKeyData keyToCheck)
+        //    {
+        //        MelonLogger.Msg("## Other" + String.Join(", ", keyToCheck.names.ToArray()));
+        //    }
+        //}
     }
 }
 
