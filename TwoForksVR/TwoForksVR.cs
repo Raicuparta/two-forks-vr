@@ -68,6 +68,9 @@ namespace Raicuparta.TwoForksVR
             } else if (sceneName.StartsWith("TeenLoop") && !isInitialized)
             {
                 SetUpGameScene();
+            } else if (sceneName == "Intro")
+            {
+                SetUpIntroScene();
             }
         }
 
@@ -86,6 +89,11 @@ namespace Raicuparta.TwoForksVR
             new GameObject().AddComponent<VRCameraManager>();
             new GameObject().AddComponent<VRUIManager>();
             new GameObject().AddComponent<VRBodyManager>();
+        }
+
+        private void SetUpIntroScene()
+        {
+            VRSettings.enabled = false;
         }
     }
 }
