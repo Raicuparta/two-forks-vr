@@ -6,7 +6,6 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.VR;
 using Valve.VR;
-// using Valve.VR;
 
 namespace Raicuparta.TwoForksVR
 {
