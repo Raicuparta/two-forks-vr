@@ -30,20 +30,29 @@ namespace Raicuparta.TwoForksVR
                 case LogType.Exception:
                 case LogType.Error:
                 {
-                    MelonLogger.Error("error condition: " + condition);
-                    MelonLogger.Error("error stack trace: " + stackTrace);
+                    MelonLogger.Error(condition);
+                    if (stackTrace != null && stackTrace.Length > 0)
+                    {
+                        MelonLogger.Error($"error stack trace: [[ {stackTrace} ]]");
+                    }
                     return;
                 }
                 case LogType.Warning:
                 {
-                    MelonLogger.Warning("error condition: " + condition);
-                    MelonLogger.Warning("error stack trace: " + stackTrace);
+                    MelonLogger.Warning(condition);
+                    if (stackTrace != null && stackTrace.Length > 0)
+                    {
+                        MelonLogger.Warning($"warning stack trace: [[ {stackTrace} ]]");
+                    }
                     return;
                 }
                 default:
                 {
-                    MelonLogger.Msg("error condition: " + condition);
-                    MelonLogger.Msg("error stack trace: " + stackTrace);
+                    MelonLogger.Msg($"{type}: {condition}");
+                    if (stackTrace != null && stackTrace.Length > 0)
+                    {
+                        MelonLogger.Error($"log stack trace: [[ {stackTrace} ]]");
+                    }
                     return;
                 }
             }

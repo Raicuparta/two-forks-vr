@@ -95,24 +95,24 @@ namespace Raicuparta.TwoForksVR
             }
         }
 
-        [HarmonyPatch(typeof(vgKeyBind), "UpdatePressCommands")]
-        public class PatchPressCommands
-        {
+        //[HarmonyPatch(typeof(vgKeyBind), "UpdatePressCommands")]
+        //public class PatchPressCommands
+        //{
 
-            public static void Prefix(vgKeyData keyToCheck)
-            {
-                MelonLogger.Msg("## Press" + String.Join(", ", keyToCheck.names.ToArray()));
-            }
-        }
-        [HarmonyPatch(typeof(vgKeyBind), "UpdateReleaseCommands")]
-        public class PatchReleaseCommands
-        {
+        //    public static void Prefix(vgKeyData keyToCheck)
+        //    {
+        //        MelonLogger.Msg("## Press" + String.Join(", ", keyToCheck.names.ToArray()));
+        //    }
+        //}
+        //[HarmonyPatch(typeof(vgKeyBind), "UpdateReleaseCommands")]
+        //public class PatchReleaseCommands
+        //{
 
-            public static void Prefix(vgKeyData keyToCheck)
-            {
-                MelonLogger.Msg("## Release" + String.Join(", ", keyToCheck.names.ToArray()));
-            }
-        }
+        //    public static void Prefix(vgKeyData keyToCheck)
+        //    {
+        //        MelonLogger.Msg("## Release" + String.Join(", ", keyToCheck.names.ToArray()));
+        //    }
+        //}
         //[HarmonyPatch(typeof(vgKeyBind), "UpdateOtherCommands")]
         //public class PatchOtherCommands
         //{
@@ -124,29 +124,3 @@ namespace Raicuparta.TwoForksVR
         //}
     }
 }
-
-/**
-
-from vgKeyBind.UpdatePressCommands
-
-select (notes): tab
-start (pause): escape
-A (climb): space, enter
-X (jog): r
-Y (read note text): q
-B (keep held item): e, escape
-dpad up (map): DPadVertical -> these two are the same?
-dpad up (compass): DPadVertical -> these two are the same?
-dpad right (camera): DPadHorizontal
-right stick click (flashlight): f, enter
-left stick click (jog): r
-left stick y (move): MoveForward
-left stick x (move): MoveStrafe
-right stick y (look): LookVertical_Stick
-right stick x (look): LookHorizontal_Stick
-rt (choose dialogue / use): RightTrigger
-lt (radio): LeftTrigger
-rb (choose dialogue): up, e
-lb (zoom / examine held item): mouse 1, q
-
-**/
