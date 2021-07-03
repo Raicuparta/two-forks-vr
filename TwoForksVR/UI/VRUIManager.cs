@@ -66,6 +66,11 @@ namespace Raicuparta.TwoForksVR
         {
             public static void Prefix(CanvasScaler __instance)
             {
+                // Prevent messing with UnityExplorer
+                if (__instance.name == "ExplorerCanvas")
+                {
+                    return;
+                }
                 SetUpUI(__instance.transform);
             }
         }
