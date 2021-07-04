@@ -2,6 +2,7 @@
 using MelonLoader;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using Valve.VR;
 
@@ -99,7 +100,7 @@ namespace Raicuparta.TwoForksVR
             {
                 public static bool Prefix(ref string __result)
                 {
-                    __result = @"C:\Users\rai\Repos\two-forks-vr\TwoForksVR\Input\Bindings";
+                    __result = $"{Directory.GetCurrentDirectory()}/Mods/TwoForksVR/Bindings";
                     return false;
                 }
             }

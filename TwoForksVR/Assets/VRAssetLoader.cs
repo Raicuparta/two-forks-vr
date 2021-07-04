@@ -19,7 +19,7 @@ namespace Raicuparta.TwoForksVR
 
         private static GameObject LoadAssetPrefab(string assetName, string objectName)
         {
-            var myLoadedAssetBundle = AssetBundle.LoadFromFile($"{Directory.GetCurrentDirectory()}/Mods/TwoForksVR/{assetName}");
+            var myLoadedAssetBundle = AssetBundle.LoadFromFile($"{Directory.GetCurrentDirectory()}/Mods/TwoForksVR/Assets/{assetName}");
             if (myLoadedAssetBundle == null)
             {
                 MelonLogger.Error($"Failed to load AssetBundle {assetName}");

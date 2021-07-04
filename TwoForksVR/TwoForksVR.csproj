@@ -98,6 +98,8 @@
 
 copy /y "$(SolutionDir)/SteamVR.dll" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\Mods"
 
-xcopy /y /i "$(SolutionDir)\HelperUnityProject\AssetBundles" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\Mods\$(ProjectName)"</PostBuildEvent>
+xcopy /y /i "$(SolutionDir)\HelperUnityProject\AssetBundles" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\Mods\$(ProjectName)\Assets"
+
+xcopy /y /i "$(ProjectDir)\Input\Bindings" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\Mods\$(ProjectName)\Bindings"</PostBuildEvent>
   </PropertyGroup>
 </Project>
