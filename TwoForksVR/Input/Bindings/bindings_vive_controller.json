@@ -123,7 +123,7 @@
    "category" : "steamvr_input",
    "controller_type" : "vive_controller",
    "description" : "",
-   "name" : "vive",
+   "name" : "Two Forks VR Vive Bindings",
    "options" : {},
    "simulated_actions" : []
 }
