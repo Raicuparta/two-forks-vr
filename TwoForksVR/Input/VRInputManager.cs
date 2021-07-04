@@ -39,6 +39,15 @@ namespace Raicuparta.TwoForksVR
                 { InputThing.MoveForward, actionSet.Move },
                 { InputThing.LookVertical, actionSet.Rotate },
             };
+
+            // Pick dialog option with interact button.
+            // TODO: move this somewhere else.
+            actionSet.Interact.onStateDown += (SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource) =>
+            {
+                vgDialogTreeManager.Instance?.OnConfirmDialogChoice();
+                vgDialogTreeManager.Instance?.ClearNonRadioDialogChoices();
+            };
+
             return;
         }
 
