@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Harmony;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -53,6 +54,15 @@ namespace Raicuparta.TwoForksVR
             vrCameraParent.SetParent(mainCamera.parent, false);
             mainCamera.SetParent(vrCameraParent);
             vrCameraParent.localPosition = Vector3.down * 1.2f;
+        }
+
+        [HarmonyPatch(typeof(vgSettingsManager), "headBob", MethodType.Setter)]
+        public class ForceDisableHeadBob
+        {
+            public static void Prefix(ref bool value)
+            {
+                value = false;
+            }
         }
     }
 }
