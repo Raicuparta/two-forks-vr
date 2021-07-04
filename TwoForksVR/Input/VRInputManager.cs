@@ -69,7 +69,7 @@ namespace Raicuparta.TwoForksVR
         }
 
         [HarmonyPatch(typeof(vgButtonData), "Update")]
-        public class PatchButtonDataUpdate
+        public static class PatchButtonDataUpdate
         {
 
             public static void Postfix(
@@ -91,6 +91,16 @@ namespace Raicuparta.TwoForksVR
                         ___keyUp = booleanActionMap[name].stateUp;
                         ___keyDown = booleanActionMap[name].stateDown;
                     }
+                }
+            }
+
+            [HarmonyPatch(typeof(SteamVR_Input), "GetActionsFileFolder")]
+            public static class PatchActionsFile
+            {
+                public static bool Prefix(ref string __result)
+                {
+                    __result = @"C:\Users\rai\Repos\two-forks-vr\TwoForksVR\Input\Bindings";
+                    return false;
                 }
             }
         }
