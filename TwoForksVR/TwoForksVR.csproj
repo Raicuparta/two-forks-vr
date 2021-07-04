@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_5;UNITY_5_6;UNITY_5;UNITY_64;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;UNITY_ASSERTIONS;ENABLE_NATIVE_ARRAY_CHECKS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -27,7 +27,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_5;UNITY_5_6;UNITY_5;UNITY_64;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;UNITY_ASSERTIONS;ENABLE_NATIVE_ARRAY_CHECKS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -37,10 +37,6 @@
     </Reference>
     <Reference Include="MelonLoader">
       <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\MelonLoader\MelonLoader.dll</HintPath>
-    </Reference>
-    <Reference Include="SteamVR, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SteamVR.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,6 +51,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="Valve.Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>SteamVR\SteamVR\Input\Plugins\JSON.NET\Valve.Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\TextureLoader.cs" />
@@ -66,7 +66,155 @@
     <Compile Include="Input\InputThing.cs" />
     <Compile Include="Input\MousePatches.cs" />
     <Compile Include="Input\VRInputManager.cs" />
+    <Compile Include="Items\ToolPicker.cs" />
+    <Compile Include="Items\ToolPickerItem.cs" />
     <Compile Include="Items\VRMap.cs" />
+    <Compile Include="SteamVR\SteamVR\Extras\SteamVR_CameraHelper.cs" />
+    <Compile Include="SteamVR\SteamVR\Extras\SteamVR_ForceSteamVRMode.cs" />
+    <Compile Include="SteamVR\SteamVR\Extras\SteamVR_GazeTracker.cs" />
+    <Compile Include="SteamVR\SteamVR\Extras\SteamVR_LaserPointer.cs" />
+    <Compile Include="SteamVR\SteamVR\Extras\SteamVR_TestThrow.cs" />
+    <Compile Include="SteamVR\SteamVR\Extras\SteamVR_TestTrackedCamera.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_BooleanEvent.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_PoseEvent.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Pose_ConnectedChangedEvent.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Pose_DeviceIndexChangedEvent.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Pose_TrackingChangedEvent.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_SingleEvent.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_SkeletonEvent.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Skeleton_ConnectedChangedEvent.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Skeleton_TrackingChangedEvent.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Vector2Event.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Vector3Event.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Action.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_ActionDirections.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_ActionSet.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_ActionSet_Manager.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Action_Boolean.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Action_In.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Action_Out.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Action_Pose.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Action_Single.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Action_Skeleton.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Action_Vector2.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Action_Vector3.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Action_Vibration.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_ActivateActionSetOnLoad.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Behaviour_Boolean.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Behaviour_Pose.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Behaviour_Single.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Behaviour_Skeleton.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Behaviour_SkeletonCustom.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Behaviour_Vector2.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Behaviour_Vector3.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_DefaultAction.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_DefaultActionSet.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Input.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Input_ActionFile.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Input_ActionScopes.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Input_ActionSetUsages.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Input_BindingFile.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Input_Generator_Names.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Input_References.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Input_Source.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Input_Sources.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Skeleton_Pose.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_Skeleton_Poser.cs" />
+    <Compile Include="SteamVR\SteamVR\Input\SteamVR_UpdateModes.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\BodyCollider.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\CircularDrive.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\ComplexThrowable.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\ControllerHoverHighlight.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\CustomEvents.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\DebugUI.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\DestroyOnDetachedFromHand.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\DestroyOnParticleSystemDeath.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\DestroyOnTriggerEnter.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\DistanceHaptics.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\DontDestroyOnLoad.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\EnumFlags.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\Equippable.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\FallbackCameraController.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\GrabTypes.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\Hand.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\HandCollider.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\HandPhysics.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\HapticRack.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\HideOnHandFocusLost.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\HoverButton.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\IgnoreHovering.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\InputModule.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\Interactable.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\InteractableDebug.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\InteractableHoverEvents.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\ItemPackage.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\ItemPackageReference.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\ItemPackageSpawner.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\LinearAnimation.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\LinearAnimator.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\LinearAudioPitch.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\LinearBlendshape.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\LinearDisplacement.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\LinearDrive.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\LinearMapping.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\ModalThrowable.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\Player.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\PlaySound.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\RenderModel.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\SeeThru.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\SleepOnAwake.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\SoundDeparent.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\SoundPlayOneshot.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\SpawnAndAttachAfterControllerIsTracking.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\SpawnAndAttachToHand.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\Throwable.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\UIElement.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\Unparent.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\Util.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Core\Scripts\VelocityEstimator.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Hints\Scripts\ControllerButtonHints.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\SnapTurn\SnapTurn.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Teleport\Scripts\AllowTeleportWhileAttachedToHand.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Teleport\Scripts\ChaperoneInfo.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Teleport\Scripts\IgnoreTeleportTrace.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Teleport\Scripts\Teleport.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Teleport\Scripts\TeleportArc.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Teleport\Scripts\TeleportArea.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Teleport\Scripts\TeleportMarkerBase.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Teleport\Scripts\TeleportPoint.cs" />
+    <Compile Include="SteamVR\SteamVR\InteractionSystem\Teleport\Scripts\TeleportURPHelper.cs" />
+    <Compile Include="SteamVR\SteamVR\Plugins\openvr_api.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_Behaviour.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_Camera.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_CameraFlip.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_CameraMask.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_Ears.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_EnumEqualityComparer.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_Events.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_ExternalCamera.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_ExternalCamera_LegacyManager.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_Fade.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_Frustum.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_IK.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_LoadLevel.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_Menu.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_Overlay.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_PlayArea.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_Render.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_RenderModel.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_RingBuffer.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_Settings.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_Skybox.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_SphericalProjection.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_TrackedCamera.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_TrackedObject.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_TrackingReferenceManager.cs" />
+    <Compile Include="SteamVR\SteamVR\Scripts\SteamVR_Utils.cs" />
+    <Compile Include="SteamVR\SteamVR_Input\ActionSetClasses\SteamVR_Input_ActionSet_default.cs" />
+    <Compile Include="SteamVR\SteamVR_Input\SteamVR_Input_Actions.cs" />
+    <Compile Include="SteamVR\SteamVR_Input\SteamVR_Input_ActionSets.cs" />
+    <Compile Include="SteamVR\SteamVR_Input\SteamVR_Input_Initialization.cs" />
     <Compile Include="TwoForksVR.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Camera\VRCameraManager.cs" />
@@ -77,6 +225,9 @@
     <Compile Include="UI\VRUIManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="Input\Bindings\actions.json" />
     <None Include="Input\Bindings\bindings_holographic_controller.json" />
     <None Include="Input\Bindings\bindings_knuckles.json" />
@@ -91,12 +242,15 @@
     <None Include="Input\Bindings\binding_vive_cosmos.json" />
     <None Include="Input\Bindings\binding_vive_pro.json" />
     <None Include="Input\Bindings\binding_vive_tracker_camera.json" />
+    <None Include="SteamVR\SteamVR\Input\Plugins\JSON.NET\LICENSE_James_Newton-King" />
+    <None Include="SteamVR\SteamVR\Input\Plugins\JSON.NET\LICENSE_SaladLab" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SteamVR\SteamVR\Input\Plugins\JSON.NET\Valve.Newtonsoft.Json.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /y "$(TargetPath)" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\Mods"
-
-copy /y "$(SolutionDir)/SteamVR.dll" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\Mods"
 
 xcopy /y /i "$(SolutionDir)\HelperUnityProject\AssetBundles" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\Mods\$(ProjectName)\Assets"
 

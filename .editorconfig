@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CS0109: Member does not hide an inherited member; new keyword is not required
+dotnet_diagnostic.CS0109.severity = none

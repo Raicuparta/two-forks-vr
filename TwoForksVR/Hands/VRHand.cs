@@ -73,9 +73,9 @@ namespace Raicuparta.TwoForksVR
             );
         }
 
-        private UnityHelper.ToolPicker SetUpToolPicker()
+        private ToolPicker SetUpToolPicker()
         {
-            var toolPicker = transform.Find("ToolPicker").gameObject.AddComponent<UnityHelper.ToolPicker>();
+            var toolPicker = transform.Find("ToolPicker").gameObject.AddComponent<ToolPicker>();
             toolPicker.ParentWhileActive = Camera.main.transform.parent;
             toolPicker.ParentWhileInactive = toolPicker.transform;
             toolPicker.Hand = transform;
@@ -85,18 +85,18 @@ namespace Raicuparta.TwoForksVR
 
             foreach (Transform child in toolPicker.ToolsContainer)
             {
-                var toolPickerItem = child.gameObject.AddComponent<UnityHelper.ToolPickerItem>();
-                toolPickerItem.ItemType = (UnityHelper.ToolPicker.VRToolItem)Enum.Parse(typeof(UnityHelper.ToolPicker.VRToolItem), child.name);
+                var toolPickerItem = child.gameObject.AddComponent<ToolPickerItem>();
+                toolPickerItem.ItemType = (ToolPicker.VRToolItem)Enum.Parse(typeof(ToolPicker.VRToolItem), child.name);
             }
 
             return toolPicker;
         }
 
-        private void HandleSelectItem(UnityHelper.ToolPicker.VRToolItem item)
+        private void HandleSelectItem(ToolPicker.VRToolItem item)
         {
             switch (item)
             {
-                case UnityHelper.ToolPicker.VRToolItem.Compass:
+                case ToolPicker.VRToolItem.Compass:
                 {
                     var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
                     if (!mapController || mapController.compassEquipped) return;
@@ -105,7 +105,7 @@ namespace Raicuparta.TwoForksVR
 
                     return;
                 }
-                case UnityHelper.ToolPicker.VRToolItem.Map:
+                case ToolPicker.VRToolItem.Map:
                 {
                     var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
                     if (!mapController || mapController.mapEquipped) return;
@@ -114,7 +114,7 @@ namespace Raicuparta.TwoForksVR
 
                     return;
                 }
-                case UnityHelper.ToolPicker.VRToolItem.Radio:
+                case ToolPicker.VRToolItem.Radio:
                 {
                     var radioController = FindObjectOfType<vgPlayerRadioControl>();
                     if (!radioController) return;
@@ -123,7 +123,7 @@ namespace Raicuparta.TwoForksVR
 
                     return;
                 }
-                case UnityHelper.ToolPicker.VRToolItem.Flashlight:
+                case ToolPicker.VRToolItem.Flashlight:
                 {
                     var flashlightController = FindObjectOfType<vgFlashlightController>();
                     if (!flashlightController || flashlightController.isActive) return;
@@ -134,11 +134,11 @@ namespace Raicuparta.TwoForksVR
             }
         }
 
-        private void HandleDeselectItem(UnityHelper.ToolPicker.VRToolItem item)
+        private void HandleDeselectItem(ToolPicker.VRToolItem item)
         {
             switch (item)
             {
-                case UnityHelper.ToolPicker.VRToolItem.Compass:
+                case ToolPicker.VRToolItem.Compass:
                 {
                     var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
                     if (!mapController || !mapController.compassEquipped) return;
@@ -147,7 +147,7 @@ namespace Raicuparta.TwoForksVR
 
                     return;
                 }
-                case UnityHelper.ToolPicker.VRToolItem.Map:
+                case ToolPicker.VRToolItem.Map:
                 {
                     var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
                     if (!mapController || !mapController.mapEquipped) return;
@@ -156,7 +156,7 @@ namespace Raicuparta.TwoForksVR
 
                     return;
                 }
-                case UnityHelper.ToolPicker.VRToolItem.Radio:
+                case ToolPicker.VRToolItem.Radio:
                 {
                     var radioController = FindObjectOfType<vgPlayerRadioControl>();
                     if (!radioController) return;
@@ -164,7 +164,7 @@ namespace Raicuparta.TwoForksVR
                     radioController.OnRadioDown();
                     return;
                 }
-                case UnityHelper.ToolPicker.VRToolItem.Flashlight:
+                case ToolPicker.VRToolItem.Flashlight:
                 {
                     var flashlightController = FindObjectOfType<vgFlashlightController>();
                     if (!flashlightController || !flashlightController.isActive) return;
