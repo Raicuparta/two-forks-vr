@@ -226,7 +226,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig">
-      <Link>.editorconfig</Link>
+      <Link>SteamVR\.editorconfig</Link>
     </None>
     <None Include="Input\Bindings\actions.json" />
     <None Include="Input\Bindings\bindings_holographic_controller.json" />
