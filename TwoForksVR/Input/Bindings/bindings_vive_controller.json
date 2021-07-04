@@ -1,46 +1,129 @@
 {
-  "bindings": {
-    "/actions/buggy": {
-      "chords": [],
-      "poses": [],
-      "haptics": [],
-      "sources": [],
-      "skeleton": []
-    },
-    "/actions/default": {
-      "chords": [],
-      "poses": [],
-      "haptics": [
-        {
-          "output": "/actions/default/out/haptic",
-          "path": "/user/hand/left/output/haptic"
-        },
-        {
-          "output": "/actions/default/out/haptic",
-          "path": "/user/hand/right/output/haptic"
-        }
-      ],
-      "sources": [],
-      "skeleton": [
-        {
-          "output": "/actions/default/in/skeletonlefthand",
-          "path": "/user/hand/left/input/skeleton/left"
-        },
-        {
-          "output": "/actions/default/in/skeletonrighthand",
-          "path": "/user/hand/right/input/skeleton/right"
-        }
-      ]
-    },
-    "/actions/platformer": {
-      "chords": [],
-      "poses": [],
-      "haptics": [],
-      "sources": [],
-      "skeleton": []
-    }
-  },
-  "controller_type": "vive_controller",
-  "description": "",
-  "name": "vive_controller"
+   "action_manifest_version" : 0,
+   "alias_info" : {},
+   "app_key" : "system.generated.firewatch.exe",
+   "bindings" : {
+      "/actions/default" : {
+         "chords" : [],
+         "haptics" : [
+            {
+               "output" : "/actions/default/out/haptic",
+               "path" : "/user/hand/left/output/haptic"
+            },
+            {
+               "output" : "/actions/default/out/haptic",
+               "path" : "/user/hand/right/output/haptic"
+            }
+         ],
+         "poses" : [
+            {
+               "output" : "/actions/default/in/poselefthand",
+               "path" : "/user/hand/left/pose/raw"
+            },
+            {
+               "output" : "/actions/default/in/poserighthand",
+               "path" : "/user/hand/right/pose/raw"
+            }
+         ],
+         "skeleton" : [
+            {
+               "output" : "/actions/default/in/skeletonlefthand",
+               "path" : "/user/hand/left/input/skeleton/left"
+            },
+            {
+               "output" : "/actions/default/in/skeletonrighthand",
+               "path" : "/user/hand/right/input/skeleton/right"
+            }
+         ],
+         "sources" : [
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/default/in/jog"
+                  },
+                  "position" : {
+                     "output" : "/actions/default/in/move"
+                  }
+               },
+               "mode" : "trackpad",
+               "path" : "/user/hand/left/input/trackpad"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/default/in/toolpicker"
+                  },
+                  "position" : {
+                     "output" : "/actions/default/in/rotate"
+                  }
+               },
+               "mode" : "trackpad",
+               "path" : "/user/hand/right/input/trackpad"
+            },
+            {
+               "inputs" : {
+                  "east" : {
+                     "output" : "/actions/default/in/nextpage"
+                  },
+                  "north" : {
+                     "output" : "/actions/default/in/uiup"
+                  },
+                  "south" : {
+                     "output" : "/actions/default/in/uidown"
+                  },
+                  "west" : {
+                     "output" : "/actions/default/in/previouspage"
+                  }
+               },
+               "mode" : "dpad",
+               "parameters" : {
+                  "sub_mode" : "touch"
+               },
+               "path" : "/user/hand/right/input/trackpad"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/default/in/interact"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/default/in/interact"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/default/in/cancel"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/application_menu"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/default/in/toolpicker"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/application_menu"
+            }
+         ]
+      }
+   },
+   "category" : "steamvr_input",
+   "controller_type" : "vive_controller",
+   "description" : "",
+   "name" : "vive",
+   "options" : {},
+   "simulated_actions" : []
 }
