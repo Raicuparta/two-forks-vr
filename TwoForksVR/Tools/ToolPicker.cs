@@ -21,8 +21,6 @@ namespace TwoForksVR.Tools
 		public Transform ToolsContainer;
 		public Transform Hand;
 		public SteamVR_Input_Sources InputSource;
-		public Action<VRToolItem> OnSelectItem;
-		public Action<VRToolItem> OnDeselectItem;
 
 		private const float circleRadius = 0.25f;
 		private const float minSquareDistance = 0.03f;
@@ -58,22 +56,22 @@ namespace TwoForksVR.Tools
 			return GetSquareDistance(compareTransform.position, Hand.position);
 		}
 
-		private void DeselectCurrentlySelectedTool()
-		{
-			if (!selectedTool || OnDeselectItem == null) return;
-
-			OnDeselectItem(selectedTool.ItemType);
-			selectedTool = null;
-		}
-
 		private void SelectCurrentlyHoveredTool()
 		{
-			if (!hoveredTool || OnSelectItem == null) return;
+			if (!hoveredTool) return;
 
-			OnSelectItem(hoveredTool.ItemType);
+			hoveredTool.Select();
 			hoveredTool.EndHover();
 			selectedTool = hoveredTool;
 			hoveredTool = null;
+		}
+
+		private void DeselectCurrentlySelectedTool()
+		{
+			if (!selectedTool) return;
+
+			selectedTool.Deselect();
+			selectedTool = null;
 		}
 
 		private void OpenToolPicker()

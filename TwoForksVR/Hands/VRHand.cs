@@ -81,8 +81,6 @@ namespace TwoForksVR
             toolPicker.ParentWhileInactive = toolPicker.transform;
             toolPicker.Hand = transform;
             toolPicker.ToolsContainer = toolPicker.transform.Find("Tools");
-            toolPicker.OnSelectItem += HandleSelectItem;
-            toolPicker.OnDeselectItem += HandleDeselectItem;
 
             foreach (Transform child in toolPicker.ToolsContainer)
             {
@@ -91,89 +89,6 @@ namespace TwoForksVR
             }
 
             return toolPicker;
-        }
-
-        private void HandleSelectItem(ToolPicker.VRToolItem item)
-        {
-            switch (item)
-            {
-                case ToolPicker.VRToolItem.Compass:
-                {
-                    var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
-                    if (!mapController || mapController.compassEquipped) return;
-
-                    mapController.OnToggleCompass();
-
-                    return;
-                }
-                case ToolPicker.VRToolItem.Map:
-                {
-                    var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
-                    if (!mapController || mapController.mapEquipped) return;
-
-                    mapController.OnToggleMap();
-
-                    return;
-                }
-                case ToolPicker.VRToolItem.Radio:
-                {
-                    var radioController = FindObjectOfType<vgPlayerRadioControl>();
-                    if (!radioController) return;
-
-                    radioController.OnRadioUp();
-
-                    return;
-                }
-                case ToolPicker.VRToolItem.Flashlight:
-                {
-                    var flashlightController = FindObjectOfType<vgFlashlightController>();
-                    if (!flashlightController || flashlightController.isActive) return;
-
-                    flashlightController.ToggleFlashlight();
-                    return;
-                }
-            }
-        }
-
-        private void HandleDeselectItem(ToolPicker.VRToolItem item)
-        {
-            switch (item)
-            {
-                case ToolPicker.VRToolItem.Compass:
-                {
-                    var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
-                    if (!mapController || !mapController.compassEquipped) return;
-
-                    mapController.OnToggleCompass();
-
-                    return;
-                }
-                case ToolPicker.VRToolItem.Map:
-                {
-                    var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
-                    if (!mapController || !mapController.mapEquipped) return;
-
-                    mapController.OnToggleMap();
-
-                    return;
-                }
-                case ToolPicker.VRToolItem.Radio:
-                {
-                    var radioController = FindObjectOfType<vgPlayerRadioControl>();
-                    if (!radioController) return;
-
-                    radioController.OnRadioDown();
-                    return;
-                }
-                case ToolPicker.VRToolItem.Flashlight:
-                {
-                    var flashlightController = FindObjectOfType<vgFlashlightController>();
-                    if (!flashlightController || !flashlightController.isActive) return;
-
-                    flashlightController.ToggleFlashlight();
-                    return;
-                }
-            }
         }
 
         private void SetUpMap()
