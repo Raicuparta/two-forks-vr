@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace TwoForksVR.Patches
+namespace TwoForksVR.Hands
 {
     [HarmonyPatch(typeof(vgPlayerTargeting), "UpdateTarget")]
     public class UseHandLaserForTargeting

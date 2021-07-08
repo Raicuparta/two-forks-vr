@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using Valve.VR;
 
-namespace TwoForksVR.Patches
+namespace TwoForksVR.Input
 {
-    public class InputPatches
+    public static class InputPatches
     {
         private static SteamVR_Input_ActionSet_default actionSet;
         private static Dictionary<string, SteamVR_Action_Boolean> booleanActionMap;
@@ -49,9 +49,8 @@ namespace TwoForksVR.Patches
         }
 
         [HarmonyPatch(typeof(vgAxisData), "Update")]
-        public class PatchKeyDataUpdate
+        public class ReadAxisValuesFromSteamVR
         {
-
             public static void Postfix(List<string> ___names, ref float ___axisValue, ref float ___axisValueLastFrame)
             {
                 if (actionSet == null)
@@ -76,9 +75,8 @@ namespace TwoForksVR.Patches
         }
 
         [HarmonyPatch(typeof(vgButtonData), "Update")]
-        public static class PatchButtonDataUpdate
+        public static class ReadButtonValuesFromSteamVR
         {
-
             public static void Postfix(
                 List<string> ___names,
                 ref bool ___keyUp,
@@ -100,15 +98,15 @@ namespace TwoForksVR.Patches
                     }
                 }
             }
+        }
 
-            [HarmonyPatch(typeof(SteamVR_Input), "GetActionsFileFolder")]
-            public static class PatchActionsFile
+        [HarmonyPatch(typeof(SteamVR_Input), "GetActionsFileFolder")]
+        public static class GetActionsFileFromMod
+        {
+            public static bool Prefix(ref string __result)
             {
-                public static bool Prefix(ref string __result)
-                {
-                    __result = $"{Directory.GetCurrentDirectory()}/Mods/TwoForksVR/Bindings";
-                    return false;
-                }
+                __result = $"{Directory.GetCurrentDirectory()}/Mods/TwoForksVR/Bindings";
+                return false;
             }
         }
     }

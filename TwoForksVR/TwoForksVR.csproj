@@ -63,13 +63,13 @@
     <Compile Include="Debug\DebugAxes.cs" />
     <Compile Include="Helpers\MathHelper.cs" />
     <Compile Include="Input\InputName.cs" />
-    <Compile Include="Patches\MousePatches.cs" />
-    <Compile Include="Patches\InputPatches.cs" />
+    <Compile Include="Input\Patches\MousePatches.cs" />
+    <Compile Include="Input\Patches\BindingsPatches.cs" />
     <Compile Include="Items\ToolPicker.cs" />
     <Compile Include="Items\ToolPickerItem.cs" />
     <Compile Include="Items\VRMap.cs" />
-    <Compile Include="Patches\HandLaserPatches.cs" />
-    <Compile Include="Patches\HandsPatches.cs" />
+    <Compile Include="Hands\Patches\PlayerTargetingPatches.cs" />
+    <Compile Include="Hands\Patches\InventoryPatches.cs" />
     <Compile Include="Patches\SettingsPatches.cs" />
     <Compile Include="SteamVR\SteamVR\Extras\SteamVR_CameraHelper.cs" />
     <Compile Include="SteamVR\SteamVR\Extras\SteamVR_ForceSteamVRMode.cs" />

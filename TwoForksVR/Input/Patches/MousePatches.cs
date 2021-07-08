@@ -1,6 +1,6 @@
 ﻿using Harmony;
 
-namespace TwoForksVR.Patches
+namespace TwoForksVR.Input
 {
     [HarmonyPatch(typeof(vgCursorManager), "Awake")]
     public class PatchCursorManager
