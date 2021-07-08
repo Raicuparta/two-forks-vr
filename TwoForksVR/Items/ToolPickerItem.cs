@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Raicuparta.TwoForksVR
+namespace TwoForksVR
 {
     public class ToolPickerItem : MonoBehaviour
     {

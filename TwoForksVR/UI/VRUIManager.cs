@@ -7,7 +7,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Raicuparta.TwoForksVR
+namespace TwoForksVR
 {
     class VRUIManager: MonoBehaviour
     {
@@ -72,15 +72,6 @@ namespace Raicuparta.TwoForksVR
                     return;
                 }
                 SetUpUI(__instance.transform);
-            }
-        }
-
-        [HarmonyPatch(typeof(vgSettingsManager), "minimalInterface", MethodType.Setter)]
-        public class ForceMinimalInterfaceSet
-        {
-            public static void Prefix(ref bool value)
-            {
-                value = true;
             }
         }
     }

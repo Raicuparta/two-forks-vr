@@ -6,7 +6,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.VR;
 
-namespace Raicuparta.TwoForksVR
+namespace TwoForksVR
 {
     public class VRCameraManager: MonoBehaviour
     {
@@ -54,15 +54,6 @@ namespace Raicuparta.TwoForksVR
             vrCameraParent.SetParent(mainCamera.parent, false);
             mainCamera.SetParent(vrCameraParent);
             vrCameraParent.localPosition = Vector3.down * 1.2f;
-        }
-
-        [HarmonyPatch(typeof(vgSettingsManager), "headBob", MethodType.Setter)]
-        public class ForceDisableHeadBob
-        {
-            public static void Prefix(ref bool value)
-            {
-                value = false;
-            }
         }
     }
 }

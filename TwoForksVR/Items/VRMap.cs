@@ -8,7 +8,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Raicuparta.TwoForksVR
+namespace TwoForksVR
 {
     public class VRMap: MonoBehaviour
     {

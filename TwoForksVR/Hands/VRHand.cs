@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.VR;
 using Valve.VR;
 
-namespace Raicuparta.TwoForksVR
+namespace TwoForksVR
 {
     public class VRHand: MonoBehaviour
     {

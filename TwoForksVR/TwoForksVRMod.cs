@@ -8,9 +8,9 @@ using UnityEngine.VR;
 using System.Linq;
 using Valve.VR;
 
-namespace Raicuparta.TwoForksVR
+namespace TwoForksVR
 {
-    public class TwoForksVR : MelonMod
+    public class TwoForksVRMod : MelonMod
     {
         private bool isInitialized = false;
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace Raicuparta.TwoForksVR
+namespace TwoForksVR
 {
     public class MousePatches : MonoBehaviour
     {

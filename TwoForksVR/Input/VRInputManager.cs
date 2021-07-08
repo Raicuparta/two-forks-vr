@@ -6,7 +6,7 @@ using System.IO;
 using UnityEngine;
 using Valve.VR;
 
-namespace Raicuparta.TwoForksVR
+namespace TwoForksVR
 {
     public class VRInputManager : MonoBehaviour
     {
