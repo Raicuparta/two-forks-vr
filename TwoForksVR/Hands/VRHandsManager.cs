@@ -12,13 +12,16 @@ namespace TwoForksVR
 {
     public class VRHandsManager: MonoBehaviour
     {
+        public static VRHandsManager Instance;
         public Transform PlayerBody; // TODO get this some other way.
 
-        private static Transform LeftHand;
-        private static Transform RightHand;
+        public Transform LeftHand;
+        public Transform RightHand;
 
         private void Start()
         {
+            Instance = this;
+
             var handPrefab = VRAssetLoader.Hand;
 
             var handMaterial = GetHandMaterial();
@@ -66,25 +69,6 @@ namespace TwoForksVR
             handAttachment.SetParent(itemSocket, false);
             itemSocket.localPosition = position;
             itemSocket.localEulerAngles = eulerAngles;
-        }
-
-        [HarmonyPatch(typeof(vgInventoryController), "CachePlayerVariables")]
-        public class PatchCachePlayerVariables
-        {
-            public static void Postfix(ref Transform ___pickupAttachTransform)
-            {
-                ___pickupAttachTransform = RightHand;
-            }
-        }
-
-        [HarmonyPatch(typeof(vgInventoryController), "TossStart")]
-        public class PatchTossAnimation
-        {
-            public static bool Prefix(vgInventoryController __instance)
-            {
-                __instance.OnToss();
-                return false;
-            }
         }
     }
 }
