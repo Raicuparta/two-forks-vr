@@ -1,4 +1,5 @@
 ﻿using Harmony;
+using MelonLoader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,14 @@ using UnityEngine;
 namespace TwoForksVR.Patches
 {
     [HarmonyPatch(typeof(vgInventoryController), "CachePlayerVariables")]
-    public class PatchCachePlayerVariables
+    public class AttachGrabbableObjectsToVRHand
     {
         public static void Postfix(ref Transform ___pickupAttachTransform)
         {
             var hand = VRHandsManager.Instance?.RightHand;
             if (!hand)
             {
+                MelonLogger.Error("Couldn't get hand transform for CachePlayerVariables patch");
                 return;
             }
             ___pickupAttachTransform = hand;
@@ -22,7 +24,7 @@ namespace TwoForksVR.Patches
     }
 
     [HarmonyPatch(typeof(vgInventoryController), "TossStart")]
-    public class PatchTossAnimation
+    public class SkipTossAnimation
     {
         public static bool Prefix(vgInventoryController __instance)
         {
