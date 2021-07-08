@@ -1,14 +1,10 @@
 ﻿using Harmony;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
-namespace TwoForksVR
+namespace TwoForksVR.Tools
 {
     [HarmonyPatch(typeof(vgCompass), "LateUpdate")]
-    public class PatchCompass
+    public class FixCompassPointToNorth
     {
         public static bool Prefix(vgCompass __instance, Vector3 ___newRotation, float ___worldOffset)
         {
