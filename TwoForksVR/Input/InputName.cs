@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace TwoForksVR
 {
-    public struct InputThing
+    public struct InputName
     {
         public const string Notes = "tab";
         public const string Pause = "escape";

@@ -80,7 +80,6 @@ namespace TwoForksVR
             new GameObject().AddComponent<VRCameraManager>();
             new GameObject().AddComponent<VRUIManager>();
             new GameObject().AddComponent<VRHandsManager>();
-            new GameObject().AddComponent<VRInputManager>();
         }
 
         private void SetUpGameScene()

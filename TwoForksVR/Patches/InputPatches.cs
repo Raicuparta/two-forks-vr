@@ -1,14 +1,11 @@
 ﻿using Harmony;
-using MelonLoader;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 using Valve.VR;
 
-namespace TwoForksVR
+namespace TwoForksVR.Patches
 {
-    public class VRInputManager : MonoBehaviour
+    public class InputPatches
     {
         private static SteamVR_Input_ActionSet_default actionSet;
         private static Dictionary<string, SteamVR_Action_Boolean> booleanActionMap;
@@ -20,24 +17,24 @@ namespace TwoForksVR
             actionSet = SteamVR_Actions._default;
             booleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>()
             {
-                { InputThing.Climb, actionSet.Interact },
-                { InputThing.ChooseUp, actionSet.UIUp },
-                { InputThing.ChooseDown, actionSet.UIDown },
-                { InputThing.Jog, actionSet.Jog },
-                { InputThing.Pause, actionSet.Cancel },
-                { InputThing.Interact, actionSet.Interact },
-                { InputThing.NextPage, actionSet.NextPage },
-                { InputThing.PreviousPage, actionSet.PreviousPage },
+                { InputName.Climb, actionSet.Interact },
+                { InputName.ChooseUp, actionSet.UIUp },
+                { InputName.ChooseDown, actionSet.UIDown },
+                { InputName.Jog, actionSet.Jog },
+                { InputName.Pause, actionSet.Cancel },
+                { InputName.Interact, actionSet.Interact },
+                { InputName.NextPage, actionSet.NextPage },
+                { InputName.PreviousPage, actionSet.PreviousPage },
             };
             vector2XActionMap = new Dictionary<string, SteamVR_Action_Vector2>()
             {
-                { InputThing.MoveStrafe, actionSet.Move },
-                { InputThing.LookHorizontal, actionSet.Rotate },
+                { InputName.MoveStrafe, actionSet.Move },
+                { InputName.LookHorizontal, actionSet.Rotate },
             };
             vector2YActionMap = new Dictionary<string, SteamVR_Action_Vector2>()
             {
-                { InputThing.MoveForward, actionSet.Move },
-                { InputThing.LookVertical, actionSet.Rotate },
+                { InputName.MoveForward, actionSet.Move },
+                { InputName.LookVertical, actionSet.Rotate },
             };
 
             // Pick dialog option with interact button.
@@ -114,33 +111,5 @@ namespace TwoForksVR
                 }
             }
         }
-
-        //[HarmonyPatch(typeof(vgKeyBind), "UpdatePressCommands")]
-        //public class PatchPressCommands
-        //{
-
-        //    public static void Prefix(vgKeyData keyToCheck)
-        //    {
-        //        MelonLogger.Msg("## Press" + String.Join(", ", keyToCheck.names.ToArray()));
-        //    }
-        //}
-        //[HarmonyPatch(typeof(vgKeyBind), "UpdateReleaseCommands")]
-        //public class PatchReleaseCommands
-        //{
-
-        //    public static void Prefix(vgKeyData keyToCheck)
-        //    {
-        //        MelonLogger.Msg("## Release" + String.Join(", ", keyToCheck.names.ToArray()));
-        //    }
-        //}
-        //[HarmonyPatch(typeof(vgKeyBind), "UpdateOtherCommands")]
-        //public class PatchOtherCommands
-        //{
-
-        //    public static void Prefix(vgKeyData keyToCheck)
-        //    {
-        //        MelonLogger.Msg("## Other" + String.Join(", ", keyToCheck.names.ToArray()));
-        //    }
-        //}
     }
 }
