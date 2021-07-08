@@ -10,12 +10,12 @@ namespace TwoForksVR
 {
     class VRHandLaser: MonoBehaviour
     {
-        private static Transform selfTransform;
+        public static VRHandLaser Instance;
         private static LineRenderer lineRenderer;
 
         private void Start()
         {
-            selfTransform = transform;
+            Instance = this;
 
             name = "VR Laser";
 
@@ -44,16 +44,6 @@ namespace TwoForksVR
         private void Update()
         {
             UpdateLaserVisibility();
-        }
-
-        [HarmonyPatch(typeof(vgPlayerTargeting), "UpdateTarget")]
-        public class PatchUpdateTarget
-        {
-            public static void Prefix(ref Vector3 cameraFacing, ref Vector3 cameraOrigin)
-            {
-                cameraFacing = selfTransform.forward;
-                cameraOrigin = selfTransform.position;
-            }
         }
     }
 }
