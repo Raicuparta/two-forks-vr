@@ -65,12 +65,12 @@
     <Compile Include="Input\InputName.cs" />
     <Compile Include="Input\Patches\MousePatches.cs" />
     <Compile Include="Input\Patches\BindingsPatches.cs" />
-    <Compile Include="Items\ToolPicker.cs" />
-    <Compile Include="Items\ToolPickerItem.cs" />
-    <Compile Include="Items\VRMap.cs" />
+    <Compile Include="Tools\ToolPicker.cs" />
+    <Compile Include="Tools\ToolPickerItem.cs" />
+    <Compile Include="Tools\VRMap.cs" />
     <Compile Include="Hands\Patches\PlayerTargetingPatches.cs" />
     <Compile Include="Hands\Patches\InventoryPatches.cs" />
-    <Compile Include="Patches\SettingsPatches.cs" />
+    <Compile Include="Settings\Patches\SettingsPatches.cs" />
     <Compile Include="SteamVR\SteamVR\Extras\SteamVR_CameraHelper.cs" />
     <Compile Include="SteamVR\SteamVR\Extras\SteamVR_ForceSteamVRMode.cs" />
     <Compile Include="SteamVR\SteamVR\Extras\SteamVR_GazeTracker.cs" />
@@ -220,11 +220,11 @@
     <Compile Include="TwoForksVRMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Camera\VRCameraManager.cs" />
-    <Compile Include="Items\VRCompass.cs" />
+    <Compile Include="Tools\Patches\CompassPatches.cs" />
     <Compile Include="Hands\VRHand.cs" />
     <Compile Include="Hands\VRHandLaser.cs" />
     <Compile Include="Hands\VRHandsManager.cs" />
-    <Compile Include="UI\VRUIManager.cs" />
+    <Compile Include="UI\Patches\UIPatches.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig">

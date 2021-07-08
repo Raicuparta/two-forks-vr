@@ -78,7 +78,6 @@ namespace TwoForksVR
         {
             isInitialized = false;
             new GameObject().AddComponent<VRCameraManager>();
-            new GameObject().AddComponent<VRUIManager>();
             new GameObject().AddComponent<VRHandsManager>();
         }
 
@@ -86,7 +85,6 @@ namespace TwoForksVR
         {
             isInitialized = true;
             new GameObject().AddComponent<VRCameraManager>();
-            new GameObject().AddComponent<VRUIManager>();
             new GameObject().AddComponent<VRBodyManager>();
         }
 
