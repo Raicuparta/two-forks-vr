@@ -6,7 +6,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.VR;
 
-namespace TwoForksVR
+namespace TwoForksVR.PlayerCamera
 {
     public class VRCameraManager: MonoBehaviour
     {
@@ -53,7 +53,6 @@ namespace TwoForksVR
             var vrCameraParent = new GameObject("VR Stage").transform;
             vrCameraParent.SetParent(mainCamera.parent, false);
             mainCamera.SetParent(vrCameraParent);
-            vrCameraParent.localPosition = Vector3.down * 1.2f;
         }
     }
 }
