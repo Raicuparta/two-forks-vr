@@ -6,7 +6,7 @@ using System.Text;
 using UnityEngine;
 using Valve.VR;
 
-namespace TwoForksVR
+namespace TwoForksVR.Hands
 {
     class VRHandLaser: MonoBehaviour
     {

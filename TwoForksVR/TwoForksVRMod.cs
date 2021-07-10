@@ -8,6 +8,7 @@ using UnityEngine.VR;
 using System.Linq;
 using Valve.VR;
 using TwoForksVR.PlayerCamera;
+using TwoForksVR.Hands;
 
 namespace TwoForksVR
 {

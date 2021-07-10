@@ -8,7 +8,7 @@ using System.Text;
 using UnityEngine;
 using Valve.VR;
 
-namespace TwoForksVR
+namespace TwoForksVR.Hands
 {
     public class VRHandsManager: MonoBehaviour
     {
