@@ -21,10 +21,19 @@ namespace TwoForksVR.UI
     [HarmonyPatch(typeof(CanvasScaler), "OnEnable")]
     public class MoveCanvasToWorldSpace
     {
+        private static readonly string[] canvasesToDisable =
+        {
+            "BlackBars", // Cinematic black bars.
+            "Camera", // Disposable camera.
+        };
+        private static readonly string[] canvasesToIgnore =
+{
+            "ExplorerCanvas", // UnityExplorer.
+        };
+
         public static void Prefix(CanvasScaler __instance)
         {
-            // Prevent messing with UnityExplorer
-            if (__instance.name == "ExplorerCanvas")
+            if (canvasesToIgnore.Contains(__instance.name))
             {
                 return;
             }
@@ -37,7 +46,7 @@ namespace TwoForksVR.UI
             var canvases = transform.GetComponentsInChildren<Canvas>(true).Where(canvas => canvas.renderMode == RenderMode.ScreenSpaceOverlay);
             canvases.Do(canvas =>
             {
-                if (canvas.name == "BlackBars")
+                if (canvasesToDisable.Contains(canvas.name))
                 {
                     canvas.enabled = false;
                     return;
@@ -47,6 +56,12 @@ namespace TwoForksVR.UI
                 canvas.transform.localPosition = Vector3.zero;
                 canvas.transform.localRotation = Quaternion.identity;
                 canvas.transform.localScale = Vector3.one;
+
+                if (canvas.name == "Camera")
+                {
+                    canvas.transform.SetParent(VRHandsManager.Instance.RightHand);
+                    canvas.transform.localScale = Vector3.one * 0.3f;
+                }
             });
         }
     }
