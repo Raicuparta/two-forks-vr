@@ -71,6 +71,14 @@ namespace TwoForksVR.Tools
                         flashlightController.ToggleFlashlight();
                         return;
                     }
+                case ToolPicker.VRToolItem.DisposableCamera:
+                    {
+                        var playerController = FindObjectOfType<vgPlayerController>();
+                        if (!playerController || playerController.cameraActive) return;
+
+                        playerController.OnCameraToggle();
+                        return;
+                    }
             }
         }
 
@@ -110,6 +118,14 @@ namespace TwoForksVR.Tools
                         if (!flashlightController || !flashlightController.isActive) return;
 
                         flashlightController.ToggleFlashlight();
+                        return;
+                    }
+                case ToolPicker.VRToolItem.DisposableCamera:
+                    {
+                        var playerController = FindObjectOfType<vgPlayerController>();
+                        if (!playerController || !playerController.cameraActive) return;
+
+                        playerController.OnCameraToggle();
                         return;
                     }
             }

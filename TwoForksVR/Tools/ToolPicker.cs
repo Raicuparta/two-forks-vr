@@ -14,6 +14,7 @@ namespace TwoForksVR.Tools
 			Map,
 			Compass,
 			Flashlight,
+			DisposableCamera,
 		}
 
 		public Transform ParentWhileActive;
