@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using TwoForksVR.Tools;
 using UnityEngine;
 using Valve.VR;
 
@@ -22,6 +23,12 @@ namespace TwoForksVR.Hands
         {
             Instance = this;
 
+            SetUpHands();
+            SetUpToolPicker();
+        }
+
+        private void SetUpHands()
+        {
             var handPrefab = VRAssetLoader.Hand;
 
             var handMaterial = GetHandMaterial();
@@ -42,6 +49,24 @@ namespace TwoForksVR.Hands
 
             // Update pickupAttachTransform to hand.
             GameObject.FindObjectOfType<vgInventoryController>().CachePlayerVariables();
+
+        }
+
+        private void SetUpToolPicker()
+        {
+            var toolPickerPrefab = VRAssetLoader.ToolPicker;
+
+            var toolPicker = Instantiate(toolPickerPrefab).AddComponent<ToolPicker>();
+            toolPicker.ParentWhileActive = Camera.main.transform.parent;
+            toolPicker.ParentWhileInactive = toolPicker.transform;
+            toolPicker.Hand = RightHand;
+            toolPicker.ToolsContainer = toolPicker.transform.Find("Tools");
+
+            foreach (Transform child in toolPicker.ToolsContainer)
+            {
+                var toolPickerItem = child.gameObject.AddComponent<ToolPickerItem>();
+                toolPickerItem.ItemType = (ToolPicker.VRToolItem)Enum.Parse(typeof(ToolPicker.VRToolItem), child.name);
+            }
         }
 
         private Material GetHandMaterial()

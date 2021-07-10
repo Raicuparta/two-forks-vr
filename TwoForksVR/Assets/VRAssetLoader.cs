@@ -11,10 +11,12 @@ namespace TwoForksVR
     public static class VRAssetLoader
     {
         public static GameObject Hand { get; private set; }
+        public static GameObject ToolPicker { get; private set; }
 
         public static void LoadAssets()
         {
             Hand = LoadAssetPrefab("hand", "Hand");
+            ToolPicker = LoadAssetPrefab("tool-picker", "ToolPicker");
         }
 
         private static GameObject LoadAssetPrefab(string assetName, string objectName)

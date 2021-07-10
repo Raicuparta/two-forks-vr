@@ -21,8 +21,6 @@ namespace TwoForksVR.Hands
             transform.SetParent(Camera.main.transform.parent, false); // TODO make sure camera is initialized?
             var pose = gameObject.AddComponent<SteamVR_Behaviour_Pose>();
 
-            var toolPicker = SetUpToolPicker();
-
             if (IsLeft)
             {
                 var handModel = transform.Find("handModel");
@@ -32,7 +30,6 @@ namespace TwoForksVR.Hands
                 SetUpRadio();
                 pose.inputSource = SteamVR_Input_Sources.LeftHand;
                 pose.poseAction = SteamVR_Actions.default_PoseLeftHand;
-                toolPicker.InputSource = SteamVR_Input_Sources.LeftHand;
             }
             else
             {
@@ -40,7 +37,6 @@ namespace TwoForksVR.Hands
                 handLaser.SetParent(transform, false);
                 pose.inputSource = SteamVR_Input_Sources.RightHand;
                 pose.poseAction = SteamVR_Actions.default_PoseRightHand;
-                toolPicker.InputSource = SteamVR_Input_Sources.RightHand;
             }
             gameObject.SetActive(true);
         }
@@ -72,23 +68,6 @@ namespace TwoForksVR.Hands
                 new Vector3(0.0157f, -0.0703f, -0.0755f),
                 new Vector3(8.3794f, 341.5249f, 179.2709f)
             );
-        }
-
-        private ToolPicker SetUpToolPicker()
-        {
-            var toolPicker = transform.Find("ToolPicker").gameObject.AddComponent<ToolPicker>();
-            toolPicker.ParentWhileActive = Camera.main.transform.parent;
-            toolPicker.ParentWhileInactive = toolPicker.transform;
-            toolPicker.Hand = transform;
-            toolPicker.ToolsContainer = toolPicker.transform.Find("Tools");
-
-            foreach (Transform child in toolPicker.ToolsContainer)
-            {
-                var toolPickerItem = child.gameObject.AddComponent<ToolPickerItem>();
-                toolPickerItem.ItemType = (ToolPicker.VRToolItem)Enum.Parse(typeof(ToolPicker.VRToolItem), child.name);
-            }
-
-            return toolPicker;
         }
 
         private void SetUpMap()

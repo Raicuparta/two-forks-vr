@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TwoForksVR.Hands;
 using UnityEngine;
 using Valve.VR;
 
@@ -33,6 +34,7 @@ namespace TwoForksVR.Tools
 
 		private void Start()
 		{
+			InputSource = SteamVR_Input_Sources.RightHand;
 			SetUpToolsList();
 		}
 
@@ -83,6 +85,7 @@ namespace TwoForksVR.Tools
 
 			ToolsContainer.gameObject.SetActive(true);
 			ToolsContainer.SetParent(ParentWhileActive);
+			ToolsContainer.position = VRHandsManager.Instance.RightHand.position;
 			ToolsContainer.LookAt(Camera.main.transform);
 			DeselectCurrentlySelectedTool();
 		}
