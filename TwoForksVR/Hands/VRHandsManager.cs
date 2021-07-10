@@ -59,7 +59,6 @@ namespace TwoForksVR.Hands
             var toolPicker = Instantiate(toolPickerPrefab).AddComponent<ToolPicker>();
             toolPicker.ParentWhileActive = Camera.main.transform.parent;
             toolPicker.ParentWhileInactive = toolPicker.transform;
-            toolPicker.Hand = RightHand;
             toolPicker.ToolsContainer = toolPicker.transform.Find("Tools");
 
             foreach (Transform child in toolPicker.ToolsContainer)

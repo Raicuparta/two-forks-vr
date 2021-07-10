@@ -21,8 +21,6 @@ namespace TwoForksVR.Tools
 		public Transform ParentWhileActive;
 		public Transform ParentWhileInactive;
 		public Transform ToolsContainer;
-		public Transform Hand;
-		public SteamVR_Input_Sources InputSource;
 
 		private const float circleRadius = 0.25f;
 		private const float minSquareDistance = 0.03f;
@@ -34,7 +32,6 @@ namespace TwoForksVR.Tools
 
 		private void Start()
 		{
-			InputSource = SteamVR_Input_Sources.RightHand;
 			SetUpToolsList();
 		}
 
@@ -54,9 +51,9 @@ namespace TwoForksVR.Tools
 			return (pointA - pointB).sqrMagnitude;
 		}
 
-		private float GetDistanceToHand(Transform compareTransform)
+		private float GetDistanceToHand(Transform compareTransform, Transform hand)
 		{
-			return GetSquareDistance(compareTransform.position, Hand.position);
+			return GetSquareDistance(compareTransform.position, hand.position);
 		}
 
 		private void SelectCurrentlyHoveredTool()
@@ -77,15 +74,13 @@ namespace TwoForksVR.Tools
 			selectedTool = null;
 		}
 
-		private void OpenToolPicker()
+		private void OpenToolPicker(Transform hand)
 		{
 			if (ToolsContainer.gameObject.activeSelf) return;
 
-			Debug.Log("OpenToolPicker");
-
 			ToolsContainer.gameObject.SetActive(true);
 			ToolsContainer.SetParent(ParentWhileActive);
-			ToolsContainer.position = VRHandsManager.Instance.RightHand.position;
+			ToolsContainer.position = hand.position;
 			ToolsContainer.LookAt(Camera.main.transform);
 			DeselectCurrentlySelectedTool();
 		}
@@ -94,8 +89,6 @@ namespace TwoForksVR.Tools
 		{
 			if (!ToolsContainer.gameObject.activeSelf) return;
 
-			Debug.Log("CloseToolPicker");
-
 			ToolsContainer.gameObject.SetActive(false);
 			ToolsContainer.SetParent(ParentWhileInactive);
 			ToolsContainer.localPosition = Vector3.zero;
@@ -103,7 +96,7 @@ namespace TwoForksVR.Tools
 			SelectCurrentlyHoveredTool();
 		}
 
-		private void UpdateSelectedTool()
+		private void UpdateSelectedTool(Transform hand)
 		{
 			ToolPickerItem nextSelectedTool = null;
 			var selectedToolDistance = Mathf.Infinity;
@@ -111,7 +104,7 @@ namespace TwoForksVR.Tools
 			for (int i = 0; i < tools.Length; i++)
 			{
 				var tool = tools[i];
-				var distance = GetDistanceToHand(tool.transform);
+				var distance = GetDistanceToHand(tool.transform, hand);
 				if (distance < minSquareDistance && distance < selectedToolDistance)
 				{
 					nextSelectedTool = tool;
@@ -136,15 +129,23 @@ namespace TwoForksVR.Tools
 
 		private void Update()
 		{
-			if (input.GetState(InputSource))
+			if (input.GetState(SteamVR_Input_Sources.RightHand))
 			{
-				UpdateSelectedTool();
+				UpdateSelectedTool(VRHandsManager.Instance.RightHand);
 			}
-			if (input.GetStateDown(InputSource))
+			if (input.GetState(SteamVR_Input_Sources.LeftHand))
 			{
-				OpenToolPicker();
+				UpdateSelectedTool(VRHandsManager.Instance.LeftHand);
 			}
-			if (input.GetStateUp(InputSource))
+			if (input.GetStateDown(SteamVR_Input_Sources.RightHand))
+			{
+				OpenToolPicker(VRHandsManager.Instance.RightHand);
+			}
+			if (input.GetStateDown(SteamVR_Input_Sources.LeftHand))
+			{
+				OpenToolPicker(VRHandsManager.Instance.LeftHand);
+			}
+			if (input.stateUp)
 			{
 				CloseToolPicker();
 			}
