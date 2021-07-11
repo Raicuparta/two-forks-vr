@@ -58,13 +58,10 @@ namespace TwoForksVR.UI
                 return;
             }
 
-            var transform = __instance.transform;
-            transform.SetParent(Camera.main.transform, false);
-            transform.localPosition = Vector3.forward * 0.5f;
-            transform.localScale = Vector3.one * 0.0004f;
-
             canvas.worldCamera = Camera.main;
             canvas.renderMode = RenderMode.WorldSpace;
+            canvas.gameObject.AddComponent<AttachToCamera>();
+            __instance.transform.localScale = Vector3.one * 0.0004f;
         }
     }
 }
