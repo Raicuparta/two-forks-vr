@@ -34,12 +34,18 @@ namespace TwoForksVR.UI
 
         public static void Prefix(CanvasScaler __instance)
         {
-            if (canvasesToIgnore.Contains(__instance.name))
+            if (!Camera.main || canvasesToIgnore.Contains(__instance.name))
             {
                 return;
             }
 
             var canvas = __instance.GetComponent<Canvas>();
+
+            if (!canvas)
+            {
+                MelonLogger.Error($"MoveCanvasToWorldSpace: {__instance.name} has no Canvas");
+                return;
+            }
 
             if (canvasesToDisable.Contains(canvas.name))
             {
