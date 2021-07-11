@@ -50,7 +50,7 @@ namespace TwoForksVR.PlayerCamera
         private void ReparentCamera()
         {
             var mainCamera = Camera.main.transform;
-            var vrCameraParent = new GameObject("VR Stage").transform;
+            var vrCameraParent = new GameObject("VRStage").transform;
             vrCameraParent.SetParent(mainCamera.parent, false);
             mainCamera.SetParent(vrCameraParent);
         }

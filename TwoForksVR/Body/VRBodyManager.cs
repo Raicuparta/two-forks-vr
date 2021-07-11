@@ -14,7 +14,7 @@ namespace TwoForksVR
             var playerBodyTransform = GetPlayerBodyTransform();
             HideBody(playerBodyTransform);
 
-            var handsManager = new GameObject().AddComponent<VRHandsManager>();
+            var handsManager = new GameObject("VRHandsManager").AddComponent<VRHandsManager>();
             handsManager.PlayerBody = playerBodyTransform;
         }
 

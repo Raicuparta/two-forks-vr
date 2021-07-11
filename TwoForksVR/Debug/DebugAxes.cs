@@ -17,7 +17,7 @@ namespace TwoForksVR
 
         private void CreateLine(Color color, Vector3 destination)
         {
-            var line = new GameObject("debugLine").transform;
+            var line = new GameObject("VRDebugLine").transform;
             line.transform.SetParent(transform, false);
 
             var lineRenderer = line.gameObject.AddComponent<LineRenderer>();

@@ -79,15 +79,15 @@ namespace TwoForksVR
         private void SetUpMenuScene()
         {
             isInitialized = false;
-            new GameObject().AddComponent<VRCameraManager>();
-            new GameObject().AddComponent<VRHandsManager>();
+            new GameObject("VRCameraManager").AddComponent<VRCameraManager>();
+            new GameObject("VRHandsManager").AddComponent<VRHandsManager>();
         }
 
         private void SetUpGameScene()
         {
             isInitialized = true;
-            new GameObject().AddComponent<VRCameraManager>();
-            new GameObject().AddComponent<VRBodyManager>();
+            new GameObject("VRCameraManager").AddComponent<VRCameraManager>();
+            new GameObject("VRBodyManager").AddComponent<VRBodyManager>();
         }
 
         private void SetUpIntroScene()
