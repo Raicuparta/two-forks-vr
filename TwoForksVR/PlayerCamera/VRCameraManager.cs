@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.VR;
+using Valve.VR;
 
 namespace TwoForksVR.PlayerCamera
 {
@@ -40,7 +41,7 @@ namespace TwoForksVR.PlayerCamera
                 return;
             }
             var cameraOffset = GetCameraOffset();
-            if (UnityEngine.Input.GetKeyDown(KeyCode.R))
+            if (SteamVR_Actions.default_Recenter.stateDown)
             {
                 stage.position -= cameraOffset;
             }
