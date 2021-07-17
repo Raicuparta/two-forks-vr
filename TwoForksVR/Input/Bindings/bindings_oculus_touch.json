@@ -4,7 +4,21 @@
    "app_key" : "system.generated.firewatch.exe",
    "bindings" : {
       "/actions/default" : {
-         "chords" : [],
+         "chords": [
+            {
+               "output": "/actions/default/in/recenter",
+               "inputs": [
+                  [
+                     "/user/hand/left/input/trigger",
+                     "click"
+                  ],
+                  [
+                     "/user/hand/right/input/trigger",
+                     "click"
+                  ]
+               ]
+            }
+         ],
          "haptics" : [
             {
                "output" : "/actions/default/out/haptic",
