@@ -47,6 +47,8 @@ namespace Valve.VR
         
         private static SteamVR_Action_Boolean p_default_UIDown;
         
+        private static SteamVR_Action_Boolean p_default_Recenter;
+        
         private static SteamVR_Action_Vibration p_default_Haptic;
         
         public static SteamVR_Action_Boolean default_Interact
@@ -169,6 +171,14 @@ namespace Valve.VR
             }
         }
         
+        public static SteamVR_Action_Boolean default_Recenter
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_Recenter.GetCopy <SteamVR_Action_Boolean>();
+            }
+        }
+        
         public static SteamVR_Action_Vibration default_Haptic
         {
             get
@@ -196,6 +206,7 @@ namespace Valve.VR
                     SteamVR_Actions.default_Cancel,
                     SteamVR_Actions.default_UIUp,
                     SteamVR_Actions.default_UIDown,
+                    SteamVR_Actions.default_Recenter,
                     SteamVR_Actions.default_Haptic};
             Valve.VR.SteamVR_Input.actionsIn = new Valve.VR.ISteamVR_Action_In[]
             {
@@ -213,7 +224,8 @@ namespace Valve.VR
                     SteamVR_Actions.default_PreviousPage,
                     SteamVR_Actions.default_Cancel,
                     SteamVR_Actions.default_UIUp,
-                    SteamVR_Actions.default_UIDown};
+                    SteamVR_Actions.default_UIDown,
+                    SteamVR_Actions.default_Recenter};
             Valve.VR.SteamVR_Input.actionsOut = new Valve.VR.ISteamVR_Action_Out[]
             {
                     SteamVR_Actions.default_Haptic};
@@ -234,7 +246,8 @@ namespace Valve.VR
                     SteamVR_Actions.default_PreviousPage,
                     SteamVR_Actions.default_Cancel,
                     SteamVR_Actions.default_UIUp,
-                    SteamVR_Actions.default_UIDown};
+                    SteamVR_Actions.default_UIDown,
+                    SteamVR_Actions.default_Recenter};
             Valve.VR.SteamVR_Input.actionsSingle = new Valve.VR.SteamVR_Action_Single[0];
             Valve.VR.SteamVR_Input.actionsVector2 = new Valve.VR.SteamVR_Action_Vector2[]
             {
@@ -257,7 +270,8 @@ namespace Valve.VR
                     SteamVR_Actions.default_PreviousPage,
                     SteamVR_Actions.default_Cancel,
                     SteamVR_Actions.default_UIUp,
-                    SteamVR_Actions.default_UIDown};
+                    SteamVR_Actions.default_UIDown,
+                    SteamVR_Actions.default_Recenter};
         }
         
         private static void PreInitActions()
@@ -277,6 +291,7 @@ namespace Valve.VR
             SteamVR_Actions.p_default_Cancel = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/Cancel")));
             SteamVR_Actions.p_default_UIUp = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/UIUp")));
             SteamVR_Actions.p_default_UIDown = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/UIDown")));
+            SteamVR_Actions.p_default_Recenter = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/Recenter")));
             SteamVR_Actions.p_default_Haptic = ((SteamVR_Action_Vibration)(SteamVR_Action.Create <SteamVR_Action_Vibration>("/actions/default/out/Haptic")));
         }
     }

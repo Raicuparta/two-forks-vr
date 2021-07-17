@@ -64,6 +64,10 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/Recenter",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     }
@@ -149,7 +153,8 @@
       "/actions/default/in/UiUp": "UI Up",
       "/actions/default/in/UiDown": "UiDown",
       "/actions/default/in/UIUp": "UI Up",
-      "/actions/default/in/UIDown": "UI Down"
+      "/actions/default/in/UIDown": "UI Down",
+      "/actions/default/in/Recenter": "Recenter"
     }
   ]
 }
