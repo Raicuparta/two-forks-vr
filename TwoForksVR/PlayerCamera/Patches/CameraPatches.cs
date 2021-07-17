@@ -10,21 +10,13 @@ namespace TwoForksVR.PlayerCamera
     [HarmonyPatch(typeof(vgCameraController), "Start")]
     public class CameraPatches
     {
+        // VR Camera's position always relative to the player's feet (when playing in room scale).
+        // Pancake Camera's position was relative to this "eyeTransform", which is in the player's head.
+        // If we just say that the "eyeTransform" is actually located at the player's feet, then the VR camera
+        // will be correctly placed relative to the floor. Just needs to be adjusted to allow for sitting mode.
         public static void Postfix(ref Transform ___eyeTransform, GameObject ___playerGameObject)
         {
             ___eyeTransform = ___playerGameObject.transform;
-        }
-    }
-
-    [HarmonyPatch(typeof(vgMenuCameraController), "Start")]
-    public class DisableMenuCameraMovement
-    {
-        // Even though Unity prevents moving / rotating a VR camera directly, the transform values still change until the next update.
-        // We need to disable any code that tries to move the camera directly, so that the transform values remain "clean".
-        public static bool Prefix(vgMenuCameraController __instance)
-        {
-            UnityEngine.Object.Destroy(__instance);
-            return false;
         }
     }
 }
