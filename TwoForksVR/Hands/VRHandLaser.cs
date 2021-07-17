@@ -31,18 +31,26 @@ namespace TwoForksVR.Hands
             lineRenderer.enabled = false;
         }
 
-        private bool ShouldLaserBeVisible()
+        private void UpdateLaserParent()
         {
-            return vgHudManager.Instance?.currentTarget != null || SteamVR_Actions.default_Interact.state;
+            if (SteamVR_Actions.default_Interact.GetStateDown(SteamVR_Input_Sources.LeftHand))
+            {
+                transform.SetParent(VRHandsManager.Instance.LeftHand, false);
+            }
+            if (SteamVR_Actions.default_Interact.GetStateDown(SteamVR_Input_Sources.RightHand))
+            {
+                transform.SetParent(VRHandsManager.Instance.RightHand, false);
+            }
         }
 
         private void UpdateLaserVisibility()
         {
-            lineRenderer.enabled = ShouldLaserBeVisible();
+            lineRenderer.enabled = vgHudManager.Instance?.currentTarget != null || SteamVR_Actions.default_Interact.state;
         }
 
         private void Update()
         {
+            UpdateLaserParent();
             UpdateLaserVisibility();
         }
     }

@@ -33,8 +33,6 @@ namespace TwoForksVR.Hands
             }
             else
             {
-                var handLaser = new GameObject("VRHandLaser").AddComponent<VRHandLaser>().transform;
-                handLaser.SetParent(transform, false);
                 pose.inputSource = SteamVR_Input_Sources.RightHand;
                 pose.poseAction = SteamVR_Actions.default_PoseRightHand;
             }

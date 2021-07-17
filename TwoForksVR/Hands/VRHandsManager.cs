@@ -25,6 +25,7 @@ namespace TwoForksVR.Hands
 
             SetUpHands();
             SetUpToolPicker();
+            SetUpHandLaser();
         }
 
         private void SetUpHands()
@@ -49,7 +50,6 @@ namespace TwoForksVR.Hands
 
             // Update pickupAttachTransform to hand.
             GameObject.FindObjectOfType<vgInventoryController>().CachePlayerVariables();
-
         }
 
         private void SetUpToolPicker()
@@ -66,6 +66,12 @@ namespace TwoForksVR.Hands
                 var toolPickerItem = child.gameObject.AddComponent<ToolPickerItem>();
                 toolPickerItem.ItemType = (ToolPicker.VRToolItem)Enum.Parse(typeof(ToolPicker.VRToolItem), child.name);
             }
+        }
+
+        private void SetUpHandLaser()
+        {
+            var handLaser = new GameObject("VRHandLaser").AddComponent<VRHandLaser>().transform;
+            handLaser.SetParent(transform, false);
         }
 
         private Material GetHandMaterial()
