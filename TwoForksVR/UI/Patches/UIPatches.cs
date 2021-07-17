@@ -28,7 +28,7 @@ namespace TwoForksVR.UI
             "Camera", // Disposable camera. TODO: show this information in some other way.
         };
         private static readonly string[] canvasesToIgnore =
-{
+        {
             "ExplorerCanvas", // UnityExplorer.
         };
 

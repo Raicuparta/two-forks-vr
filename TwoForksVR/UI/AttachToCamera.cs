@@ -17,7 +17,7 @@ namespace TwoForksVR.UI
         {
             if (target == null)
             {
-                target = VRCameraManager.Instance?.VRCamera?.transform;
+                target = Camera.main?.transform;
                 return;
             }
             transform.position = target.position + target.forward * offset;

@@ -11,7 +11,6 @@ namespace TwoForksVR.PlayerCamera
     public class VRCameraManager: MonoBehaviour
     {
         public static VRCameraManager Instance;
-        public Camera VRCamera;
 
         private bool isInitialized;
         
@@ -53,15 +52,9 @@ namespace TwoForksVR.PlayerCamera
 
         private void ReparentCamera()
         {
-            var originalCamera = Camera.main;
-            VRCamera = new GameObject("VRCamera").AddComponent<Camera>();
-            VRCamera.CopyFrom(originalCamera);
-            originalCamera.tag = "";
-            originalCamera.enabled = false;
-            VRCamera.tag = "MainCamera";
             var vrCameraParent = new GameObject("VRStage").transform;
-            vrCameraParent.SetParent(originalCamera.transform.parent, false);
-            VRCamera.transform.SetParent(vrCameraParent);
+            vrCameraParent.SetParent(Camera.main.transform.parent, false);
+            Camera.main.transform.SetParent(vrCameraParent);
         }
     }
 }
