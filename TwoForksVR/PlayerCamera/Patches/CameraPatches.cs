@@ -1,4 +1,5 @@
 ﻿using Harmony;
+using MelonLoader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,11 @@ namespace TwoForksVR.PlayerCamera
         // will be correctly placed relative to the floor. Just needs to be adjusted to allow for sitting mode.
         public static void Postfix(ref Transform ___eyeTransform, GameObject ___playerGameObject)
         {
-            ___eyeTransform = ___playerGameObject.transform;
+            //if (!VRCameraManager.Instance)
+            //{
+            //    MelonLogger.Msg("whaaat?");
+            //}
+            //VRCameraManager.Instance.MoveCameraToCorrectHeight();
         }
     }
 }

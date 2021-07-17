@@ -1,4 +1,5 @@
 ﻿using Harmony;
+using MelonLoader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,15 +14,36 @@ namespace TwoForksVR.PlayerCamera
         public static VRCameraManager Instance;
 
         private bool isInitialized;
-        
+        private Transform stage;
+        private vgCameraController cameraController;
+
         private void Start()
         {
+            cameraController = FindObjectOfType<vgCameraController>();
             Instance = this;
             VRSettings.enabled = false;
             SetUpCamera();
             LimitVerticalRotation();
-            ReparentCamera();
+            SetUpStage();
             DisableCameraAnimations();
+        }
+
+        private void Update()
+        {
+            UpdateCameraOffset();
+        }
+
+        private void UpdateCameraOffset()
+        {
+            if (!cameraController)
+            {
+                return;
+            }
+            var cameraOffset = GetCameraOffset();
+            if (UnityEngine.Input.GetKeyDown(KeyCode.R))
+            {
+                stage.position -= cameraOffset;
+            }
         }
 
         private void SetUpCamera()
@@ -51,11 +73,12 @@ namespace TwoForksVR.PlayerCamera
             });
         }
 
-        private void ReparentCamera()
+        private Transform SetUpStage()
         {
-            var vrCameraParent = new GameObject("VRStage").transform;
-            vrCameraParent.SetParent(Camera.main.transform.parent, false);
-            Camera.main.transform.SetParent(vrCameraParent);
+            stage = new GameObject("VRStage").transform;
+            stage.SetParent(Camera.main.transform.parent, false);
+            Camera.main.transform.SetParent(stage);
+            return stage;
         }
 
         private void DisableCameraAnimations()
@@ -63,6 +86,23 @@ namespace TwoForksVR.PlayerCamera
             var animation = Camera.main.GetComponent<Animation>();
             if (!animation) return;
             animation.enabled = false;
+        }
+
+        private Vector3 GetCameraOffset()
+        {
+            return Camera.main.transform.position - cameraController.eyeTransform.position;
+        }
+
+        public void MoveCameraToCorrectHeight(Vector3 offset)
+        {
+            //var eyeTransform = new GameObject("VREyeTransform").transform;
+
+            stage.position -= offset;
+
+            //eyeTransform.SetParent(cameraController.playerController.transform, false);
+            //eyeTransform.position = cameraController.eyeTransform.position;
+            //eyeTransform.rotation = cameraController.eyeTransform.rotation;
+            //cameraController.eyeTransform = 
         }
     }
 }
