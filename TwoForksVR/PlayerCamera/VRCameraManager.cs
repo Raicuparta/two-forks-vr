@@ -40,10 +40,12 @@ namespace TwoForksVR.PlayerCamera
             {
                 return;
             }
-            var cameraOffset = GetCameraOffset();
             if (SteamVR_Actions.default_Recenter.stateDown)
             {
+                var cameraOffset = GetCameraOffset();
                 stage.position -= cameraOffset;
+                var angleOffset = cameraController.eyeTransform.eulerAngles.y - Camera.main.transform.eulerAngles.y - 90f;
+                stage.Rotate(Vector3.up * angleOffset);
             }
         }
 
@@ -92,18 +94,6 @@ namespace TwoForksVR.PlayerCamera
         private Vector3 GetCameraOffset()
         {
             return Camera.main.transform.position - cameraController.eyeTransform.position;
-        }
-
-        public void MoveCameraToCorrectHeight(Vector3 offset)
-        {
-            //var eyeTransform = new GameObject("VREyeTransform").transform;
-
-            stage.position -= offset;
-
-            //eyeTransform.SetParent(cameraController.playerController.transform, false);
-            //eyeTransform.position = cameraController.eyeTransform.position;
-            //eyeTransform.rotation = cameraController.eyeTransform.rotation;
-            //cameraController.eyeTransform = 
         }
     }
 }
