@@ -27,25 +27,16 @@ namespace TwoForksVR.PlayerCamera
             LimitVerticalRotation();
             SetUpStage();
             DisableCameraAnimations();
+
+            // Recenter camera after a while. Hack, need to figure out when I can call it.
+            Invoke(nameof(RecenterCamera), 1f);
         }
 
         private void Update()
         {
-            UpdateCameraOffset();
-        }
-
-        private void UpdateCameraOffset()
-        {
-            if (!cameraController)
-            {
-                return;
-            }
             if (SteamVR_Actions.default_Recenter.stateDown)
             {
-                var cameraOffset = GetCameraOffset();
-                stage.position -= cameraOffset;
-                var angleOffset = cameraController.eyeTransform.eulerAngles.y - Camera.main.transform.eulerAngles.y - 90f;
-                stage.Rotate(Vector3.up * angleOffset);
+                RecenterCamera();
             }
         }
 
@@ -94,6 +85,18 @@ namespace TwoForksVR.PlayerCamera
         private Vector3 GetCameraOffset()
         {
             return Camera.main.transform.position - cameraController.eyeTransform.position;
+        }
+
+        private void RecenterCamera()
+        {
+            if (!cameraController)
+            {
+                return;
+            }
+            var cameraOffset = GetCameraOffset();
+            stage.position -= cameraOffset;
+            var angleOffset = cameraController.eyeTransform.eulerAngles.y - Camera.main.transform.eulerAngles.y - 90f;
+            stage.Rotate(Vector3.up * angleOffset);
         }
     }
 }
