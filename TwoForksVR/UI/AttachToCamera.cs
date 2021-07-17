@@ -13,7 +13,7 @@ namespace TwoForksVR.UI
         private float offset = 0.5f;
         public Transform target;
 
-        private void LateUpdate ()
+        private void Update()
         {
             if (target == null)
             {

@@ -21,6 +21,7 @@ namespace TwoForksVR.PlayerCamera
             SetUpCamera();
             LimitVerticalRotation();
             ReparentCamera();
+            DisableCameraAnimations();
         }
 
         private void SetUpCamera()
@@ -55,6 +56,13 @@ namespace TwoForksVR.PlayerCamera
             var vrCameraParent = new GameObject("VRStage").transform;
             vrCameraParent.SetParent(Camera.main.transform.parent, false);
             Camera.main.transform.SetParent(vrCameraParent);
+        }
+
+        private void DisableCameraAnimations()
+        {
+            var animation = Camera.main.GetComponent<Animation>();
+            if (!animation) return;
+            animation.enabled = false;
         }
     }
 }
