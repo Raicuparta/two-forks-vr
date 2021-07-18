@@ -8,14 +8,19 @@ namespace TwoForksVR.Hands
     {
         public static bool Prefix(ref Transform __result, string name)
         {
+            Transform attachment = null;
             if (name == "henryHandLeftAttachment")
             {
-                __result = VRHandsManager.Instance.LeftHandAttachment;
-                return false;
+                attachment = VRHandsManager.Instance?.LeftHandAttachment;
             }
             else if (name == "henryHandRightAttachment")
             {
-                __result = VRHandsManager.Instance.RightHandAttachment;
+                attachment = VRHandsManager.Instance?.RightHandAttachment;
+            }
+
+            if (attachment)
+            {
+                __result = attachment;
                 return false;
             }
             return true;
