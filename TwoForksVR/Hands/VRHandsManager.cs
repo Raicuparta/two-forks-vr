@@ -18,6 +18,8 @@ namespace TwoForksVR.Hands
 
         public Transform LeftHand;
         public Transform RightHand;
+        public Transform LeftHandAttachment;
+        public Transform RightHandAttachment;
 
         private void Start()
         {
@@ -35,13 +37,13 @@ namespace TwoForksVR.Hands
             var handMaterial = GetHandMaterial();
             RightHand = CreateHand(handPrefab, handMaterial);
             LeftHand = CreateHand(handPrefab, handMaterial, true);
-            SetUpHandAttachment(
+            LeftHandAttachment = SetUpHandAttachment(
                 LeftHand,
                 "Left",
                 new Vector3(0.0157f, -0.0703f, -0.0755f),
                 new Vector3(8.3794f, 341.5249f, 179.2709f)
             );
-            SetUpHandAttachment(
+            RightHandAttachment = SetUpHandAttachment(
                 RightHand,
                 "Right",
                 new Vector3(0.0551f, -0.0229f, -0.131f),
@@ -92,13 +94,14 @@ namespace TwoForksVR.Hands
             return hand.transform;
         }
 
-        private void SetUpHandAttachment(Transform hand, string handName, Vector3 position, Vector3 eulerAngles)
+        private Transform SetUpHandAttachment(Transform hand, string handName, Vector3 position, Vector3 eulerAngles)
         {
             var itemSocket = hand.Find("itemSocket");
             var handAttachment = GameObject.Find($"henryHand{handName}Attachment").transform;
             handAttachment.SetParent(itemSocket, false);
             itemSocket.localPosition = position;
             itemSocket.localEulerAngles = eulerAngles;
+            return handAttachment;
         }
     }
 }
