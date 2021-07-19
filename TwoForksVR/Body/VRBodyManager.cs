@@ -30,6 +30,7 @@ namespace TwoForksVR
             MakeMaterialTextureTransparent(backpackMaterial);
 
             var armsMaterial = materials[2];
+            // TODO arms texture replace.
         }
 
         private void MakeMaterialTextureTransparent(Material material)

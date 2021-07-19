@@ -28,6 +28,8 @@ namespace TwoForksVR.Hands
             SetUpHands();
             SetUpToolPicker();
             SetUpHandLaser();
+
+            DoHandShit(PlayerBody.parent.Find("henryroot"));
         }
 
         private void SetUpHands()
@@ -102,6 +104,25 @@ namespace TwoForksVR.Hands
             itemSocket.localPosition = position;
             itemSocket.localEulerAngles = eulerAngles;
             return handAttachment;
+        }
+
+        private void DoHandShit(Transform rootTransform)
+        {
+            var rightHandBone = rootTransform
+                .Find("henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1")
+                .gameObject;
+            rightHandBone.AddComponent<LateUpdateFollow>().Target = RightHand;
+        }
+    }
+
+    public class LateUpdateFollow : MonoBehaviour
+    {
+        public Transform Target;
+
+        void LateUpdate()
+        {
+            transform.position = Target.position;
+            transform.rotation = Target.rotation;
         }
     }
 }
