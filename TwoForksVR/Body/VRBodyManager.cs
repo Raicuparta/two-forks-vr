@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MelonLoader;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace TwoForksVR
         private void Start()
         {
             var playerBodyTransform = GetPlayerBodyTransform();
-            //HideBody(playerBodyTransform);
+            HideBody(playerBodyTransform);
 
             var handsManager = new GameObject("VRHandsManager").AddComponent<VRHandsManager>();
             handsManager.PlayerBody = playerBodyTransform;
@@ -20,7 +21,23 @@ namespace TwoForksVR
 
         private void HideBody(Transform bodyTransform)
         {
-            bodyTransform.gameObject.SetActive(false);
+            var materials = bodyTransform.GetComponent<SkinnedMeshRenderer>().materials;
+
+            var bodyMaterial = materials[0];
+            MakeMaterialTextureTransparent(bodyMaterial);
+
+            var backpackMaterial = materials[1];
+            MakeMaterialTextureTransparent(backpackMaterial);
+
+            var armsMaterial = materials[2];
+        }
+
+        private void MakeMaterialTextureTransparent(Material material)
+        {
+            var cutoutShader = Shader.Find("Marmoset/Transparent/Cutout/Bumped Specular IBL");
+            material.shader = cutoutShader;
+            material.SetTexture("_MainTex", null);
+            material.SetColor("_Color", Color.clear);
         }
 
         private Transform GetPlayerBodyTransform()
