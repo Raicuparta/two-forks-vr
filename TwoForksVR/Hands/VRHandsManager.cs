@@ -18,8 +18,8 @@ namespace TwoForksVR.Hands
 
         public Transform LeftHand;
         public Transform RightHand;
-        public Transform LeftHandAttachment;
-        public Transform RightHandAttachment;
+        //public Transform LeftHandAttachment;
+        //public Transform RightHandAttachment;
 
         private void Start()
         {
@@ -39,18 +39,18 @@ namespace TwoForksVR.Hands
             var handMaterial = GetHandMaterial();
             RightHand = CreateHand(handPrefab, handMaterial);
             LeftHand = CreateHand(handPrefab, handMaterial, true);
-            LeftHandAttachment = SetUpHandAttachment(
-                LeftHand,
-                "Left",
-                new Vector3(0.0157f, -0.0703f, -0.0755f),
-                new Vector3(8.3794f, 341.5249f, 179.2709f)
-            );
-            RightHandAttachment = SetUpHandAttachment(
-                RightHand,
-                "Right",
-                new Vector3(0.0551f, -0.0229f, -0.131f),
-                new Vector3(54.1782f, 224.7767f, 139.0415f)
-            );
+            //LeftHandAttachment = SetUpHandAttachment(
+            //    LeftHand,
+            //    "Left",
+            //    new Vector3(0.0157f, -0.0703f, -0.0755f),
+            //    new Vector3(8.3794f, 341.5249f, 179.2709f)
+            //);
+            //RightHandAttachment = SetUpHandAttachment(
+            //    RightHand,
+            //    "Right",
+            //    new Vector3(0.0551f, -0.0229f, -0.131f),
+            //    new Vector3(54.1782f, 224.7767f, 139.0415f)
+            //);
 
             // Update pickupAttachTransform to hand.
             GameObject.FindObjectOfType<vgInventoryController>().CachePlayerVariables();
