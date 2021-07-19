@@ -108,10 +108,19 @@ namespace TwoForksVR.Hands
 
         private void DoHandShit(Transform rootTransform)
         {
+            var target = new GameObject("rightHandTarget").transform;
+            target.SetParent(RightHand, false);
+            target.localPosition = new Vector3(0.01072523f, -0.04519948f, -0.3680739f);
+            target.localEulerAngles = new Vector3(84.35201f, -1.602f, -99.76801f);
+            //target.localPosition = new Vector3(0.0707f, 0.0948f, -0.4881f);
+            //target.localEulerAngles = new Vector3(347.1512f, 78.2487f, 43.7769f);
+
             var rightHandBone = rootTransform
-                .Find("henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1")
+                .Find("henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2")
                 .gameObject;
-            rightHandBone.AddComponent<LateUpdateFollow>().Target = RightHand;
+            rightHandBone.AddComponent<LateUpdateFollow>().Target = target;
+
+
         }
     }
 
