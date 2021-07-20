@@ -15,12 +15,19 @@ namespace TwoForksVR.Hands
     public class VRHandsManager: MonoBehaviour
     {
         public static VRHandsManager Instance;
-        public Transform PlayerBody; // TODO get this some other way.
 
         public Transform LeftHand;
         public Transform RightHand;
-        //public Transform LeftHandAttachment;
-        //public Transform RightHandAttachment;
+
+        private Transform playerBody;
+
+        public static VRHandsManager Create(Transform parent, Transform playerBody)
+        {
+            var instance = Instantiate(VRAssetLoader.Hands).AddComponent<VRHandsManager>();
+            instance.playerBody = playerBody;
+            instance.transform.SetParent(parent, false);
+            return instance;
+        }
 
         private void Start()
         {
@@ -33,11 +40,8 @@ namespace TwoForksVR.Hands
 
         private void SetUpHands()
         {
-            var hands = Instantiate(VRAssetLoader.Hands).transform;
-            hands.SetParent(transform, false);
-
-            RightHand = CreateHand(hands.Find("RightHand").gameObject);
-            LeftHand = CreateHand(hands.Find("LeftHand").gameObject, true);
+            RightHand = CreateHand(transform.Find("RightHand").gameObject);
+            LeftHand = CreateHand(transform.Find("LeftHand").gameObject, true);
 
             var bodyRoot = PlayerBody.parent.Find("henryroot");
             DoHandShit(RightHand, bodyRoot);

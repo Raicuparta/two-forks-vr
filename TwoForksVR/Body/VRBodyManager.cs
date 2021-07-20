@@ -21,9 +21,7 @@ namespace TwoForksVR
 
         private void SetUpHandsManager(Transform playerBodyTransform)
         {
-            var handsManager = new GameObject("VRHandsManager").AddComponent<VRHandsManager>(); // TODO use VRHands from asset
-            handsManager.PlayerBody = playerBodyTransform;
-            handsManager.transform.SetParent(Camera.main.transform.parent, false); // TODO use VR Stage
+            VRHandsManager.Create(playerBodyTransform, Camera.main.transform.parent); // TODO use VR Stage
         }
 
         private void HideBody(Transform playerBodyTransform)
