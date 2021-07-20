@@ -18,17 +18,10 @@ namespace TwoForksVR.Hands
         {
             gameObject.SetActive(false);
             name = $"{(IsLeft ? "Left" : "Right")} Hand";
-            //transform.SetParent(Camera.main.transform.parent, false); // TODO make sure camera is initialized?
             var pose = gameObject.AddComponent<SteamVR_Behaviour_Pose>();
 
-            //var handModel = transform.Find("handModel");
-            //handModel.gameObject.SetActive(false);
             if (IsLeft)
             {
-                //handModel.localScale = new Vector3(-handModel.localScale.x, handModel.localScale.y, handModel.localScale.z);
-                //SetUpWeddingRing();
-                //SetUpMap();
-                //SetUpRadio();
                 pose.inputSource = SteamVR_Input_Sources.LeftHand;
                 pose.poseAction = SteamVR_Actions.default_PoseLeftHand;
             }

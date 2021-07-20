@@ -74,16 +74,6 @@ namespace TwoForksVR.Hands
             return hand.transform;
         }
 
-        private Transform SetUpHandAttachment(Transform hand, string handName, Vector3 position, Vector3 eulerAngles)
-        {
-            var itemSocket = hand.Find("itemSocket");
-            var handAttachment = GameObject.Find($"henryHand{handName}Attachment").transform;
-            handAttachment.SetParent(itemSocket, false);
-            itemSocket.localPosition = position;
-            itemSocket.localEulerAngles = eulerAngles;
-            return handAttachment;
-        }
-
         private void DoHandShit(Transform hand, Transform rootTransform, bool isLeft = false)
         {
             var name = isLeft ? "Left" : "Right";
