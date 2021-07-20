@@ -22,7 +22,10 @@ namespace TwoForksVR
 
         private void HideBody(Transform bodyTransform)
         {
-            var materials = bodyTransform.GetComponent<SkinnedMeshRenderer>().materials;
+            var renderer = bodyTransform.GetComponent<SkinnedMeshRenderer>();
+            renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.TwoSided;
+
+            var materials = renderer.materials;
 
             var bodyMaterial = materials[0];
             MakeMaterialTextureTransparent(bodyMaterial);
