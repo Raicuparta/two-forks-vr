@@ -21,9 +21,10 @@ namespace TwoForksVR.Hands
             transform.SetParent(Camera.main.transform.parent, false); // TODO make sure camera is initialized?
             var pose = gameObject.AddComponent<SteamVR_Behaviour_Pose>();
 
+            var handModel = transform.Find("handModel");
+            handModel.gameObject.SetActive(false);
             if (IsLeft)
             {
-                var handModel = transform.Find("handModel");
                 handModel.localScale = new Vector3(-handModel.localScale.x, handModel.localScale.y, handModel.localScale.z);
                 SetUpWeddingRing();
                 SetUpMap();

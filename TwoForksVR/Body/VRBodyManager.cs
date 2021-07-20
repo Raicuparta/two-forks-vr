@@ -30,15 +30,18 @@ namespace TwoForksVR
             MakeMaterialTextureTransparent(backpackMaterial);
 
             var armsMaterial = materials[2];
-            // TODO arms texture replace.
+            MakeMaterialTextureTransparent(armsMaterial, VRAssetLoader.ArmsCutoutTexture);
         }
 
-        private void MakeMaterialTextureTransparent(Material material)
+        private void MakeMaterialTextureTransparent(Material material, Texture2D texture = null)
         {
             var cutoutShader = Shader.Find("Marmoset/Transparent/Cutout/Bumped Specular IBL");
             material.shader = cutoutShader;
-            material.SetTexture("_MainTex", null);
-            material.SetColor("_Color", Color.clear);
+            material.SetTexture("_MainTex", texture);
+            if (!texture)
+            {
+                material.SetColor("_Color", Color.clear);
+            }
         }
 
         private Transform GetPlayerBodyTransform()

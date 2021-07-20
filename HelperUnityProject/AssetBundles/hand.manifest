@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2119056307
+CRC: 205241873
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 23b5f4a2da446b88f0dd3505459ebba1
+    Hash: 9a4d0f94b621aace1048b3a6b21e91ef
   TypeTreeHash:
     serializedVersion: 2
     Hash: 374b226fcf22a781e7ed63c9b2c7b15a
@@ -39,4 +39,5 @@ Assets:
 - Assets/Icons/map.png
 - Assets/Icons/radio.png
 - Assets/Icons/flashlight.png
+- Assets/arms-cutout.png
 Dependencies: []
