@@ -81,7 +81,6 @@ namespace TwoForksVR
         private void SetUpMenuScene()
         {
             isInitialized = false;
-            new GameObject("VRCameraManager").AddComponent<VRCameraManager>();
             VRStage.Create();
             //new GameObject("VRHandsManager").AddComponent<VRHandsManager>();
         }
@@ -89,7 +88,6 @@ namespace TwoForksVR
         private void SetUpGameScene()
         {
             isInitialized = true;
-            new GameObject("VRCameraManager").AddComponent<VRCameraManager>();
             new GameObject("VRBodyManager").AddComponent<VRBodyManager>();
             VRStage.Create();
         }
