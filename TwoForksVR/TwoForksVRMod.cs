@@ -10,6 +10,7 @@ using Valve.VR;
 using TwoForksVR.PlayerCamera;
 using TwoForksVR.Hands;
 using TwoForksVR.Assets;
+using TwoForksVR.Stage;
 
 namespace TwoForksVR
 {
@@ -81,7 +82,8 @@ namespace TwoForksVR
         {
             isInitialized = false;
             new GameObject("VRCameraManager").AddComponent<VRCameraManager>();
-            new GameObject("VRHandsManager").AddComponent<VRHandsManager>();
+            VRStage.Create();
+            //new GameObject("VRHandsManager").AddComponent<VRHandsManager>();
         }
 
         private void SetUpGameScene()
@@ -89,6 +91,7 @@ namespace TwoForksVR
             isInitialized = true;
             new GameObject("VRCameraManager").AddComponent<VRCameraManager>();
             new GameObject("VRBodyManager").AddComponent<VRBodyManager>();
+            VRStage.Create();
         }
 
         private void SetUpIntroScene()

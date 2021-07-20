@@ -10,23 +10,18 @@ using UnityEngine;
 
 namespace TwoForksVR
 {
-    public class VRBodyManager: MonoBehaviour
+    public class VRBodyManager : MonoBehaviour
     {
+        private static Transform playerBodyTransform;
+
         private void Start()
         {
-            var playerBodyTransform = GetPlayerBodyTransform();
-            HideBody(playerBodyTransform);
-            SetUpHandsManager(playerBodyTransform);
+            HideBody();
         }
 
-        private void SetUpHandsManager(Transform playerBodyTransform)
+        private void HideBody()
         {
-            VRHandsManager.Create(playerBodyTransform, Camera.main.transform.parent); // TODO use VR Stage
-        }
-
-        private void HideBody(Transform playerBodyTransform)
-        {
-            var renderer = playerBodyTransform.GetComponent<SkinnedMeshRenderer>();
+            var renderer = GetPlayerBodyTransform().GetComponent<SkinnedMeshRenderer>();
             renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.TwoSided;
 
             var materials = renderer.materials;
@@ -52,9 +47,9 @@ namespace TwoForksVR
             }
         }
 
-        private Transform GetPlayerBodyTransform()
+        public static Transform GetPlayerBodyTransform()
         {
-            return GameObject.Find("Player Prefab").transform.Find("PlayerModel/henry/body");
+            return playerBodyTransform ?? (playerBodyTransform = GameObject.Find("Player Prefab")?.transform.Find("PlayerModel/henry/body"));
         }
     }
 }

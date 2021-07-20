@@ -43,7 +43,7 @@ namespace TwoForksVR.Hands
             RightHand = CreateHand(transform.Find("RightHand").gameObject);
             LeftHand = CreateHand(transform.Find("LeftHand").gameObject, true);
 
-            var bodyRoot = PlayerBody.parent.Find("henryroot");
+            var bodyRoot = playerBody.parent.Find("henryroot");
             DoHandShit(RightHand, bodyRoot);
             DoHandShit(LeftHand, bodyRoot, true);
         }
