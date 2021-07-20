@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1738626538
+CRC: 204210744
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e414affb23f86c6bd9d48d558c1cc961
+    Hash: b499dde89443df4b2d92b5f522cd5e70
   TypeTreeHash:
     serializedVersion: 2
     Hash: fe81e584da1edbbf261e47a859090100
@@ -28,5 +28,5 @@ ClassTypes:
 - Class: 115
   Script: {instanceID: 0}
 Assets:
-- Assets/VRHands.prefab
+- Assets/Prefabs/VRHands.prefab
 Dependencies: []

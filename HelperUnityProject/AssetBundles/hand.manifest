@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4138230242
+CRC: 1235631935
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f75faf68f9508791f8462919f07904c5
+    Hash: 14128a910d5569c4f3c0e3064735a1e8
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9eb0905dc6a6a3e5b1a097f997ac7512
@@ -32,11 +32,11 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
-- Assets/Hand.prefab
-- Assets/Icons/compass.png
-- Assets/Icons/map.png
-- Assets/Icons/radio.png
-- Assets/Icons/flashlight.png
-- Assets/arms-cutout.png
-- Assets/HandLid.prefab
+- Assets/Prefabs/Hand.prefab
+- Assets/Sprites/Icons/compass.png
+- Assets/Sprites/Icons/map.png
+- Assets/Sprites/Icons/radio.png
+- Assets/Sprites/Icons/flashlight.png
+- Assets/Textures/arms-cutout.png
+- Assets/Prefabs/HandLid.prefab
 Dependencies: []
