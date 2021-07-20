@@ -8,5 +8,6 @@ public class LateUpdateFollow : MonoBehaviour {
 	void LateUpdate () {
 		transform.position = Target.position;
 		transform.rotation = Target.rotation;
+		transform.localScale = Target.localScale;
     }
 }
