@@ -218,6 +218,7 @@
     <Compile Include="SteamVR\SteamVR_Input\SteamVR_Input_Actions.cs" />
     <Compile Include="SteamVR\SteamVR_Input\SteamVR_Input_ActionSets.cs" />
     <Compile Include="SteamVR\SteamVR_Input\SteamVR_Input_Initialization.cs" />
+    <Compile Include="Tools\VRToolItem.cs" />
     <Compile Include="TwoForksVRMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PlayerCamera\VRCameraManager.cs" />

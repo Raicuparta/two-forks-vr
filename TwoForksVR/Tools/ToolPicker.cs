@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using TwoForksVR.Assets;
-using TwoForksVR.Hands;
 using UnityEngine;
 using Valve.VR;
 
@@ -10,17 +8,6 @@ namespace TwoForksVR.Tools
 {
 	public class ToolPicker : MonoBehaviour
 	{
-		public enum VRToolItem
-		{
-			Radio,
-			Map,
-			Compass,
-			Flashlight,
-			DisposableCamera,
-		}
-
-
-		private const float circleRadius = 0.25f;
 		private const float minSquareDistance = 0.03f;
 
 		private Transform toolsContainer;
@@ -38,39 +25,20 @@ namespace TwoForksVR.Tools
 			instance.toolsContainer = instance.transform.Find("Tools");
 			instance.rightHand = rightHand;
 			instance.leftHand = leftHand;
-			foreach (Transform child in instance.toolsContainer)
-			{
-				var toolPickerItem = child.gameObject.AddComponent<ToolPickerItem>();
-				toolPickerItem.ItemType = (VRToolItem) Enum.Parse(typeof(VRToolItem), child.name);
-			}
+
+			instance.tools = instance.toolsContainer.Cast<Transform>().Select(
+				(child, index) => ToolPickerItem.Create(
+					parent: instance.toolsContainer,
+					index: index
+				)
+			).ToArray();
+
 			return instance;
 		}
 
 		private void Start()
 		{
-			SetUpToolsList();
 			CloseToolPicker();
-		}
-
-		private void SetUpToolsList()
-		{
-			tools = toolsContainer.GetComponentsInChildren<ToolPickerItem>();
-			for (var i = 0; i < tools.Length; i++)
-			{
-				var tool = tools[i];
-				float angle = i * Mathf.PI * 2f / tools.Length;
-				tool.transform.localPosition = new Vector3(Mathf.Cos(angle) * circleRadius, Mathf.Sin(angle) * circleRadius, 0);
-			}
-		}
-
-		private float GetSquareDistance(Vector3 pointA, Vector3 pointB)
-		{
-			return (pointA - pointB).sqrMagnitude;
-		}
-
-		private float GetDistanceToHand(Transform compareTransform, Transform hand)
-		{
-			return GetSquareDistance(compareTransform.position, hand.position);
 		}
 
 		private void SelectCurrentlyHoveredTool()
@@ -120,7 +88,7 @@ namespace TwoForksVR.Tools
 			for (int i = 0; i < tools.Length; i++)
 			{
 				var tool = tools[i];
-				var distance = GetDistanceToHand(tool.transform, hand);
+				var distance = MathHelper.GetSquareDistance(tool.transform, hand);
 				if (distance < minSquareDistance && distance < selectedToolDistance)
 				{
 					nextSelectedTool = tool;
