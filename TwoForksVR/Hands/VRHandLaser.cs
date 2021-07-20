@@ -14,10 +14,10 @@ namespace TwoForksVR.Hands
         private Transform rightHand;
         private Transform leftHand;
 
-        public static VRHandLaser Create(Transform parent, Transform leftHand, Transform rightHand)
+        public static VRHandLaser Create(Transform leftHand, Transform rightHand)
         {
             var instance = new GameObject("VRHandLaser").AddComponent<VRHandLaser>();
-            instance.transform.SetParent(parent, false);
+            instance.transform.SetParent(rightHand, false);
             instance.rightHand = rightHand;
             instance.leftHand = leftHand;
             return instance;

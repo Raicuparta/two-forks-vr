@@ -35,7 +35,6 @@ namespace TwoForksVR.Hands
                 rightHand: rightHand
             );
             VRHandLaser.Create(
-                parent: transform,
                 leftHand: leftHand,
                 rightHand: rightHand
             );
