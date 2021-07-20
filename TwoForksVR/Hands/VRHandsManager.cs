@@ -29,34 +29,19 @@ namespace TwoForksVR.Hands
             SetUpHands();
             SetUpToolPicker();
             SetUpHandLaser();
-
-            var bodyRoot = PlayerBody.parent.Find("henryroot");
-            DoHandShit(bodyRoot);
-            DoHandShit(bodyRoot, true);
         }
 
         private void SetUpHands()
         {
-            var handPrefab = VRAssetLoader.Hand;
+            var hands = Instantiate(VRAssetLoader.Hands).transform;
+            hands.SetParent(transform, false);
 
-            var handMaterial = GetHandMaterial();
-            RightHand = CreateHand(handPrefab, handMaterial);
-            LeftHand = CreateHand(handPrefab, handMaterial, true);
-            //LeftHandAttachment = SetUpHandAttachment(
-            //    LeftHand,
-            //    "Left",
-            //    new Vector3(0.0157f, -0.0703f, -0.0755f),
-            //    new Vector3(8.3794f, 341.5249f, 179.2709f)
-            //);
-            //RightHandAttachment = SetUpHandAttachment(
-            //    RightHand,
-            //    "Right",
-            //    new Vector3(0.0551f, -0.0229f, -0.131f),
-            //    new Vector3(54.1782f, 224.7767f, 139.0415f)
-            //);
+            RightHand = CreateHand(hands.Find("RightHand").gameObject);
+            LeftHand = CreateHand(hands.Find("LeftHand").gameObject, true);
 
-            // Update pickupAttachTransform to hand.
-            GameObject.FindObjectOfType<vgInventoryController>().CachePlayerVariables();
+            var bodyRoot = PlayerBody.parent.Find("henryroot");
+            DoHandShit(RightHand, bodyRoot);
+            DoHandShit(LeftHand, bodyRoot, true);
         }
 
         private void SetUpToolPicker()
@@ -81,20 +66,10 @@ namespace TwoForksVR.Hands
             handLaser.SetParent(transform, false);
         }
 
-        private Material GetHandMaterial()
+        private Transform CreateHand(GameObject instance, bool isLeft = false)
         {
-            if (!PlayerBody)
-            {
-                return null;
-            }
-            return PlayerBody.GetComponent<SkinnedMeshRenderer>().materials[2];
-        }
-
-        private Transform CreateHand(GameObject prefab, Material material, bool isLeft = false)
-        {
-            var hand = Instantiate(prefab).AddComponent<VRHand>();
+            var hand = instance.AddComponent<VRHand>();
             hand.IsLeft = isLeft;
-            hand.SetMaterial(material);
 
             return hand.transform;
         }
@@ -109,27 +84,12 @@ namespace TwoForksVR.Hands
             return handAttachment;
         }
 
-        private void DoHandShit(Transform rootTransform, bool isLeft = false)
+        private void DoHandShit(Transform hand, Transform rootTransform, bool isLeft = false)
         {
             var name = isLeft ? "Left" : "Right";
-            var trackingTarget = new GameObject($"{name}HandTarget").transform;
-            trackingTarget.SetParent(isLeft ? LeftHand : RightHand, false);
-            if (isLeft)
-            {
-                trackingTarget.localPosition = new Vector3(-0.00632076f, -0.04738592f, -0.3663795f);
-                trackingTarget.localEulerAngles = new Vector3(-96.46899f, 22.21799f, 58.95399f);
-            }
-            else
-            {
-                trackingTarget.localPosition = new Vector3(0.01072523f, -0.04519948f, -0.3680739f);
-                trackingTarget.localEulerAngles = new Vector3(84.35201f, -1.602f, -99.76801f);
-            } 
-
-            //target.localPosition = new Vector3(0.0707f, 0.0948f, -0.4881f);
-            //target.localEulerAngles = new Vector3(347.1512f, 78.2487f, 43.7769f);
 
             var armBone = rootTransform.Find($"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{name}1/henrySpider{name}2/henrySpider{name}IK/henryArm{name}Collarbone/henryArm{name}1/henryArm{name}2");
-            armBone.gameObject.AddComponent<LateUpdateFollow>().Target = trackingTarget;
+            armBone.gameObject.AddComponent<LateUpdateFollow>().Target = hand.Find("ArmTarget");
 
             var handLid = Instantiate(VRAssetLoader.HandLid).transform;
             handLid.SetParent(armBone, false);
@@ -156,11 +116,13 @@ namespace TwoForksVR.Hands
     public class LateUpdateFollow : MonoBehaviour
     {
         public Transform Target;
+        private static readonly Vector3 scale = Vector3.one * 0.8f;
 
         void LateUpdate()
         {
             transform.position = Target.position;
             transform.rotation = Target.rotation;
+            //transform.localScale = scale;
         }
     }
 }

@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3022519560
+CRC: 1956972581
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -9,3 +9,6 @@ AssetBundleManifest:
       Name: tool-picker
       Dependencies:
         Dependency_0: hand
+    Info_2:
+      Name: hands
+      Dependencies: {}

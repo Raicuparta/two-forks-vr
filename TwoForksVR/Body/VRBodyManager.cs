@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using TwoForksVR.Hands;
 using TwoForksVR.Assets;
+using TwoForksVR.PlayerCamera;
 using UnityEngine;
 
 namespace TwoForksVR
@@ -15,14 +16,19 @@ namespace TwoForksVR
         {
             var playerBodyTransform = GetPlayerBodyTransform();
             HideBody(playerBodyTransform);
-
-            var handsManager = new GameObject("VRHandsManager").AddComponent<VRHandsManager>();
-            handsManager.PlayerBody = playerBodyTransform;
+            SetUpHandsManager(playerBodyTransform);
         }
 
-        private void HideBody(Transform bodyTransform)
+        private void SetUpHandsManager(Transform playerBodyTransform)
         {
-            var renderer = bodyTransform.GetComponent<SkinnedMeshRenderer>();
+            var handsManager = new GameObject("VRHandsManager").AddComponent<VRHandsManager>(); // TODO use VRHands from asset
+            handsManager.PlayerBody = playerBodyTransform;
+            handsManager.transform.SetParent(Camera.main.transform.parent, false); // TODO use VR Stage
+        }
+
+        private void HideBody(Transform playerBodyTransform)
+        {
+            var renderer = playerBodyTransform.GetComponent<SkinnedMeshRenderer>();
             renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.TwoSided;
 
             var materials = renderer.materials;

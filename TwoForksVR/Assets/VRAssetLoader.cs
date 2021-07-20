@@ -14,6 +14,7 @@ namespace TwoForksVR.Assets
         public static GameObject ToolPicker { get; private set; }
         public static GameObject HandLid { get; private set; }
         public static Texture2D ArmsCutoutTexture { get; private set; }
+        public static GameObject Hands { get; private set; }
 
         public static void LoadAssets()
         {
@@ -23,6 +24,7 @@ namespace TwoForksVR.Assets
             ArmsCutoutTexture = handAsset.LoadAsset<Texture2D>("arms-cutout");
 
             ToolPicker = LoadAssetPrefab("tool-picker", "ToolPicker");
+            Hands = LoadAssetPrefab("hands", "VRHands");
         }
 
         private static AssetBundle LoadBundle(string assetName)
