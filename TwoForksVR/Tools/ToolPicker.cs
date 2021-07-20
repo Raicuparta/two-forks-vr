@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TwoForksVR.Assets;
 using TwoForksVR.Hands;
 using UnityEngine;
 using Valve.VR;
@@ -18,17 +19,28 @@ namespace TwoForksVR.Tools
 			DisposableCamera,
 		}
 
-		public Transform ParentWhileActive;
-		public Transform ParentWhileInactive;
-		public Transform ToolsContainer;
 
 		private const float circleRadius = 0.25f;
 		private const float minSquareDistance = 0.03f;
 
+		private Transform toolsContainer;
 		private ToolPickerItem[] tools;
 		private SteamVR_Action_Boolean input = SteamVR_Actions.default_ToolPicker;
 		private ToolPickerItem hoveredTool;
 		private ToolPickerItem selectedTool;
+
+		public static ToolPicker Create(Transform parent)
+        {
+			var instance = Instantiate(VRAssetLoader.ToolPicker).AddComponent<ToolPicker>();
+			instance.transform.SetParent(parent, false);
+			instance.toolsContainer = instance.transform.Find("Tools");
+			foreach (Transform child in instance.toolsContainer)
+			{
+				var toolPickerItem = child.gameObject.AddComponent<ToolPickerItem>();
+				toolPickerItem.ItemType = (VRToolItem) Enum.Parse(typeof(VRToolItem), child.name);
+			}
+			return instance;
+		}
 
 		private void Start()
 		{
@@ -37,7 +49,7 @@ namespace TwoForksVR.Tools
 
 		private void SetUpToolsList()
 		{
-			tools = ToolsContainer.GetComponentsInChildren<ToolPickerItem>();
+			tools = toolsContainer.GetComponentsInChildren<ToolPickerItem>();
 			for (var i = 0; i < tools.Length; i++)
 			{
 				var tool = tools[i];
@@ -76,23 +88,22 @@ namespace TwoForksVR.Tools
 
 		private void OpenToolPicker(Transform hand)
 		{
-			if (ToolsContainer.gameObject.activeSelf) return;
+			if (toolsContainer.gameObject.activeSelf) return;
 
-			ToolsContainer.gameObject.SetActive(true);
-			ToolsContainer.SetParent(ParentWhileActive);
-			ToolsContainer.position = hand.position;
-			ToolsContainer.LookAt(Camera.main.transform);
+			toolsContainer.gameObject.SetActive(true);
+			toolsContainer.position = hand.position;
+			toolsContainer.LookAt(Camera.main.transform);
 			DeselectCurrentlySelectedTool();
 		}
 
 		private void CloseToolPicker()
 		{
-			if (!ToolsContainer.gameObject.activeSelf) return;
+			if (!toolsContainer.gameObject.activeSelf) return;
 
-			ToolsContainer.gameObject.SetActive(false);
-			ToolsContainer.SetParent(ParentWhileInactive);
-			ToolsContainer.localPosition = Vector3.zero;
-			ToolsContainer.localRotation = Quaternion.identity;
+			toolsContainer.gameObject.SetActive(false);
+			toolsContainer.SetParent(transform);
+			toolsContainer.localPosition = Vector3.zero;
+			toolsContainer.localRotation = Quaternion.identity;
 			SelectCurrentlyHoveredTool();
 		}
 

@@ -12,6 +12,13 @@ namespace TwoForksVR.Hands
     {
         private LineRenderer lineRenderer;
 
+        public static VRHandLaser Create(Transform parent)
+        {
+            var instance = new GameObject("VRHandLaser").AddComponent<VRHandLaser>();
+            instance.transform.SetParent(parent);
+            return instance;
+        }
+
         private void Start()
         {
             UseHandLaserForTargeting.LaserTransform = transform;

@@ -34,8 +34,8 @@ namespace TwoForksVR.Hands
             Instance = this;
 
             SetUpHands();
-            SetUpToolPicker();
-            SetUpHandLaser();
+            ToolPicker.Create(transform);
+            VRHandLaser.Create(transform);
         }
 
         private void SetUpHands()
@@ -46,28 +46,6 @@ namespace TwoForksVR.Hands
             var bodyRoot = playerBody.parent.Find("henryroot");
             DoHandShit(RightHand, bodyRoot);
             DoHandShit(LeftHand, bodyRoot, true);
-        }
-
-        private void SetUpToolPicker()
-        {
-            var toolPickerPrefab = VRAssetLoader.ToolPicker;
-
-            var toolPicker = Instantiate(toolPickerPrefab).AddComponent<ToolPicker>();
-            toolPicker.ParentWhileActive = Camera.main.transform.parent;
-            toolPicker.ParentWhileInactive = toolPicker.transform;
-            toolPicker.ToolsContainer = toolPicker.transform.Find("Tools");
-
-            foreach (Transform child in toolPicker.ToolsContainer)
-            {
-                var toolPickerItem = child.gameObject.AddComponent<ToolPickerItem>();
-                toolPickerItem.ItemType = (ToolPicker.VRToolItem)Enum.Parse(typeof(ToolPicker.VRToolItem), child.name);
-            }
-        }
-
-        private void SetUpHandLaser()
-        {
-            var handLaser = new GameObject("VRHandLaser").AddComponent<VRHandLaser>().transform;
-            handLaser.SetParent(transform, false);
         }
 
         private Transform CreateHand(GameObject instance, bool isLeft = false)
