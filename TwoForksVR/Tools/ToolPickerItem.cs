@@ -19,7 +19,15 @@ namespace TwoForksVR.Tools
             float angle = index * Mathf.PI * 2f / parent.childCount;
             instance.transform.localPosition = new Vector3(Mathf.Cos(angle) * circleRadius, Mathf.Sin(angle) * circleRadius, 0);
 
+            instance.SetUpIcon();
+
             return instance;
+        }
+
+        private void SetUpIcon()
+        {
+            var icon = transform.Find("Icon").GetComponent<SpriteRenderer>();
+            icon.material.shader = Shader.Find("Sprites/Default");
         }
 
         public void StartHover()

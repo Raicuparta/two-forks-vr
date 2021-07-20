@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4221551590881488}
   - component: {fileID: 212381335198863458}
   m_Layer: 0
-  m_Name: Compass-Icon
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 4865852174626962}
   - component: {fileID: 212699291064542844}
   m_Layer: 0
-  m_Name: Map-Icon
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 4672464466154014}
   - component: {fileID: 212816430313653860}
   m_Layer: 0
-  m_Name: DisposableCamera-Icon
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 4777031168354692}
   - component: {fileID: 212478808270572646}
   m_Layer: 0
-  m_Name: Radio-Icon
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 4063326983734640}
   - component: {fileID: 212091167531224488}
   m_Layer: 0
-  m_Name: Flashlight-Icon
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
