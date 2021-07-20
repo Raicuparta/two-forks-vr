@@ -14,11 +14,8 @@ namespace TwoForksVR.Hands
 {
     public class VRHandsManager: MonoBehaviour
     {
-        public static VRHandsManager Instance;
-
-        public Transform LeftHand;
-        public Transform RightHand;
-
+        private Transform leftHand;
+        private Transform rightHand;
         private Transform playerBody;
 
         public static VRHandsManager Create(Transform parent, Transform playerBody)
@@ -31,21 +28,27 @@ namespace TwoForksVR.Hands
 
         private void Start()
         {
-            Instance = this;
-
             SetUpHands();
-            ToolPicker.Create(transform);
-            VRHandLaser.Create(transform);
+            ToolPicker.Create(
+                parent: transform,
+                leftHand: leftHand,
+                rightHand: rightHand
+            );
+            VRHandLaser.Create(
+                parent: transform,
+                leftHand: leftHand,
+                rightHand: rightHand
+            );
         }
 
         private void SetUpHands()
         {
-            RightHand = CreateHand(transform.Find("RightHand").gameObject);
-            LeftHand = CreateHand(transform.Find("LeftHand").gameObject, true);
+            rightHand = CreateHand(transform.Find("RightHand").gameObject);
+            leftHand = CreateHand(transform.Find("LeftHand").gameObject, true);
 
             var bodyRoot = playerBody.parent.Find("henryroot");
-            DoHandShit(RightHand, bodyRoot);
-            DoHandShit(LeftHand, bodyRoot, true);
+            DoHandShit(rightHand, bodyRoot);
+            DoHandShit(leftHand, bodyRoot, true);
         }
 
         private Transform CreateHand(GameObject instance, bool isLeft = false)

@@ -28,12 +28,16 @@ namespace TwoForksVR.Tools
 		private SteamVR_Action_Boolean input = SteamVR_Actions.default_ToolPicker;
 		private ToolPickerItem hoveredTool;
 		private ToolPickerItem selectedTool;
+		private Transform rightHand;
+		private Transform leftHand;
 
-		public static ToolPicker Create(Transform parent)
+		public static ToolPicker Create(Transform parent, Transform leftHand, Transform rightHand)
         {
 			var instance = Instantiate(VRAssetLoader.ToolPicker).AddComponent<ToolPicker>();
 			instance.transform.SetParent(parent, false);
 			instance.toolsContainer = instance.transform.Find("Tools");
+			instance.rightHand = rightHand;
+			instance.leftHand = leftHand;
 			foreach (Transform child in instance.toolsContainer)
 			{
 				var toolPickerItem = child.gameObject.AddComponent<ToolPickerItem>();
@@ -142,19 +146,19 @@ namespace TwoForksVR.Tools
 		{
 			if (input.GetState(SteamVR_Input_Sources.RightHand))
 			{
-				UpdateSelectedTool(VRHandsManager.Instance.RightHand);
+				UpdateSelectedTool(rightHand);
 			}
 			if (input.GetState(SteamVR_Input_Sources.LeftHand))
 			{
-				UpdateSelectedTool(VRHandsManager.Instance.LeftHand);
+				UpdateSelectedTool(leftHand);
 			}
 			if (input.GetStateDown(SteamVR_Input_Sources.RightHand))
 			{
-				OpenToolPicker(VRHandsManager.Instance.RightHand);
+				OpenToolPicker(rightHand);
 			}
 			if (input.GetStateDown(SteamVR_Input_Sources.LeftHand))
 			{
-				OpenToolPicker(VRHandsManager.Instance.LeftHand);
+				OpenToolPicker(leftHand);
 			}
 			if (input.stateUp)
 			{
