@@ -106,13 +106,13 @@ namespace TwoForksVR.Hands
     public class LateUpdateFollow : MonoBehaviour
     {
         public Transform Target;
-        private static readonly Vector3 scale = Vector3.one * 0.8f;
+        private static readonly Vector3 scale = Vector3.one * 0.925f;
 
         void LateUpdate()
         {
             transform.position = Target.position;
             transform.rotation = Target.rotation;
-            //transform.localScale = scale;
+            transform.localScale = scale;
         }
     }
 }
