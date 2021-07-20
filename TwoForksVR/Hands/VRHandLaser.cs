@@ -10,14 +10,22 @@ namespace TwoForksVR.Hands
 {
     class VRHandLaser: MonoBehaviour
     {
-        public static VRHandLaser Instance;
-        private static LineRenderer lineRenderer;
+        private LineRenderer lineRenderer;
+        private Transform rightHand;
+        private Transform leftHand;
+
+        public static VRHandLaser Create(Transform leftHand, Transform rightHand)
+        {
+            var instance = new GameObject("VRHandLaser").AddComponent<VRHandLaser>();
+            instance.transform.SetParent(rightHand, false);
+            instance.rightHand = rightHand;
+            instance.leftHand = leftHand;
+            return instance;
+        }
 
         private void Start()
         {
-            Instance = this;
-
-            name = "VR Laser";
+            UseHandLaserForTargeting.LaserTransform = transform;
 
             lineRenderer = gameObject.AddComponent<LineRenderer>();
             lineRenderer.useWorldSpace = false;
@@ -35,11 +43,11 @@ namespace TwoForksVR.Hands
         {
             if (SteamVR_Actions.default_Interact.GetStateDown(SteamVR_Input_Sources.LeftHand))
             {
-                transform.SetParent(VRHandsManager.Instance.LeftHand, false);
+                transform.SetParent(leftHand, false);
             }
             if (SteamVR_Actions.default_Interact.GetStateDown(SteamVR_Input_Sources.RightHand))
             {
-                transform.SetParent(VRHandsManager.Instance.RightHand, false);
+                transform.SetParent(rightHand, false);
             }
         }
 

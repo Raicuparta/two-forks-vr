@@ -57,17 +57,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\TextureLoader.cs" />
     <Compile Include="Assets\VRAssetLoader.cs" />
     <Compile Include="Body\VRBodyManager.cs" />
-    <Compile Include="PlayerCamera\Patches\CameraPatches.cs" />
     <Compile Include="Debug\DebugAxes.cs" />
     <Compile Include="Helpers\MathHelper.cs" />
     <Compile Include="Input\InputName.cs" />
     <Compile Include="Input\Patches\MousePatches.cs" />
     <Compile Include="Input\Patches\BindingsPatches.cs" />
     <Compile Include="PlayerCamera\Patches\CameraTransformProtectionPatches.cs" />
-    <Compile Include="Hands\Patches\HandAttachmentPatches.cs" />
+    <Compile Include="Stage\VRStage.cs" />
     <Compile Include="Tools\ToolPicker.cs" />
     <Compile Include="Tools\ToolPickerItem.cs" />
     <Compile Include="Tools\VRMap.cs" />
@@ -220,6 +218,7 @@
     <Compile Include="SteamVR\SteamVR_Input\SteamVR_Input_Actions.cs" />
     <Compile Include="SteamVR\SteamVR_Input\SteamVR_Input_ActionSets.cs" />
     <Compile Include="SteamVR\SteamVR_Input\SteamVR_Input_Initialization.cs" />
+    <Compile Include="Tools\VRToolItem.cs" />
     <Compile Include="TwoForksVRMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PlayerCamera\VRCameraManager.cs" />

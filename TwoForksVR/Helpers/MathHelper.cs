@@ -24,5 +24,15 @@ namespace TwoForksVR
 			float angle = index * Mathf.PI * 2f / totalCount;
 			return new Vector3(Mathf.Cos(angle) * circleRadius, Mathf.Sin(angle) * circleRadius, 0);
 		}
+
+        public static float GetSquareDistance(Vector3 pointA, Vector3 pointB)
+        {
+            return (pointA - pointB).sqrMagnitude;
+        }
+
+        public static float GetSquareDistance(Transform transformA, Transform transformB)
+        {
+            return GetSquareDistance(transformA.position, transformB.position);
+        }
     }
 }

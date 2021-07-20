@@ -8,21 +8,6 @@ using UnityEngine;
 
 namespace TwoForksVR.Hands
 {
-    [HarmonyPatch(typeof(vgInventoryController), "CachePlayerVariables")]
-    public class AttachGrabbableObjectsToVRHand
-    {
-        public static void Postfix(ref Transform ___pickupAttachTransform)
-        {
-            var hand = VRHandsManager.Instance?.RightHand;
-            if (!hand)
-            {
-                MelonLogger.Error("Couldn't get hand transform for CachePlayerVariables patch");
-                return;
-            }
-            ___pickupAttachTransform = hand;
-        }
-    }
-
     [HarmonyPatch(typeof(vgInventoryController), "TossStart")]
     public class SkipTossAnimation
     {

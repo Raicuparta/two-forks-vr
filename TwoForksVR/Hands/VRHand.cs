@@ -7,27 +7,33 @@ using UnityEngine;
 using UnityEngine.VR;
 using Valve.VR;
 using TwoForksVR.Tools;
+using TwoForksVR.Assets;
 
 namespace TwoForksVR.Hands
 {
     public class VRHand: MonoBehaviour
     {
-        public bool IsLeft = false;
+        private bool isLeft;
+        private Transform rootBone;
+        private string handName;
+
+        public static VRHand Create(Transform parent, Transform rootBone, bool isLeft = false)
+        {
+            var handName = isLeft ? "Left" : "Right";
+            var transform = parent.Find($"{handName}Hand");
+            var instance = transform.gameObject.AddComponent<VRHand>();
+            instance.handName = handName;
+            instance.isLeft = isLeft;
+            instance.rootBone = rootBone;
+            return instance;
+        }
 
         private void Start()
         {
             gameObject.SetActive(false);
-            name = $"{(IsLeft ? "Left" : "Right")} Hand";
-            transform.SetParent(Camera.main.transform.parent, false); // TODO make sure camera is initialized?
             var pose = gameObject.AddComponent<SteamVR_Behaviour_Pose>();
-
-            if (IsLeft)
+            if (isLeft)
             {
-                var handModel = transform.Find("handModel");
-                handModel.localScale = new Vector3(-handModel.localScale.x, handModel.localScale.y, handModel.localScale.z);
-                SetUpWeddingRing();
-                SetUpMap();
-                SetUpRadio();
                 pose.inputSource = SteamVR_Input_Sources.LeftHand;
                 pose.poseAction = SteamVR_Actions.default_PoseLeftHand;
             }
@@ -37,81 +43,78 @@ namespace TwoForksVR.Hands
                 pose.poseAction = SteamVR_Actions.default_PoseRightHand;
             }
             gameObject.SetActive(true);
-        }
-
-        private void SetUpHandAttachment(Transform hand, string handName, Vector3 position, Vector3 eulerAngles)
-        {
-            var itemSocket = hand.Find("itemSocket");
-            var handAttachment = GameObject.Find($"henryHand{handName}Attachment").transform;
-            handAttachment.SetParent(itemSocket, false);
-            itemSocket.localPosition = position;
-            itemSocket.localEulerAngles = eulerAngles;
-        }
-
-        private void SetRightHandAttachment()
-        {
-            SetUpHandAttachment(
-                transform,
-                "Right",
-                new Vector3(0.0551f, -0.0229f, -0.131f),
-                new Vector3(54.1782f, 224.7767f, 139.0415f)
-            );
-        }
-
-        private void SetLeftHandAttachment()
-        {
-            SetUpHandAttachment(
-                transform,
-                "Left",
-                new Vector3(0.0157f, -0.0703f, -0.0755f),
-                new Vector3(8.3794f, 341.5249f, 179.2709f)
-            );
-        }
-
-        private void SetUpMap()
-        {
-            var mapInHand = transform.Find("itemSocket/henryHandLeftAttachment/MapRiggedPosedPrefab(Clone)/MapRoot/MapInHand");
-            if (!mapInHand)
+            if (rootBone)
             {
-                return;
-            }
-            mapInHand.gameObject.AddComponent<VRMap>();
-        }
-
-        private void SetUpRadio()
-        {
-            var radio = transform.Find("itemSocket/henryHandLeftAttachment/Radio(Clone)");
-            if (!radio)
-            {
-                return;
-            }
-            radio.localPosition = new Vector3(-0.01f, -0.09f, 0.03f);
-            radio.localEulerAngles = new Vector3(291.0985f, 133.8764f, 30.9742f);
-        }
-
-        private void SetUpWeddingRing()
-        {
-            var weddingRing = GameObject.Find("HenryWeddingRing 1")?.transform;
-            if (!weddingRing)
-            {
-                return;
-            }
-            var socket = transform.Find("handModel/weddingRingSocket");
-            weddingRing.SetParent(socket);
-            weddingRing.localPosition = Vector3.zero;
-            weddingRing.localRotation = Quaternion.identity;
-        }
-
-        public void SetMaterial(Material material)
-        {
-            var renderer = transform.Find("handModel/hand").GetComponent<MeshRenderer>();
-            if (material)
-            {
-                renderer.material = material;
+                SetUpBones();
             } else
             {
-                renderer.material.shader = Shader.Find("Standard");
+                SetUpFallbackHands();
             }
+        }
+
+        private void SetUpFallbackHands()
+        {
+            var handModel = transform.Find("HandModel");
+            if (!handModel) return;
+            handModel.gameObject.SetActive(true);
+        }
+
+        private void SetUpBones()
+        {
+            if (!rootBone)
+            {
+                return;
+            }
+
+            var armBone = SetUpArmBone();
+            SetUpHandLid(armBone);
+            var handBone = SetUpHandBone(armBone);
+            MelonLogger.Msg("Pre VRMap.Create");
+            VRMap.Create(handBone, handName);
+        }
+
+        private Transform SetUpArmBone()
+        {
+            var armBone = rootBone.Find($"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2");
+            var updateFollow = armBone.gameObject.AddComponent<LateUpdateFollow>();
+            updateFollow.Target = transform.Find("ArmTarget");
+            updateFollow.Scale = 0.8f;
+            return armBone;
+        }
+
+        private void SetUpHandLid(Transform armBone)
+        {
+            var handLid = Instantiate(VRAssetLoader.HandLid).transform;
+            handLid.SetParent(armBone, false);
+            if (isLeft)
+            {
+                handLid.localScale = new Vector3(1, 1, -1);
+            }
+        }
+
+        private Transform SetUpHandBone(Transform armBone)
+        {
+            var wristTarget = new GameObject($"{handName}WristTarget").transform;
+            wristTarget.SetParent(armBone);
+            var stabilizerAngleMultiplier = isLeft ? -1 : 1;
+            wristTarget.localPosition = new Vector3(-0.2497151f, 0f, 0f);
+            wristTarget.localEulerAngles = new Vector3(3.949f * stabilizerAngleMultiplier, 17.709f * stabilizerAngleMultiplier, 12.374f);
+            var handBone = armBone.transform.Find($"henryArm{handName}Hand");
+            handBone.gameObject.AddComponent<LateUpdateFollow>().Target = wristTarget;
+            return handBone;
+        }
+    }
+
+    public class LateUpdateFollow : MonoBehaviour
+    {
+        public Transform Target;
+        public float Scale = 1f;
+
+        void LateUpdate()
+        {
+            transform.position = Target.position;
+            transform.rotation = Target.rotation;
+            transform.localScale = Vector3.one * Scale;
         }
     }
 }

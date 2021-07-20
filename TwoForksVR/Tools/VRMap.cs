@@ -12,14 +12,43 @@ namespace TwoForksVR.Tools
 {
     public class VRMap: MonoBehaviour
     {
-        private void Start()
+        private const float mapScale = 2f;
+
+        public static VRMap Create(Transform handBone, string handName)
         {
+            var mapPrefab = handBone.Find($"henryHand{handName}Attachment/MapRiggedPosedPrefab(Clone)");
+            var mapInHand = mapPrefab.Find("MapRoot/MapInHand");
+            if (!mapPrefab || !mapInHand) return null;
+
             // Very hard to read the map in VR since we can't zoom in.
             // So making it bigger to make it easier, especially for lower resolution headsets.
-            transform.localScale = Vector3.one * 150f;
+            mapPrefab.localScale = Vector3.one * mapScale;
 
-            // Need to disable and re-enable the cloth component to reset it,
-            // otherwise the physics would be all fucky after resizing.
+            return mapInHand.gameObject.AddComponent<VRMap>();
+        }
+
+        private void Start()
+        {
+            AdjustPosition();
+            ResetCloth();
+        }
+
+        private void LateUpdate()
+        {
+            ForceHighResolutionMap();
+        }
+
+        // Map doesn't quite fit the hand after scaling, need to move it a bit.
+        private void AdjustPosition()
+        {
+            transform.localPosition = new Vector3(0.01f, 0f, 0.02f);
+            transform.localEulerAngles = new Vector3(10f, 0f, 0f);
+        }
+
+        // Need to disable and re-enable the cloth component to reset it,
+        // otherwise the physics would be all fucky after resizing.
+        private void ResetCloth()
+        {
             var cloth = gameObject.GetComponent<Cloth>();
             cloth.enabled = false;
             cloth.enabled = true;
@@ -34,11 +63,6 @@ namespace TwoForksVR.Tools
             if (!mapController) return;
 
             mapController.isZoomingMap = true;
-        }
-
-        private void LateUpdate()
-        {
-            ForceHighResolutionMap();
         }
     }
 }

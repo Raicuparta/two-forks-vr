@@ -35,8 +35,8 @@
                "path" : "/user/hand/right/pose/raw"
             },
             {
-               "output" : "/actions/default/in/poselefthand",
-               "path" : "/user/hand/left/pose/tip"
+                "output": "/actions/default/in/poselefthand",
+                "path": "/user/hand/left/pose/raw"
             }
          ],
          "skeleton" : [

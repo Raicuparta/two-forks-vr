@@ -15,19 +15,22 @@ namespace TwoForksVR.PlayerCamera
         public static VRCameraManager Instance;
 
         private bool isInitialized;
-        private Transform stage;
         private vgCameraController cameraController;
+
+        public static VRCameraManager Create(Transform parent)
+        {
+            var instance = parent.gameObject.AddComponent<VRCameraManager>();
+            return instance;
+        }
 
         private void Start()
         {
-            cameraController = FindObjectOfType<vgCameraController>();
             Instance = this;
+            cameraController = FindObjectOfType<vgCameraController>();
             VRSettings.enabled = false;
             SetUpCamera();
             LimitVerticalRotation();
-            SetUpStage();
             DisableCameraAnimations();
-
             // Recenter camera after a while. Hack, need to figure out when I can call it.
             Invoke(nameof(RecenterCamera), 1f);
         }
@@ -43,6 +46,7 @@ namespace TwoForksVR.PlayerCamera
         private void SetUpCamera()
         {
             var camera = Camera.main;
+            camera.transform.SetParent(transform);
             camera.transform.localPosition = Vector3.zero;
             camera.transform.localRotation = Quaternion.identity;
             camera.nearClipPlane = 0.03f;
@@ -60,19 +64,10 @@ namespace TwoForksVR.PlayerCamera
             {
                 return;
             }
-
             cameraController.defaultCameraTuning.ForEach(tuning => {
                 tuning.minVerticalAngle = 0;
                 tuning.maxVerticalAngle = 0;
             });
-        }
-
-        private Transform SetUpStage()
-        {
-            stage = new GameObject("VRStage").transform;
-            stage.SetParent(Camera.main.transform.parent, false);
-            Camera.main.transform.SetParent(stage);
-            return stage;
         }
 
         private void DisableCameraAnimations()
@@ -94,9 +89,9 @@ namespace TwoForksVR.PlayerCamera
                 return;
             }
             var cameraOffset = GetCameraOffset();
-            stage.position -= cameraOffset;
+            transform.position -= cameraOffset;
             var angleOffset = cameraController.eyeTransform.eulerAngles.y - Camera.main.transform.eulerAngles.y - 90f;
-            stage.Rotate(Vector3.up * angleOffset);
+            transform.Rotate(Vector3.up * angleOffset);
         }
     }
 }

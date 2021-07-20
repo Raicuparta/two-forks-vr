@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2385262787
+CRC: 2620021276
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c8f736d61aea3da4cc6d95e4dd0e175c
+    Hash: e28ac0620af894368e5a2d5f9d7b2cef
   TypeTreeHash:
     serializedVersion: 2
     Hash: a9192c0eebbf0280f7a92b9ad1786da0
@@ -30,6 +30,6 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
-- Assets/ToolPicker.prefab
+- Assets/Prefabs/ToolPicker.prefab
 Dependencies:
 - C:/Users/rai/Repos/two-forks-vr/HelperUnityProject/AssetBundles/hand
