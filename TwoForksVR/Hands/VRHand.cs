@@ -44,10 +44,10 @@ namespace TwoForksVR.Hands
                 pose.poseAction = SteamVR_Actions.default_PoseRightHand;
             }
             gameObject.SetActive(true);
-            MakeBonesFollowHands();
+            SetUpBones();
         }
 
-        private void MakeBonesFollowHands()
+        private void SetUpBones()
         {
             if (!rootBone)
             {
@@ -57,8 +57,8 @@ namespace TwoForksVR.Hands
             var armBone = SetUpArmBone();
             SetUpHandLid(armBone);
             var handBone = SetUpHandBone(armBone);
-            //SetUpMap(handBone);
-
+            MelonLogger.Msg("Pre VRMap.Create");
+            VRMap.Create(handBone, handName);
         }
 
         private Transform SetUpArmBone()
@@ -90,16 +90,6 @@ namespace TwoForksVR.Hands
             var handBone = armBone.transform.Find($"henryArm{handName}Hand");
             handBone.gameObject.AddComponent<LateUpdateFollow>().Target = wristTarget;
             return handBone;
-        }
-
-        private void SetUpMap(Transform handBone)
-        {
-            var mapInHand = transform.Find("itemSocket/henryHandLeftAttachment/MapRiggedPosedPrefab(Clone)/MapRoot/MapInHand");
-            if (!mapInHand)
-            {
-                return;
-            }
-            mapInHand.gameObject.AddComponent<VRMap>();
         }
     }
 
