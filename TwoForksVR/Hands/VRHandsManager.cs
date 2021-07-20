@@ -116,13 +116,19 @@ namespace TwoForksVR.Hands
             //target.localPosition = new Vector3(0.0707f, 0.0948f, -0.4881f);
             //target.localEulerAngles = new Vector3(347.1512f, 78.2487f, 43.7769f);
 
-            var rightHandBone = rootTransform
-                .Find("henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2")
-                .gameObject;
-            rightHandBone.AddComponent<LateUpdateFollow>().Target = target;
+            var rightHandBone = rootTransform.Find("henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2");
+            rightHandBone.gameObject.AddComponent<LateUpdateFollow>().Target = target;
 
-            var handLid = Instantiate(VRAssetLoader.HandLid);
-            handLid.transform.SetParent(rightHandBone.transform, false);
+            var handLid = Instantiate(VRAssetLoader.HandLid).transform;
+            handLid.SetParent(rightHandBone, false);
+
+            var stabilizerTarget = new GameObject("rightHandStabilizerTarget").transform;
+            stabilizerTarget.SetParent(rightHandBone);
+            stabilizerTarget.localPosition = new Vector3(-0.2497151f, 0f, 0f);
+            stabilizerTarget.localEulerAngles = new Vector3(3.949f, 17.709f, 12.374f);
+
+            var righHandSubBone = rightHandBone.transform.Find("henryArmRightHand").gameObject;
+            righHandSubBone.AddComponent<LateUpdateFollow>().Target = stabilizerTarget;
 
         }
     }
