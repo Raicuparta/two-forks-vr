@@ -15,12 +15,14 @@ namespace TwoForksVR.Hands
     {
         private bool isLeft;
         private Transform rootBone;
+        private string handName;
 
         public static VRHand Create(Transform parent, Transform rootBone, bool isLeft = false)
         {
-            var name = isLeft ? "Left" : "Right";
-            var transform = parent.Find($"{name}Hand");
+            var handName = isLeft ? "Left" : "Right";
+            var transform = parent.Find($"{handName}Hand");
             var instance = transform.gameObject.AddComponent<VRHand>();
+            instance.handName = handName;
             instance.isLeft = isLeft;
             instance.rootBone = rootBone;
             return instance;
@@ -29,7 +31,6 @@ namespace TwoForksVR.Hands
         private void Start()
         {
             gameObject.SetActive(false);
-            name = $"{(isLeft ? "Left" : "Right")} Hand";
             var pose = gameObject.AddComponent<SteamVR_Behaviour_Pose>();
 
             if (isLeft)
@@ -43,41 +44,53 @@ namespace TwoForksVR.Hands
                 pose.poseAction = SteamVR_Actions.default_PoseRightHand;
             }
             gameObject.SetActive(true);
-            DoHandShit();
+            MakeBonesFollowHands();
         }
 
-        private void DoHandShit()
+        private void MakeBonesFollowHands()
         {
             if (!rootBone)
             {
                 return;
             }
 
-            var name = isLeft ? "Left" : "Right";
+            var armBone = SetUpArmBone();
+            SetUpHandLid(armBone);
+            var handBone = SetUpHandBone(armBone);
+            //SetUpMap(handBone);
 
-            var armBone = rootBone.Find($"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{name}1/henrySpider{name}2/henrySpider{name}IK/henryArm{name}Collarbone/henryArm{name}1/henryArm{name}2");
+        }
+
+        private Transform SetUpArmBone()
+        {
+            var armBone = rootBone.Find($"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2");
             armBone.gameObject.AddComponent<LateUpdateFollow>().Target = transform.Find("ArmTarget");
+            return armBone;
+        }
 
+        private void SetUpHandLid(Transform armBone)
+        {
             var handLid = Instantiate(VRAssetLoader.HandLid).transform;
             handLid.SetParent(armBone, false);
             if (isLeft)
             {
                 handLid.localScale = new Vector3(1, 1, -1);
             }
-
-            var stabilizerTarget = new GameObject($"{name}HandStabilizerTarget").transform;
-            stabilizerTarget.SetParent(armBone);
-
-            var stabilizerAngleMultiplier = isLeft ? -1 : 1;
-
-            stabilizerTarget.localPosition = new Vector3(-0.2497151f, 0f, 0f);
-            stabilizerTarget.localEulerAngles = new Vector3(3.949f * stabilizerAngleMultiplier, 17.709f * stabilizerAngleMultiplier, 12.374f);
-
-            var handBone = armBone.transform.Find($"henryArm{name}Hand").gameObject;
-            handBone.AddComponent<LateUpdateFollow>().Target = stabilizerTarget;
         }
 
-        private void SetUpMap()
+        private Transform SetUpHandBone(Transform armBone)
+        {
+            var wristTarget = new GameObject($"{handName}WristTarget").transform;
+            wristTarget.SetParent(armBone);
+            var stabilizerAngleMultiplier = isLeft ? -1 : 1;
+            wristTarget.localPosition = new Vector3(-0.2497151f, 0f, 0f);
+            wristTarget.localEulerAngles = new Vector3(3.949f * stabilizerAngleMultiplier, 17.709f * stabilizerAngleMultiplier, 12.374f);
+            var handBone = armBone.transform.Find($"henryArm{handName}Hand");
+            handBone.gameObject.AddComponent<LateUpdateFollow>().Target = wristTarget;
+            return handBone;
+        }
+
+        private void SetUpMap(Transform handBone)
         {
             var mapInHand = transform.Find("itemSocket/henryHandLeftAttachment/MapRiggedPosedPrefab(Clone)/MapRoot/MapInHand");
             if (!mapInHand)
@@ -91,13 +104,13 @@ namespace TwoForksVR.Hands
     public class LateUpdateFollow : MonoBehaviour
     {
         public Transform Target;
-        private static readonly Vector3 scale = Vector3.one * 0.925f;
+        public float scale = 1f;
 
         void LateUpdate()
         {
             transform.position = Target.position;
             transform.rotation = Target.rotation;
-            transform.localScale = scale;
+            transform.localScale = Vector3.one * scale;
         }
     }
 }
