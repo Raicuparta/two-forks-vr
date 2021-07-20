@@ -12,15 +12,25 @@ namespace TwoForksVR.Hands
 {
     public class VRHand: MonoBehaviour
     {
-        public bool IsLeft = false;
+        private bool isLeft;
+
+        public static VRHand Create(Transform parent, bool isLeft = false)
+        {
+            var name = isLeft ? "Left" : "Right";
+            var transform = parent.Find($"{name}Hand");
+            var instance = transform.gameObject.AddComponent<VRHand>();
+            instance.isLeft = isLeft;
+
+            return instance;
+        }
 
         private void Start()
         {
             gameObject.SetActive(false);
-            name = $"{(IsLeft ? "Left" : "Right")} Hand";
+            name = $"{(isLeft ? "Left" : "Right")} Hand";
             var pose = gameObject.AddComponent<SteamVR_Behaviour_Pose>();
 
-            if (IsLeft)
+            if (isLeft)
             {
                 pose.inputSource = SteamVR_Input_Sources.LeftHand;
                 pose.poseAction = SteamVR_Actions.default_PoseLeftHand;

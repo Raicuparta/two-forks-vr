@@ -60,7 +60,6 @@
     <Compile Include="Assets\TextureLoader.cs" />
     <Compile Include="Assets\VRAssetLoader.cs" />
     <Compile Include="Body\VRBodyManager.cs" />
-    <Compile Include="PlayerCamera\Patches\CameraPatches.cs" />
     <Compile Include="Debug\DebugAxes.cs" />
     <Compile Include="Helpers\MathHelper.cs" />
     <Compile Include="Input\InputName.cs" />

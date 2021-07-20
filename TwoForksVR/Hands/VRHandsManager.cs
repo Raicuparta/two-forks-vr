@@ -43,20 +43,12 @@ namespace TwoForksVR.Hands
 
         private void SetUpHands()
         {
-            rightHand = CreateHand(transform.Find("RightHand").gameObject);
-            leftHand = CreateHand(transform.Find("LeftHand").gameObject, true);
+            rightHand = VRHand.Create(transform).transform;
+            leftHand = VRHand.Create(transform, true).transform;
 
             var bodyRoot = playerBody.parent.Find("henryroot");
             DoHandShit(rightHand, bodyRoot);
             DoHandShit(leftHand, bodyRoot, true);
-        }
-
-        private Transform CreateHand(GameObject instance, bool isLeft = false)
-        {
-            var hand = instance.AddComponent<VRHand>();
-            hand.IsLeft = isLeft;
-
-            return hand.transform;
         }
 
         private void DoHandShit(Transform hand, Transform rootTransform, bool isLeft = false)
