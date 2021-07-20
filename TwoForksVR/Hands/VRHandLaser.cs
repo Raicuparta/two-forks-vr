@@ -10,12 +10,11 @@ namespace TwoForksVR.Hands
 {
     class VRHandLaser: MonoBehaviour
     {
-        public static VRHandLaser Instance;
-        private static LineRenderer lineRenderer;
+        private LineRenderer lineRenderer;
 
         private void Start()
         {
-            Instance = this;
+            UseHandLaserForTargeting.LaserTransform = transform;
 
             name = "VR Laser";
 

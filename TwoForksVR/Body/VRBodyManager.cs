@@ -14,6 +14,11 @@ namespace TwoForksVR
     {
         private static Transform playerBodyTransform;
 
+        public static VRBodyManager Create()
+        {
+            return new GameObject("VRBodyManager").AddComponent<VRBodyManager>();
+        }
+
         private void Start()
         {
             HideBody();

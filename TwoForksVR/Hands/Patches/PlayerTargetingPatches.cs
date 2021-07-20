@@ -11,16 +11,13 @@ namespace TwoForksVR.Hands
     [HarmonyPatch(typeof(vgPlayerTargeting), "UpdateTarget")]
     public class UseHandLaserForTargeting
     {
+        public static Transform LaserTransform;
+
         public static void Prefix(ref Vector3 cameraFacing, ref Vector3 cameraOrigin)
         {
-            var transform = VRHandLaser.Instance?.transform;
-            if (!transform)
-            {
-                MelonLogger.Error("Couldn't get laser transform for UpdateTarget patch");
-                return;
-            }
-            cameraFacing = transform.forward;
-            cameraOrigin = transform.position;
+            if (!LaserTransform) return;
+            cameraFacing = LaserTransform.forward;
+            cameraOrigin = LaserTransform.position;
         }
     }
 }

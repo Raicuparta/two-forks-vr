@@ -82,13 +82,12 @@ namespace TwoForksVR
         {
             isInitialized = false;
             VRStage.Create();
-            //new GameObject("VRHandsManager").AddComponent<VRHandsManager>();
         }
 
         private void SetUpGameScene()
         {
             isInitialized = true;
-            new GameObject("VRBodyManager").AddComponent<VRBodyManager>();
+            VRBodyManager.Create();
             VRStage.Create();
         }
 
