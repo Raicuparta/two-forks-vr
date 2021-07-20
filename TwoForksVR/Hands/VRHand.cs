@@ -32,7 +32,6 @@ namespace TwoForksVR.Hands
         {
             gameObject.SetActive(false);
             var pose = gameObject.AddComponent<SteamVR_Behaviour_Pose>();
-
             if (isLeft)
             {
                 pose.inputSource = SteamVR_Input_Sources.LeftHand;
@@ -44,7 +43,20 @@ namespace TwoForksVR.Hands
                 pose.poseAction = SteamVR_Actions.default_PoseRightHand;
             }
             gameObject.SetActive(true);
-            SetUpBones();
+            if (rootBone)
+            {
+                SetUpBones();
+            } else
+            {
+                SetUpFallbackHands();
+            }
+        }
+
+        private void SetUpFallbackHands()
+        {
+            var handModel = transform.Find("HandModel");
+            if (!handModel) return;
+            handModel.gameObject.SetActive(true);
         }
 
         private void SetUpBones()
