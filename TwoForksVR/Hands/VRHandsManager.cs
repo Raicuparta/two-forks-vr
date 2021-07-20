@@ -130,6 +130,7 @@ namespace TwoForksVR.Hands
             var righHandSubBone = rightHandBone.transform.Find("henryArmRightHand").gameObject;
             righHandSubBone.AddComponent<LateUpdateFollow>().Target = stabilizerTarget;
 
+            
         }
     }
 
