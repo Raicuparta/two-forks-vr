@@ -17,9 +17,9 @@ namespace TwoForksVR.PlayerCamera
         private bool isInitialized;
         private vgCameraController cameraController;
 
-        public static VRCameraManager Create(Transform stage)
+        public static VRCameraManager Create(Transform parent)
         {
-            var instance = stage.gameObject.AddComponent<VRCameraManager>();
+            var instance = parent.gameObject.AddComponent<VRCameraManager>();
             return instance;
         }
 

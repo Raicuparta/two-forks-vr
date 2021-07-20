@@ -43,53 +43,17 @@ namespace TwoForksVR.Hands
 
         private void SetUpHands()
         {
-            rightHand = VRHand.Create(transform).transform;
-            leftHand = VRHand.Create(transform, true).transform;
+            var rootBone = playerBody?.parent.Find("henryroot");
 
-            var bodyRoot = playerBody.parent.Find("henryroot");
-            DoHandShit(rightHand, bodyRoot);
-            DoHandShit(leftHand, bodyRoot, true);
-        }
-
-        private void DoHandShit(Transform hand, Transform rootTransform, bool isLeft = false)
-        {
-            var name = isLeft ? "Left" : "Right";
-
-            var armBone = rootTransform.Find($"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{name}1/henrySpider{name}2/henrySpider{name}IK/henryArm{name}Collarbone/henryArm{name}1/henryArm{name}2");
-            armBone.gameObject.AddComponent<LateUpdateFollow>().Target = hand.Find("ArmTarget");
-
-            var handLid = Instantiate(VRAssetLoader.HandLid).transform;
-            handLid.SetParent(armBone, false);
-            if (isLeft)
-            {
-                handLid.localScale = new Vector3(1, 1, -1);
-            }
-
-            var stabilizerTarget = new GameObject($"{name}HandStabilizerTarget").transform;
-            stabilizerTarget.SetParent(armBone);
-
-            var stabilizerAngleMultiplier = isLeft ? -1 : 1;
-
-            stabilizerTarget.localPosition = new Vector3(-0.2497151f, 0f, 0f);
-            stabilizerTarget.localEulerAngles = new Vector3(3.949f * stabilizerAngleMultiplier, 17.709f * stabilizerAngleMultiplier, 12.374f);
-
-            var handBone = armBone.transform.Find($"henryArm{name}Hand").gameObject;
-            handBone.AddComponent<LateUpdateFollow>().Target = stabilizerTarget;
-
-            
-        }
-    }
-
-    public class LateUpdateFollow : MonoBehaviour
-    {
-        public Transform Target;
-        private static readonly Vector3 scale = Vector3.one * 0.925f;
-
-        void LateUpdate()
-        {
-            transform.position = Target.position;
-            transform.rotation = Target.rotation;
-            transform.localScale = scale;
+            rightHand = VRHand.Create(
+                parent: transform,
+                rootBone: rootBone
+            ).transform;
+            leftHand = VRHand.Create(
+                parent: transform,
+                rootBone: rootBone,
+                isLeft: true
+            ).transform;
         }
     }
 }

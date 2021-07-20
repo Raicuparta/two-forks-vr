@@ -13,15 +13,14 @@ namespace TwoForksVR.Stage
         public static VRStage Create()
         {
             var instance = new GameObject("VRStage").AddComponent<VRStage>();
-            instance.transform.SetParent(Camera.main.transform.parent, false);
+            var transform = instance.transform;
+            transform.SetParent(Camera.main.transform.parent, false);
+            VRCameraManager.Create(parent: transform);
+            VRHandsManager.Create(
+                parent: transform,
+                playerBody: VRBodyManager.GetPlayerBodyTransform()
+            );
             return instance;
-        }
-
-        private void Start()
-        {
-            var playerBody = VRBodyManager.GetPlayerBodyTransform();
-            VRHandsManager.Create(transform, playerBody);
-            VRCameraManager.Create(transform);
         }
     }
 }
