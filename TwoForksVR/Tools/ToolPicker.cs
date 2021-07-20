@@ -49,6 +49,7 @@ namespace TwoForksVR.Tools
 		private void Start()
 		{
 			SetUpToolsList();
+			CloseToolPicker();
 		}
 
 		private void SetUpToolsList()
