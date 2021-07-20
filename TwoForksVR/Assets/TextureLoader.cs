@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace TwoForksVR
+namespace TwoForksVR.Assets
 {
     public static class TextureLoader
     {

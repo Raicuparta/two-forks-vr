@@ -9,6 +9,7 @@ using System.Linq;
 using Valve.VR;
 using TwoForksVR.PlayerCamera;
 using TwoForksVR.Hands;
+using TwoForksVR.Assets;
 
 namespace TwoForksVR
 {

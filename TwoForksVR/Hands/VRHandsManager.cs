@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using TwoForksVR.Tools;
+using TwoForksVR.Assets;
 using UnityEngine;
 using Valve.VR;
 
@@ -120,6 +121,8 @@ namespace TwoForksVR.Hands
                 .gameObject;
             rightHandBone.AddComponent<LateUpdateFollow>().Target = target;
 
+            var handLid = Instantiate(VRAssetLoader.HandLid);
+            handLid.transform.SetParent(rightHandBone.transform, false);
 
         }
     }

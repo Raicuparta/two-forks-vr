@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 205241873
+CRC: 904726594
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9a4d0f94b621aace1048b3a6b21e91ef
+    Hash: 76a5fe85fd17ba878c9a67cda0551324
   TypeTreeHash:
     serializedVersion: 2
     Hash: 374b226fcf22a781e7ed63c9b2c7b15a
@@ -40,4 +40,5 @@ Assets:
 - Assets/Icons/radio.png
 - Assets/Icons/flashlight.png
 - Assets/arms-cutout.png
+- Assets/HandLid.prefab
 Dependencies: []

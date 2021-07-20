@@ -6,18 +6,20 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace TwoForksVR
+namespace TwoForksVR.Assets
 {
     public static class VRAssetLoader
     {
         public static GameObject Hand { get; private set; }
         public static GameObject ToolPicker { get; private set; }
+        public static GameObject HandLid { get; private set; }
         public static Texture2D ArmsCutoutTexture { get; private set; }
 
         public static void LoadAssets()
         {
             var handAsset = LoadBundle("hand");
             Hand = handAsset.LoadAsset<GameObject>("Hand");
+            HandLid = handAsset.LoadAsset<GameObject>("HandLid");
             ArmsCutoutTexture = handAsset.LoadAsset<Texture2D>("arms-cutout");
 
             ToolPicker = LoadAssetPrefab("tool-picker", "ToolPicker");
