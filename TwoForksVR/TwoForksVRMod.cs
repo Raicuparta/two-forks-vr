@@ -74,6 +74,7 @@ namespace TwoForksVR
                 SetUpGameScene();
             } else if (sceneName == "Intro")
             {
+                SetUpIntroScene();
                 SetUpMenuScene();
             }
         }
@@ -93,7 +94,7 @@ namespace TwoForksVR
 
         private void SetUpIntroScene()
         {
-            //VRSettings.enabled = false;
+            new GameObject().AddComponent<IntroFix>();
         }
     }
 }

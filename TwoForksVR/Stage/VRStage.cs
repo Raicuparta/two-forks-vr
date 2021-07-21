@@ -18,15 +18,14 @@ namespace TwoForksVR.Stage
             var instance = new GameObject("VRStage").AddComponent<VRStage>();
 
             var camera = Camera.main;
+            instance.camera = camera;
             if (!camera)
             {
-                //camera = new GameObject("VR Camera").AddComponent<Camera>();
-                //camera.tag = "MainCamera";
-                //camera.enabled = false;
-                VRSettings.enabled = false;
+                camera = new GameObject("VR Camera").AddComponent<Camera>();
+                camera.tag = "MainCamera";
+                instance.camera = camera;
                 return instance;
             }
-            instance.camera = camera;
             var transform = instance.transform;
             transform.SetParent(camera.transform.parent, false);
             VRCameraManager.Create(parent: transform);
@@ -39,17 +38,14 @@ namespace TwoForksVR.Stage
 
         private void Update()
         {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.C))
-            {
-                camera.enabled = !camera.enabled;
-            }
             if (UnityEngine.Input.GetKeyDown(KeyCode.V))
             {
                 VRSettings.enabled = !VRSettings.enabled;
             }
             if (UnityEngine.Input.GetKeyDown(KeyCode.T))
             {
-                VRSettings.enabled = VRStage.Create();
+                GameObject.Find("IntroManager").SetActive(false);
+                GameObject.Find("IntroTextAndBackground").SetActive(false);
             }
             if (UnityEngine.Input.GetKeyDown(KeyCode.Equals))
             {

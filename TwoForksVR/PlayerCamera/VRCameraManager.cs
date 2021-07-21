@@ -23,6 +23,11 @@ namespace TwoForksVR.PlayerCamera
             return instance;
         }
 
+        public static Camera GetCamera()
+        {
+            return Camera.main ?? Camera.current;
+        }
+
         private void Start()
         {
             Instance = this;
@@ -44,7 +49,7 @@ namespace TwoForksVR.PlayerCamera
 
         private void SetUpCamera()
         {
-            var camera = Camera.main;
+            var camera = GetCamera();
             camera.transform.SetParent(transform);
             camera.transform.localPosition = Vector3.zero;
             camera.transform.localRotation = Quaternion.identity;
@@ -70,14 +75,14 @@ namespace TwoForksVR.PlayerCamera
 
         private void DisableCameraAnimations()
         {
-            var animation = Camera.main.GetComponent<Animation>();
+            var animation = GetCamera().GetComponent<Animation>();
             if (!animation) return;
             animation.enabled = false;
         }
 
         private Vector3 GetCameraOffset()
         {
-            return Camera.main.transform.position - cameraController.eyeTransform.position;
+            return GetCamera().transform.position - cameraController.eyeTransform.position;
         }
 
         private void RecenterCamera()
@@ -88,7 +93,7 @@ namespace TwoForksVR.PlayerCamera
             }
             var cameraOffset = GetCameraOffset();
             transform.position -= cameraOffset;
-            var angleOffset = cameraController.eyeTransform.eulerAngles.y - Camera.main.transform.eulerAngles.y - 90f;
+            var angleOffset = cameraController.eyeTransform.eulerAngles.y - GetCamera().transform.eulerAngles.y - 90f;
             transform.Rotate(Vector3.up * angleOffset);
         }
     }
