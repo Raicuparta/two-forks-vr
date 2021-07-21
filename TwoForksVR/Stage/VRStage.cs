@@ -29,10 +29,10 @@ namespace TwoForksVR.Stage
             var transform = instance.transform;
             transform.SetParent(camera.transform.parent, false);
             VRCameraManager.Create(parent: transform);
-            //VRHandsManager.Create(
-            //    parent: transform,
-            //    playerBody: VRBodyManager.GetPlayerBodyTransform()
-            //);
+            VRHandsManager.Create(
+                parent: transform,
+                playerBody: VRBodyManager.GetPlayerBodyTransform()
+            );
             return instance;
         }
 

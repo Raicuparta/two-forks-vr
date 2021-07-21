@@ -39,13 +39,13 @@ namespace TwoForksVR.PlayerCamera
             Invoke(nameof(RecenterCamera), 1f);
         }
 
-        //private void Update()
-        //{
-        //    if (SteamVR_Actions.default_Recenter.stateDown)
-        //    {
-        //        RecenterCamera();
-        //    }
-        //}
+        private void Update()
+        {
+            if (SteamVR_Actions.default_Recenter.stateDown)
+            {
+                RecenterCamera();
+            }
+        }
 
         private void SetUpCamera()
         {
