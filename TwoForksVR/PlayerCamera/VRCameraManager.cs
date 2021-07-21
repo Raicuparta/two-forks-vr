@@ -32,6 +32,7 @@ namespace TwoForksVR.PlayerCamera
         {
             Instance = this;
             cameraController = FindObjectOfType<vgCameraController>();
+            VRSettings.enabled = false;
             SetUpCamera();
             LimitVerticalRotation();
             DisableCameraAnimations();
@@ -56,6 +57,7 @@ namespace TwoForksVR.PlayerCamera
             camera.nearClipPlane = 0.03f;
             if (!isInitialized)
             {
+                VRSettings.enabled = true;
                 isInitialized = true;
             }
         }
