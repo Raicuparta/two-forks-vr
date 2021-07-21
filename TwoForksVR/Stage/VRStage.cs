@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Harmony;
+using MelonLoader;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -50,6 +52,16 @@ namespace TwoForksVR.Stage
             if (UnityEngine.Input.GetKeyDown(KeyCode.Equals))
             {
                 Time.timeScale = Time.timeScale > 1 ? 1 : 10;
+            }
+        }
+
+        [HarmonyPatch(typeof(vgCameraController), "Start")]
+        public class CreateStage
+        {
+            public static void Prefix()
+            {
+                MelonLogger.Msg("CREATING STAGE FROM PREFIX");
+                Create();
             }
         }
     }

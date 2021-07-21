@@ -62,14 +62,20 @@ namespace TwoForksVR
             }
         }
 
+        private bool IsGameScene(string sceneName)
+        {
+            return sceneName.StartsWith("TeenLoop") || sceneName.StartsWith("Intro_SECTR");
+        }
+
         public override void OnSceneWasInitialized(int buildIndex, string sceneName)
         {
+            MelonLogger.Msg($"#### INITIALIZED SCENE: ({sceneName}) ####");
             base.OnSceneWasInitialized(buildIndex, sceneName);
 
             if (sceneName == "Main_Menu")
             {
                 SetUpMenuScene();
-            } else if (sceneName.StartsWith("TeenLoop") && !isInitialized)
+            } else if (IsGameScene(sceneName) && !isInitialized)
             {
                 SetUpGameScene();
             } else if (sceneName == "Intro")
@@ -89,7 +95,7 @@ namespace TwoForksVR
         {
             isInitialized = true;
             VRBodyManager.Create();
-            VRStage.Create();
+            //VRStage.Create();
         }
 
         private void SetUpIntroScene()
