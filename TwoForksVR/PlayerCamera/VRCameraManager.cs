@@ -27,7 +27,6 @@ namespace TwoForksVR.PlayerCamera
         {
             Instance = this;
             cameraController = FindObjectOfType<vgCameraController>();
-            VRSettings.enabled = false;
             SetUpCamera();
             LimitVerticalRotation();
             DisableCameraAnimations();
@@ -35,13 +34,13 @@ namespace TwoForksVR.PlayerCamera
             Invoke(nameof(RecenterCamera), 1f);
         }
 
-        private void Update()
-        {
-            if (SteamVR_Actions.default_Recenter.stateDown)
-            {
-                RecenterCamera();
-            }
-        }
+        //private void Update()
+        //{
+        //    if (SteamVR_Actions.default_Recenter.stateDown)
+        //    {
+        //        RecenterCamera();
+        //    }
+        //}
 
         private void SetUpCamera()
         {
@@ -52,7 +51,6 @@ namespace TwoForksVR.PlayerCamera
             camera.nearClipPlane = 0.03f;
             if (!isInitialized)
             {
-                VRSettings.enabled = true;
                 isInitialized = true;
             }
         }
