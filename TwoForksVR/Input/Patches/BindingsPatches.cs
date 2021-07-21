@@ -53,6 +53,11 @@ namespace TwoForksVR.Input
         {
             public static void Postfix(List<string> ___names, ref float ___axisValue, ref float ___axisValueLastFrame)
             {
+                if (!SteamVR_Input.initialized)
+                {
+                    return;
+                }
+
                 if (actionSet == null)
                 {
                     Initialize();
@@ -84,6 +89,11 @@ namespace TwoForksVR.Input
 
             )
             {
+                if (!SteamVR_Input.initialized)
+                {
+                    return;
+                }
+
                 if (actionSet == null)
                 {
                     Initialize();
