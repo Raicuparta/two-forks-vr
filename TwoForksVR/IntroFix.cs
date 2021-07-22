@@ -13,7 +13,6 @@ namespace TwoForksVR
 
         private void Start()
         {
-            VRSettings.enabled = false;
             Invoke(nameof(Init), 1);
             Invoke(nameof(After), 2);
         }
@@ -23,7 +22,6 @@ namespace TwoForksVR
             introManager = GameObject.Find("IntroManager");
             introManager.SetActive(false);
             GameObject.Find("IntroTextAndBackground").SetActive(false);
-            VRSettings.enabled = true;
         }
 
         private void After()
