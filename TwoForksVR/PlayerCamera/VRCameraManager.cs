@@ -48,6 +48,7 @@ namespace TwoForksVR.PlayerCamera
             camera.transform.localPosition = Vector3.zero;
             camera.transform.localRotation = Quaternion.identity;
             camera.nearClipPlane = 0.03f;
+            camera.depth = 1; // Make sure this camera draws on top of other cameras we make.
             if (!isInitialized)
             {
                 VRSettings.enabled = true;
