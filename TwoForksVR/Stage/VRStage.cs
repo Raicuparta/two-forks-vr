@@ -31,7 +31,7 @@ namespace TwoForksVR.Stage
             VRCameraManager.Create(parent: stageTransform);
             VRHandsManager.Create(
                 parent: stageTransform,
-                playerBody: VRBodyManager.GetPlayerBodyTransform()
+                playerBody: VRBodyManager.GetPlayerBodyTransform() // TODO makes no sense to pass since it's from outside
             );
             return instance;
         }
