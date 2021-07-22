@@ -52,24 +52,5 @@ namespace TwoForksVR.Stage
                 Time.timeScale = Time.timeScale > 1 ? 1 : 10;
             }
         }
-
-        [HarmonyPatch(typeof(vgCameraController), "Start")]
-        public class CreateGameStage
-        {
-            public static void Prefix(vgCameraController __instance)
-            {
-                Create(__instance.GetComponentInChildren<Camera>());
-            }
-        }
-
-        [HarmonyPatch(typeof(vgMenuCameraController), "Start")]
-        public class CreateMenuStage
-        {
-            [HarmonyPriority(Priority.High)]
-            public static void Prefix(vgMenuCameraController __instance)
-            {
-                Create(__instance.GetComponentInChildren<Camera>());
-            }
-        }
     }
 }
