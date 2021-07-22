@@ -13,19 +13,14 @@ namespace TwoForksVR.Stage
 {
     class VRStage: MonoBehaviour
     {
-        private Camera camera;
-
-        public static VRStage Create()
+        public static VRStage Create(Camera camera)
         {
             var instance = new GameObject("VRStage").AddComponent<VRStage>();
 
-            var camera = Camera.main;
-            instance.camera = camera;
             if (!camera)
             {
                 camera = new GameObject("VR Camera").AddComponent<Camera>();
                 camera.tag = "MainCamera";
-                instance.camera = camera;
                 return instance;
             }
             var transform = instance.transform;
@@ -58,10 +53,9 @@ namespace TwoForksVR.Stage
         [HarmonyPatch(typeof(vgCameraController), "Start")]
         public class CreateGameStage
         {
-            public static void Prefix()
+            public static void Prefix(vgCameraController __instance)
             {
-                MelonLogger.Msg("CREATING STAGE FROM PREFIX");
-                Create();
+                Create(__instance.GetComponentInChildren<Camera>());
             }
         }
 
@@ -69,10 +63,9 @@ namespace TwoForksVR.Stage
         public class CreateMenuStage
         {
             [HarmonyPriority(Priority.High)]
-            public static void Prefix()
+            public static void Prefix(vgMenuCameraController __instance)
             {
-                MelonLogger.Msg("CREATING STAGE FROM PREFIX");
-                Create();
+                Create(__instance.GetComponentInChildren<Camera>());
             }
         }
     }
