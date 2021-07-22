@@ -78,9 +78,6 @@ namespace TwoForksVR
             } else if (IsGameScene(sceneName) && !isInitialized)
             {
                 SetUpGameScene();
-            } else if (sceneName == "Intro")
-            {
-                SetUpIntroScene();
             }
         }
 
@@ -92,11 +89,6 @@ namespace TwoForksVR
         private void SetUpGameScene()
         {
             isInitialized = true;
-        }
-
-        private void SetUpIntroScene()
-        {
-            IntroFix.Create();
         }
     }
 }

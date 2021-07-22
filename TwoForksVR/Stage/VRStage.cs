@@ -37,6 +37,7 @@ namespace TwoForksVR.Stage
                 camera.clearFlags = CameraClearFlags.Color;
                 camera.backgroundColor = Color.black;
                 camera.tag = "MainCamera";
+                IntroFix.Create();
             }
 
             VRCameraManager.Create(
