@@ -11,20 +11,23 @@ namespace TwoForksVR
     {
         GameObject introManager;
 
-        private void Start()
+        public static IntroFix Create()
         {
-            Invoke(nameof(Init), 1);
-            Invoke(nameof(After), 2);
+            return new GameObject().AddComponent<IntroFix>();
         }
 
-        private void Init()
+        private void Awake()
         {
             introManager = GameObject.Find("IntroManager");
+            if (!introManager)
+            {
+                return;
+            }
             introManager.SetActive(false);
             GameObject.Find("IntroTextAndBackground").SetActive(false);
         }
 
-        private void After()
+        private void Start()
         {
             introManager.SetActive(true);
         }

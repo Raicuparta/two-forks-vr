@@ -96,7 +96,7 @@ namespace TwoForksVR
 
         private void SetUpIntroScene()
         {
-            new GameObject().AddComponent<IntroFix>();
+            IntroFix.Create();
         }
     }
 }
