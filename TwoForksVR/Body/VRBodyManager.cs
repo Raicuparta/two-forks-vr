@@ -1,11 +1,4 @@
-﻿using MelonLoader;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TwoForksVR.Hands;
-using TwoForksVR.Assets;
-using TwoForksVR.PlayerCamera;
+﻿using TwoForksVR.Assets;
 using UnityEngine;
 using TwoForksVR.Stage;
 using Harmony;
@@ -16,8 +9,15 @@ namespace TwoForksVR
     {
         public static VRBodyManager Create(Transform playerTransform)
         {
-            var camera = playerTransform.parent.GetComponentInChildren<Camera>();
             var playerBody = playerTransform.Find("henry/body").gameObject;
+            var existingBodyManager = playerBody.GetComponent<VRBodyManager>();
+            if (existingBodyManager) return existingBodyManager;
+
+            var camera = playerTransform
+                .parent
+                .GetComponentInChildren<vgCameraController>()
+                .GetComponentInChildren<Camera>();
+
             VRStage.Create(
                 camera: camera,
                 playerTransform: playerTransform
