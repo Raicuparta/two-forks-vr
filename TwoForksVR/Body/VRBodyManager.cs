@@ -8,19 +8,21 @@ using TwoForksVR.Assets;
 using TwoForksVR.PlayerCamera;
 using UnityEngine;
 using TwoForksVR.Stage;
+using Harmony;
 
 namespace TwoForksVR
 {
     public class VRBodyManager : MonoBehaviour
     {
-        private static Transform playerBodyTransform;
-
-        public static VRBodyManager Create()
+        public static VRBodyManager Create(Transform playerTransform)
         {
-            var playerPrefab = GameObject.Find("Player Prefab");
-            var playerBody = playerPrefab.transform.Find("PlayerModel/henry/body");
-            VRStage.Create(playerPrefab.GetComponentInChildren<Camera>(), playerBody);
-            return playerBody.gameObject.AddComponent<VRBodyManager>();
+            var camera = playerTransform.parent.GetComponentInChildren<Camera>();
+            var playerBody = playerTransform.Find("henry/body").gameObject;
+            VRStage.Create(
+                camera: camera,
+                playerTransform: playerTransform
+            );
+            return playerBody.AddComponent<VRBodyManager>();
         }
 
         private void Start()
@@ -30,7 +32,7 @@ namespace TwoForksVR
 
         private void HideBody()
         {
-            var renderer = GetPlayerBodyTransform().GetComponent<SkinnedMeshRenderer>();
+            var renderer = transform.GetComponent<SkinnedMeshRenderer>();
             renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.TwoSided;
 
             var materials = renderer.materials;
@@ -55,10 +57,14 @@ namespace TwoForksVR
                 material.SetColor("_Color", Color.clear);
             }
         }
+    }
 
-        public static Transform GetPlayerBodyTransform()
+    [HarmonyPatch(typeof(vgPlayerController), "Awake")]
+    public class CreateBodyManager
+    {
+        public static void Prefix(vgPlayerController __instance)
         {
-            return playerBodyTransform ?? (playerBodyTransform = GameObject.Find("Player Prefab")?.transform.Find("PlayerModel/henry/body"));
+            VRBodyManager.Create(__instance.transform);
         }
     }
 }

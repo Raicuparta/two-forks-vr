@@ -13,7 +13,7 @@ namespace TwoForksVR.Stage
 {
     class VRStage: MonoBehaviour
     {
-        public static VRStage Create(Camera camera, Transform playerBody)
+        public static VRStage Create(Camera camera, Transform playerTransform)
         {
             var parent = camera.transform.parent;
             var stageTransform = parent.Find("VRStage") ?? new GameObject("VRStage").transform;
@@ -31,7 +31,7 @@ namespace TwoForksVR.Stage
             VRCameraManager.Create(parent: stageTransform);
             VRHandsManager.Create(
                 parent: stageTransform,
-                playerBody: VRBodyManager.GetPlayerBodyTransform() // TODO makes no sense to pass since it's from outside
+                playerTransform: playerTransform
             );
             return instance;
         }

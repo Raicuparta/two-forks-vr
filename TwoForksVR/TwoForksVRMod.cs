@@ -93,7 +93,6 @@ namespace TwoForksVR
         private void SetUpGameScene()
         {
             isInitialized = true;
-            VRBodyManager.Create();
         }
 
         private void SetUpIntroScene()
