@@ -81,7 +81,6 @@ namespace TwoForksVR
             } else if (sceneName == "Intro")
             {
                 SetUpIntroScene();
-                SetUpMenuScene();
             }
         }
 

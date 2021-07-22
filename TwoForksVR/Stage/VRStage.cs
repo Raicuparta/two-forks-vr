@@ -15,17 +15,24 @@ namespace TwoForksVR.Stage
     {
         public static VRStage Create(Camera camera, Transform playerTransform)
         {
-            var parent = camera.transform.parent;
-            var stageTransform = parent.Find("VRStage") ?? new GameObject("VRStage").transform;
-            if (stageTransform.GetComponent<VRStage>()) return null;
-            stageTransform.SetParent(parent, false);
-            var instance = stageTransform.gameObject.AddComponent<VRStage>();
+            VRStage instance;
+            var parent = camera?.transform.parent;
 
-            if (!camera)
+            var existingStage = GameObject.Find("VRStage")?.GetComponent<VRStage>();
+            if (existingStage) return existingStage;
+
+            var stageTransform = new GameObject("VRStage").transform;
+            instance = stageTransform.gameObject.AddComponent<VRStage>();
+
+            if (camera)
+            {
+                stageTransform.SetParent(parent, false);
+               
+            } 
+            else
             {
                 camera = new GameObject("VR Camera").AddComponent<Camera>();
                 camera.tag = "MainCamera";
-                return instance;
             }
 
             VRCameraManager.Create(
@@ -36,6 +43,7 @@ namespace TwoForksVR.Stage
                 parent: stageTransform,
                 playerTransform: playerTransform
             );
+
             return instance;
         }
 
