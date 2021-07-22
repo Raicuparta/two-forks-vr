@@ -27,11 +27,12 @@ namespace TwoForksVR.Stage
             if (camera)
             {
                 stageTransform.SetParent(parent, false);
-               
             } 
             else
             {
                 camera = new GameObject("VR Camera").AddComponent<Camera>();
+                camera.clearFlags = CameraClearFlags.Color;
+                camera.backgroundColor = Color.black;
                 camera.tag = "MainCamera";
             }
 
