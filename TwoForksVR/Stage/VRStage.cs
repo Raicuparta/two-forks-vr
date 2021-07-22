@@ -18,8 +18,11 @@ namespace TwoForksVR.Stage
             VRStage instance;
             var parent = camera?.transform.parent;
 
-            var existingStage = GameObject.Find("VRStage")?.GetComponent<VRStage>();
-            if (existingStage) return existingStage;
+            if (!parent)
+            {
+                var existingStage = GameObject.Find("VRStage")?.GetComponent<VRStage>();
+                if (existingStage) return existingStage;
+            }
 
             var stageTransform = new GameObject("VRStage").transform;
             instance = stageTransform.gameObject.AddComponent<VRStage>();
