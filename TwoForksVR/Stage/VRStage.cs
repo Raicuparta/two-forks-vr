@@ -28,7 +28,10 @@ namespace TwoForksVR.Stage
                 return instance;
             }
 
-            VRCameraManager.Create(parent: stageTransform);
+            VRCameraManager.Create(
+                parent: stageTransform,
+                camera: camera
+            );
             VRHandsManager.Create(
                 parent: stageTransform,
                 playerTransform: playerTransform
