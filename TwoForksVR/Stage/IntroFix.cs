@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.VR;
 
-namespace TwoForksVR
+namespace TwoForksVR.Stage
 {
     class IntroFix: MonoBehaviour
     {
@@ -13,7 +13,7 @@ namespace TwoForksVR
 
         public static IntroFix Create()
         {
-            return new GameObject().AddComponent<IntroFix>();
+            return new GameObject("VRIntroFix").AddComponent<IntroFix>();
         }
 
         private void Awake()

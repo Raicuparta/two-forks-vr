@@ -3,7 +3,7 @@ using UnityEngine;
 using TwoForksVR.Stage;
 using Harmony;
 
-namespace TwoForksVR
+namespace TwoForksVR.PlayerBody
 {
     public class VRBodyManager : MonoBehaviour
     {

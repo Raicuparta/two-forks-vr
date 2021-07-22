@@ -58,13 +58,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\VRAssetLoader.cs" />
-    <Compile Include="Body\VRBodyManager.cs" />
+    <Compile Include="PlayerBody\VRBodyManager.cs" />
     <Compile Include="Debug\DebugAxes.cs" />
     <Compile Include="Helpers\MathHelper.cs" />
     <Compile Include="Input\InputName.cs" />
     <Compile Include="Input\Patches\MousePatches.cs" />
     <Compile Include="Input\Patches\BindingsPatches.cs" />
-    <Compile Include="IntroFix.cs" />
+    <Compile Include="Stage\IntroFix.cs" />
     <Compile Include="PlayerCamera\Patches\CameraTransformProtectionPatches.cs" />
     <Compile Include="Stage\Patches\StagePatches.cs" />
     <Compile Include="Stage\VRStage.cs" />
