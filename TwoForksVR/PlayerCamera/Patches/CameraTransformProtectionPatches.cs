@@ -15,7 +15,7 @@ namespace TwoForksVR.PlayerCamera
     {
         public static bool Prefix(vgMenuCameraController __instance)
         {
-            UnityEngine.Object.Destroy(__instance);
+            __instance.enabled = false;
             return false;
         }
     }

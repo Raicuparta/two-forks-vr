@@ -56,8 +56,19 @@ namespace TwoForksVR.Stage
         }
 
         [HarmonyPatch(typeof(vgCameraController), "Start")]
-        public class CreateStage
+        public class CreateGameStage
         {
+            public static void Prefix()
+            {
+                MelonLogger.Msg("CREATING STAGE FROM PREFIX");
+                Create();
+            }
+        }
+
+        [HarmonyPatch(typeof(vgMenuCameraController), "Start")]
+        public class CreateMenuStage
+        {
+            [HarmonyPriority(Priority.High)]
             public static void Prefix()
             {
                 MelonLogger.Msg("CREATING STAGE FROM PREFIX");
