@@ -13,7 +13,7 @@ namespace TwoForksVR.Stage
 {
     class VRStage: MonoBehaviour
     {
-        public static VRStage Create(Camera camera)
+        public static VRStage Create(Camera camera, Transform playerBody)
         {
             var parent = camera.transform.parent;
             var stageTransform = parent.Find("VRStage") ?? new GameObject("VRStage").transform;

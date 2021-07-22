@@ -66,6 +66,7 @@
     <Compile Include="Input\Patches\BindingsPatches.cs" />
     <Compile Include="IntroFix.cs" />
     <Compile Include="PlayerCamera\Patches\CameraTransformProtectionPatches.cs" />
+    <Compile Include="Stage\Patches\StagePatches.cs" />
     <Compile Include="Stage\VRStage.cs" />
     <Compile Include="Tools\ToolPicker.cs" />
     <Compile Include="Tools\ToolPickerItem.cs" />

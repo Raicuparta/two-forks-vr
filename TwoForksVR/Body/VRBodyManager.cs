@@ -7,6 +7,7 @@ using TwoForksVR.Hands;
 using TwoForksVR.Assets;
 using TwoForksVR.PlayerCamera;
 using UnityEngine;
+using TwoForksVR.Stage;
 
 namespace TwoForksVR
 {
@@ -16,7 +17,10 @@ namespace TwoForksVR
 
         public static VRBodyManager Create()
         {
-            return new GameObject("VRBodyManager").AddComponent<VRBodyManager>();
+            var playerPrefab = GameObject.Find("Player Prefab");
+            var playerBody = playerPrefab.transform.Find("PlayerModel/henry/body");
+            VRStage.Create(playerPrefab.GetComponentInChildren<Camera>(), playerBody);
+            return playerBody.gameObject.AddComponent<VRBodyManager>();
         }
 
         private void Start()
