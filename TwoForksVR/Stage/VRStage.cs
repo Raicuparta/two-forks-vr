@@ -54,15 +54,6 @@ namespace TwoForksVR.Stage
 
         private void Update()
         {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.V))
-            {
-                VRSettings.enabled = !VRSettings.enabled;
-            }
-            if (UnityEngine.Input.GetKeyDown(KeyCode.T))
-            {
-                GameObject.Find("IntroManager").SetActive(false);
-                GameObject.Find("IntroTextAndBackground").SetActive(false);
-            }
             if (UnityEngine.Input.GetKeyDown(KeyCode.Equals))
             {
                 Time.timeScale = Time.timeScale > 1 ? 1 : 10;
