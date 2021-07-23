@@ -24,12 +24,14 @@ namespace TwoForksVR.Stage
                 if (existingStage) return existingStage;
             }
 
+            var stageParent = new GameObject("VRStageParent").transform;
             var stageTransform = new GameObject("VRStage").transform;
+            stageTransform.SetParent(stageParent, false);
             instance = stageTransform.gameObject.AddComponent<VRStage>();
 
             if (camera)
             {
-                stageTransform.SetParent(parent, false);
+                stageParent.gameObject.AddComponent<LateUpdateFollow>().Target = parent;
             } 
             else
             {
