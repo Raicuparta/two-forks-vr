@@ -9,27 +9,20 @@ using TwoForksVR.Tools;
 using TwoForksVR.Assets;
 using UnityEngine;
 using Valve.VR;
+using TwoForksVR.Stage;
 
 namespace TwoForksVR.Hands
 {
     public class VRHandsManager: MonoBehaviour
     {
-        private Transform playerTransform;
-
-        public static VRHandsManager Create(Transform parent, Transform playerTransform)
+        public static VRHandsManager Create(VRStage stage)
         {
             var instance = Instantiate(VRAssetLoader.Hands).AddComponent<VRHandsManager>();
-            instance.playerTransform = playerTransform;
-            instance.transform.SetParent(parent, false);
+            instance.transform.SetParent(stage.transform, false);
             return instance;
         }
 
-        private void Start()
-        {
-            SetUpHands();
-        }
-
-        private void SetUpHands()
+        public void SetUp(Transform playerTransform)
         {
             var rootBone = playerTransform?.Find("henry/henryroot");
             var rightHand = VRHand.Create(

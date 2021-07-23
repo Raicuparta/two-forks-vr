@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TwoForksVR.Stage;
 using UnityEngine;
 using UnityEngine.VR;
 using Valve.VR;
@@ -16,17 +17,22 @@ namespace TwoForksVR.PlayerCamera
         private vgCameraController cameraController;
         private Camera camera;
 
-        public static VRCameraManager Create(Transform parent, Camera camera)
+        public static VRCameraManager Create(VRStage stage)
         {
-            var instance = parent.gameObject.AddComponent<VRCameraManager>();
-            instance.camera = camera;
+            var instance = stage.gameObject.AddComponent<VRCameraManager>();
             return instance;
         }
 
-        private void Start()
+        public void SetUp(Camera camera)
+        {
+            this.camera = camera;
+            StartTodo();
+        }
+
+        private void StartTodo()
         {
             cameraController = FindObjectOfType<vgCameraController>();
-            VRSettings.enabled = false;
+            //VRSettings.enabled = false; TODO
             SetUpCamera();
             LimitVerticalRotation();
             DisableCameraAnimations();

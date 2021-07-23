@@ -10,7 +10,7 @@ namespace TwoForksVR.Stage
         [HarmonyPriority(Priority.High)]
         public static void Prefix(vgMenuCameraController __instance)
         {
-            VRStage.Create(__instance.GetComponentInChildren<Camera>(), null);
+            VRStage.Instance.SetUp(__instance.GetComponentInChildren<Camera>(), null);
         }
     }
 }

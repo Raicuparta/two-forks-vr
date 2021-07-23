@@ -11,47 +11,63 @@ using UnityEngine.VR;
 
 namespace TwoForksVR.Stage
 {
-    class VRStage: MonoBehaviour
+    public class VRStage: MonoBehaviour
     {
-        public static VRStage Create(Camera camera, Transform playerTransform)
-        {
-            VRStage instance;
-            var parent = camera?.transform.parent;
+        public static VRStage Instance;
 
-            if (!parent)
+        private VRCameraManager cameraManager;
+        private VRHandsManager handsManager;
+        private LateUpdateFollow follow;
+        private Camera fallbackCamera;
+
+        public static VRStage Create()
+        {
+            if (!Instance)
             {
-                var existingStage = GameObject.Find("VRStage")?.GetComponent<VRStage>();
-                if (existingStage) return existingStage;
+                var stageParent = new GameObject("VRStageParent");
+                DontDestroyOnLoad(stageParent);
+                Instance = new GameObject("VRStage").AddComponent<VRStage>();
+                Instance.transform.SetParent(stageParent.transform, false);
+                Instance.cameraManager = VRCameraManager.Create(Instance);
+                Instance.handsManager = VRHandsManager.Create(Instance);
+                Instance.follow = stageParent.AddComponent<LateUpdateFollow>();
+
+                Instance.fallbackCamera = new GameObject("VR Camera").AddComponent<Camera>();
+                Instance.fallbackCamera.enabled = false;
+                Instance.fallbackCamera.clearFlags = CameraClearFlags.Color;
+                Instance.fallbackCamera.backgroundColor = Color.black;
+                Instance.fallbackCamera.tag = "MainCamera";
+            }
+            return Instance;
+        }
+
+        public void SetUp(Camera camera, Transform playerTransform)
+        {
+            if (camera.GetComponentInParent<VRStage>())
+            {
+                return;
             }
 
-            var stageParent = new GameObject("VRStageParent").transform;
-            var stageTransform = new GameObject("VRStage").transform;
-            stageTransform.SetParent(stageParent, false);
-            instance = stageTransform.gameObject.AddComponent<VRStage>();
+            var parent = camera?.transform.parent;
+
+            //if (!parent)
+            //{
+            //    var existingStage = GameObject.Find("VRStage")?.GetComponent<VRStage>();
+            //    if (existingStage) return;
+            //}
 
             if (camera)
             {
-                stageParent.gameObject.AddComponent<LateUpdateFollow>().Target = parent;
-            } 
+                follow.Target = camera?.transform.parent;
+            }
             else
             {
-                camera = new GameObject("VR Camera").AddComponent<Camera>();
-                camera.clearFlags = CameraClearFlags.Color;
-                camera.backgroundColor = Color.black;
-                camera.tag = "MainCamera";
+                fallbackCamera.enabled = true;
                 IntroFix.Create();
             }
 
-            VRCameraManager.Create(
-                parent: stageTransform,
-                camera: camera
-            );
-            VRHandsManager.Create(
-                parent: stageTransform,
-                playerTransform: playerTransform
-            );
-
-            return instance;
+            cameraManager.SetUp(camera ?? fallbackCamera);
+            handsManager.SetUp(playerTransform);
         }
 
         private void Update()

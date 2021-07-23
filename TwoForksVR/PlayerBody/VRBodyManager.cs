@@ -18,7 +18,7 @@ namespace TwoForksVR.PlayerBody
                 .GetComponentInChildren<vgCameraController>()
                 .GetComponentInChildren<Camera>();
 
-            VRStage.Create(
+            VRStage.Instance.SetUp(
                 camera: camera,
                 playerTransform: playerTransform
             );

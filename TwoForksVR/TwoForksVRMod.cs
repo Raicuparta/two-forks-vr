@@ -73,6 +73,9 @@ namespace TwoForksVR
 
         public override void OnSceneWasInitialized(int buildIndex, string sceneName)
         {
+            // TODO less often?
+            VRStage.Create();
+
             MelonLogger.Msg($"#### INITIALIZED SCENE: ({sceneName}) ####");
             base.OnSceneWasInitialized(buildIndex, sceneName);
 

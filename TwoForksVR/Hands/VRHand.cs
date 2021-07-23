@@ -20,6 +20,7 @@ namespace TwoForksVR.Hands
         public static VRHand Create(Transform parent, Transform rootBone, bool isLeft = false)
         {
             var handName = isLeft ? "Left" : "Right";
+            MelonLogger.Msg("## creating hand " + handName);
             var transform = parent.Find($"{handName}Hand");
             var instance = transform.gameObject.AddComponent<VRHand>();
             instance.handName = handName;
@@ -112,6 +113,10 @@ namespace TwoForksVR.Hands
 
         void LateUpdate()
         {
+            if (!Target)
+            {
+                return;
+            }
             transform.position = Target.position;
             transform.rotation = Target.rotation;
             transform.localScale = Vector3.one * Scale;
