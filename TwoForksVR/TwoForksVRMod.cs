@@ -29,6 +29,10 @@ namespace TwoForksVR
 
         private void OnUnityLog(string condition, string stackTrace, LogType type)
         {
+            if (type == LogType.Log)
+            {
+                return;
+            }
             switch (type)
             {
                 case LogType.Exception:
