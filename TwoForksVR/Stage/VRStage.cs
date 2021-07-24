@@ -31,7 +31,7 @@ namespace TwoForksVR.Stage
                 Instance.handsManager = VRHandsManager.Create(Instance);
                 Instance.follow = stageParent.AddComponent<LateUpdateFollow>();
 
-                Instance.fallbackCamera = new GameObject("VR Camera").AddComponent<Camera>();
+                Instance.fallbackCamera = new GameObject("VRFallbackCamera").AddComponent<Camera>();
                 Instance.fallbackCamera.enabled = false;
                 Instance.fallbackCamera.clearFlags = CameraClearFlags.Color;
                 Instance.fallbackCamera.backgroundColor = Color.black;
@@ -45,22 +45,10 @@ namespace TwoForksVR.Stage
         {
             MelonLogger.Msg($"Setting up VRStage with camera {camera?.name} and player {playerTransform?.name}");
 
-            if (camera.GetComponentInParent<VRStage>())
-            {
-                return;
-            }
-
-            var parent = camera?.transform.parent;
-
-            //if (!parent)
-            //{
-            //    var existingStage = GameObject.Find("VRStage")?.GetComponent<VRStage>();
-            //    if (existingStage) return;
-            //}
-
             if (camera)
             {
                 follow.Target = camera?.transform.parent;
+                fallbackCamera.enabled = false;
             }
             else
             {
