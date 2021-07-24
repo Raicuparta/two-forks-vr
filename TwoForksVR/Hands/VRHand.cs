@@ -93,7 +93,6 @@ namespace TwoForksVR.Hands
             var armBone = rootBone.Find($"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2");
             var updateFollow = armBone.GetComponent<LateUpdateFollow>() ?? armBone.gameObject.AddComponent<LateUpdateFollow>();
             updateFollow.Target = transform.Find("ArmTarget");
-            updateFollow.Scale = 0.8f;
             return armBone;
         }
 
@@ -125,7 +124,6 @@ namespace TwoForksVR.Hands
     public class LateUpdateFollow : MonoBehaviour
     {
         public Transform Target;
-        public float Scale = 1f;
 
         void LateUpdate()
         {
@@ -135,7 +133,6 @@ namespace TwoForksVR.Hands
             }
             transform.position = Target.position;
             transform.rotation = Target.rotation;
-            transform.localScale = Vector3.one * Scale;
         }
     }
 }
