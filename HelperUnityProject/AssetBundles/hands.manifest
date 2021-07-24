@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 204210744
+CRC: 3343104275
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: b499dde89443df4b2d92b5f522cd5e70
+    Hash: 619bd6b28be5d88ae14dd1346ec65fd5
   TypeTreeHash:
     serializedVersion: 2
-    Hash: fe81e584da1edbbf261e47a859090100
+    Hash: cabdba1f47cfa18d989066811dbb64a2
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -22,10 +22,6 @@ ClassTypes:
 - Class: 43
   Script: {instanceID: 0}
 - Class: 48
-  Script: {instanceID: 0}
-- Class: 114
-  Script: {fileID: 11500000, guid: 9a5fb0ca93b55ef4b8d54b512b103341, type: 3}
-- Class: 115
   Script: {instanceID: 0}
 Assets:
 - Assets/Prefabs/VRHands.prefab
