@@ -12,6 +12,7 @@ namespace TwoForksVR.Stage
         private VRCameraManager cameraManager;
         private VRHandsManager handsManager;
         private LateUpdateFollow follow;
+        private Camera mainCamera;
         private Camera fallbackCamera;
 
         public static VRStage Create()
@@ -45,19 +46,19 @@ namespace TwoForksVR.Stage
         {
             MelonLogger.Msg($"Setting up VRStage with camera {camera?.name} and player {playerTransform?.name}");
 
-            if (camera)
+            mainCamera = camera;
+            follow.Target = mainCamera?.transform.parent;
+            if (mainCamera)
             {
-                follow.Target = camera?.transform.parent;
                 fallbackCamera.enabled = false;
             }
             else
             {
-                MelonLogger.Msg("Setting up Intro stage");
                 fallbackCamera.enabled = true;
-                IntroFix.Create();
+                IntroFix.Create(); // TODO less?
             }
 
-            cameraManager.SetUp(camera ?? fallbackCamera);
+            cameraManager.SetUp(mainCamera ?? fallbackCamera);
             handsManager.SetUp(playerTransform);
         }
 
@@ -66,6 +67,11 @@ namespace TwoForksVR.Stage
             if (UnityEngine.Input.GetKeyDown(KeyCode.Equals))
             {
                 Time.timeScale = Time.timeScale > 1 ? 1 : 10;
+            }
+            if (!fallbackCamera.enabled && !(mainCamera && mainCamera.enabled))
+            {
+                MelonLogger.Msg($"main camera is down, reverting to fallback camera");
+                SetUp(null, null);
             }
         }
     }
