@@ -29,7 +29,10 @@ namespace TwoForksVR.Stage
 
         private void Start()
         {
-            introManager.SetActive(true);
+            if (introManager)
+            {
+                introManager.SetActive(true);
+            }
         }
     }
 }
