@@ -35,7 +35,6 @@ namespace TwoForksVR.PlayerCamera
         private void StartTodo()
         {
             cameraController = FindObjectOfType<vgCameraController>();
-            //VRSettings.enabled = false; TODO
             SetUpCamera();
             LimitVerticalRotation();
             DisableCameraAnimations();
@@ -55,20 +54,20 @@ namespace TwoForksVR.PlayerCamera
         {
             if (camera.transform.parent?.name != "VRCameraParent")
             {
+                // Probably an old Unity bug: if the camera starts with an offset position,
+                // the tracking will always be incorrect.
+                // So I disable VR, reset the camera position, and then enable VR again.
+                VRSettings.enabled = false;
                 var cameraParent = new GameObject("VRCameraParent").transform;
                 cameraParent.SetParent(camera.transform.parent, false);
                 camera.transform.SetParent(cameraParent.transform);
                 camera.transform.localPosition = Vector3.zero;
                 camera.transform.localRotation = Quaternion.identity;
                 cameraParent.gameObject.AddComponent<LateUpdateFollow>().Target = stage.transform;
+                VRSettings.enabled = true;
             }
             camera.nearClipPlane = 0.03f;
             camera.depth = 1; // Make sure this camera draws on top of other cameras we make. TODO remove?
-            if (!isInitialized)
-            {
-                VRSettings.enabled = true;
-                isInitialized = true;
-            }
         }
 
         private void LimitVerticalRotation()
