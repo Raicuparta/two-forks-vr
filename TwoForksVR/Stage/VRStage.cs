@@ -1,14 +1,6 @@
-﻿using Harmony;
-using MelonLoader;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using TwoForksVR.Hands;
+﻿using TwoForksVR.Hands;
 using TwoForksVR.PlayerCamera;
 using UnityEngine;
-using UnityEngine.VR;
 
 namespace TwoForksVR.Stage
 {
