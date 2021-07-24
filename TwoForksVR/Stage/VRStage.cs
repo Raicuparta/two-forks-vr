@@ -2,6 +2,7 @@
 using MelonLoader;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using TwoForksVR.Hands;
@@ -25,6 +26,11 @@ namespace TwoForksVR.Stage
             if (!Instance)
             {
                 var stageParent = new GameObject("VRStageParent");
+
+                // Apparently Firewatch will destroy all DontDrestroyOnLoad objects between scenes,
+                // unless they have the MAIN tag.
+                stageParent.tag = "MAIN";
+
                 DontDestroyOnLoad(stageParent);
                 Instance = new GameObject("VRStage").AddComponent<VRStage>();
                 Instance.transform.SetParent(stageParent.transform, false);
