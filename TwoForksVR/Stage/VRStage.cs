@@ -14,6 +14,7 @@ namespace TwoForksVR.Stage
         private LateUpdateFollow follow;
         private Camera mainCamera;
         private Camera fallbackCamera;
+        private IntroFix introFix;
 
         public static VRStage Create()
         {
@@ -55,7 +56,10 @@ namespace TwoForksVR.Stage
             else
             {
                 fallbackCamera.enabled = true;
-                IntroFix.Create(); // TODO less?
+                if (!introFix)
+                {
+                    introFix = IntroFix.Create();
+                }
             }
 
             cameraManager.SetUp(mainCamera ?? fallbackCamera);
