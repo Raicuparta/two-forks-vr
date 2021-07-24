@@ -35,11 +35,12 @@ namespace TwoForksVR.Hands
             this.rootBone = rootBone;
             if (rootBone)
             {
+                SetFallbackHandActive(false);
                 EnableAnimatedHand();
             }
             else
             {
-                EnableFallbackHand();
+                SetFallbackHandActive(true);
             }
             gameObject.SetActive(true);
         } 
@@ -65,11 +66,11 @@ namespace TwoForksVR.Hands
             gameObject.SetActive(true);
         }
 
-        private void EnableFallbackHand()
+        private void SetFallbackHandActive(bool active)
         {
             var handModel = transform.Find("HandModel");
             if (!handModel) return;
-            handModel.gameObject.SetActive(true);
+            handModel.gameObject.SetActive(active);
         }
 
         private void EnableAnimatedHand()
