@@ -66,6 +66,16 @@ namespace TwoForksVR.Stage
             handsManager.SetUp(playerTransform);
         }
 
+        public void Recenter()
+        {
+            cameraManager.Recenter();
+        }
+
+        private void DelayedRecenter()
+        {
+            cameraManager.Recenter();
+        }
+
         private void Update()
         {
             if (UnityEngine.Input.GetKeyDown(KeyCode.Equals))

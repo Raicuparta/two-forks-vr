@@ -68,6 +68,7 @@
     <Compile Include="Input\Patches\MousePatches.cs" />
     <Compile Include="Input\Patches\BindingsPatches.cs" />
     <Compile Include="PlayerCamera\Patches\MenuCameraPatches.cs" />
+    <Compile Include="PlayerCamera\Patches\GameCameraPatches.cs" />
     <Compile Include="Stage\IntroFix.cs" />
     <Compile Include="PlayerCamera\Patches\CameraTransformProtectionPatches.cs" />
     <Compile Include="Stage\VRStage.cs" />

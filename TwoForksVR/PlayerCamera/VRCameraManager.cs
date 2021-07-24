@@ -33,15 +33,15 @@ namespace TwoForksVR.PlayerCamera
             SetUpCamera();
             LimitVerticalRotation();
             DisableCameraComponents();
-            // Recenter camera after a while. Hack, need to figure out when I can call it.
-            Invoke(nameof(RecenterCamera), 1f);
+            // Recenter camera after a while. Just in case it didn't work the first time.
+            Invoke(nameof(Recenter), 1);
         }
 
         private void Update()
         {
             if (SteamVR_Actions.default_Recenter.stateDown)
             {
-                RecenterCamera();
+                Recenter();
             }
         }
 
@@ -97,12 +97,19 @@ namespace TwoForksVR.PlayerCamera
 
         private Vector3 GetCameraOffset()
         {
-            return camera.transform.position - cameraController.eyeTransform.position;
+            try
+            {
+                return camera.transform.position - cameraController.eyeTransform.position;
+            }
+            catch
+            {
+                return Vector3.zero;
+            }
         }
 
-        private void RecenterCamera()
+        public void Recenter()
         {
-            if (!cameraController)
+            if (!cameraController?.eyeTransform)
             {
                 return;
             }
