@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TwoForksVR.Hands;
 using TwoForksVR.Stage;
 using UnityEngine;
 using UnityEngine.VR;
@@ -16,10 +17,12 @@ namespace TwoForksVR.PlayerCamera
         private bool isInitialized;
         private vgCameraController cameraController;
         private Camera camera;
+        private VRStage stage;
 
         public static VRCameraManager Create(VRStage stage)
         {
             var instance = stage.gameObject.AddComponent<VRCameraManager>();
+            instance.stage = stage;
             return instance;
         }
 
@@ -50,11 +53,17 @@ namespace TwoForksVR.PlayerCamera
 
         private void SetUpCamera()
         {
-            camera.transform.SetParent(transform);
-            camera.transform.localPosition = Vector3.zero;
-            camera.transform.localRotation = Quaternion.identity;
+            if (camera.transform.parent?.name != "VRCameraParent")
+            {
+                var cameraParent = new GameObject("VRCameraParent").transform;
+                cameraParent.SetParent(camera.transform.parent, false);
+                camera.transform.SetParent(cameraParent.transform);
+                camera.transform.localPosition = Vector3.zero;
+                camera.transform.localRotation = Quaternion.identity;
+                cameraParent.gameObject.AddComponent<LateUpdateFollow>().Target = stage.transform;
+            }
             camera.nearClipPlane = 0.03f;
-            camera.depth = 1; // Make sure this camera draws on top of other cameras we make.
+            camera.depth = 1; // Make sure this camera draws on top of other cameras we make. TODO remove?
             if (!isInitialized)
             {
                 VRSettings.enabled = true;
