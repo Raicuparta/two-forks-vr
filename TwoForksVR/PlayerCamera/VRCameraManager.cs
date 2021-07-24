@@ -62,7 +62,6 @@ namespace TwoForksVR.PlayerCamera
                 VRSettings.enabled = true;
             }
             camera.nearClipPlane = 0.03f;
-            camera.depth = 1; // Make sure this camera draws on top of other cameras we make. TODO remove?
         }
 
         private void LimitVerticalRotation()
