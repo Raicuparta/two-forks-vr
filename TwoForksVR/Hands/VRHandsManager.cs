@@ -9,50 +9,47 @@ using TwoForksVR.Tools;
 using TwoForksVR.Assets;
 using UnityEngine;
 using Valve.VR;
+using TwoForksVR.Stage;
 
 namespace TwoForksVR.Hands
 {
     public class VRHandsManager: MonoBehaviour
     {
-        private Transform leftHand;
-        private Transform rightHand;
-        private Transform playerBody;
+        VRHand leftHand;
+        VRHand rightHand;
+        ToolPicker toolPicker;
+        VRHandLaser handLaser;
 
-        public static VRHandsManager Create(Transform parent, Transform playerBody)
+        public static VRHandsManager Create(VRStage stage)
         {
             var instance = Instantiate(VRAssetLoader.Hands).AddComponent<VRHandsManager>();
-            instance.playerBody = playerBody;
-            instance.transform.SetParent(parent, false);
+            instance.transform.SetParent(stage.transform, false);
+
+            instance.rightHand = VRHand.Create(
+                parent: instance.transform
+            );
+            instance.leftHand = VRHand.Create(
+                parent: instance.transform,
+                isLeft: true
+            );
+            instance.toolPicker = ToolPicker.Create(
+                parent: instance.transform,
+                leftHand: instance.leftHand.transform,
+                rightHand: instance.rightHand.transform
+            );
+            instance.handLaser = VRHandLaser.Create(
+                leftHand: instance.leftHand.transform,
+                rightHand: instance.rightHand.transform
+            );
+
             return instance;
         }
 
-        private void Start()
+        public void SetUp(Transform playerTransform)
         {
-            SetUpHands();
-            ToolPicker.Create(
-                parent: transform,
-                leftHand: leftHand,
-                rightHand: rightHand
-            );
-            VRHandLaser.Create(
-                leftHand: leftHand,
-                rightHand: rightHand
-            );
-        }
-
-        private void SetUpHands()
-        {
-            var rootBone = playerBody?.parent.Find("henryroot");
-
-            rightHand = VRHand.Create(
-                parent: transform,
-                rootBone: rootBone
-            ).transform;
-            leftHand = VRHand.Create(
-                parent: transform,
-                rootBone: rootBone,
-                isLeft: true
-            ).transform;
+            var rootBone = playerTransform?.Find("henry/henryroot");
+            rightHand.SetUp(rootBone);
+            leftHand.SetUp(rootBone);
         }
     }
 }

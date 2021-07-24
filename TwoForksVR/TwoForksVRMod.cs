@@ -29,6 +29,10 @@ namespace TwoForksVR
 
         private void OnUnityLog(string condition, string stackTrace, LogType type)
         {
+            if (type == LogType.Log)
+            {
+                return;
+            }
             switch (type)
             {
                 case LogType.Exception:
@@ -62,38 +66,34 @@ namespace TwoForksVR
             }
         }
 
+        private bool IsGameScene(string sceneName)
+        {
+            return sceneName.StartsWith("TeenLoop") || sceneName.StartsWith("Intro_SECTR");
+        }
+
         public override void OnSceneWasInitialized(int buildIndex, string sceneName)
         {
+            VRStage.Create();
+
             base.OnSceneWasInitialized(buildIndex, sceneName);
 
             if (sceneName == "Main_Menu")
             {
                 SetUpMenuScene();
-            } else if (sceneName.StartsWith("TeenLoop") && !isInitialized)
+            } else if (IsGameScene(sceneName) && !isInitialized)
             {
                 SetUpGameScene();
-            } else if (sceneName == "Intro")
-            {
-                SetUpIntroScene();
             }
         }
 
         private void SetUpMenuScene()
         {
             isInitialized = false;
-            VRStage.Create();
         }
 
         private void SetUpGameScene()
         {
             isInitialized = true;
-            VRBodyManager.Create();
-            VRStage.Create();
-        }
-
-        private void SetUpIntroScene()
-        {
-            VRSettings.enabled = false;
         }
     }
 }

@@ -10,16 +10,6 @@ using UnityEngine;
 // All these patches try to disable any game code that would otherwise mess with the camera's transform values.
 namespace TwoForksVR.PlayerCamera
 {
-    [HarmonyPatch(typeof(vgMenuCameraController), "Start")]
-    public class DisableMenuCameraMovement
-    {
-        public static bool Prefix(vgMenuCameraController __instance)
-        {
-            UnityEngine.Object.Destroy(__instance);
-            return false;
-        }
-    }
-
     [HarmonyPatch(typeof(vgCameraController), "ApplyPostAnimationTransform")]
     public class DisableGameCameraMovement
     {

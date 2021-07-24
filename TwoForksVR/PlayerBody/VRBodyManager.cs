@@ -1,22 +1,28 @@
-﻿using MelonLoader;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TwoForksVR.Hands;
-using TwoForksVR.Assets;
-using TwoForksVR.PlayerCamera;
+﻿using TwoForksVR.Assets;
 using UnityEngine;
+using TwoForksVR.Stage;
+using Harmony;
 
-namespace TwoForksVR
+namespace TwoForksVR.PlayerBody
 {
     public class VRBodyManager : MonoBehaviour
     {
-        private static Transform playerBodyTransform;
-
-        public static VRBodyManager Create()
+        public static VRBodyManager Create(Transform playerTransform)
         {
-            return new GameObject("VRBodyManager").AddComponent<VRBodyManager>();
+            var playerBody = playerTransform.Find("henry/body").gameObject;
+            var existingBodyManager = playerBody.GetComponent<VRBodyManager>();
+            if (existingBodyManager) return existingBodyManager;
+
+            var camera = playerTransform
+                .parent
+                .GetComponentInChildren<vgCameraController>()
+                .GetComponentInChildren<Camera>();
+
+            VRStage.Instance.SetUp(
+                camera: camera,
+                playerTransform: playerTransform
+            );
+            return playerBody.AddComponent<VRBodyManager>();
         }
 
         private void Start()
@@ -26,7 +32,7 @@ namespace TwoForksVR
 
         private void HideBody()
         {
-            var renderer = GetPlayerBodyTransform().GetComponent<SkinnedMeshRenderer>();
+            var renderer = transform.GetComponent<SkinnedMeshRenderer>();
             renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.TwoSided;
 
             var materials = renderer.materials;
@@ -51,10 +57,14 @@ namespace TwoForksVR
                 material.SetColor("_Color", Color.clear);
             }
         }
+    }
 
-        public static Transform GetPlayerBodyTransform()
+    [HarmonyPatch(typeof(vgPlayerController), "Awake")]
+    public class CreateBodyManager
+    {
+        public static void Prefix(vgPlayerController __instance)
         {
-            return playerBodyTransform ?? (playerBodyTransform = GameObject.Find("Player Prefab")?.transform.Find("PlayerModel/henry/body"));
+            VRBodyManager.Create(__instance.transform);
         }
     }
 }

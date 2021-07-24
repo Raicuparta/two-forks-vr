@@ -50,7 +50,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4246891189552346}
-  - component: {fileID: 114247223785550172}
   m_Layer: 0
   m_Name: Radio
   m_TagString: Untagged
@@ -98,7 +97,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4388259803848478}
-  - component: {fileID: 114766355486472288}
   m_Layer: 0
   m_Name: DisposableCamera
   m_TagString: Untagged
@@ -130,7 +128,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4743612362574626}
-  - component: {fileID: 114838918934735966}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -162,7 +159,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4494166041861898}
-  - component: {fileID: 114518181674324086}
   m_Layer: 0
   m_Name: ToolPicker
   m_TagString: Untagged
@@ -178,7 +174,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4871704747401522}
-  - component: {fileID: 114657183969332372}
   m_Layer: 0
   m_Name: Compass
   m_TagString: Untagged
@@ -194,7 +189,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4430003674474352}
-  - component: {fileID: 114996326568273802}
   m_Layer: 0
   m_Name: Flashlight
   m_TagString: Untagged
@@ -295,7 +289,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1810793809231122}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.02430572, y: -0.022389367, z: -0.04229188}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4403415251798000}
@@ -369,82 +363,6 @@ Transform:
   m_Father: {fileID: 4403415251798000}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114247223785550172
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1122710268991362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76fc032de0ad74b4aa3adf61b598b0f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemType: 0
---- !u!114 &114518181674324086
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1810793809231122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87a7592da63b3c6408d65ba8ccf1be0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ParentWhileActive: {fileID: 0}
-  ParentWhileInactive: {fileID: 4494166041861898}
-  ToolsContainer: {fileID: 4403415251798000}
-  Hand: {fileID: 0}
-  InputSource: 0
---- !u!114 &114657183969332372
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1885196021157130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76fc032de0ad74b4aa3adf61b598b0f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemType: 2
---- !u!114 &114766355486472288
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1388385534339066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76fc032de0ad74b4aa3adf61b598b0f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemType: 3
---- !u!114 &114838918934735966
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1560224551938054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76fc032de0ad74b4aa3adf61b598b0f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemType: 1
---- !u!114 &114996326568273802
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1940063638932186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76fc032de0ad74b4aa3adf61b598b0f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemType: 3
 --- !u!212 &212091167531224488
 SpriteRenderer:
   m_ObjectHideFlags: 1

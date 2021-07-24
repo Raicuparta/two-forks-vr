@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TwoForksVR.Hands;
+using TwoForksVR.Stage;
 using UnityEngine;
 using UnityEngine.VR;
 using Valve.VR;
@@ -12,49 +14,54 @@ namespace TwoForksVR.PlayerCamera
 {
     public class VRCameraManager: MonoBehaviour
     {
-        public static VRCameraManager Instance;
-
         private bool isInitialized;
         private vgCameraController cameraController;
+        private Camera camera;
+        private VRStage stage;
 
-        public static VRCameraManager Create(Transform parent)
+        public static VRCameraManager Create(VRStage stage)
         {
-            var instance = parent.gameObject.AddComponent<VRCameraManager>();
+            var instance = stage.gameObject.AddComponent<VRCameraManager>();
+            instance.stage = stage;
             return instance;
         }
 
-        private void Start()
+        public void SetUp(Camera camera)
         {
-            Instance = this;
+            this.camera = camera;
             cameraController = FindObjectOfType<vgCameraController>();
-            VRSettings.enabled = false;
             SetUpCamera();
             LimitVerticalRotation();
-            DisableCameraAnimations();
-            // Recenter camera after a while. Hack, need to figure out when I can call it.
-            Invoke(nameof(RecenterCamera), 1f);
+            DisableCameraComponents();
+            // Recenter camera after a while. Just in case it didn't work the first time.
+            Invoke(nameof(Recenter), 1);
         }
 
         private void Update()
         {
             if (SteamVR_Actions.default_Recenter.stateDown)
             {
-                RecenterCamera();
+                Recenter();
             }
         }
 
         private void SetUpCamera()
         {
-            var camera = Camera.main;
-            camera.transform.SetParent(transform);
-            camera.transform.localPosition = Vector3.zero;
-            camera.transform.localRotation = Quaternion.identity;
-            camera.nearClipPlane = 0.03f;
-            if (!isInitialized)
+            if (camera.transform.parent?.name != "VRCameraParent")
             {
+                // Probably an old Unity bug: if the camera starts with an offset position,
+                // the tracking will always be incorrect.
+                // So I disable VR, reset the camera position, and then enable VR again.
+                VRSettings.enabled = false;
+                var cameraParent = new GameObject("VRCameraParent").transform;
+                cameraParent.SetParent(camera.transform.parent, false);
+                camera.transform.SetParent(cameraParent.transform);
+                camera.transform.localPosition = Vector3.zero;
+                camera.transform.localRotation = Quaternion.identity;
+                cameraParent.gameObject.AddComponent<LateUpdateFollow>().Target = stage.transform;
                 VRSettings.enabled = true;
-                isInitialized = true;
             }
+            camera.nearClipPlane = 0.03f;
         }
 
         private void LimitVerticalRotation()
@@ -70,27 +77,44 @@ namespace TwoForksVR.PlayerCamera
             });
         }
 
-        private void DisableCameraAnimations()
+        private void DisableCameraComponents()
         {
-            var animation = Camera.main.GetComponent<Animation>();
-            if (!animation) return;
-            animation.enabled = false;
+            DisableCameraComponent<Animation>();
+            DisableCameraComponent<AmplifyMotionCamera>();
+            DisableCameraComponent<vgMenuCameraController>();
+            DisableCameraComponent<AmplifyMotionEffect>();
+            DisableCameraComponent<UnityStandardAssets.ImageEffects.Bloom>();
+            DisableCameraComponent<UnityStandardAssets.ImageEffects.Antialiasing>();
+        }
+
+        private void DisableCameraComponent<TComponent>() where TComponent: Behaviour
+        {
+            var component = camera.GetComponent<TComponent>();
+            if (!component) return;
+            component.enabled = false;
         }
 
         private Vector3 GetCameraOffset()
         {
-            return Camera.main.transform.position - cameraController.eyeTransform.position;
+            try
+            {
+                return camera.transform.position - cameraController.eyeTransform.position;
+            }
+            catch
+            {
+                return Vector3.zero;
+            }
         }
 
-        private void RecenterCamera()
+        public void Recenter()
         {
-            if (!cameraController)
+            if (!cameraController?.eyeTransform)
             {
                 return;
             }
             var cameraOffset = GetCameraOffset();
             transform.position -= cameraOffset;
-            var angleOffset = cameraController.eyeTransform.eulerAngles.y - Camera.main.transform.eulerAngles.y - 90f;
+            var angleOffset = cameraController.eyeTransform.eulerAngles.y - camera.transform.eulerAngles.y - 90f;
             transform.Rotate(Vector3.up * angleOffset);
         }
     }

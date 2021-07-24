@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp_publicized">
       <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\publicized_assemblies\Assembly-CSharp_publicized.dll</HintPath>
     </Reference>
@@ -58,14 +61,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\VRAssetLoader.cs" />
-    <Compile Include="Body\VRBodyManager.cs" />
+    <Compile Include="PlayerBody\VRBodyManager.cs" />
     <Compile Include="Debug\DebugAxes.cs" />
     <Compile Include="Helpers\MathHelper.cs" />
     <Compile Include="Input\InputName.cs" />
     <Compile Include="Input\Patches\MousePatches.cs" />
     <Compile Include="Input\Patches\BindingsPatches.cs" />
+    <Compile Include="PlayerCamera\Patches\MenuCameraPatches.cs" />
+    <Compile Include="PlayerCamera\Patches\GameCameraPatches.cs" />
+    <Compile Include="Stage\IntroFix.cs" />
     <Compile Include="PlayerCamera\Patches\CameraTransformProtectionPatches.cs" />
     <Compile Include="Stage\VRStage.cs" />
+    <Compile Include="Tools\Patches\MapPatches.cs" />
     <Compile Include="Tools\ToolPicker.cs" />
     <Compile Include="Tools\ToolPickerItem.cs" />
     <Compile Include="Tools\VRMap.cs" />
