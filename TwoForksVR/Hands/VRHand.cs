@@ -83,8 +83,6 @@ namespace TwoForksVR.Hands
             var armBone = SetUpArmBone();
             SetUpHandLid(armBone);
             var handBone = SetUpHandBone(armBone);
-            MelonLogger.Msg("Pre VRMap.Create");
-            // TODO create map
             //VRMap.Create(handBone, handName);
         }
 

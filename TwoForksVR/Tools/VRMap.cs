@@ -14,15 +14,15 @@ namespace TwoForksVR.Tools
     {
         private const float mapScale = 2f;
 
-        public static VRMap Create(Transform handBone, string handName)
+        public static VRMap Create(Transform mapInHand, string handName)
         {
-            var mapPrefab = handBone.Find($"henryHand{handName}Attachment/MapRiggedPosedPrefab(Clone)");
-            var mapInHand = mapPrefab.Find("MapRoot/MapInHand");
-            if (!mapPrefab || !mapInHand) return null;
+            MelonLogger.Msg($"Creating VRMap 3 {mapInHand?.name}");
+            if (!mapInHand || mapInHand.GetComponent<VRMap>()) return null;
+            MelonLogger.Msg($"Creating VRMap 4");
 
             // Very hard to read the map in VR since we can't zoom in.
             // So making it bigger to make it easier, especially for lower resolution headsets.
-            mapPrefab.localScale = Vector3.one * mapScale;
+            mapInHand.parent.parent.localScale = Vector3.one * mapScale;
 
             return mapInHand.gameObject.AddComponent<VRMap>();
         }
