@@ -10,7 +10,6 @@ namespace TwoForksVR.PlayerCamera
     {
         public static void Prefix(vgMenuCameraController __instance)
         {
-            MelonLogger.Msg($"Setting up VRStage from vgMenuCameraController patch of {__instance?.name}");
             VRStage.Instance.SetUp(__instance.GetComponentInChildren<Camera>(), null);
         }
     }

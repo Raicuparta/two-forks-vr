@@ -16,9 +16,7 @@ namespace TwoForksVR.Tools
 
         public static VRMap Create(Transform mapInHand, string handName)
         {
-            MelonLogger.Msg($"Creating VRMap 3 {mapInHand?.name}");
             if (!mapInHand || mapInHand.GetComponent<VRMap>()) return null;
-            MelonLogger.Msg($"Creating VRMap 4");
 
             // Very hard to read the map in VR since we can't zoom in.
             // So making it bigger to make it easier, especially for lower resolution headsets.

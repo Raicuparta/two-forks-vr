@@ -45,8 +45,6 @@ namespace TwoForksVR.Stage
 
         public void SetUp(Camera camera, Transform playerTransform)
         {
-            MelonLogger.Msg($"Setting up VRStage with camera {camera?.name} and player {playerTransform?.name}");
-
             mainCamera = camera;
             follow.Target = mainCamera?.transform.parent;
             if (mainCamera)
@@ -84,7 +82,6 @@ namespace TwoForksVR.Stage
             }
             if (!fallbackCamera.enabled && !(mainCamera && mainCamera.enabled))
             {
-                MelonLogger.Msg($"main camera is down, reverting to fallback camera");
                 SetUp(null, null);
             }
         }

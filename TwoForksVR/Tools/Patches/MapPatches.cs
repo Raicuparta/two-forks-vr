@@ -14,7 +14,6 @@ namespace TwoForksVR.Tools
             var mapInHand = GameObject.Find("MapInHand");
             if (mapInHand)
             {
-                MelonLogger.Msg($"CreateVRMap 1 {mapInHand?.name}");
                 VRMap.Create(mapInHand.transform, "Left");
             }
         }
