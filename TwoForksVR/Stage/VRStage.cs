@@ -1,4 +1,5 @@
-﻿using TwoForksVR.Hands;
+﻿using MelonLoader;
+using TwoForksVR.Hands;
 using TwoForksVR.PlayerCamera;
 using UnityEngine;
 
@@ -35,12 +36,15 @@ namespace TwoForksVR.Stage
                 Instance.fallbackCamera.clearFlags = CameraClearFlags.Color;
                 Instance.fallbackCamera.backgroundColor = Color.black;
                 Instance.fallbackCamera.tag = "MainCamera";
+                Instance.fallbackCamera.transform.SetParent(Instance.transform, false);
             }
             return Instance;
         }
 
         public void SetUp(Camera camera, Transform playerTransform)
         {
+            MelonLogger.Msg($"Setting up VRStage with camera {camera?.name} and player {playerTransform?.name}");
+
             if (camera.GetComponentInParent<VRStage>())
             {
                 return;
@@ -60,6 +64,7 @@ namespace TwoForksVR.Stage
             }
             else
             {
+                MelonLogger.Msg("Setting up Intro stage");
                 fallbackCamera.enabled = true;
                 IntroFix.Create();
             }

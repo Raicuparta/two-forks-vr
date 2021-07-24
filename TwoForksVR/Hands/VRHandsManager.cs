@@ -15,34 +15,41 @@ namespace TwoForksVR.Hands
 {
     public class VRHandsManager: MonoBehaviour
     {
+        VRHand leftHand;
+        VRHand rightHand;
+        ToolPicker toolPicker;
+        VRHandLaser handLaser;
+
         public static VRHandsManager Create(VRStage stage)
         {
             var instance = Instantiate(VRAssetLoader.Hands).AddComponent<VRHandsManager>();
             instance.transform.SetParent(stage.transform, false);
+
+            instance.rightHand = VRHand.Create(
+                parent: instance.transform
+            );
+            instance.leftHand = VRHand.Create(
+                parent: instance.transform,
+                isLeft: true
+            );
+            instance.toolPicker = ToolPicker.Create(
+                parent: instance.transform,
+                leftHand: instance.leftHand.transform,
+                rightHand: instance.rightHand.transform
+            );
+            instance.handLaser = VRHandLaser.Create(
+                leftHand: instance.leftHand.transform,
+                rightHand: instance.rightHand.transform
+            );
+
             return instance;
         }
 
         public void SetUp(Transform playerTransform)
         {
             var rootBone = playerTransform?.Find("henry/henryroot");
-            var rightHand = VRHand.Create(
-                parent: transform,
-                rootBone: rootBone
-            ).transform;
-            var leftHand = VRHand.Create(
-                parent: transform,
-                rootBone: rootBone,
-                isLeft: true
-            ).transform;
-            ToolPicker.Create(
-                parent: transform,
-                leftHand: leftHand,
-                rightHand: rightHand
-            );
-            VRHandLaser.Create(
-                leftHand: leftHand,
-                rightHand: rightHand
-            );
+            rightHand.SetUp(rootBone);
+            leftHand.SetUp(rootBone);
         }
     }
 }
