@@ -29,15 +29,10 @@ namespace TwoForksVR.PlayerCamera
         public void SetUp(Camera camera)
         {
             this.camera = camera;
-            StartTodo();
-        }
-
-        private void StartTodo()
-        {
             cameraController = FindObjectOfType<vgCameraController>();
             SetUpCamera();
             LimitVerticalRotation();
-            DisableCameraAnimations();
+            DisableCameraComponents();
             // Recenter camera after a while. Hack, need to figure out when I can call it.
             Invoke(nameof(RecenterCamera), 1f);
         }
@@ -83,11 +78,21 @@ namespace TwoForksVR.PlayerCamera
             });
         }
 
-        private void DisableCameraAnimations()
+        private void DisableCameraComponents()
         {
-            var animation = camera.GetComponent<Animation>();
-            if (!animation) return;
-            animation.enabled = false;
+            DisableCameraComponent<Animation>();
+            DisableCameraComponent<AmplifyMotionCamera>();
+            DisableCameraComponent<vgMenuCameraController>();
+            DisableCameraComponent<AmplifyMotionEffect>();
+            DisableCameraComponent<UnityStandardAssets.ImageEffects.Bloom>();
+            DisableCameraComponent<UnityStandardAssets.ImageEffects.Antialiasing>();
+        }
+
+        private void DisableCameraComponent<TComponent>() where TComponent: Behaviour
+        {
+            var component = camera.GetComponent<TComponent>();
+            if (!component) return;
+            component.enabled = false;
         }
 
         private Vector3 GetCameraOffset()
