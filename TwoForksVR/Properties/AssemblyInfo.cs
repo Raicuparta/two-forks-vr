@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using MelonLoader;
 using TwoForksVR;
 
-[assembly: MelonInfo(typeof(TwoForksVRMod), "TwoForksVR", "0.0.3", "Raicuparta")]
+[assembly: MelonInfo(typeof(TwoForksVRMod), "TwoForksVR", "0.0.4", "Raicuparta")]
 [assembly: MelonGame(null, null)]
 
 // General Information about an assembly is controlled through the following
