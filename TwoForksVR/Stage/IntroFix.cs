@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.VR;
+using MelonLoader;
 
 namespace TwoForksVR.Stage
 {
@@ -23,6 +24,7 @@ namespace TwoForksVR.Stage
             {
                 return;
             }
+            VRStage.FallbackCamera.tag = "MainCamera";
             introManager.SetActive(false);
             GameObject.Find("IntroTextAndBackground").SetActive(false);
         }

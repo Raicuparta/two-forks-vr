@@ -9,11 +9,13 @@ namespace TwoForksVR.Stage
     {
         public static VRStage Instance;
 
+        // No idea why, but if I don't make this static, it gets lost
+        public static Camera FallbackCamera { get; private set; }
+
         private VRCameraManager cameraManager;
         private VRHandsManager handsManager;
         private LateUpdateFollow follow;
         private Camera mainCamera;
-        private Camera fallbackCamera;
         private IntroFix introFix;
 
         public static VRStage Create()
@@ -33,12 +35,11 @@ namespace TwoForksVR.Stage
                 Instance.handsManager = VRHandsManager.Create(Instance);
                 Instance.follow = stageParent.AddComponent<LateUpdateFollow>();
 
-                Instance.fallbackCamera = new GameObject("VRFallbackCamera").AddComponent<Camera>();
-                Instance.fallbackCamera.enabled = false;
-                Instance.fallbackCamera.clearFlags = CameraClearFlags.Color;
-                Instance.fallbackCamera.backgroundColor = Color.black;
-                Instance.fallbackCamera.tag = "MainCamera";
-                Instance.fallbackCamera.transform.SetParent(Instance.transform, false);
+                FallbackCamera = new GameObject("VRFallbackCamera").AddComponent<Camera>();
+                FallbackCamera.enabled = false;
+                FallbackCamera.clearFlags = CameraClearFlags.Color;
+                FallbackCamera.backgroundColor = Color.black;
+                FallbackCamera.transform.SetParent(Instance.transform, false);
             }
             return Instance;
         }
@@ -49,18 +50,19 @@ namespace TwoForksVR.Stage
             follow.Target = mainCamera?.transform.parent;
             if (mainCamera)
             {
-                fallbackCamera.enabled = false;
+                FallbackCamera.enabled = false;
+                VRStage.FallbackCamera.tag = "Untagged";
             }
             else
             {
-                fallbackCamera.enabled = true;
+                FallbackCamera.enabled = true;
                 if (!introFix)
                 {
                     introFix = IntroFix.Create();
                 }
             }
 
-            cameraManager.SetUp(mainCamera ?? fallbackCamera);
+            cameraManager.SetUp(mainCamera ?? FallbackCamera);
             handsManager.SetUp(playerTransform);
         }
 
@@ -80,7 +82,7 @@ namespace TwoForksVR.Stage
             {
                 Time.timeScale = Time.timeScale > 1 ? 1 : 10;
             }
-            if (!fallbackCamera.enabled && !(mainCamera && mainCamera.enabled))
+            if (!FallbackCamera.enabled && !(mainCamera && mainCamera.enabled))
             {
                 SetUp(null, null);
             }
