@@ -47,9 +47,11 @@ namespace TwoForksVR.Hands
 
         public void SetUp(Transform playerTransform)
         {
-            var rootBone = playerTransform?.Find("henry/henryroot");
-            rightHand.SetUp(rootBone);
-            leftHand.SetUp(rootBone);
+            var henry = playerTransform?.Find("henry");
+            var animator = henry?.GetComponent<Animator>();
+            var rootBone = henry?.Find("henryroot");
+            rightHand.SetUp(rootBone, animator);
+            leftHand.SetUp(rootBone, animator);
         }
     }
 }
