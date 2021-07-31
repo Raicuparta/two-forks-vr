@@ -15,10 +15,9 @@ namespace TwoForksVR.Hands
 {
     public class VRHandsManager: MonoBehaviour
     {
-        VRHand leftHand;
-        VRHand rightHand;
-        ToolPicker toolPicker;
-        VRHandLaser handLaser;
+        private VRHand leftHand;
+        private VRHand rightHand;
+        private Animator animator;
 
         public static VRHandsManager Create(VRStage stage)
         {
@@ -32,12 +31,12 @@ namespace TwoForksVR.Hands
                 parent: instance.transform,
                 isLeft: true
             );
-            instance.toolPicker = ToolPicker.Create(
+            ToolPicker.Create(
                 parent: instance.transform,
                 leftHand: instance.leftHand.transform,
                 rightHand: instance.rightHand.transform
             );
-            instance.handLaser = VRHandLaser.Create(
+            VRHandLaser.Create(
                 leftHand: instance.leftHand.transform,
                 rightHand: instance.rightHand.transform
             );
@@ -48,10 +47,35 @@ namespace TwoForksVR.Hands
         public void SetUp(Transform playerTransform)
         {
             var henry = playerTransform?.Find("henry");
-            var animator = henry?.GetComponent<Animator>();
+            animator = henry?.GetComponent<Animator>();
             var rootBone = henry?.Find("henryroot");
             rightHand.SetUp(rootBone, animator);
             leftHand.SetUp(rootBone, animator);
+        }
+
+        private void Update()
+        {
+            if (UnityEngine.Input.GetKeyDown(KeyCode.F11))
+            {
+                if (!animator)
+                {
+                    return;
+                }
+                MelonLogger.Msg("---- Start animation log ----");
+                for (int layerIndex = 0; layerIndex < animator.layerCount; layerIndex++)
+                {
+                    if (animator.GetCurrentAnimatorClipInfoCount(layerIndex) == 0)
+                    {
+                        continue;
+                    }
+                    MelonLogger.Msg($"Layer Index: {layerIndex}");
+                    MelonLogger.Msg($"Layer Name: {animator.GetLayerName(layerIndex)}");
+                    var animations = animator.GetCurrentAnimatorClipInfo(layerIndex);
+                    var animationNames = string.Join(", ", animations.Select(animation => animation.clip.name).ToArray());
+                    MelonLogger.Msg($"Animations [{animationNames}]");
+                }
+                MelonLogger.Msg("---- End animation log ----");
+            }
         }
     }
 }

@@ -18,6 +18,17 @@ namespace TwoForksVR.Hands
         private string handName;
         private Animator animator;
         private GameObject fallbackHandModel;
+        private static readonly string[][] animationBlacklist = new string[][]
+        {
+            new string[] { },
+            new string[] { },
+            new string[] { },
+            new string[] { },
+            new string[] { },
+            new string[] { },
+            new string[] { },
+            new string[] { "EnterTruck", "grabPack" },
+        };
 
         public static VRHand Create(Transform parent,  bool isLeft = false)
         {
@@ -121,10 +132,21 @@ namespace TwoForksVR.Hands
             {
                 return false;
             }
-            return isLeft ? animator.GetCurrentAnimatorStateInfo(3).IsName("Empty") : (
-                animator.GetCurrentAnimatorStateInfo(2).IsName("Empty") &&
-                animator.GetCurrentAnimatorStateInfo(4).IsName("Empty")
-            );
+
+            for (int layerIndex = 0; layerIndex < animationBlacklist.Length; layerIndex++)
+            {
+                var blacklist = animationBlacklist[layerIndex];
+                var animations = animator.GetCurrentAnimatorClipInfo(layerIndex); // TODO initialize this outside
+                foreach (var animation in animations)
+                {
+                    if (blacklist.Contains(animation.clip.name))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         private void SetUpHandLid(Transform armBone)
@@ -166,5 +188,11 @@ namespace TwoForksVR.Hands
             transform.position = Target.position;
             transform.rotation = Target.rotation;
         }
+    }
+
+    public struct AnimationIdentifier
+    {
+        public int Layer;
+        public string Name;
     }
 }
