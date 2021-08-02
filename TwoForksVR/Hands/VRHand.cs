@@ -15,21 +15,8 @@ namespace TwoForksVR.Hands
     {
         private bool isLeft;
         private Transform rootBone;
-        private GameObject handAttachment;
         private string handName;
-        private Animator animator;
         private GameObject fallbackHandModel;
-        private static readonly string[][] animationBlacklist = new string[][]
-        {
-            new string[] { },
-            new string[] { },
-            new string[] { },
-            new string[] { },
-            new string[] { },
-            new string[] { },
-            new string[] { },
-            new string[] { "EnterTruck" },
-        };
 
         public static VRHand Create(Transform parent,  bool isLeft = false)
         {
@@ -43,9 +30,8 @@ namespace TwoForksVR.Hands
             return instance;
         }
 
-        public void SetUp(Transform rootBone, Animator animator)
+        public void SetUp(Transform rootBone)
         {
-            this.animator = animator;
             gameObject.SetActive(false);
             this.rootBone = rootBone;
             if (rootBone)
@@ -81,24 +67,6 @@ namespace TwoForksVR.Hands
             gameObject.SetActive(true);
         }
 
-        private void Update()
-        {
-            if (!handAttachment)
-            {
-                return;
-            }
-
-            var shouldShowHeldItem = ShouldShowHeldItem();
-            if (!handAttachment.activeInHierarchy && shouldShowHeldItem)
-            {
-                handAttachment.SetActive(true);
-            }
-            else if (handAttachment.activeInHierarchy && !shouldShowHeldItem)
-            {
-                handAttachment.SetActive(false);
-            }
-        }
-
         private void SetFallbackHandActive(bool active)
         {
             if (!fallbackHandModel) return;
@@ -120,34 +88,9 @@ namespace TwoForksVR.Hands
         private Transform SetUpArmBone()
         {
             var armBone = rootBone.Find($"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2");
-            handAttachment = armBone.Find($"henryArm{handName}Hand/henryHand{handName}Attachment").gameObject;
             var updateFollow = armBone.GetComponent<LateUpdateFollow>() ?? armBone.gameObject.AddComponent<LateUpdateFollow>();
             updateFollow.Target = transform.Find("ArmTarget");
-            updateFollow.Condition = ShouldShowHeldItem;
             return armBone;
-        }
-
-        private bool ShouldShowHeldItem()
-        {
-            if (!animator)
-            {
-                return false;
-            }
-
-            for (int layerIndex = 0; layerIndex < animationBlacklist.Length; layerIndex++)
-            {
-                var blacklist = animationBlacklist[layerIndex];
-                var animations = animator.GetCurrentAnimatorClipInfo(layerIndex); // TODO initialize this outside
-                foreach (var animation in animations)
-                {
-                    if (blacklist.Contains(animation.clip.name))
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
         }
 
         private void SetUpHandLid(Transform armBone)
@@ -178,11 +121,10 @@ namespace TwoForksVR.Hands
     public class LateUpdateFollow : MonoBehaviour
     {
         public Transform Target;
-        public Func<bool> Condition = null;
 
         void LateUpdate()
         {
-            if (!Target || (Condition != null && !Condition.Invoke()))
+            if (!Target)
             {
                 return;
             }

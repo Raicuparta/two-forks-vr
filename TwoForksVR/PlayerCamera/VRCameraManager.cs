@@ -14,7 +14,6 @@ namespace TwoForksVR.PlayerCamera
 {
     public class VRCameraManager: MonoBehaviour
     {
-        private bool isInitialized;
         private vgCameraController cameraController;
         private Camera camera;
         private VRStage stage;

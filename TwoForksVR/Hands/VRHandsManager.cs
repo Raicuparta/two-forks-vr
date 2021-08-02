@@ -49,8 +49,8 @@ namespace TwoForksVR.Hands
             var henry = playerTransform?.Find("henry");
             animator = henry?.GetComponent<Animator>();
             var rootBone = henry?.Find("henryroot");
-            rightHand.SetUp(rootBone, animator);
-            leftHand.SetUp(rootBone, animator);
+            rightHand.SetUp(rootBone);
+            leftHand.SetUp(rootBone);
         }
 
         private void Update()
