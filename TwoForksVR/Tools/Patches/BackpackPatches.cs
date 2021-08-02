@@ -1,4 +1,5 @@
 ﻿using Harmony;
+using MelonLoader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,21 @@ namespace TwoForksVR.Tools
         public static bool Prefix()
         {
             return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(vgAttachmentController), "AttachTemporarily")]
+    public class PreventAttachingBackpackToHand
+    {
+        public static bool Prefix(GameObject attachment)
+        {
+            MelonLogger.Msg($"PreventAttachingBackpackToHand {attachment.name}");
+            if (attachment.name == "Backpack")
+            {
+                attachment.SetActive(false);
+                return false;
+            }
+            return true;
         }
     }
 }

@@ -15,6 +15,7 @@ namespace TwoForksVR.Hands
     {
         private bool isLeft;
         private Transform rootBone;
+        private GameObject handAttachment;
         private string handName;
         private Animator animator;
         private GameObject fallbackHandModel;
@@ -27,7 +28,7 @@ namespace TwoForksVR.Hands
             new string[] { },
             new string[] { },
             new string[] { },
-            new string[] { "EnterTruck", "grabPack" },
+            new string[] { "EnterTruck" },
         };
 
         public static VRHand Create(Transform parent,  bool isLeft = false)
@@ -82,19 +83,19 @@ namespace TwoForksVR.Hands
 
         private void Update()
         {
-            if (!fallbackHandModel)
+            if (!handAttachment)
             {
                 return;
             }
 
-            var shouldAnimateHand = ShouldAnimateHand();
-            if (fallbackHandModel.activeInHierarchy && shouldAnimateHand)
+            var shouldShowHeldItem = ShouldShowHeldItem();
+            if (!handAttachment.activeInHierarchy && shouldShowHeldItem)
             {
-                SetFallbackHandActive(false);
+                handAttachment.SetActive(true);
             }
-            else if (!fallbackHandModel.activeInHierarchy && !shouldAnimateHand)
+            else if (handAttachment.activeInHierarchy && !shouldShowHeldItem)
             {
-                SetFallbackHandActive(true);
+                handAttachment.SetActive(false);
             }
         }
 
@@ -113,20 +114,20 @@ namespace TwoForksVR.Hands
 
             var armBone = SetUpArmBone();
             SetUpHandLid(armBone);
-            var handBone = SetUpHandBone(armBone);
-            //VRMap.Create(handBone, handName);
+            SetUpHandBone(armBone);
         }
 
         private Transform SetUpArmBone()
         {
             var armBone = rootBone.Find($"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2");
+            handAttachment = armBone.Find($"henryArm{handName}Hand/henryHand{handName}Attachment").gameObject;
             var updateFollow = armBone.GetComponent<LateUpdateFollow>() ?? armBone.gameObject.AddComponent<LateUpdateFollow>();
             updateFollow.Target = transform.Find("ArmTarget");
-            updateFollow.Condition = ShouldAnimateHand;
+            updateFollow.Condition = ShouldShowHeldItem;
             return armBone;
         }
 
-        private bool ShouldAnimateHand()
+        private bool ShouldShowHeldItem()
         {
             if (!animator)
             {
