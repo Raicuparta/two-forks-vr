@@ -78,7 +78,7 @@
     <Compile Include="Tools\ToolPickerItem.cs" />
     <Compile Include="Tools\VRMap.cs" />
     <Compile Include="Hands\Patches\PlayerTargetingPatches.cs" />
-    <Compile Include="Hands\Patches\InventoryPatches.cs" />
+    <Compile Include="Hands\Patches\HeldItemPatches.cs" />
     <Compile Include="Settings\Patches\SettingsPatches.cs" />
     <Compile Include="SteamVR\SteamVR\Extras\SteamVR_CameraHelper.cs" />
     <Compile Include="SteamVR\SteamVR\Extras\SteamVR_ForceSteamVRMode.cs" />
