@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\VRAssetLoader.cs" />
+    <Compile Include="Debug\GeneralDebugger.cs" />
     <Compile Include="Helpers\LateUpdateFollow.cs" />
     <Compile Include="PlayerBody\Patches\BodyPatches.cs" />
     <Compile Include="PlayerBody\VRBodyManager.cs" />
