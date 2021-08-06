@@ -1,9 +1,8 @@
-﻿using MelonLoader;
-using System.Linq;
-using TwoForksVR.Tools;
+﻿using TwoForksVR.Tools;
 using TwoForksVR.Assets;
 using UnityEngine;
 using TwoForksVR.Stage;
+using TwoForksVR.Debug;
 
 namespace TwoForksVR.Hands
 {
@@ -11,7 +10,6 @@ namespace TwoForksVR.Hands
     {
         private VRHand leftHand;
         private VRHand rightHand;
-        private Animator animator;
 
         public static VRHandsManager Create(VRStage stage)
         {
@@ -41,35 +39,10 @@ namespace TwoForksVR.Hands
         public void SetUp(Transform playerTransform)
         {
             var henry = playerTransform?.Find("henry");
-            animator = henry?.GetComponent<Animator>();
             var rootBone = henry?.Find("henryroot");
             rightHand.SetUp(rootBone);
             leftHand.SetUp(rootBone);
-        }
-
-        private void Update()
-        {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.F11))
-            {
-                if (!animator)
-                {
-                    return;
-                }
-                MelonLogger.Msg("---- Start animation log ----");
-                for (int layerIndex = 0; layerIndex < animator.layerCount; layerIndex++)
-                {
-                    if (animator.GetCurrentAnimatorClipInfoCount(layerIndex) == 0)
-                    {
-                        continue;
-                    }
-                    MelonLogger.Msg($"Layer Index: {layerIndex}");
-                    MelonLogger.Msg($"Layer Name: {animator.GetLayerName(layerIndex)}");
-                    var animations = animator.GetCurrentAnimatorClipInfo(layerIndex);
-                    var animationNames = string.Join(", ", animations.Select(animation => animation.clip.name).ToArray());
-                    MelonLogger.Msg($"Animations [{animationNames}]");
-                }
-                MelonLogger.Msg("---- End animation log ----");
-            }
+            GeneralDebugger.PlayerAnimator = henry?.GetComponent<Animator>();
         }
     }
 }

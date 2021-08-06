@@ -1,4 +1,5 @@
-﻿using TwoForksVR.Hands;
+﻿using TwoForksVR.Debug;
+using TwoForksVR.Hands;
 using TwoForksVR.Helpers;
 using TwoForksVR.PlayerCamera;
 using UnityEngine;
@@ -41,6 +42,8 @@ namespace TwoForksVR.Stage
                 FallbackCamera.clearFlags = CameraClearFlags.Color;
                 FallbackCamera.backgroundColor = Color.black;
                 FallbackCamera.transform.SetParent(Instance.transform, false);
+
+                Instance.gameObject.AddComponent<GeneralDebugger>();
             }
             return Instance;
         }
@@ -52,7 +55,7 @@ namespace TwoForksVR.Stage
             if (mainCamera)
             {
                 FallbackCamera.enabled = false;
-                VRStage.FallbackCamera.tag = "Untagged";
+                FallbackCamera.tag = "Untagged";
             }
             else
             {
@@ -72,17 +75,8 @@ namespace TwoForksVR.Stage
             cameraManager.Recenter();
         }
 
-        private void DelayedRecenter()
-        {
-            cameraManager.Recenter();
-        }
-
         private void Update()
         {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.Equals))
-            {
-                Time.timeScale = Time.timeScale > 1 ? 1 : 10;
-            }
             if (!FallbackCamera.enabled && !(mainCamera && mainCamera.enabled))
             {
                 SetUp(null, null);
