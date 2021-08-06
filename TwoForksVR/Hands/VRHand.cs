@@ -132,10 +132,4 @@ namespace TwoForksVR.Hands
             transform.rotation = Target.rotation;
         }
     }
-
-    public struct AnimationIdentifier
-    {
-        public int Layer;
-        public string Name;
-    }
 }
