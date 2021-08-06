@@ -1,13 +1,7 @@
-﻿using MelonLoader;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-using UnityEngine.VR;
+﻿using UnityEngine;
 using Valve.VR;
-using TwoForksVR.Tools;
 using TwoForksVR.Assets;
+using TwoForksVR.Helpers;
 
 namespace TwoForksVR.Hands
 {
@@ -115,21 +109,6 @@ namespace TwoForksVR.Hands
             var handBoneFollow = handBone.GetComponent<LateUpdateFollow>() ?? handBone.gameObject.AddComponent<LateUpdateFollow>();
             handBoneFollow.Target = wristTarget;
             return handBone;
-        }
-    }
-
-    public class LateUpdateFollow : MonoBehaviour
-    {
-        public Transform Target;
-
-        void LateUpdate()
-        {
-            if (!Target)
-            {
-                return;
-            }
-            transform.position = Target.position;
-            transform.rotation = Target.rotation;
         }
     }
 }

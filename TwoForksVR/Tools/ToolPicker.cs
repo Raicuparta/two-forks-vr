@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using TwoForksVR.Assets;
 using UnityEngine;
 using Valve.VR;
@@ -10,9 +9,9 @@ namespace TwoForksVR.Tools
 	{
 		private const float minSquareDistance = 0.03f;
 
+		private readonly SteamVR_Action_Boolean input = SteamVR_Actions.default_ToolPicker;
 		private Transform toolsContainer;
 		private ToolPickerItem[] tools;
-		private SteamVR_Action_Boolean input = SteamVR_Actions.default_ToolPicker;
 		private ToolPickerItem hoveredTool;
 		private ToolPickerItem selectedTool;
 		private Transform rightHand;

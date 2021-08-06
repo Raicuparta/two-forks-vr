@@ -1,5 +1,5 @@
-﻿using MelonLoader;
-using TwoForksVR.Hands;
+﻿using TwoForksVR.Hands;
+using TwoForksVR.Helpers;
 using TwoForksVR.PlayerCamera;
 using UnityEngine;
 
@@ -22,11 +22,12 @@ namespace TwoForksVR.Stage
         {
             if (!Instance)
             {
-                var stageParent = new GameObject("VRStageParent");
-
-                // Apparently Firewatch will destroy all DontDrestroyOnLoad objects between scenes,
-                // unless they have the MAIN tag.
-                stageParent.tag = "MAIN";
+                var stageParent = new GameObject("VRStageParent")
+                {
+                    // Apparently Firewatch will destroy all DontDrestroyOnLoad objects between scenes,
+                    // unless they have the MAIN tag.
+                    tag = "MAIN"
+                };
 
                 DontDestroyOnLoad(stageParent);
                 Instance = new GameObject("VRStage").AddComponent<VRStage>();
