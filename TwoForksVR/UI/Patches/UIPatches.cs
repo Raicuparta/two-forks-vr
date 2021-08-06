@@ -1,6 +1,8 @@
 ﻿using Harmony;
 using MelonLoader;
 using System.Linq;
+using TwoForksVR.Hands;
+using TwoForksVR.Helpers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -58,6 +60,38 @@ namespace TwoForksVR.UI
             canvas.renderMode = RenderMode.WorldSpace;
             canvas.gameObject.AddComponent<AttachToCamera>();
             __instance.transform.localScale = Vector3.one * 0.0004f;
+        }
+    }
+
+    [HarmonyPatch(typeof(vgInventoryScreenController), "OnEnable")]
+    public class PreventInventoryDisablingMainCamera
+    {
+        public static void Postfix(Camera ___mainCamera, Camera ___menuCamera)
+        {
+            if (___mainCamera != null)
+            {
+                ___mainCamera.enabled = true;
+            }
+            ___menuCamera?.gameObject.SetActive(false);
+        }
+    }
+
+    [HarmonyPatch(typeof(vgInventoryScreenController), "Start")]
+    public class InventoryFollowMainCamera
+    {
+        public static void Prefix(vgInventoryScreenController __instance)
+        {
+            var objectStage = __instance.transform.Find("ObjectStage").gameObject;
+            if (objectStage.GetComponent<LateUpdateFollow>()) return;
+
+            // TODO not like this!
+            objectStage.AddComponent<LateUpdateFollow>().Target = VRHandsManager.RightHand;
+
+            var inventoryObjectParent = objectStage.transform.Find("InventoryObjectParent");
+            inventoryObjectParent.localPosition = new Vector3(-0.16f, -0.04f, 0f);
+            inventoryObjectParent.localEulerAngles = new Vector3(328.5668f, 166.9781f, 334.8478f);
+
+            objectStage.transform.Find("ObjectStageDirectionalLight").gameObject.SetActive(false);
         }
     }
 }

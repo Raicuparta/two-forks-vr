@@ -10,6 +10,7 @@ namespace TwoForksVR.Hands
     {
         private VRHand leftHand;
         private VRHand rightHand;
+        public static Transform RightHand;
 
         public static VRHandsManager Create(VRStage stage)
         {
@@ -23,6 +24,7 @@ namespace TwoForksVR.Hands
                 parent: instance.transform,
                 isLeft: true
             );
+            RightHand = instance.rightHand.transform;
             ToolPicker.Create(
                 parent: instance.transform,
                 leftHand: instance.leftHand.transform,

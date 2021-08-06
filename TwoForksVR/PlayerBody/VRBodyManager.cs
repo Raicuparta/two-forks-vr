@@ -2,6 +2,7 @@
 using UnityEngine;
 using TwoForksVR.Stage;
 using Harmony;
+using MelonLoader;
 
 namespace TwoForksVR.PlayerBody
 {
@@ -18,6 +19,7 @@ namespace TwoForksVR.PlayerBody
                 .GetComponentInChildren<vgCameraController>()
                 .GetComponentInChildren<Camera>();
 
+            MelonLogger.Msg("Doing the thing");
             VRStage.Instance.SetUp(
                 camera: camera,
                 playerTransform: playerTransform
