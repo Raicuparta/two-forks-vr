@@ -1,24 +1,15 @@
-﻿using Harmony;
-using MelonLoader;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using TwoForksVR.Tools;
+﻿using TwoForksVR.Tools;
 using TwoForksVR.Assets;
 using UnityEngine;
-using Valve.VR;
 using TwoForksVR.Stage;
+using TwoForksVR.Debug;
 
 namespace TwoForksVR.Hands
 {
     public class VRHandsManager: MonoBehaviour
     {
-        VRHand leftHand;
-        VRHand rightHand;
-        ToolPicker toolPicker;
-        VRHandLaser handLaser;
+        private VRHand leftHand;
+        private VRHand rightHand;
 
         public static VRHandsManager Create(VRStage stage)
         {
@@ -32,12 +23,12 @@ namespace TwoForksVR.Hands
                 parent: instance.transform,
                 isLeft: true
             );
-            instance.toolPicker = ToolPicker.Create(
+            ToolPicker.Create(
                 parent: instance.transform,
                 leftHand: instance.leftHand.transform,
                 rightHand: instance.rightHand.transform
             );
-            instance.handLaser = VRHandLaser.Create(
+            VRHandLaser.Create(
                 leftHand: instance.leftHand.transform,
                 rightHand: instance.rightHand.transform
             );
@@ -47,9 +38,11 @@ namespace TwoForksVR.Hands
 
         public void SetUp(Transform playerTransform)
         {
-            var rootBone = playerTransform?.Find("henry/henryroot");
+            var henry = playerTransform?.Find("henry");
+            var rootBone = henry?.Find("henryroot");
             rightHand.SetUp(rootBone);
             leftHand.SetUp(rootBone);
+            GeneralDebugger.PlayerAnimator = henry?.GetComponent<Animator>();
         }
     }
 }

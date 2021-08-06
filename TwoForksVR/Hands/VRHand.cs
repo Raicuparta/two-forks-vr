@@ -1,13 +1,7 @@
-﻿using MelonLoader;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-using UnityEngine.VR;
+﻿using UnityEngine;
 using Valve.VR;
-using TwoForksVR.Tools;
 using TwoForksVR.Assets;
+using TwoForksVR.Helpers;
 
 namespace TwoForksVR.Hands
 {
@@ -16,6 +10,7 @@ namespace TwoForksVR.Hands
         private bool isLeft;
         private Transform rootBone;
         private string handName;
+        private GameObject fallbackHandModel;
 
         public static VRHand Create(Transform parent,  bool isLeft = false)
         {
@@ -24,6 +19,7 @@ namespace TwoForksVR.Hands
             var instance = transform.gameObject.AddComponent<VRHand>();
             instance.handName = handName;
             instance.isLeft = isLeft;
+            instance.fallbackHandModel = transform.Find("HandModel")?.gameObject;
             instance.SetUpPose();
             return instance;
         }
@@ -67,9 +63,8 @@ namespace TwoForksVR.Hands
 
         private void SetFallbackHandActive(bool active)
         {
-            var handModel = transform.Find("HandModel");
-            if (!handModel) return;
-            handModel.gameObject.SetActive(active);
+            if (!fallbackHandModel) return;
+            fallbackHandModel.SetActive(active);
         }
 
         private void EnableAnimatedHand()
@@ -81,8 +76,7 @@ namespace TwoForksVR.Hands
 
             var armBone = SetUpArmBone();
             SetUpHandLid(armBone);
-            var handBone = SetUpHandBone(armBone);
-            //VRMap.Create(handBone, handName);
+            SetUpHandBone(armBone);
         }
 
         private Transform SetUpArmBone()
@@ -115,21 +109,6 @@ namespace TwoForksVR.Hands
             var handBoneFollow = handBone.GetComponent<LateUpdateFollow>() ?? handBone.gameObject.AddComponent<LateUpdateFollow>();
             handBoneFollow.Target = wristTarget;
             return handBone;
-        }
-    }
-
-    public class LateUpdateFollow : MonoBehaviour
-    {
-        public Transform Target;
-
-        void LateUpdate()
-        {
-            if (!Target)
-            {
-                return;
-            }
-            transform.position = Target.position;
-            transform.rotation = Target.rotation;
         }
     }
 }

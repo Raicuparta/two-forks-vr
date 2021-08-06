@@ -1,11 +1,6 @@
 ﻿using Harmony;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
 
-namespace TwoForksVR.Tools
+namespace TwoForksVR.PlayerBody
 {
     [HarmonyPatch(typeof(vgPlayerController), "SetBackpackVisibility")]
     public class PreventShowingBackpack

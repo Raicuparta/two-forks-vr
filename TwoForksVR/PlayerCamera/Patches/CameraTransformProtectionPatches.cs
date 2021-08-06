@@ -1,8 +1,4 @@
 ﻿using Harmony;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 // Even though Unity prevents moving / rotating a VR camera directly, the transform values still change until the next update.

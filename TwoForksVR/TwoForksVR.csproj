@@ -61,6 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\VRAssetLoader.cs" />
+    <Compile Include="Helpers\LateUpdateFollow.cs" />
+    <Compile Include="PlayerBody\Patches\BodyPatches.cs" />
     <Compile Include="PlayerBody\VRBodyManager.cs" />
     <Compile Include="Debug\DebugAxes.cs" />
     <Compile Include="Helpers\MathHelper.cs" />
@@ -73,12 +75,11 @@
     <Compile Include="PlayerCamera\Patches\CameraTransformProtectionPatches.cs" />
     <Compile Include="Stage\VRStage.cs" />
     <Compile Include="Tools\Patches\MapPatches.cs" />
-    <Compile Include="Tools\Patches\BackpackPatches.cs" />
     <Compile Include="Tools\ToolPicker.cs" />
     <Compile Include="Tools\ToolPickerItem.cs" />
     <Compile Include="Tools\VRMap.cs" />
     <Compile Include="Hands\Patches\PlayerTargetingPatches.cs" />
-    <Compile Include="Hands\Patches\InventoryPatches.cs" />
+    <Compile Include="Hands\Patches\HeldItemPatches.cs" />
     <Compile Include="Settings\Patches\SettingsPatches.cs" />
     <Compile Include="SteamVR\SteamVR\Extras\SteamVR_CameraHelper.cs" />
     <Compile Include="SteamVR\SteamVR\Extras\SteamVR_ForceSteamVRMode.cs" />

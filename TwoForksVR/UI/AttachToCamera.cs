@@ -1,16 +1,10 @@
-﻿using MelonLoader;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TwoForksVR.PlayerCamera;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TwoForksVR.UI
 {
     public class AttachToCamera : MonoBehaviour
     {
-        private float offset = 0.5f;
+        private const float offset = 0.5f;
         public Transform target;
 
         private void LateUpdate()

@@ -1,10 +1,4 @@
-﻿using Harmony;
-using MelonLoader;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TwoForksVR.Hands;
+﻿using TwoForksVR.Helpers;
 using TwoForksVR.Stage;
 using UnityEngine;
 using UnityEngine.VR;
@@ -14,7 +8,6 @@ namespace TwoForksVR.PlayerCamera
 {
     public class VRCameraManager: MonoBehaviour
     {
-        private bool isInitialized;
         private vgCameraController cameraController;
         private Camera camera;
         private VRStage stage;
