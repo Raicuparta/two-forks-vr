@@ -18,6 +18,7 @@ namespace TwoForksVR.Hands
         {
             var instance = new GameObject("VRHandLaser").AddComponent<VRHandLaser>();
             instance.transform.SetParent(rightHand, false);
+            instance.transform.localEulerAngles = new Vector3(39.132f, 356.9302f, 0.3666f);
             instance.rightHand = rightHand;
             instance.leftHand = leftHand;
             return instance;
