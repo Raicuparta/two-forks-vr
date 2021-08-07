@@ -93,7 +93,6 @@ namespace TwoForksVR.UI
             var objectStage = __instance.transform.Find("ObjectStage").gameObject;
             if (objectStage.GetComponent<LateUpdateFollow>()) return;
 
-            // TODO not like this!
             objectStage.AddComponent<LateUpdateFollow>().Target = RightHand;
 
             var inventoryObjectParent = objectStage.transform.Find("InventoryObjectParent");
