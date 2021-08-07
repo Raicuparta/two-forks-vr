@@ -11,12 +11,9 @@ namespace TwoForksVR
     [BepInPlugin("raicuparta.twoforksvr", "Two Forks VR", "0.0.6")]
     public class TwoForksVRMod : BaseUnityPlugin
     {
-        private static ManualLogSource logger;
-
         private void Awake()
         {
-            logger = Logger;
-            Application.logMessageReceived += OnUnityLog;
+            //Application.logMessageReceived += OnUnityLog;
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
             VRAssetLoader.LoadAssets();
             VRStage.Create();
@@ -63,17 +60,17 @@ namespace TwoForksVR
 
         public static void LogInfo(object data)
         {
-            logger.LogInfo(data);
+            UnityEngine.Debug.Log(data);
         }
 
         public static void LogWarning(object data)
         {
-            logger.LogWarning(data);
+            UnityEngine.Debug.LogWarning(data);
         }
 
         public static void LogError(object data)
         {
-            logger.LogError(data);
+            UnityEngine.Debug.LogError(data);
         }
     }
 }

@@ -26,6 +26,8 @@ namespace TwoForksVR.Hands
 
         public static bool Prefix(GameObject attachment)
         {
+            TwoForksVRMod.LogInfo($"Attaching object to hand?");
+            if (!attachment) return true;
             TwoForksVRMod.LogInfo($"Attaching object to hand: {attachment.name}");
             if (AttachmentNameBlacklist.Contains(attachment.name))
             {
