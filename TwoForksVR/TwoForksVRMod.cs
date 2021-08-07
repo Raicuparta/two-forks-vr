@@ -4,7 +4,6 @@ using TwoForksVR.Stage;
 using BepInEx;
 using HarmonyLib;
 using System.Reflection;
-using BepInEx.Logging;
 
 namespace TwoForksVR
 {
@@ -13,6 +12,7 @@ namespace TwoForksVR
     {
         private void Awake()
         {
+            UnityExplorer.ExplorerStandalone.CreateInstance();
             //Application.logMessageReceived += OnUnityLog;
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
             VRAssetLoader.LoadAssets();
