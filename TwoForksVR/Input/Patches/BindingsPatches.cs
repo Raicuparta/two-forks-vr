@@ -115,7 +115,7 @@ namespace TwoForksVR.Input
         {
             public static bool Prefix(ref string __result)
             {
-                __result = $"{Directory.GetCurrentDirectory()}/Mods/TwoForksVR/Bindings";
+                __result = $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/TwoForksVR/Bindings";
                 return false;
             }
         }

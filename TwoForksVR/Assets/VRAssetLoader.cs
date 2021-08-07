@@ -29,7 +29,7 @@ namespace TwoForksVR.Assets
 
         private static AssetBundle LoadBundle(string assetName)
         {
-            var myLoadedAssetBundle = AssetBundle.LoadFromFile($"{Directory.GetCurrentDirectory()}/Mods/TwoForksVR/Assets/{assetName}");
+            var myLoadedAssetBundle = AssetBundle.LoadFromFile($"{Directory.GetCurrentDirectory()}/BepInEx/plugins/TwoForksVR/Assets/{assetName}");
             if (myLoadedAssetBundle == null)
             {
                 TwoForksVRMod.LogError($"Failed to load AssetBundle {assetName}");

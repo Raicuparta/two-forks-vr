@@ -272,10 +272,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /y "$(TargetPath)" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\Mods"
+    <PostBuildEvent>copy /y "$(TargetPath)" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\plugins
 
-xcopy /y /i "$(SolutionDir)\HelperUnityProject\AssetBundles" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\Mods\$(ProjectName)\Assets"
+xcopy /y /i "$(SolutionDir)\HelperUnityProject\AssetBundles" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\plugins\$(ProjectName)\Assets"
 
-xcopy /y /i "$(ProjectDir)\Input\Bindings" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\Mods\$(ProjectName)\Bindings"</PostBuildEvent>
+xcopy /y /i "$(ProjectDir)\Input\Bindings" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\plugins\$(ProjectName)\Bindings"</PostBuildEvent>
   </PropertyGroup>
 </Project>
