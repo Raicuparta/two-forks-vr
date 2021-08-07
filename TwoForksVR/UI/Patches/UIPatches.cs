@@ -80,13 +80,21 @@ namespace TwoForksVR.UI
     [HarmonyPatch(typeof(vgInventoryScreenController), "Start")]
     public class InventoryFollowMainCamera
     {
+        public static Transform RightHand;
+
         public static void Prefix(vgInventoryScreenController __instance)
         {
+            if (RightHand == null)
+            {
+                MelonLogger.Error("Right hand transform hasn't been set up properly in InventoryFollowMainCamera patch");
+                return;
+            }
+
             var objectStage = __instance.transform.Find("ObjectStage").gameObject;
             if (objectStage.GetComponent<LateUpdateFollow>()) return;
 
             // TODO not like this!
-            objectStage.AddComponent<LateUpdateFollow>().Target = VRHandsManager.RightHand;
+            objectStage.AddComponent<LateUpdateFollow>().Target = RightHand;
 
             var inventoryObjectParent = objectStage.transform.Find("InventoryObjectParent");
             inventoryObjectParent.localPosition = new Vector3(-0.16f, -0.04f, 0f);

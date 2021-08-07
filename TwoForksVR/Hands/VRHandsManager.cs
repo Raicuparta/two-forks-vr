@@ -3,6 +3,7 @@ using TwoForksVR.Assets;
 using UnityEngine;
 using TwoForksVR.Stage;
 using TwoForksVR.Debug;
+using TwoForksVR.UI;
 
 namespace TwoForksVR.Hands
 {
@@ -10,7 +11,6 @@ namespace TwoForksVR.Hands
     {
         private VRHand leftHand;
         private VRHand rightHand;
-        public static Transform RightHand;
 
         public static VRHandsManager Create(VRStage stage)
         {
@@ -24,7 +24,6 @@ namespace TwoForksVR.Hands
                 parent: instance.transform,
                 isLeft: true
             );
-            RightHand = instance.rightHand.transform;
             ToolPicker.Create(
                 parent: instance.transform,
                 leftHand: instance.leftHand.transform,
@@ -34,6 +33,8 @@ namespace TwoForksVR.Hands
                 leftHand: instance.leftHand.transform,
                 rightHand: instance.rightHand.transform
             );
+
+            InventoryFollowMainCamera.RightHand = instance.rightHand.transform;
 
             return instance;
         }
