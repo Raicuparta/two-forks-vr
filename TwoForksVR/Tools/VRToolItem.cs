@@ -7,5 +7,6 @@
 		Compass,
 		Flashlight,
 		DisposableCamera,
+		Inventory,
 	}
 }
