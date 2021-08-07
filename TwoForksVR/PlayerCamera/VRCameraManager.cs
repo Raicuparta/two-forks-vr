@@ -11,6 +11,7 @@ namespace TwoForksVR.PlayerCamera
         private vgCameraController cameraController;
         private Camera camera;
         private VRStage stage;
+        private int cameraCullingMask = 0;
 
         public static VRCameraManager Create(VRStage stage)
         {
@@ -35,6 +36,18 @@ namespace TwoForksVR.PlayerCamera
             if (SteamVR_Actions.default_Recenter.stateDown)
             {
                 Recenter();
+            }
+            if (vgPauseManager.Instance)
+            {
+                if (cameraCullingMask == 0 && vgPauseManager.Instance.isPaused)
+                {
+                    cameraCullingMask = camera.cullingMask;
+                    camera.cullingMask = LayerMask.GetMask("UI", "MenuBackground");
+                } else if (cameraCullingMask != 0 && !vgPauseManager.Instance.isPaused)
+                {
+                    camera.cullingMask = cameraCullingMask;
+                    cameraCullingMask = 0;
+                }
             }
         }
 

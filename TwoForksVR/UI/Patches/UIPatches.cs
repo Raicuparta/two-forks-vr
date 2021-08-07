@@ -58,6 +58,7 @@ namespace TwoForksVR.UI
 
             canvas.worldCamera = Camera.main;
             canvas.renderMode = RenderMode.WorldSpace;
+            canvas.gameObject.layer = LayerMask.NameToLayer("UI");
             canvas.gameObject.AddComponent<AttachToCamera>();
             __instance.transform.localScale = Vector3.one * 0.0005f;
         }
