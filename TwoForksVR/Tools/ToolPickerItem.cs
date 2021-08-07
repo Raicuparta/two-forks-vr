@@ -99,6 +99,12 @@ namespace TwoForksVR.Tools
                         playerController.OnCameraToggle();
                         return;
                     }
+                case VRToolItem.Inventory:
+                    {
+                        var inventoryController = FindObjectOfType<vgInventoryController>();
+                        inventoryController.OnDisplayInventory();
+                        return;
+                    }
             }
         }
 
@@ -146,6 +152,12 @@ namespace TwoForksVR.Tools
                         if (!playerController || !playerController.cameraActive) return;
 
                         playerController.OnCameraToggle();
+                        return;
+                    }
+                case VRToolItem.Inventory:
+                    {
+                        var inventoryMenuController = FindObjectOfType<vgInventoryMenuController>();
+                        inventoryMenuController?.OnCloseInventory();
                         return;
                     }
             }

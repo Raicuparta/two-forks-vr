@@ -1,6 +1,8 @@
 ﻿using Harmony;
 using MelonLoader;
 using System.Linq;
+using TwoForksVR.Hands;
+using TwoForksVR.Helpers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -56,8 +58,51 @@ namespace TwoForksVR.UI
 
             canvas.worldCamera = Camera.main;
             canvas.renderMode = RenderMode.WorldSpace;
+            canvas.gameObject.layer = LayerMask.NameToLayer("UI");
             canvas.gameObject.AddComponent<AttachToCamera>();
-            __instance.transform.localScale = Vector3.one * 0.0004f;
+            __instance.transform.localScale = Vector3.one * 0.0005f;
+        }
+    }
+
+    [HarmonyPatch(typeof(vgInventoryScreenController), "OnEnable")]
+    public class PreventInventoryDisablingMainCamera
+    {
+        public static void Postfix(Camera ___mainCamera, Camera ___menuCamera)
+        {
+            if (___mainCamera != null)
+            {
+                ___mainCamera.enabled = true;
+            }
+            ___menuCamera?.gameObject.SetActive(false);
+        }
+    }
+
+    [HarmonyPatch(typeof(vgInventoryScreenController), "Start")]
+    public class InventoryFollowMainCamera
+    {
+        public static Transform RightHand;
+
+        public static void Prefix(vgInventoryScreenController __instance)
+        {
+            if (RightHand == null)
+            {
+                MelonLogger.Error("Right hand transform hasn't been set up properly in InventoryFollowMainCamera patch");
+                return;
+            }
+
+            var objectStage = __instance.transform.Find("ObjectStage").gameObject;
+            if (objectStage.GetComponent<LateUpdateFollow>()) return;
+
+            objectStage.AddComponent<LateUpdateFollow>().Target = RightHand;
+
+            var inventoryObjectParent = objectStage.transform.Find("InventoryObjectParent");
+            inventoryObjectParent.localPosition = new Vector3(-0.16f, -0.04f, 0f);
+            inventoryObjectParent.localEulerAngles = new Vector3(328.5668f, 166.9781f, 334.8478f);
+
+            objectStage.transform.Find("ObjectStageDirectionalLight").gameObject.SetActive(false);
+
+            var footer = __instance.transform.Find("InventoryCanvas/SafeZoner/InventoryVerticalLayout/Menu Footer").gameObject;
+            footer.SetActive(false);
         }
     }
 }

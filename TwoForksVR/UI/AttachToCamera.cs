@@ -4,7 +4,7 @@ namespace TwoForksVR.UI
 {
     public class AttachToCamera : MonoBehaviour
     {
-        private const float offset = 0.5f;
+        private float offset = 0.8f;
         public Transform target;
 
         private void LateUpdate()

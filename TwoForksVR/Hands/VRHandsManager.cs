@@ -3,6 +3,7 @@ using TwoForksVR.Assets;
 using UnityEngine;
 using TwoForksVR.Stage;
 using TwoForksVR.Debug;
+using TwoForksVR.UI;
 
 namespace TwoForksVR.Hands
 {
@@ -32,6 +33,8 @@ namespace TwoForksVR.Hands
                 leftHand: instance.leftHand.transform,
                 rightHand: instance.rightHand.transform
             );
+
+            InventoryFollowMainCamera.RightHand = instance.rightHand.transform;
 
             return instance;
         }

@@ -2,6 +2,7 @@
 using UnityEngine;
 using TwoForksVR.Stage;
 using Harmony;
+using MelonLoader;
 
 namespace TwoForksVR.PlayerBody
 {
@@ -10,6 +11,7 @@ namespace TwoForksVR.PlayerBody
         public static VRBodyManager Create(Transform playerTransform)
         {
             var playerBody = playerTransform.Find("henry/body").gameObject;
+            playerBody.layer = LayerMask.NameToLayer("UI");
             var existingBodyManager = playerBody.GetComponent<VRBodyManager>();
             if (existingBodyManager) return existingBodyManager;
 
