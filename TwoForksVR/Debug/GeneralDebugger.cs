@@ -1,5 +1,4 @@
-﻿using MelonLoader;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 
 namespace TwoForksVR.Debug
@@ -34,20 +33,20 @@ namespace TwoForksVR.Debug
                 {
                     return;
                 }
-                MelonLogger.Msg("---- Start animation log ----");
+                TwoForksVRMod.LogInfo("---- Start animation log ----");
                 for (int layerIndex = 0; layerIndex < PlayerAnimator.layerCount; layerIndex++)
                 {
                     if (PlayerAnimator.GetCurrentAnimatorClipInfoCount(layerIndex) == 0)
                     {
                         continue;
                     }
-                    MelonLogger.Msg($"Layer Index: {layerIndex}");
-                    MelonLogger.Msg($"Layer Name: {PlayerAnimator.GetLayerName(layerIndex)}");
+                    TwoForksVRMod.LogInfo($"Layer Index: {layerIndex}");
+                    TwoForksVRMod.LogInfo($"Layer Name: {PlayerAnimator.GetLayerName(layerIndex)}");
                     var animations = PlayerAnimator.GetCurrentAnimatorClipInfo(layerIndex);
                     var animationNames = string.Join(", ", animations.Select(animation => animation.clip.name).ToArray());
-                    MelonLogger.Msg($"Animations [{animationNames}]");
+                    TwoForksVRMod.LogInfo($"Animations [{animationNames}]");
                 }
-                MelonLogger.Msg("---- End animation log ----");
+                TwoForksVRMod.LogInfo("---- End animation log ----");
             }
         }
     }

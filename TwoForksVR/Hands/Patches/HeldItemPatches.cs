@@ -1,5 +1,4 @@
-﻿using Harmony;
-using MelonLoader;
+﻿using HarmonyLib;
 using System.Linq;
 using UnityEngine;
 
@@ -27,7 +26,7 @@ namespace TwoForksVR.Hands
 
         public static bool Prefix(GameObject attachment)
         {
-            MelonLogger.Msg($"Attaching object to hand: {attachment.name}");
+            TwoForksVRMod.LogInfo($"Attaching object to hand: {attachment.name}");
             if (AttachmentNameBlacklist.Contains(attachment.name))
             {
                 attachment.SetActive(false);

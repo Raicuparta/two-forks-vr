@@ -1,5 +1,4 @@
-﻿using Harmony;
-using MelonLoader;
+﻿using HarmonyLib;
 using System.Linq;
 using TwoForksVR.Hands;
 using TwoForksVR.Helpers;
@@ -41,7 +40,7 @@ namespace TwoForksVR.UI
 
             if (!canvas)
             {
-                MelonLogger.Error($"MoveCanvasToWorldSpace: {__instance.name} has no Canvas");
+                TwoForksVRMod.LogError($"MoveCanvasToWorldSpace: {__instance.name} has no Canvas");
                 return;
             }
 
@@ -86,7 +85,7 @@ namespace TwoForksVR.UI
         {
             if (RightHand == null)
             {
-                MelonLogger.Error("Right hand transform hasn't been set up properly in InventoryFollowMainCamera patch");
+                TwoForksVRMod.LogError("Right hand transform hasn't been set up properly in InventoryFollowMainCamera patch");
                 return;
             }
 

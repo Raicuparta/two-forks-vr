@@ -1,8 +1,7 @@
 ﻿using TwoForksVR.Assets;
 using UnityEngine;
 using TwoForksVR.Stage;
-using Harmony;
-using MelonLoader;
+using HarmonyLib;
 
 namespace TwoForksVR.PlayerBody
 {

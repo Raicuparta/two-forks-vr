@@ -1,4 +1,4 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using UnityEngine;
 
 // Even though Unity prevents moving / rotating a VR camera directly, the transform values still change until the next update.

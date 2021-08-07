@@ -1,5 +1,4 @@
-﻿using Harmony;
-using MelonLoader;
+﻿using HarmonyLib;
 using UnityEngine;
 
 namespace TwoForksVR.Tools

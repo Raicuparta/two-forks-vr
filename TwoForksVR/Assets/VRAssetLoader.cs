@@ -1,4 +1,4 @@
-﻿using MelonLoader;
+﻿
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,7 +32,7 @@ namespace TwoForksVR.Assets
             var myLoadedAssetBundle = AssetBundle.LoadFromFile($"{Directory.GetCurrentDirectory()}/Mods/TwoForksVR/Assets/{assetName}");
             if (myLoadedAssetBundle == null)
             {
-                MelonLogger.Error($"Failed to load AssetBundle {assetName}");
+                TwoForksVRMod.LogError($"Failed to load AssetBundle {assetName}");
                 return null;
             }
             return myLoadedAssetBundle;

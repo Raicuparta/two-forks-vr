@@ -32,14 +32,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\core\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp_publicized">
       <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\publicized_assemblies\Assembly-CSharp_publicized.dll</HintPath>
     </Reference>
-    <Reference Include="MelonLoader">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\MelonLoader\MelonLoader.dll</HintPath>
+    <Reference Include="BepInEx">
+      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\core\BepInEx.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx.Harmony">
+      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\core\BepInEx.Harmony.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -63,6 +69,7 @@
     <Compile Include="Assets\VRAssetLoader.cs" />
     <Compile Include="Debug\GeneralDebugger.cs" />
     <Compile Include="Helpers\LateUpdateFollow.cs" />
+    <Compile Include="Helpers\ModLogger.cs" />
     <Compile Include="PlayerBody\Patches\BodyPatches.cs" />
     <Compile Include="PlayerBody\VRBodyManager.cs" />
     <Compile Include="Debug\DebugAxes.cs" />
