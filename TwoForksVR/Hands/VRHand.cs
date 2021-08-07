@@ -90,7 +90,7 @@ namespace TwoForksVR.Hands
         private void SetUpHandLid(Transform armBone)
         {
             var handLid = Instantiate(VRAssetLoader.HandLid).transform;
-            handLid.gameObject.layer = LayerMask.NameToLayer("UI");
+            handLid.Find("HandLidModel").gameObject.layer = LayerMask.NameToLayer("UI");
             handLid.SetParent(armBone, false);
             if (isLeft)
             {
