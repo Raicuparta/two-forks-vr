@@ -43,7 +43,8 @@ namespace TwoForksVR.PlayerCamera
                 {
                     cameraCullingMask = camera.cullingMask;
                     camera.cullingMask = LayerMask.GetMask("UI", "MenuBackground");
-                } else if (cameraCullingMask != 0 && !vgPauseManager.Instance.isPaused)
+                }
+                else if (cameraCullingMask != 0 && !vgPauseManager.Instance.isPaused)
                 {
                     camera.cullingMask = cameraCullingMask;
                     cameraCullingMask = 0;
