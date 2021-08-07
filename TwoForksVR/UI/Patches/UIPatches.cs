@@ -59,7 +59,7 @@ namespace TwoForksVR.UI
             canvas.worldCamera = Camera.main;
             canvas.renderMode = RenderMode.WorldSpace;
             canvas.gameObject.AddComponent<AttachToCamera>();
-            __instance.transform.localScale = Vector3.one * 0.0004f;
+            __instance.transform.localScale = Vector3.one * 0.0005f;
         }
     }
 
@@ -92,6 +92,9 @@ namespace TwoForksVR.UI
             inventoryObjectParent.localEulerAngles = new Vector3(328.5668f, 166.9781f, 334.8478f);
 
             objectStage.transform.Find("ObjectStageDirectionalLight").gameObject.SetActive(false);
+
+            var footer = __instance.transform.Find("InventoryCanvas/SafeZoner/InventoryVerticalLayout/Menu Footer").gameObject;
+            footer.SetActive(false);
         }
     }
 }
