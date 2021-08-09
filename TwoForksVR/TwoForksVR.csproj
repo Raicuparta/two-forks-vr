@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Assets\VRAssetLoader.cs" />
     <Compile Include="Debug\GeneralDebugger.cs" />
+    <Compile Include="Debug\Patches\DebugPatches.cs" />
     <Compile Include="Helpers\LateUpdateFollow.cs" />
     <Compile Include="Helpers\ModLogger.cs" />
     <Compile Include="PlayerBody\Patches\BodyPatches.cs" />
