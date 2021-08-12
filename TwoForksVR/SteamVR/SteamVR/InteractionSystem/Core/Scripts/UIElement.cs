@@ -5,9 +5,7 @@
 //=============================================================================
 
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
-using System;
 
 namespace Valve.VR.InteractionSystem
 {

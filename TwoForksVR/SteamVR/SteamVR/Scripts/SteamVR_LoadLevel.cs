@@ -6,7 +6,6 @@
 
 using UnityEngine;
 using System.Collections;
-using Valve.VR;
 using System.IO;
 
 namespace Valve.VR

@@ -8,7 +8,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using Valve.VR;
 
 namespace Valve.VR
 {

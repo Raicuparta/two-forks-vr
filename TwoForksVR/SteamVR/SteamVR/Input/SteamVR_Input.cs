@@ -1,12 +1,10 @@
 ﻿//======= Copyright (c) Valve Corporation, All rights reserved. ===============
 
 using UnityEngine;
-using Valve.VR;
 using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Linq;
 using Valve.Newtonsoft.Json;
 using System.Text;
 

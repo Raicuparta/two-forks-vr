@@ -10,10 +10,6 @@
 
 namespace Valve.VR
 {
-    using System;
-    using UnityEngine;
-    
-    
     public partial class SteamVR_Actions
     {
         

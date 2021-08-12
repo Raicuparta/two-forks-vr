@@ -1,5 +1,4 @@
-﻿using HarmonyLib;
-using TwoForksVR.Assets;
+﻿using TwoForksVR.Assets;
 using TwoForksVR.Helpers;
 using TwoForksVR.Stage;
 using UnityEngine;
@@ -14,12 +13,12 @@ namespace TwoForksVR.PlayerBody
             HideBody();
         }
 
-        public static VRBodyManager Create(Transform playerTransform)
+        public static void Create(Transform playerTransform)
         {
             var playerBody = playerTransform.Find("henry/body").gameObject;
             playerBody.layer = LayerMask.NameToLayer("UI");
             var existingBodyManager = playerBody.GetComponent<VRBodyManager>();
-            if (existingBodyManager) return existingBodyManager;
+            if (existingBodyManager) return;
 
             var camera = playerTransform
                 .parent
@@ -30,7 +29,7 @@ namespace TwoForksVR.PlayerBody
                 camera,
                 playerTransform
             );
-            return playerBody.AddComponent<VRBodyManager>();
+            playerBody.AddComponent<VRBodyManager>();
         }
 
         private void HideBody()
@@ -56,15 +55,6 @@ namespace TwoForksVR.PlayerBody
             material.shader = cutoutShader;
             material.SetTexture(ShaderProperty.MainTexture, texture);
             if (!texture) material.SetColor(ShaderProperty.Color, Color.clear);
-        }
-    }
-
-    [HarmonyPatch(typeof(vgPlayerController), "Awake")]
-    public class CreateBodyManager
-    {
-        public static void Prefix(vgPlayerController __instance)
-        {
-            VRBodyManager.Create(__instance.transform);
         }
     }
 }

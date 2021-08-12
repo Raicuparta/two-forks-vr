@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-//======= Copyright (c) Valve Corporation, All rights reserved. ===============
-
-using System.Text;
-
+﻿//======= Copyright (c) Valve Corporation, All rights reserved. ===============
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Valve.VR
 {

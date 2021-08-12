@@ -5,7 +5,6 @@
 //=============================================================================
 
 using UnityEngine;
-using Valve.VR;
 using System.IO;
 using System.Linq;
 
