@@ -17,7 +17,6 @@ namespace TwoForksVR
             Application.logMessageReceived += OnUnityLog;
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
             VRAssetLoader.LoadAssets();
-            VRStage.Create();
         }
 
         private void OnUnityLog(string condition, string stackTrace, LogType type)

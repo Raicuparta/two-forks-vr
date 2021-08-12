@@ -90,6 +90,7 @@
         <Compile Include="PlayerCamera\Patches\GameCameraPatches.cs" />
         <Compile Include="Stage\IntroFix.cs" />
         <Compile Include="PlayerCamera\Patches\CameraTransformProtectionPatches.cs" />
+        <Compile Include="Stage\StagePatches.cs" />
         <Compile Include="Stage\VRStage.cs" />
         <Compile Include="Tools\Patches\MapPatches.cs" />
         <Compile Include="Tools\ToolPicker.cs" />

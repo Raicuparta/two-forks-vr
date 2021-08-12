@@ -1,4 +1,5 @@
-﻿using TwoForksVR.Debug;
+﻿using System;
+using TwoForksVR.Debug;
 using TwoForksVR.Hands;
 using TwoForksVR.Helpers;
 using TwoForksVR.PlayerCamera;
@@ -24,32 +25,31 @@ namespace TwoForksVR.Stage
             if (!FallbackCamera.enabled && !(mainCamera && mainCamera.enabled)) SetUp(null, null);
         }
 
-        public static VRStage Create()
+        public static VRStage Create(Transform parent)
         {
-            if (!Instance)
+            if (Instance) return Instance;
+            var stageParent = new GameObject("VRStageParent")
             {
-                var stageParent = new GameObject("VRStageParent")
-                {
-                    // Apparently Firewatch will destroy all DontDrestroyOnLoad objects between scenes,
-                    // unless they have the MAIN tag.
-                    tag = "MAIN"
-                };
+                // Apparently Firewatch will destroy all DontDrestroyOnLoad objects between scenes,
+                // unless they have the MAIN tag.
+                tag = "MAIN",
+                transform = { parent = parent }
+            };
 
-                DontDestroyOnLoad(stageParent);
-                Instance = new GameObject("VRStage").AddComponent<VRStage>();
-                Instance.transform.SetParent(stageParent.transform, false);
-                Instance.cameraManager = VRCameraManager.Create(Instance);
-                Instance.handsManager = VRHandsManager.Create(Instance);
-                Instance.follow = stageParent.AddComponent<LateUpdateFollow>();
+            DontDestroyOnLoad(stageParent);
+            Instance = new GameObject("VRStage").AddComponent<VRStage>();
+            Instance.transform.SetParent(stageParent.transform, false);
+            Instance.cameraManager = VRCameraManager.Create(Instance);
+            Instance.handsManager = VRHandsManager.Create(Instance);
+            Instance.follow = stageParent.AddComponent<LateUpdateFollow>();
 
-                FallbackCamera = new GameObject("VRFallbackCamera").AddComponent<Camera>();
-                FallbackCamera.enabled = false;
-                FallbackCamera.clearFlags = CameraClearFlags.Color;
-                FallbackCamera.backgroundColor = Color.black;
-                FallbackCamera.transform.SetParent(Instance.transform, false);
+            FallbackCamera = new GameObject("VRFallbackCamera").AddComponent<Camera>();
+            FallbackCamera.enabled = false;
+            FallbackCamera.clearFlags = CameraClearFlags.Color;
+            FallbackCamera.backgroundColor = Color.black;
+            FallbackCamera.transform.SetParent(Instance.transform, false);
 
-                Instance.gameObject.AddComponent<GeneralDebugger>();
-            }
+            Instance.gameObject.AddComponent<GeneralDebugger>();
 
             return Instance;
         }
