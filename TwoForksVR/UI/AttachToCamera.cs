@@ -1,22 +1,21 @@
 ﻿using UnityEngine;
+using UnityExplorer;
 
 namespace TwoForksVR.UI
 {
     public class AttachToCamera : MonoBehaviour
     {
-        public Transform target;
         private const float offset = 0.8f;
 
         private void LateUpdate()
         {
-            if (target == null && Camera.main)
-            {
-                target = Camera.main.transform;
-                return;
-            }
+            // TODO optimize this, don't access Camera.main every frame.
+            var mainCamera = Camera.main;
 
-            var targetPosition = target.position;
-            transform.position = targetPosition + target.forward * offset;
+            if (mainCamera == null) return;
+
+            var targetPosition = mainCamera.transform.position;
+            transform.position = targetPosition + mainCamera.transform.forward * offset;
             transform.LookAt(2 * transform.position - targetPosition);
         }
     }

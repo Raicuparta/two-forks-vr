@@ -32,19 +32,19 @@ namespace TwoForksVR.UI.Patches
             "ExplorerCanvas" // UnityExplorer.
         };
 
-        // [HarmonyPrefix]
-        // [HarmonyPatch(typeof(UIBehaviour), "Awake")]
-        // private static void UIBehaviourAwake(UIBehaviour __instance)
-        // {
-        //     PatchCanvases(__instance);
-        // }
-
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(CanvasScaler), "OnEnable")]
-        private static void CanvasScalerEnable(CanvasScaler __instance)
+        [HarmonyPatch(typeof(UIBehaviour), "Awake")]
+        private static void UIBehaviourAwake(UIBehaviour __instance)
         {
             PatchCanvases(__instance);
         }
+
+        // [HarmonyPrefix]
+        // [HarmonyPatch(typeof(CanvasScaler), "OnEnable")]
+        // private static void CanvasScalerEnable(CanvasScaler __instance)
+        // {
+        //     PatchCanvases(__instance);
+        // }
 
         private static void PatchCanvases(Component component)
         {
