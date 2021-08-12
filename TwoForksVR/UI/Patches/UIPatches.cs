@@ -1,13 +1,15 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using HarmonyLib;
 using TwoForksVR.Helpers;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace TwoForksVR.UI.Patches
 {
     [HarmonyPatch(typeof(vgScrimManager), "ShowScrim")]
-    public class DisablePauseBlur
+    public static class DisablePauseBlur
     {
         public static void Prefix(ref bool blur)
         {
@@ -15,8 +17,9 @@ namespace TwoForksVR.UI.Patches
         }
     }
 
-    [HarmonyPatch(typeof(CanvasScaler), "OnEnable")]
-    public class MoveCanvasToWorldSpace
+
+    [HarmonyPatch]
+    public static class MoveCanvasToWorldSpace
     {
         private static readonly string[] canvasesToDisable =
         {
@@ -29,15 +32,29 @@ namespace TwoForksVR.UI.Patches
             "ExplorerCanvas" // UnityExplorer.
         };
 
-        public static void Prefix(CanvasScaler __instance)
-        {
-            if (!Camera.main || canvasesToIgnore.Contains(__instance.name)) return;
+        // [HarmonyPrefix]
+        // [HarmonyPatch(typeof(UIBehaviour), "Awake")]
+        // private static void UIBehaviourAwake(UIBehaviour __instance)
+        // {
+        //     PatchCanvases(__instance);
+        // }
 
-            var canvas = __instance.GetComponent<Canvas>();
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(CanvasScaler), "OnEnable")]
+        private static void CanvasScalerEnable(CanvasScaler __instance)
+        {
+            PatchCanvases(__instance);
+        }
+
+        private static void PatchCanvases(Component component)
+        {
+            if (!Camera.main || canvasesToIgnore.Contains(component.name)) return;
+
+            component.gameObject.layer = LayerFromName.UI;
+            var canvas = component.GetComponentInParent<Canvas>();
 
             if (!canvas)
             {
-                TwoForksVRMod.LogError($"MoveCanvasToWorldSpace: {__instance.name} has no Canvas");
                 return;
             }
 
@@ -51,9 +68,9 @@ namespace TwoForksVR.UI.Patches
 
             canvas.worldCamera = Camera.main;
             canvas.renderMode = RenderMode.WorldSpace;
-            canvas.gameObject.layer = LayerMask.NameToLayer("UI");
+            canvas.gameObject.layer = LayerFromName.UI;
             canvas.gameObject.AddComponent<AttachToCamera>();
-            __instance.transform.localScale = Vector3.one * 0.0005f;
+            canvas.transform.localScale = Vector3.one * 0.0005f;
         }
     }
 
@@ -66,6 +83,7 @@ namespace TwoForksVR.UI.Patches
             {
                 ___mainCamera.enabled = true;
             }
+
             if (___menuCamera != null)
             {
                 ___menuCamera.gameObject.SetActive(false);
