@@ -8,12 +8,9 @@ namespace TwoForksVR.Helpers
     {
         public Transform Target;
 
-        void LateUpdate()
+        private void LateUpdate()
         {
-            if (!Target)
-            {
-                return;
-            }
+            if (!Target) return;
             transform.position = Target.position;
             transform.rotation = Target.rotation;
         }

@@ -2,7 +2,7 @@
 using TwoForksVR.Stage;
 using UnityEngine;
 
-namespace TwoForksVR.PlayerCamera
+namespace TwoForksVR.PlayerCamera.Patches
 {
     [HarmonyPatch(typeof(vgMenuCameraController), "Start")]
     public class CreateMenuStage

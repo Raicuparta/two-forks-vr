@@ -1,9 +1,9 @@
-﻿using HarmonyLib;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using HarmonyLib;
 using Valve.VR;
 
-namespace TwoForksVR.Input
+namespace TwoForksVR.Input.Patches
 {
     public static class InputPatches
     {
@@ -17,35 +17,34 @@ namespace TwoForksVR.Input
             actionSet = SteamVR_Actions._default;
             booleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>()
             {
-                { InputName.Climb, actionSet.Interact },
-                { InputName.ChooseUp, actionSet.UIUp },
-                { InputName.ChooseDown, actionSet.UIDown },
-                { InputName.Jog, actionSet.Jog },
-                { InputName.Pause, actionSet.Cancel },
-                { InputName.Interact, actionSet.Interact },
-                { InputName.NextPage, actionSet.NextPage },
-                { InputName.PreviousPage, actionSet.PreviousPage },
+                {InputName.Climb, actionSet.Interact},
+                {InputName.ChooseUp, actionSet.UIUp},
+                {InputName.ChooseDown, actionSet.UIDown},
+                {InputName.Jog, actionSet.Jog},
+                {InputName.Pause, actionSet.Cancel},
+                {InputName.Interact, actionSet.Interact},
+                {InputName.NextPage, actionSet.NextPage},
+                {InputName.PreviousPage, actionSet.PreviousPage}
             };
             vector2XActionMap = new Dictionary<string, SteamVR_Action_Vector2>()
             {
-                { InputName.MoveStrafe, actionSet.Move },
-                { InputName.LookHorizontal, actionSet.Rotate },
+                {InputName.MoveStrafe, actionSet.Move},
+                {InputName.LookHorizontal, actionSet.Rotate}
             };
             vector2YActionMap = new Dictionary<string, SteamVR_Action_Vector2>()
             {
-                { InputName.MoveForward, actionSet.Move },
-                { InputName.LookVertical, actionSet.Rotate },
+                {InputName.MoveForward, actionSet.Move},
+                {InputName.LookVertical, actionSet.Rotate}
             };
 
             // Pick dialog option with interact button.
             // TODO: move this somewhere else.
-            actionSet.Interact.onStateDown += (SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource) =>
+            actionSet.Interact.onStateDown += (fromAction, fromSource) =>
             {
-                vgDialogTreeManager.Instance?.OnConfirmDialogChoice();
-                vgDialogTreeManager.Instance?.ClearNonRadioDialogChoices();
+                if (!vgDialogTreeManager.Instance) return;
+                vgDialogTreeManager.Instance.OnConfirmDialogChoice();
+                vgDialogTreeManager.Instance.ClearNonRadioDialogChoices();
             };
-
-            return;
         }
 
         [HarmonyPatch(typeof(vgAxisData), "Update")]
@@ -86,7 +85,6 @@ namespace TwoForksVR.Input
                 List<string> ___names,
                 ref bool ___keyUp,
                 ref bool ___keyDown
-
             )
             {
                 if (!SteamVR_Input.initialized)

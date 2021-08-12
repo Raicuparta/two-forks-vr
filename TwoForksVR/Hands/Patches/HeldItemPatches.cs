@@ -1,8 +1,8 @@
-﻿using HarmonyLib;
-using System.Linq;
+﻿using System.Linq;
+using HarmonyLib;
 using UnityEngine;
 
-namespace TwoForksVR.Hands
+namespace TwoForksVR.Hands.Patches
 {
     [HarmonyPatch(typeof(vgInventoryController), "TossStart")]
     public class SkipTossAnimation
@@ -18,7 +18,7 @@ namespace TwoForksVR.Hands
     [HarmonyPatch(typeof(vgAttachmentController), "AttachTemporarily")]
     public class HideBlacklistedHandAttachments
     {
-        private static readonly string[] AttachmentNameBlacklist = new string[]
+        private static readonly string[] attachmentNameBlacklist =
         {
             "Backpack",
             "BackPack"
@@ -26,15 +26,13 @@ namespace TwoForksVR.Hands
 
         public static bool Prefix(GameObject attachment)
         {
-            TwoForksVRMod.LogInfo($"Attaching object to hand?");
+            TwoForksVRMod.LogInfo("Attaching object to hand?");
             if (!attachment) return true;
             TwoForksVRMod.LogInfo($"Attaching object to hand: {attachment.name}");
-            if (AttachmentNameBlacklist.Contains(attachment.name))
-            {
-                attachment.SetActive(false);
-                return false;
-            }
-            return true;
+            if (!attachmentNameBlacklist.Contains(attachment.name)) return true;
+            attachment.SetActive(false);
+            return false;
+
         }
     }
 }

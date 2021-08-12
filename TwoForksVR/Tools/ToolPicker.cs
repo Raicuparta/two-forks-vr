@@ -1,137 +1,119 @@
 ﻿using System.Linq;
 using TwoForksVR.Assets;
+using TwoForksVR.Helpers;
 using UnityEngine;
 using Valve.VR;
 
 namespace TwoForksVR.Tools
 {
-	public class ToolPicker : MonoBehaviour
-	{
-		private const float minSquareDistance = 0.03f;
+    public class ToolPicker : MonoBehaviour
+    {
+        private const float minSquareDistance = 0.03f;
 
-		private readonly SteamVR_Action_Boolean input = SteamVR_Actions.default_ToolPicker;
-		private Transform toolsContainer;
-		private ToolPickerItem[] tools;
-		private ToolPickerItem hoveredTool;
-		private ToolPickerItem selectedTool;
-		private Transform rightHand;
-		private Transform leftHand;
+        private readonly SteamVR_Action_Boolean input = SteamVR_Actions.default_ToolPicker;
+        private ToolPickerItem hoveredTool;
+        private Transform leftHand;
+        private Transform rightHand;
+        private ToolPickerItem selectedTool;
+        private ToolPickerItem[] tools;
+        private Transform toolsContainer;
 
-		public static ToolPicker Create(Transform parent, Transform leftHand, Transform rightHand)
+        private void Start()
         {
-			var instance = Instantiate(VRAssetLoader.ToolPicker).AddComponent<ToolPicker>();
-			instance.transform.SetParent(parent, false);
-			instance.toolsContainer = instance.transform.Find("Tools");
-			instance.rightHand = rightHand;
-			instance.leftHand = leftHand;
+            CloseToolPicker();
+        }
 
-			instance.tools = instance.toolsContainer.Cast<Transform>().Select(
-				(child, index) => ToolPickerItem.Create(
-					parent: instance.toolsContainer,
-					index: index
-				)
-			).ToArray();
+        private void Update()
+        {
+            if (input.GetState(SteamVR_Input_Sources.RightHand)) UpdateSelectedTool(rightHand);
+            if (input.GetState(SteamVR_Input_Sources.LeftHand)) UpdateSelectedTool(leftHand);
+            if (input.GetStateDown(SteamVR_Input_Sources.RightHand)) OpenToolPicker(rightHand);
+            if (input.GetStateDown(SteamVR_Input_Sources.LeftHand)) OpenToolPicker(leftHand);
+            if (input.stateUp) CloseToolPicker();
+        }
 
-			return instance;
-		}
+        public static ToolPicker Create(Transform parent, Transform leftHand, Transform rightHand)
+        {
+            var instance = Instantiate(VRAssetLoader.ToolPicker).AddComponent<ToolPicker>();
+            instance.transform.SetParent(parent, false);
+            instance.toolsContainer = instance.transform.Find("Tools");
+            instance.rightHand = rightHand;
+            instance.leftHand = leftHand;
 
-		private void Start()
-		{
-			CloseToolPicker();
-		}
+            instance.tools = instance.toolsContainer.Cast<Transform>().Select(
+                (child, index) => ToolPickerItem.Create(
+                    instance.toolsContainer,
+                    index
+                )
+            ).ToArray();
 
-		private void SelectCurrentlyHoveredTool()
-		{
-			if (!hoveredTool) return;
+            return instance;
+        }
 
-			hoveredTool.Select();
-			hoveredTool.EndHover();
-			selectedTool = hoveredTool;
-			hoveredTool = null;
-		}
+        private void SelectCurrentlyHoveredTool()
+        {
+            if (!hoveredTool) return;
 
-		private void DeselectCurrentlySelectedTool()
-		{
-			if (!selectedTool) return;
+            hoveredTool.Select();
+            hoveredTool.EndHover();
+            selectedTool = hoveredTool;
+            hoveredTool = null;
+        }
 
-			selectedTool.Deselect();
-			selectedTool = null;
-		}
+        private void DeselectCurrentlySelectedTool()
+        {
+            if (!selectedTool) return;
 
-		private void OpenToolPicker(Transform hand)
-		{
-			if (toolsContainer.gameObject.activeSelf) return;
+            selectedTool.Deselect();
+            selectedTool = null;
+        }
 
-			toolsContainer.gameObject.SetActive(true);
-			toolsContainer.position = hand.position;
-			toolsContainer.LookAt(Camera.main.transform);
-			DeselectCurrentlySelectedTool();
-		}
+        private void OpenToolPicker(Transform hand)
+        {
+            if (toolsContainer.gameObject.activeSelf || !Camera.main) return;
 
-		private void CloseToolPicker()
-		{
-			if (!toolsContainer.gameObject.activeSelf) return;
+            toolsContainer.gameObject.SetActive(true);
+            toolsContainer.position = hand.position;
+            toolsContainer.LookAt(Camera.main.transform);
+            DeselectCurrentlySelectedTool();
+        }
 
-			toolsContainer.gameObject.SetActive(false);
-			toolsContainer.SetParent(transform);
-			toolsContainer.localPosition = Vector3.zero;
-			toolsContainer.localRotation = Quaternion.identity;
-			SelectCurrentlyHoveredTool();
-		}
+        private void CloseToolPicker()
+        {
+            if (!toolsContainer.gameObject.activeSelf) return;
 
-		private void UpdateSelectedTool(Transform hand)
-		{
-			ToolPickerItem nextSelectedTool = null;
-			var selectedToolDistance = Mathf.Infinity;
+            toolsContainer.gameObject.SetActive(false);
+            toolsContainer.SetParent(transform);
+            toolsContainer.localPosition = Vector3.zero;
+            toolsContainer.localRotation = Quaternion.identity;
+            SelectCurrentlyHoveredTool();
+        }
 
-			for (int i = 0; i < tools.Length; i++)
-			{
-				var tool = tools[i];
-				var distance = MathHelper.GetSquareDistance(tool.transform, hand);
-				if (distance < minSquareDistance && distance < selectedToolDistance)
-				{
-					nextSelectedTool = tool;
-					selectedToolDistance = distance;
-				}
-			}
-			if (nextSelectedTool == hoveredTool)
-			{
-				return;
-			}
-			if (hoveredTool)
-			{
-				hoveredTool.EndHover();
-				hoveredTool = null;
-			}
-			if (nextSelectedTool)
-			{
-				hoveredTool = nextSelectedTool;
-				nextSelectedTool.StartHover();
-			}
-		}
+        private void UpdateSelectedTool(Transform hand)
+        {
+            ToolPickerItem nextSelectedTool = null;
+            var selectedToolDistance = Mathf.Infinity;
 
-		private void Update()
-		{
-			if (input.GetState(SteamVR_Input_Sources.RightHand))
-			{
-				UpdateSelectedTool(rightHand);
-			}
-			if (input.GetState(SteamVR_Input_Sources.LeftHand))
-			{
-				UpdateSelectedTool(leftHand);
-			}
-			if (input.GetStateDown(SteamVR_Input_Sources.RightHand))
-			{
-				OpenToolPicker(rightHand);
-			}
-			if (input.GetStateDown(SteamVR_Input_Sources.LeftHand))
-			{
-				OpenToolPicker(leftHand);
-			}
-			if (input.stateUp)
-			{
-				CloseToolPicker();
-			}
-		}
-	}
+            foreach (var tool in tools)
+            {
+                var distance = MathHelper.GetSquareDistance(tool.transform, hand);
+                if (!(distance < minSquareDistance) || !(distance < selectedToolDistance)) continue;
+                nextSelectedTool = tool;
+                selectedToolDistance = distance;
+            }
+
+            if (nextSelectedTool == hoveredTool) return;
+            if (hoveredTool)
+            {
+                hoveredTool.EndHover();
+                hoveredTool = null;
+            }
+
+            if (nextSelectedTool)
+            {
+                hoveredTool = nextSelectedTool;
+                nextSelectedTool.StartHover();
+            }
+        }
+    }
 }
