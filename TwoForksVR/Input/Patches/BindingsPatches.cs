@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using HarmonyLib;
 using Valve.VR;
 
@@ -97,13 +98,10 @@ namespace TwoForksVR.Input.Patches
                     Initialize();
                 }
 
-                foreach (var name in ___names)
+                foreach (var name in ___names.Where(name => booleanActionMap.ContainsKey(name)))
                 {
-                    if (booleanActionMap.ContainsKey(name))
-                    {
-                        ___keyUp = booleanActionMap[name].stateUp;
-                        ___keyDown = booleanActionMap[name].stateDown;
-                    }
+                    ___keyUp = booleanActionMap[name].stateUp;
+                    ___keyDown = booleanActionMap[name].stateDown;
                 }
             }
         }
