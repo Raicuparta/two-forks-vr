@@ -6,18 +6,23 @@ using UnityEngine;
 
 namespace TwoForksVR.Stage
 {
-    public class VRStage: MonoBehaviour
+    public class VRStage : MonoBehaviour
     {
         public static VRStage Instance;
+
+        private VRCameraManager cameraManager;
+        private LateUpdateFollow follow;
+        private VRHandsManager handsManager;
+        private IntroFix introFix;
+        private Camera mainCamera;
 
         // No idea why, but if I don't make this static, it gets lost
         public static Camera FallbackCamera { get; private set; }
 
-        private VRCameraManager cameraManager;
-        private VRHandsManager handsManager;
-        private LateUpdateFollow follow;
-        private Camera mainCamera;
-        private IntroFix introFix;
+        private void Update()
+        {
+            if (!FallbackCamera.enabled && !(mainCamera && mainCamera.enabled)) SetUp(null, null);
+        }
 
         public static VRStage Create()
         {
@@ -45,42 +50,32 @@ namespace TwoForksVR.Stage
 
                 Instance.gameObject.AddComponent<GeneralDebugger>();
             }
+
             return Instance;
         }
 
         public void SetUp(Camera camera, Transform playerTransform)
         {
             mainCamera = camera;
-            follow.Target = mainCamera?.transform.parent;
             if (mainCamera)
             {
+                follow.Target = mainCamera.transform.parent;
                 FallbackCamera.enabled = false;
                 FallbackCamera.tag = "Untagged";
             }
             else
             {
                 FallbackCamera.enabled = true;
-                if (!introFix)
-                {
-                    introFix = IntroFix.Create();
-                }
+                if (!introFix) introFix = IntroFix.Create();
             }
 
-            cameraManager.SetUp(mainCamera ?? FallbackCamera);
+            cameraManager.SetUp(mainCamera ? mainCamera : FallbackCamera);
             handsManager.SetUp(playerTransform);
         }
 
         public void Recenter()
         {
             cameraManager.Recenter();
-        }
-
-        private void Update()
-        {
-            if (!FallbackCamera.enabled && !(mainCamera && mainCamera.enabled))
-            {
-                SetUp(null, null);
-            }
         }
     }
 }

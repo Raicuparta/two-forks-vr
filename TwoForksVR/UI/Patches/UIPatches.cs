@@ -1,11 +1,10 @@
-﻿using HarmonyLib;
-using System.Linq;
-using TwoForksVR.Hands;
+﻿using System.Linq;
+using HarmonyLib;
 using TwoForksVR.Helpers;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace TwoForksVR.UI
+namespace TwoForksVR.UI.Patches
 {
     [HarmonyPatch(typeof(vgScrimManager), "ShowScrim")]
     public class DisablePauseBlur
@@ -22,19 +21,17 @@ namespace TwoForksVR.UI
         private static readonly string[] canvasesToDisable =
         {
             "BlackBars", // Cinematic black bars.
-            "Camera", // Disposable camera. TODO: show this information in some other way.
+            "Camera" // Disposable camera. TODO: show this information in some other way.
         };
+
         private static readonly string[] canvasesToIgnore =
         {
-            "ExplorerCanvas", // UnityExplorer.
+            "ExplorerCanvas" // UnityExplorer.
         };
 
         public static void Prefix(CanvasScaler __instance)
         {
-            if (!Camera.main || canvasesToIgnore.Contains(__instance.name))
-            {
-                return;
-            }
+            if (!Camera.main || canvasesToIgnore.Contains(__instance.name)) return;
 
             var canvas = __instance.GetComponent<Canvas>();
 
@@ -50,10 +47,7 @@ namespace TwoForksVR.UI
                 return;
             }
 
-            if (canvas.renderMode != RenderMode.ScreenSpaceOverlay)
-            {
-                return;
-            }
+            if (canvas.renderMode != RenderMode.ScreenSpaceOverlay) return;
 
             canvas.worldCamera = Camera.main;
             canvas.renderMode = RenderMode.WorldSpace;
@@ -72,7 +66,10 @@ namespace TwoForksVR.UI
             {
                 ___mainCamera.enabled = true;
             }
-            ___menuCamera?.gameObject.SetActive(false);
+            if (___menuCamera != null)
+            {
+                ___menuCamera.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -85,7 +82,8 @@ namespace TwoForksVR.UI
         {
             if (RightHand == null)
             {
-                TwoForksVRMod.LogError("Right hand transform hasn't been set up properly in InventoryFollowMainCamera patch");
+                TwoForksVRMod.LogError(
+                    "Right hand transform hasn't been set up properly in InventoryFollowMainCamera patch");
                 return;
             }
 
@@ -100,7 +98,8 @@ namespace TwoForksVR.UI
 
             objectStage.transform.Find("ObjectStageDirectionalLight").gameObject.SetActive(false);
 
-            var footer = __instance.transform.Find("InventoryCanvas/SafeZoner/InventoryVerticalLayout/Menu Footer").gameObject;
+            var footer = __instance.transform.Find("InventoryCanvas/SafeZoner/InventoryVerticalLayout/Menu Footer")
+                .gameObject;
             footer.SetActive(false);
         }
     }

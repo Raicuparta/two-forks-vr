@@ -1,13 +1,13 @@
-﻿using TwoForksVR.Tools;
-using TwoForksVR.Assets;
-using UnityEngine;
-using TwoForksVR.Stage;
+﻿using TwoForksVR.Assets;
 using TwoForksVR.Debug;
-using TwoForksVR.UI;
+using TwoForksVR.Stage;
+using TwoForksVR.Tools;
+using TwoForksVR.UI.Patches;
+using UnityEngine;
 
 namespace TwoForksVR.Hands
 {
-    public class VRHandsManager: MonoBehaviour
+    public class VRHandsManager : MonoBehaviour
     {
         private VRHand leftHand;
         private VRHand rightHand;
@@ -15,23 +15,24 @@ namespace TwoForksVR.Hands
         public static VRHandsManager Create(VRStage stage)
         {
             var instance = Instantiate(VRAssetLoader.Hands).AddComponent<VRHandsManager>();
-            instance.transform.SetParent(stage.transform, false);
+            var instanceTransform = instance.transform;
+            instanceTransform.SetParent(stage.transform, false);
 
             instance.rightHand = VRHand.Create(
-                parent: instance.transform
+                instanceTransform
             );
             instance.leftHand = VRHand.Create(
-                parent: instance.transform,
-                isLeft: true
+                instanceTransform,
+                true
             );
             ToolPicker.Create(
-                parent: instance.transform,
-                leftHand: instance.leftHand.transform,
-                rightHand: instance.rightHand.transform
+                instanceTransform,
+                instance.leftHand.transform,
+                instance.rightHand.transform
             );
             VRHandLaser.Create(
-                leftHand: instance.leftHand.transform,
-                rightHand: instance.rightHand.transform
+                instance.leftHand.transform,
+                instance.rightHand.transform
             );
 
             InventoryFollowMainCamera.RightHand = instance.rightHand.transform;
@@ -41,11 +42,11 @@ namespace TwoForksVR.Hands
 
         public void SetUp(Transform playerTransform)
         {
-            var henry = playerTransform?.Find("henry");
-            var rootBone = henry?.Find("henryroot");
+            var henry = playerTransform != null ? playerTransform.Find("henry") : null;
+            var rootBone = henry != null ? henry.Find("henryroot") : null;
             rightHand.SetUp(rootBone);
             leftHand.SetUp(rootBone);
-            GeneralDebugger.PlayerAnimator = henry?.GetComponent<Animator>();
+            GeneralDebugger.PlayerAnimator = henry != null ? henry.GetComponent<Animator>() : null;
         }
     }
 }

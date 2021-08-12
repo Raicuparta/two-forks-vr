@@ -4,18 +4,20 @@ namespace TwoForksVR.UI
 {
     public class AttachToCamera : MonoBehaviour
     {
-        private float offset = 0.8f;
         public Transform target;
+        private const float offset = 0.8f;
 
         private void LateUpdate()
         {
-            if (target == null)
+            if (target == null && Camera.main)
             {
-                target = Camera.main?.transform;
+                target = Camera.main.transform;
                 return;
             }
-            transform.position = target.position + target.forward * offset;
-            transform.LookAt(2 * transform.position - target.position);
+
+            var targetPosition = target.position;
+            transform.position = targetPosition + target.forward * offset;
+            transform.LookAt(2 * transform.position - targetPosition);
         }
     }
 }

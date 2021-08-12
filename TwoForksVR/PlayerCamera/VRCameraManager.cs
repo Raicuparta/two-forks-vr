@@ -2,16 +2,39 @@
 using TwoForksVR.Stage;
 using UnityEngine;
 using UnityEngine.VR;
+using UnityStandardAssets.ImageEffects;
 using Valve.VR;
 
 namespace TwoForksVR.PlayerCamera
 {
-    public class VRCameraManager: MonoBehaviour
+    public class VRCameraManager : MonoBehaviour
     {
-        private vgCameraController cameraController;
         private Camera camera;
+        private vgCameraController cameraController;
+        private int cameraCullingMask;
         private VRStage stage;
-        private int cameraCullingMask = 0;
+
+        private void Update()
+        {
+            if (SteamVR_Actions.default_Recenter.stateDown) Recenter();
+            UpdateCulling();
+        }
+
+        private void UpdateCulling()
+        {
+            if (!vgPauseManager.Instance) return;
+            // TODO: maybe need to do this some other way? Some menus don't have UI layer.
+            if (cameraCullingMask == 0 && vgPauseManager.Instance.isPaused)
+            {
+                cameraCullingMask = camera.cullingMask;
+                camera.cullingMask = LayerMask.GetMask("UI", "MenuBackground");
+            }
+            else if (cameraCullingMask != 0 && !vgPauseManager.Instance.isPaused)
+            {
+                camera.cullingMask = cameraCullingMask;
+                cameraCullingMask = 0;
+            }
+        }
 
         public static VRCameraManager Create(VRStage stage)
         {
@@ -20,9 +43,9 @@ namespace TwoForksVR.PlayerCamera
             return instance;
         }
 
-        public void SetUp(Camera camera)
+        public void SetUp(Camera newCamera)
         {
-            this.camera = camera;
+            camera = newCamera;
             cameraController = FindObjectOfType<vgCameraController>();
             SetUpCamera();
             LimitVerticalRotation();
@@ -31,55 +54,32 @@ namespace TwoForksVR.PlayerCamera
             Invoke(nameof(Recenter), 1);
         }
 
-        private void Update()
-        {
-            if (SteamVR_Actions.default_Recenter.stateDown)
-            {
-                Recenter();
-            }
-            if (vgPauseManager.Instance)
-            {
-                // TODO: maybe need to do this some other way? Some menus don't have UI layer.
-                if (cameraCullingMask == 0 && vgPauseManager.Instance.isPaused)
-                {
-                    cameraCullingMask = camera.cullingMask;
-                    camera.cullingMask = LayerMask.GetMask("UI", "MenuBackground");
-                }
-                else if (cameraCullingMask != 0 && !vgPauseManager.Instance.isPaused)
-                {
-                    camera.cullingMask = cameraCullingMask;
-                    cameraCullingMask = 0;
-                }
-            }
-        }
-
         private void SetUpCamera()
         {
-            if (camera.transform.parent?.name != "VRCameraParent")
-            {
-                // Probably an old Unity bug: if the camera starts with an offset position,
-                // the tracking will always be incorrect.
-                // So I disable VR, reset the camera position, and then enable VR again.
-                VRSettings.enabled = false;
-                var cameraParent = new GameObject("VRCameraParent").transform;
-                cameraParent.SetParent(camera.transform.parent, false);
-                camera.transform.SetParent(cameraParent.transform);
-                camera.transform.localPosition = Vector3.zero;
-                camera.transform.localRotation = Quaternion.identity;
-                cameraParent.gameObject.AddComponent<LateUpdateFollow>().Target = stage.transform;
-                VRSettings.enabled = true;
-            }
             camera.nearClipPlane = 0.03f;
+            var cameraTransform = camera.transform;
+
+            if (cameraTransform.parent && cameraTransform.parent.name == "VRCameraParent") return;
+
+            // Probably an old Unity bug: if the camera starts with an offset position,
+            // the tracking will always be incorrect.
+            // So I disable VR, reset the camera position, and then enable VR again.
+            VRSettings.enabled = false;
+            var cameraParent = new GameObject("VRCameraParent").transform;
+            cameraParent.SetParent(cameraTransform.parent, false);
+            cameraTransform.SetParent(cameraParent.transform);
+            cameraTransform.localPosition = Vector3.zero;
+            cameraTransform.localRotation = Quaternion.identity;
+            cameraParent.gameObject.AddComponent<LateUpdateFollow>().Target = stage.transform;
+            VRSettings.enabled = true;
         }
 
-        private void LimitVerticalRotation()
+        private static void LimitVerticalRotation()
         {
-            var cameraController = GameObject.FindObjectOfType<vgCameraController>();
-            if (!cameraController)
+            var cameraController = FindObjectOfType<vgCameraController>();
+            if (!cameraController) return;
+            cameraController.defaultCameraTuning.ForEach(tuning =>
             {
-                return;
-            }
-            cameraController.defaultCameraTuning.ForEach(tuning => {
                 tuning.minVerticalAngle = 0;
                 tuning.maxVerticalAngle = 0;
             });
@@ -91,11 +91,11 @@ namespace TwoForksVR.PlayerCamera
             DisableCameraComponent<AmplifyMotionCamera>();
             DisableCameraComponent<vgMenuCameraController>();
             DisableCameraComponent<AmplifyMotionEffect>();
-            DisableCameraComponent<UnityStandardAssets.ImageEffects.Bloom>();
-            DisableCameraComponent<UnityStandardAssets.ImageEffects.Antialiasing>();
+            DisableCameraComponent<Bloom>();
+            DisableCameraComponent<Antialiasing>();
         }
 
-        private void DisableCameraComponent<TComponent>() where TComponent: Behaviour
+        private void DisableCameraComponent<TComponent>() where TComponent : Behaviour
         {
             var component = camera.GetComponent<TComponent>();
             if (!component) return;
@@ -116,10 +116,7 @@ namespace TwoForksVR.PlayerCamera
 
         public void Recenter()
         {
-            if (!cameraController?.eyeTransform)
-            {
-                return;
-            }
+            if (!cameraController || !cameraController.eyeTransform) return;
             var cameraOffset = GetCameraOffset();
             transform.position -= cameraOffset;
             var angleOffset = cameraController.eyeTransform.eulerAngles.y - camera.transform.eulerAngles.y - 90f;

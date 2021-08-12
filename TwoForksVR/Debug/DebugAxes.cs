@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using TwoForksVR.Helpers;
 using UnityEngine;
 
-namespace TwoForksVR
+namespace TwoForksVR.Debug
 {
-    class DebugAxes: MonoBehaviour
+    internal class DebugAxes : MonoBehaviour
     {
         private void Start()
         {
@@ -22,13 +19,13 @@ namespace TwoForksVR
 
             var lineRenderer = line.gameObject.AddComponent<LineRenderer>();
             lineRenderer.useWorldSpace = false;
-            lineRenderer.SetPositions(new[] { Vector3.zero, destination });
+            lineRenderer.SetPositions(new[] {Vector3.zero, destination});
             lineRenderer.startWidth = 0.005f;
             lineRenderer.endWidth = 0.005f;
             lineRenderer.endColor = color;
             lineRenderer.startColor = color;
             lineRenderer.material.shader = Shader.Find("Particles/Alpha Blended Premultiply");
-            lineRenderer.material.SetColor("_Color", color);
+            lineRenderer.material.SetColor(ShaderProperty.Color, color);
         }
     }
 }

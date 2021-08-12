@@ -1,9 +1,6 @@
-﻿using UnityEngine;
-
-namespace TwoForksVR.Helpers
+﻿namespace TwoForksVR.Helpers
 {
     public static class ModLogger
     {
-
     }
 }

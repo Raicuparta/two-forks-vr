@@ -1,8 +1,9 @@
 ﻿using HarmonyLib;
+using UnityExplorer.UI;
 
 namespace TwoForksVR.Debug.Patches
 {
-    [HarmonyPatch(typeof(UnityExplorer.UI.UIManager), "InitUI")]
+    [HarmonyPatch(typeof(UIManager), "InitUI")]
     public class HideUnityExplorerOnStartup
     {
         // I couldn't get the BepInEx version of UnityExplorer to work.
@@ -10,7 +11,7 @@ namespace TwoForksVR.Debug.Patches
         // So I'm patching the setting here, since without this I can't use the game menus in VR.
         public static void Postfix()
         {
-            UnityExplorer.UI.UIManager.ShowMenu = false;
+            UIManager.ShowMenu = false;
         }
     }
 }

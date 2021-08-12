@@ -1,29 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace TwoForksVR
+namespace TwoForksVR.Helpers
 {
     public static class MathHelper
     {
         public static float SignedAngle(Vector3 from, Vector3 to, Vector3 axis)
         {
-            float unsignedAngle = Vector3.Angle(from, to);
+            var unsignedAngle = Vector3.Angle(from, to);
 
-            float cross_x = from.y * to.z - from.z * to.y;
-            float cross_y = from.z * to.x - from.x * to.z;
-            float cross_z = from.x * to.y - from.y * to.x;
-            float sign = Mathf.Sign(axis.x * cross_x + axis.y * cross_y + axis.z * cross_z);
+            var crossX = from.y * to.z - from.z * to.y;
+            var crossY = from.z * to.x - from.x * to.z;
+            var crossZ = from.x * to.y - from.y * to.x;
+            var sign = Mathf.Sign(axis.x * crossX + axis.y * crossY + axis.z * crossZ);
             return unsignedAngle * sign;
         }
 
         public static Vector3 PositionAroundCircle(int index, int totalCount, float circleRadius)
         {
-			float angle = index * Mathf.PI * 2f / totalCount;
-			return new Vector3(Mathf.Cos(angle) * circleRadius, Mathf.Sin(angle) * circleRadius, 0);
-		}
+            var angle = index * Mathf.PI * 2f / totalCount;
+            return new Vector3(Mathf.Cos(angle) * circleRadius, Mathf.Sin(angle) * circleRadius, 0);
+        }
 
         public static float GetSquareDistance(Vector3 pointA, Vector3 pointB)
         {

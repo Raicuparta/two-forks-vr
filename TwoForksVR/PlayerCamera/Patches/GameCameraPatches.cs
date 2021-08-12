@@ -1,22 +1,20 @@
 ﻿using HarmonyLib;
 using TwoForksVR.Stage;
 
-namespace TwoForksVR.PlayerCamera
+namespace TwoForksVR.PlayerCamera.Patches
 {
     public class GameCameraPatches
     {
-        private static bool isDone = false;
+        private static bool isDone;
 
         [HarmonyPatch(typeof(vgCameraController), "LateUpdate")]
         public class RecenterCamera
         {
             public static void Postfix()
             {
-                if (!isDone)
-                {
-                    VRStage.Instance.Recenter();
-                    isDone = true;
-                }
+                if (isDone) return;
+                VRStage.Instance.Recenter();
+                isDone = true;
             }
         }
 

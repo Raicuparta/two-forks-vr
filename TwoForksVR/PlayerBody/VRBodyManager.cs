@@ -1,12 +1,19 @@
-﻿using TwoForksVR.Assets;
-using UnityEngine;
+﻿using HarmonyLib;
+using TwoForksVR.Assets;
+using TwoForksVR.Helpers;
 using TwoForksVR.Stage;
-using HarmonyLib;
+using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace TwoForksVR.PlayerBody
 {
     public class VRBodyManager : MonoBehaviour
     {
+        private void Start()
+        {
+            HideBody();
+        }
+
         public static VRBodyManager Create(Transform playerTransform)
         {
             var playerBody = playerTransform.Find("henry/body").gameObject;
@@ -20,21 +27,16 @@ namespace TwoForksVR.PlayerBody
                 .GetComponentInChildren<Camera>();
 
             VRStage.Instance.SetUp(
-                camera: camera,
-                playerTransform: playerTransform
+                camera,
+                playerTransform
             );
             return playerBody.AddComponent<VRBodyManager>();
-        }
-
-        private void Start()
-        {
-            HideBody();
         }
 
         private void HideBody()
         {
             var renderer = transform.GetComponent<SkinnedMeshRenderer>();
-            renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.TwoSided;
+            renderer.shadowCastingMode = ShadowCastingMode.TwoSided;
 
             var materials = renderer.materials;
 
@@ -48,15 +50,12 @@ namespace TwoForksVR.PlayerBody
             MakeMaterialTextureTransparent(armsMaterial, VRAssetLoader.ArmsCutoutTexture);
         }
 
-        private void MakeMaterialTextureTransparent(Material material, Texture2D texture = null)
+        private static void MakeMaterialTextureTransparent(Material material, Texture2D texture = null)
         {
             var cutoutShader = Shader.Find("Marmoset/Transparent/Cutout/Bumped Specular IBL");
             material.shader = cutoutShader;
-            material.SetTexture("_MainTex", texture);
-            if (!texture)
-            {
-                material.SetColor("_Color", Color.clear);
-            }
+            material.SetTexture(ShaderProperty.MainTexture, texture);
+            if (!texture) material.SetColor(ShaderProperty.Color, Color.clear);
         }
     }
 

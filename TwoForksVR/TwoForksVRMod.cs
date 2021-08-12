@@ -1,9 +1,10 @@
-﻿using UnityEngine;
-using TwoForksVR.Assets;
-using TwoForksVR.Stage;
+﻿using System.Reflection;
 using BepInEx;
 using HarmonyLib;
-using System.Reflection;
+using TwoForksVR.Assets;
+using TwoForksVR.Stage;
+using UnityEngine;
+using UnityExplorer;
 
 namespace TwoForksVR
 {
@@ -12,8 +13,8 @@ namespace TwoForksVR
     {
         private void Awake()
         {
-            UnityExplorer.ExplorerStandalone.CreateInstance();
-            //Application.logMessageReceived += OnUnityLog;
+            ExplorerStandalone.CreateInstance();
+            Application.logMessageReceived += OnUnityLog;
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
             VRAssetLoader.LoadAssets();
             VRStage.Create();
@@ -21,38 +22,27 @@ namespace TwoForksVR
 
         private void OnUnityLog(string condition, string stackTrace, LogType type)
         {
-            if (type == LogType.Log)
-            {
-                return;
-            }
+            if (type == LogType.Log) return;
             switch (type)
             {
                 case LogType.Exception:
                 case LogType.Error:
                 {
                     LogError(condition);
-                    if (stackTrace != null && stackTrace.Length > 0)
-                    {
-                        LogError($"error stack trace: [[ {stackTrace} ]]");
-                    }
+                    if (!string.IsNullOrEmpty(stackTrace)) LogError($"error stack trace: [[ {stackTrace} ]]");
                     return;
                 }
                 case LogType.Warning:
                 {
                     LogWarning(condition);
-                    if (stackTrace != null && stackTrace.Length > 0)
-                    {
+                    if (!string.IsNullOrEmpty(stackTrace))
                         LogWarning($"warning stack trace: [[ {stackTrace} ]]");
-                    }
                     return;
                 }
                 default:
                 {
                     LogInfo($"{type}: {condition}");
-                    if (stackTrace != null && stackTrace.Length > 0)
-                    {
-                        LogError($"log stack trace: [[ {stackTrace} ]]");
-                    }
+                    if (!string.IsNullOrEmpty(stackTrace)) LogError($"log stack trace: [[ {stackTrace} ]]");
                     return;
                 }
             }
