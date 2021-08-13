@@ -1,5 +1,6 @@
 ﻿using TwoForksVR.Helpers;
 using TwoForksVR.Stage;
+using TwoForksVR.UI;
 using UnityEngine;
 using UnityEngine.VR;
 using UnityStandardAssets.ImageEffects;
@@ -45,6 +46,7 @@ namespace TwoForksVR.PlayerCamera
 
         public void SetUp(Camera newCamera)
         {
+            AttachToCamera.SetTargetCamera(newCamera);
             camera = newCamera;
             cameraController = FindObjectOfType<vgCameraController>();
             SetUpCamera();
