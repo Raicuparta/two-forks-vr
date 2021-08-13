@@ -14,12 +14,12 @@ namespace TwoForksVR
         private void Awake()
         {
             ExplorerStandalone.CreateInstance();
-            Application.logMessageReceived += OnUnityLog;
+            // Application.logMessageReceived += OnUnityLog;
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
             VRAssetLoader.LoadAssets();
         }
 
-        private void OnUnityLog(string condition, string stackTrace, LogType type)
+        private static void OnUnityLog(string condition, string stackTrace, LogType type)
         {
             if (type == LogType.Log) return;
             switch (type)

@@ -36,6 +36,8 @@ namespace TwoForksVR.Stage
                 transform = { parent = parent }
             };
 
+            stageParent.AddComponent<vgOnlyLoadOnce>().dontDestroyOnLoad = true;
+
             DontDestroyOnLoad(stageParent);
             Instance = new GameObject("VRStage").AddComponent<VRStage>();
             Instance.transform.SetParent(stageParent.transform, false);
@@ -76,6 +78,11 @@ namespace TwoForksVR.Stage
         public void Recenter()
         {
             cameraManager.Recenter();
+        }
+
+        private void OnDisable()
+        {
+            throw new Exception("The VR Stage is being disabled. This should never happen. Check the call stack of this error to find the culprit.");
         }
     }
 }
