@@ -2,7 +2,6 @@
 using BepInEx;
 using HarmonyLib;
 using TwoForksVR.Assets;
-using TwoForksVR.Stage;
 using UnityEngine;
 using UnityExplorer;
 

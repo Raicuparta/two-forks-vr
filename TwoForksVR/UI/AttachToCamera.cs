@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityExplorer;
 
 namespace TwoForksVR.UI
 {
@@ -14,8 +13,9 @@ namespace TwoForksVR.UI
 
             if (mainCamera == null) return;
 
-            var targetPosition = mainCamera.transform.position;
-            transform.position = targetPosition + mainCamera.transform.forward * offset;
+            var cameraTransform = mainCamera.transform;
+            var targetPosition = cameraTransform.position;
+            transform.position = targetPosition + cameraTransform.forward * offset;
             transform.LookAt(2 * transform.position - targetPosition);
         }
     }
