@@ -7,6 +7,25 @@ using UnityEngine.UI;
 
 namespace TwoForksVR.UI.Patches
 {
+    [HarmonyPatch]
+    public static class UIPatches
+    {
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgHudManager), "ShowAbilityIcon")]
+        private static bool PreventShowingAbilityIcon()
+        {
+            return false;
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgHudManager), "InitializeAbilityIcon")]
+        private static bool DestroyAbilityIcon(vgHudManager __instance)
+        {
+            Object.Destroy(__instance.abilityIcon);
+            return false;
+        }
+    }
+    
     [HarmonyPatch(typeof(vgScrimManager), "ShowScrim")]
     public static class DisablePauseBlur
     {
@@ -47,25 +66,29 @@ namespace TwoForksVR.UI.Patches
 
         private static void PatchCanvases(Component component)
         {
-            if (!Camera.main || canvasesToIgnore.Contains(component.name)) return;
+            var camera = Camera.main;
+            if (!camera || canvasesToIgnore.Contains(component.name)) return;
 
             component.gameObject.layer = LayerFromName.UI;
             var canvas = component.GetComponentInParent<Canvas>();
 
-            if (!canvas)
-            {
-                return;
-            }
+            if (!canvas) return;
 
             if (canvasesToDisable.Contains(canvas.name))
             {
                 canvas.enabled = false;
                 return;
             }
+            
+            var attachToCamera = canvas.GetComponent<AttachToCamera>();
+            if (attachToCamera)
+            {
+                
+            }
 
             if (canvas.renderMode != RenderMode.ScreenSpaceOverlay) return;
 
-            canvas.worldCamera = Camera.main;
+            canvas.worldCamera = camera;
             canvas.renderMode = RenderMode.WorldSpace;
             canvas.gameObject.layer = LayerFromName.UI;
             canvas.gameObject.AddComponent<AttachToCamera>();
