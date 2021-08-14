@@ -1,17 +1,21 @@
-﻿using HarmonyLib;
+﻿using System;
+using HarmonyLib;
 using UnityEngine;
 
 namespace TwoForksVR.Tools.Patches
 {
-    [HarmonyPatch(typeof(vgMapManager), "UpdateMapReferences")]
-    public class CreateVRMap
+    [HarmonyPatch]
+    public static class MapPatches
     {
-        public static void Postfix()
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(AmplifyMotionObjectBase), "Start")]
+        private static void CreateVRMap(AmplifyMotionObjectBase __instance)
         {
-            // I usually wouldn't use GameObject.Find like this,
-            // but this is how the base game does it, and they don't save any references.
-            var mapInHand = GameObject.Find("MapInHand");
-            if (mapInHand) VRMap.Create(mapInHand.transform, "Left");
+            // The MapInHand object doesn't have any specific component that I can attach to.
+            // So I'm using AmplifyMotionObject, which is present in a bunch of objects in the game,
+            // then filtering by the name.
+            if (__instance.name != "MapInHand") return;
+            VRMap.Create(__instance.transform, "Left");
         }
     }
 }
