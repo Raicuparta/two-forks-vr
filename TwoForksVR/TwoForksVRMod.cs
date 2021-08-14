@@ -1,91 +1,64 @@
-﻿using Harmony;
-using MelonLoader;
-using UnityEngine;
+﻿using System.Reflection;
+using BepInEx;
+using HarmonyLib;
 using TwoForksVR.Assets;
-using TwoForksVR.Stage;
+using UnityEngine;
+using UnityExplorer;
 
 namespace TwoForksVR
 {
-    public class TwoForksVRMod : MelonMod
+    [BepInPlugin("raicuparta.twoforksvr", "Two Forks VR", "0.0.6")]
+    public class TwoForksVRMod : BaseUnityPlugin
     {
-        private bool isInitialized = false;
-
-        public override void OnApplicationStart()
+        private void Awake()
         {
-            base.OnApplicationStart();
-            HarmonyInstance.Create("Raicuparta.FirewatchVR").PatchAll();
-            VRAssetLoader.LoadAssets();
-
+            ExplorerStandalone.CreateInstance();
             Application.logMessageReceived += OnUnityLog;
+            Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
+            VRAssetLoader.LoadAssets();
         }
 
-        private void OnUnityLog(string condition, string stackTrace, LogType type)
+        private static void OnUnityLog(string condition, string stackTrace, LogType type)
         {
-            if (type == LogType.Log)
-            {
-                return;
-            }
+            // if (type == LogType.Log) return;
             switch (type)
             {
                 case LogType.Exception:
                 case LogType.Error:
                 {
-                    MelonLogger.Error(condition);
-                    if (stackTrace != null && stackTrace.Length > 0)
-                    {
-                        MelonLogger.Error($"error stack trace: [[ {stackTrace} ]]");
-                    }
+                    LogError(condition);
+                    if (!string.IsNullOrEmpty(stackTrace)) LogError($"error stack trace: [[ {stackTrace} ]]");
                     return;
                 }
                 case LogType.Warning:
                 {
-                    MelonLogger.Warning(condition);
-                    if (stackTrace != null && stackTrace.Length > 0)
-                    {
-                        MelonLogger.Warning($"warning stack trace: [[ {stackTrace} ]]");
-                    }
+                    LogWarning(condition);
+                    if (!string.IsNullOrEmpty(stackTrace))
+                        LogWarning($"warning stack trace: [[ {stackTrace} ]]");
                     return;
                 }
                 default:
                 {
-                    MelonLogger.Msg($"{type}: {condition}");
-                    if (stackTrace != null && stackTrace.Length > 0)
-                    {
-                        MelonLogger.Error($"log stack trace: [[ {stackTrace} ]]");
-                    }
+                    LogInfo($"{type}: {condition}");
+                    if (!string.IsNullOrEmpty(stackTrace)) LogError($"log stack trace: [[ {stackTrace} ]]");
                     return;
                 }
             }
         }
 
-        private bool IsGameScene(string sceneName)
+        public static void LogInfo(object data)
         {
-            return sceneName.StartsWith("TeenLoop") || sceneName.StartsWith("Intro_SECTR");
+            UnityEngine.Debug.Log(data);
         }
 
-        public override void OnSceneWasInitialized(int buildIndex, string sceneName)
+        public static void LogWarning(object data)
         {
-            VRStage.Create();
-
-            base.OnSceneWasInitialized(buildIndex, sceneName);
-
-            if (sceneName == "Main_Menu")
-            {
-                SetUpMenuScene();
-            } else if (IsGameScene(sceneName) && !isInitialized)
-            {
-                SetUpGameScene();
-            }
+            UnityEngine.Debug.LogWarning(data);
         }
 
-        private void SetUpMenuScene()
+        public static void LogError(object data)
         {
-            isInitialized = false;
-        }
-
-        private void SetUpGameScene()
-        {
-            isInitialized = true;
+            UnityEngine.Debug.LogError(data);
         }
     }
 }

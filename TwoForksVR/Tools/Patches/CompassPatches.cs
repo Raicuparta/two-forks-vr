@@ -1,7 +1,8 @@
-﻿using Harmony;
+﻿using HarmonyLib;
+using TwoForksVR.Helpers;
 using UnityEngine;
 
-namespace TwoForksVR.Tools
+namespace TwoForksVR.Tools.Patches
 {
     [HarmonyPatch(typeof(vgCompass), "LateUpdate")]
     public class FixCompassPointToNorth

@@ -2,20 +2,9 @@
 
 namespace TwoForksVR.Tools
 {
-    public class VRMap: MonoBehaviour
+    public class VRMap : MonoBehaviour
     {
         private const float mapScale = 2f;
-
-        public static VRMap Create(Transform mapInHand, string handName)
-        {
-            if (!mapInHand || mapInHand.GetComponent<VRMap>()) return null;
-
-            // Very hard to read the map in VR since we can't zoom in.
-            // So making it bigger to make it easier, especially for lower resolution headsets.
-            mapInHand.parent.parent.localScale = Vector3.one * mapScale;
-
-            return mapInHand.gameObject.AddComponent<VRMap>();
-        }
 
         private void Start()
         {
@@ -26,6 +15,17 @@ namespace TwoForksVR.Tools
         private void LateUpdate()
         {
             ForceHighResolutionMap();
+        }
+
+        public static VRMap Create(Transform mapInHand, string handName)
+        {
+            if (!mapInHand || mapInHand.GetComponent<VRMap>()) return null;
+
+            // Very hard to read the map in VR since we can't zoom in.
+            // So making it bigger to make it easier, especially for lower resolution headsets.
+            mapInHand.parent.parent.localScale = Vector3.one * mapScale;
+
+            return mapInHand.gameObject.AddComponent<VRMap>();
         }
 
         // Map doesn't quite fit the hand after scaling, need to move it a bit.
@@ -47,11 +47,11 @@ namespace TwoForksVR.Tools
         // In base game, map resolution changes depending on zoom. In VR there's no zoom,
         // so we need to always have high resolution. For whatever reason I don't seem to be
         // able to patch the IsZoomingMap method, so I'm forcing it on LateUpdate instead.
-        private void ForceHighResolutionMap()
+        private static void ForceHighResolutionMap()
         {
-            var mapController = vgMapManager.Instance?.mapController;
+            if (!vgMapManager.Instance) return;
+            var mapController = vgMapManager.Instance.mapController;
             if (!mapController) return;
-
             mapController.isZoomingMap = true;
         }
     }

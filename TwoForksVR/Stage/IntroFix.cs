@@ -2,22 +2,14 @@
 
 namespace TwoForksVR.Stage
 {
-    class IntroFix: MonoBehaviour
+    internal class IntroFix : MonoBehaviour
     {
-        GameObject introManager;
-
-        public static IntroFix Create()
-        {
-            return new GameObject("VRIntroFix").AddComponent<IntroFix>();
-        }
+        private GameObject introManager;
 
         private void Awake()
         {
             introManager = GameObject.Find("IntroManager");
-            if (!introManager)
-            {
-                return;
-            }
+            if (!introManager) return;
             VRStage.FallbackCamera.tag = "MainCamera";
             introManager.SetActive(false);
             GameObject.Find("IntroTextAndBackground").SetActive(false);
@@ -25,10 +17,12 @@ namespace TwoForksVR.Stage
 
         private void Start()
         {
-            if (introManager)
-            {
-                introManager.SetActive(true);
-            }
+            if (introManager) introManager.SetActive(true);
+        }
+
+        public static IntroFix Create()
+        {
+            return new GameObject("VRIntroFix").AddComponent<IntroFix>();
         }
     }
 }

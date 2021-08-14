@@ -1,5 +1,4 @@
-﻿using MelonLoader;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 
 namespace TwoForksVR.Debug
@@ -14,41 +13,28 @@ namespace TwoForksVR.Debug
             UpdateAnimator();
         }
 
-        private void UpdateTimeScale()
+        private static void UpdateTimeScale()
         {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.Equals))
-            {
-                Time.timeScale = Time.timeScale > 1 ? 1 : 10;
-            }
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Equals)) Time.timeScale = Time.timeScale > 1 ? 1 : 10;
         }
 
-        private void UpdateAnimator()
+        private static void UpdateAnimator()
         {
-            if (PlayerAnimator == null)
+            if (!PlayerAnimator || !UnityEngine.Input.GetKeyDown(KeyCode.F11)) return;
+
+            TwoForksVRMod.LogInfo("---- Start animation log ----");
+            for (var layerIndex = 0; layerIndex < PlayerAnimator.layerCount; layerIndex++)
             {
-                return;
+                if (PlayerAnimator.GetCurrentAnimatorClipInfoCount(layerIndex) == 0) continue;
+                TwoForksVRMod.LogInfo($"Layer Index: {layerIndex}");
+                TwoForksVRMod.LogInfo($"Layer Name: {PlayerAnimator.GetLayerName(layerIndex)}");
+                var animations = PlayerAnimator.GetCurrentAnimatorClipInfo(layerIndex);
+                var animationNames =
+                    string.Join(", ", animations.Select(animation => animation.clip.name).ToArray());
+                TwoForksVRMod.LogInfo($"Animations [{animationNames}]");
             }
-            if (UnityEngine.Input.GetKeyDown(KeyCode.F11))
-            {
-                if (!PlayerAnimator)
-                {
-                    return;
-                }
-                MelonLogger.Msg("---- Start animation log ----");
-                for (int layerIndex = 0; layerIndex < PlayerAnimator.layerCount; layerIndex++)
-                {
-                    if (PlayerAnimator.GetCurrentAnimatorClipInfoCount(layerIndex) == 0)
-                    {
-                        continue;
-                    }
-                    MelonLogger.Msg($"Layer Index: {layerIndex}");
-                    MelonLogger.Msg($"Layer Name: {PlayerAnimator.GetLayerName(layerIndex)}");
-                    var animations = PlayerAnimator.GetCurrentAnimatorClipInfo(layerIndex);
-                    var animationNames = string.Join(", ", animations.Select(animation => animation.clip.name).ToArray());
-                    MelonLogger.Msg($"Animations [{animationNames}]");
-                }
-                MelonLogger.Msg("---- End animation log ----");
-            }
+
+            TwoForksVRMod.LogInfo("---- End animation log ----");
         }
     }
 }

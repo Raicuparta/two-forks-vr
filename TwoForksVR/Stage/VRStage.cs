@@ -1,4 +1,5 @@
-﻿using TwoForksVR.Debug;
+﻿using System;
+using TwoForksVR.Debug;
 using TwoForksVR.Hands;
 using TwoForksVR.Helpers;
 using TwoForksVR.PlayerCamera;
@@ -6,67 +7,71 @@ using UnityEngine;
 
 namespace TwoForksVR.Stage
 {
-    public class VRStage: MonoBehaviour
+    public class VRStage : MonoBehaviour
     {
         public static VRStage Instance;
+
+        private VRCameraManager cameraManager;
+        private LateUpdateFollow follow;
+        private VRHandsManager handsManager;
+        private IntroFix introFix;
+        private Camera mainCamera;
 
         // No idea why, but if I don't make this static, it gets lost
         public static Camera FallbackCamera { get; private set; }
 
-        private VRCameraManager cameraManager;
-        private VRHandsManager handsManager;
-        private LateUpdateFollow follow;
-        private Camera mainCamera;
-        private IntroFix introFix;
-
-        public static VRStage Create()
+        private void Update()
         {
-            if (!Instance)
+            if (!FallbackCamera.enabled && !(mainCamera && mainCamera.enabled)) SetUp(null, null);
+        }
+
+        public static VRStage Create(Transform parent)
+        {
+            if (Instance) return Instance;
+            var stageParent = new GameObject("VRStageParent")
             {
-                var stageParent = new GameObject("VRStageParent")
-                {
-                    // Apparently Firewatch will destroy all DontDrestroyOnLoad objects between scenes,
-                    // unless they have the MAIN tag.
-                    tag = "MAIN"
-                };
+                // Apparently Firewatch will destroy all DontDrestroyOnLoad objects between scenes,
+                // unless they have the MAIN tag.
+                tag = "MAIN",
+                transform = { parent = parent }
+            };
 
-                DontDestroyOnLoad(stageParent);
-                Instance = new GameObject("VRStage").AddComponent<VRStage>();
-                Instance.transform.SetParent(stageParent.transform, false);
-                Instance.cameraManager = VRCameraManager.Create(Instance);
-                Instance.handsManager = VRHandsManager.Create(Instance);
-                Instance.follow = stageParent.AddComponent<LateUpdateFollow>();
+            stageParent.AddComponent<vgOnlyLoadOnce>().dontDestroyOnLoad = true;
 
-                FallbackCamera = new GameObject("VRFallbackCamera").AddComponent<Camera>();
-                FallbackCamera.enabled = false;
-                FallbackCamera.clearFlags = CameraClearFlags.Color;
-                FallbackCamera.backgroundColor = Color.black;
-                FallbackCamera.transform.SetParent(Instance.transform, false);
+            DontDestroyOnLoad(stageParent);
+            Instance = new GameObject("VRStage").AddComponent<VRStage>();
+            Instance.transform.SetParent(stageParent.transform, false);
+            Instance.cameraManager = VRCameraManager.Create(Instance);
+            Instance.handsManager = VRHandsManager.Create(Instance);
+            Instance.follow = stageParent.AddComponent<LateUpdateFollow>();
 
-                Instance.gameObject.AddComponent<GeneralDebugger>();
-            }
+            FallbackCamera = new GameObject("VRFallbackCamera").AddComponent<Camera>();
+            FallbackCamera.enabled = false;
+            FallbackCamera.clearFlags = CameraClearFlags.Color;
+            FallbackCamera.backgroundColor = Color.black;
+            FallbackCamera.transform.SetParent(Instance.transform, false);
+
+            Instance.gameObject.AddComponent<GeneralDebugger>();
+
             return Instance;
         }
 
         public void SetUp(Camera camera, Transform playerTransform)
         {
             mainCamera = camera;
-            follow.Target = mainCamera?.transform.parent;
             if (mainCamera)
             {
+                follow.Target = mainCamera.transform.parent;
                 FallbackCamera.enabled = false;
                 FallbackCamera.tag = "Untagged";
             }
             else
             {
                 FallbackCamera.enabled = true;
-                if (!introFix)
-                {
-                    introFix = IntroFix.Create();
-                }
+                if (!introFix) introFix = IntroFix.Create();
             }
 
-            cameraManager.SetUp(mainCamera ?? FallbackCamera);
+            cameraManager.SetUp(mainCamera ? mainCamera : FallbackCamera);
             handsManager.SetUp(playerTransform);
         }
 
@@ -75,12 +80,9 @@ namespace TwoForksVR.Stage
             cameraManager.Recenter();
         }
 
-        private void Update()
+        private void OnDisable()
         {
-            if (!FallbackCamera.enabled && !(mainCamera && mainCamera.enabled))
-            {
-                SetUp(null, null);
-            }
+            throw new Exception("The VR Stage is being disabled. This should never happen. Check the call stack of this error to find the culprit.");
         }
     }
 }

@@ -1,10 +1,5 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
-using MelonLoader;
-using TwoForksVR;
-
-[assembly: MelonInfo(typeof(TwoForksVRMod), "TwoForksVR", "0.0.5", "Raicuparta")]
-[assembly: MelonGame(null, null)]
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
