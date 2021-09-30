@@ -1,6 +1,4 @@
-﻿using System;
-using HarmonyLib;
-using UnityEngine;
+﻿using HarmonyLib;
 
 namespace TwoForksVR.Tools.Patches
 {
@@ -8,7 +6,7 @@ namespace TwoForksVR.Tools.Patches
     public static class MapPatches
     {
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(AmplifyMotionObjectBase), "Start")]
+        [HarmonyPatch(typeof(AmplifyMotionObjectBase), nameof(AmplifyMotionObjectBase.Start))]
         private static void CreateVRMap(AmplifyMotionObjectBase __instance)
         {
             // The MapInHand object doesn't have any specific component that I can attach to.

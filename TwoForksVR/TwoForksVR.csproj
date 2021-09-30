@@ -249,6 +249,8 @@
         <Compile Include="Hands\VRHandLaser.cs" />
         <Compile Include="Hands\VRHandsManager.cs" />
         <Compile Include="UI\AttachToCamera.cs" />
+        <Compile Include="UI\Patches\CanvasToWorldSpacePatches.cs" />
+        <Compile Include="UI\Patches\InventoryPatches.cs" />
         <Compile Include="UI\Patches\UIPatches.cs" />
     </ItemGroup>
     <ItemGroup>
