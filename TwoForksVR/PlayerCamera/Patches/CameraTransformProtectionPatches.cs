@@ -24,8 +24,7 @@ namespace TwoForksVR.PlayerCamera.Patches
         {
             // If I always disable this method, it will break the camera position.
             // Since it was only broken while paused, I'm disabling it only in that scenario.
-            if (Time.timeScale == 0) return false;
-            return true;
+            return Time.timeScale != 0;
         }
     }
 }
