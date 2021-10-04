@@ -3,37 +3,32 @@ using TwoForksVR.Stage;
 
 namespace TwoForksVR.PlayerCamera.Patches
 {
+    [HarmonyPatch]
     public class GameCameraPatches
     {
         private static bool isDone;
 
-        [HarmonyPatch(typeof(vgCameraController), "LateUpdate")]
-        public class RecenterCamera
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.LateUpdate))]
+        private static void RecenterCamera()
         {
-            public static void Postfix()
-            {
-                if (isDone) return;
-                VRStage.Instance.Recenter();
-                isDone = true;
-            }
+            if (isDone) return;
+            VRStage.Instance.Recenter();
+            isDone = true;
+        }
+        
+        [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.Start))]
+        [HarmonyPrefix]
+        private static void ResetIsDoneOnCameraStart()
+        {
+            isDone = false;
         }
 
-        [HarmonyPatch(typeof(vgCameraController), "Start")]
-        public class ResetIsDoneOnCameraStart
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgLoadingCamera), nameof(vgLoadingCamera.OnEnable))]
+        private static void ResetIsDoneOnLoading()
         {
-            public static void Prefix()
-            {
-                isDone = false;
-            }
-        }
-
-        [HarmonyPatch(typeof(vgLoadingCamera), "OnEnable")]
-        public class ResetIsDoneOnLoading
-        {
-            public static void Prefix()
-            {
-                isDone = false;
-            }
+            isDone = false;
         }
     }
 }
