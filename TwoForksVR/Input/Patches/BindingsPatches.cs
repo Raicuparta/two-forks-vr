@@ -77,7 +77,7 @@ namespace TwoForksVR.Input.Patches
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(vgButtonData), nameof(vgButtonData.Update))]
-        public static void ReadButtonValuesFromSteamVR(vgButtonData __instance){
+        private static void ReadButtonValuesFromSteamVR(vgButtonData __instance){
             if (!SteamVR_Input.initialized) return;
 
             if (actionSet == null)
@@ -94,7 +94,7 @@ namespace TwoForksVR.Input.Patches
         
         [HarmonyPrefix]
         [HarmonyPatch(typeof(SteamVR_Input), nameof(SteamVR_Input.GetActionsFileFolder))]
-        public static bool GetActionsFileFromMod(ref string __result)
+        private static bool GetActionsFileFromMod(ref string __result)
         {
             // TODO: could probably just use the streamingassets folder and avoid doing this?
             __result = $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/TwoForksVR/Bindings";
