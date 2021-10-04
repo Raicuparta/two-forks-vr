@@ -4,19 +4,19 @@
 // These patches force some settings to certain values to prevent VR funkyness.
 namespace TwoForksVR.Settings.Patches
 {
-    [HarmonyPatch(typeof(vgSettingsManager), "headBob", MethodType.Setter)]
-    public class ForceDisableHeadBob
+    [HarmonyPatch]
+    public class SettingsPatches
     {
-        public static void Prefix(ref bool value)
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.headBob), MethodType.Setter)]
+        public static void ForceDisableHeadBob(ref bool value)
         {
             value = false;
         }
-    }
-
-    [HarmonyPatch(typeof(vgSettingsManager), "minimalInterface", MethodType.Setter)]
-    public class ForceEnableMinimalInterface
-    {
-        public static void Prefix(ref bool value)
+        
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.minimalInterface), MethodType.Setter)]
+        public static void ForceEnableMinimalInterface(ref bool value)
         {
             value = true;
         }
