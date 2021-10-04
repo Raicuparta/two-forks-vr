@@ -6,7 +6,7 @@ namespace TwoForksVR.Stage.Patches
     public static class StagePatches
     {
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgReset), "Awake")]
+        [HarmonyPatch(typeof(vgReset), nameof(vgReset.Awake))]
         private static void CreateStage(vgReset __instance)
         {
             // All objects are eventually destroyed, unless they are children of this "reset object".

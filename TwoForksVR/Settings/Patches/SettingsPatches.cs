@@ -9,14 +9,14 @@ namespace TwoForksVR.Settings.Patches
     {
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.headBob), MethodType.Setter)]
-        public static void ForceDisableHeadBob(ref bool value)
+        private static void ForceDisableHeadBob(ref bool value)
         {
             value = false;
         }
         
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.minimalInterface), MethodType.Setter)]
-        public static void ForceEnableMinimalInterface(ref bool value)
+        private static void ForceEnableMinimalInterface(ref bool value)
         {
             value = true;
         }
