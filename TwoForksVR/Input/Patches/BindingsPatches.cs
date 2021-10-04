@@ -6,6 +6,7 @@ using Valve.VR;
 
 namespace TwoForksVR.Input.Patches
 {
+    [HarmonyPatch]
     public static class InputPatches
     {
         private static SteamVR_Input_ActionSet_default actionSet;
@@ -48,72 +49,56 @@ namespace TwoForksVR.Input.Patches
             };
         }
 
-        [HarmonyPatch(typeof(vgAxisData), "Update")]
-        public class ReadAxisValuesFromSteamVR
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgAxisData), nameof(vgAxisData.Update))]
+        private static void ReadAxisValuesFromSteamVR(List<string> ___names, ref float ___axisValue, ref float ___axisValueLastFrame)
         {
-            public static void Postfix(List<string> ___names, ref float ___axisValue, ref float ___axisValueLastFrame)
+            if (!SteamVR_Input.initialized) return;
+
+            if (actionSet == null)
             {
-                if (!SteamVR_Input.initialized)
-                {
-                    return;
-                }
+                Initialize();
+            }
 
-                if (actionSet == null)
+            foreach (var name in ___names)
+            {
+                if (vector2XActionMap.ContainsKey(name))
                 {
-                    Initialize();
+                    ___axisValue = vector2XActionMap[name].axis.x;
+                    ___axisValueLastFrame = vector2XActionMap[name].lastAxis.x;
                 }
-
-                foreach (var name in ___names)
+                else if (vector2YActionMap.ContainsKey(name))
                 {
-                    if (vector2XActionMap.ContainsKey(name))
-                    {
-                        ___axisValue = vector2XActionMap[name].axis.x;
-                        ___axisValueLastFrame = vector2XActionMap[name].lastAxis.x;
-                    }
-                    else if (vector2YActionMap.ContainsKey(name))
-                    {
-                        ___axisValue = vector2YActionMap[name].axis.y;
-                        ___axisValueLastFrame = vector2YActionMap[name].lastAxis.y;
-                    }
+                    ___axisValue = vector2YActionMap[name].axis.y;
+                    ___axisValueLastFrame = vector2YActionMap[name].lastAxis.y;
                 }
             }
         }
 
-        [HarmonyPatch(typeof(vgButtonData), "Update")]
-        public static class ReadButtonValuesFromSteamVR
-        {
-            public static void Postfix(
-                List<string> ___names,
-                ref bool ___keyUp,
-                ref bool ___keyDown
-            )
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgButtonData), nameof(vgButtonData.Update))]
+        public static void ReadButtonValuesFromSteamVR(vgButtonData __instance){
+            if (!SteamVR_Input.initialized) return;
+
+            if (actionSet == null)
             {
-                if (!SteamVR_Input.initialized)
-                {
-                    return;
-                }
+                Initialize();
+            }
 
-                if (actionSet == null)
-                {
-                    Initialize();
-                }
-
-                foreach (var name in ___names.Where(name => booleanActionMap.ContainsKey(name)))
-                {
-                    ___keyUp = booleanActionMap[name].stateUp;
-                    ___keyDown = booleanActionMap[name].stateDown;
-                }
+            foreach (var name in __instance.names.Where(name => booleanActionMap.ContainsKey(name)))
+            {
+                __instance.keyUp = booleanActionMap[name].stateUp;
+                __instance.keyDown = booleanActionMap[name].stateDown;
             }
         }
-
-        [HarmonyPatch(typeof(SteamVR_Input), "GetActionsFileFolder")]
-        public static class GetActionsFileFromMod
+        
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(SteamVR_Input), nameof(SteamVR_Input.GetActionsFileFolder))]
+        public static bool GetActionsFileFromMod(ref string __result)
         {
-            public static bool Prefix(ref string __result)
-            {
-                __result = $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/TwoForksVR/Bindings";
-                return false;
-            }
+            // TODO: could probably just use the streamingassets folder and avoid doing this?
+            __result = $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/TwoForksVR/Bindings";
+            return false;
         }
     }
 }

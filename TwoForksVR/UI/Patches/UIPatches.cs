@@ -23,7 +23,7 @@ namespace TwoForksVR.UI.Patches
         
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgScrimManager), "ShowScrim")]
-        public static void DisablePauseBlur(ref bool blur)
+        private static void DisablePauseBlur(ref bool blur)
         {
             blur = false;
         }

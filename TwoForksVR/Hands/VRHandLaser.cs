@@ -33,7 +33,7 @@ namespace TwoForksVR.Hands
             UpdateLaserVisibility();
         }
 
-        public static VRHandLaser Create(Transform leftHand, Transform rightHand)
+        public static void Create(Transform leftHand, Transform rightHand)
         {
             var instance = new GameObject("VRHandLaser").AddComponent<VRHandLaser>();
             var instanceTransform = instance.transform;
@@ -41,7 +41,6 @@ namespace TwoForksVR.Hands
             instanceTransform.localEulerAngles = new Vector3(39.132f, 356.9302f, 0.3666f);
             instance.rightHand = rightHand;
             instance.leftHand = leftHand;
-            return instance;
         }
 
         private void UpdateLaserParent()
