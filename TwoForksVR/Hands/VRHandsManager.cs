@@ -35,7 +35,7 @@ namespace TwoForksVR.Hands
                 instance.rightHand.transform
             );
 
-            InventoryFollowMainCamera.RightHand = instance.rightHand.transform;
+            InventoryPatches.RightHand = instance.rightHand.transform;
 
             return instance;
         }
