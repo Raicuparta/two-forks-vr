@@ -153,7 +153,7 @@ namespace TwoForksVR.Tools
                 {
                     var inventoryMenuController = FindObjectOfType<vgInventoryMenuController>();
                     if (!inventoryMenuController) return;
-                    
+
                     inventoryMenuController.OnCloseInventory();
                     return;
                 }

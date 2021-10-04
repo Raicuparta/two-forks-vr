@@ -16,7 +16,7 @@ namespace TwoForksVR.PlayerCamera.Patches
             VRStage.Instance.Recenter();
             isDone = true;
         }
-        
+
         [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.Start))]
         [HarmonyPrefix]
         private static void ResetIsDoneOnCameraStart()

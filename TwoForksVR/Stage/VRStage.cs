@@ -25,6 +25,12 @@ namespace TwoForksVR.Stage
             if (!FallbackCamera.enabled && !(mainCamera && mainCamera.enabled)) SetUp(null, null);
         }
 
+        private void OnDisable()
+        {
+            throw new Exception(
+                "The VR Stage is being disabled. This should never happen. Check the call stack of this error to find the culprit.");
+        }
+
         public static VRStage Create(Transform parent)
         {
             if (Instance) return Instance;
@@ -33,7 +39,7 @@ namespace TwoForksVR.Stage
                 // Apparently Firewatch will destroy all DontDrestroyOnLoad objects between scenes,
                 // unless they have the MAIN tag.
                 tag = "MAIN",
-                transform = { parent = parent }
+                transform = {parent = parent}
             };
 
             stageParent.AddComponent<vgOnlyLoadOnce>().dontDestroyOnLoad = true;
@@ -78,11 +84,6 @@ namespace TwoForksVR.Stage
         public void Recenter()
         {
             cameraManager.Recenter();
-        }
-
-        private void OnDisable()
-        {
-            throw new Exception("The VR Stage is being disabled. This should never happen. Check the call stack of this error to find the culprit.");
         }
     }
 }

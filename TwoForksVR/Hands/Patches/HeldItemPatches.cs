@@ -13,7 +13,7 @@ namespace TwoForksVR.Hands.Patches
             "Backpack",
             "BackPack"
         };
-        
+
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgInventoryController), nameof(vgInventoryController.TossStart))]
         private static bool SkipTossAnimation(vgInventoryController __instance)

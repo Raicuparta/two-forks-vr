@@ -13,7 +13,7 @@ namespace TwoForksVR.Settings.Patches
         {
             value = false;
         }
-        
+
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.minimalInterface), MethodType.Setter)]
         private static void ForceEnableMinimalInterface(ref bool value)

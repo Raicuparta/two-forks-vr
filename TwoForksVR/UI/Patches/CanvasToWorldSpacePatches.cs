@@ -1,9 +1,9 @@
-﻿using HarmonyLib;
+﻿using System.Linq;
+using HarmonyLib;
 using TwoForksVR.Helpers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System.Linq;
 
 namespace TwoForksVR.UI.Patches
 {
@@ -50,7 +50,7 @@ namespace TwoForksVR.UI.Patches
                 canvas.enabled = false;
                 return;
             }
-            
+
             var attachToCamera = canvas.GetComponent<AttachToCamera>();
             if (attachToCamera)
             {

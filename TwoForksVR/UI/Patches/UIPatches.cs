@@ -20,7 +20,7 @@ namespace TwoForksVR.UI.Patches
             Object.Destroy(__instance.abilityIcon);
             return false;
         }
-        
+
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgScrimManager), nameof(vgScrimManager.ShowScrim))]
         private static void DisablePauseBlur(ref bool blur)

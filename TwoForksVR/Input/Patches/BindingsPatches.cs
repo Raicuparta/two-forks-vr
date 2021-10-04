@@ -17,7 +17,7 @@ namespace TwoForksVR.Input.Patches
         private static void Initialize()
         {
             actionSet = SteamVR_Actions._default;
-            booleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>()
+            booleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>
             {
                 {InputName.Climb, actionSet.Interact},
                 {InputName.ChooseUp, actionSet.UIUp},
@@ -28,12 +28,12 @@ namespace TwoForksVR.Input.Patches
                 {InputName.NextPage, actionSet.NextPage},
                 {InputName.PreviousPage, actionSet.PreviousPage}
             };
-            vector2XActionMap = new Dictionary<string, SteamVR_Action_Vector2>()
+            vector2XActionMap = new Dictionary<string, SteamVR_Action_Vector2>
             {
                 {InputName.MoveStrafe, actionSet.Move},
                 {InputName.LookHorizontal, actionSet.Rotate}
             };
-            vector2YActionMap = new Dictionary<string, SteamVR_Action_Vector2>()
+            vector2YActionMap = new Dictionary<string, SteamVR_Action_Vector2>
             {
                 {InputName.MoveForward, actionSet.Move},
                 {InputName.LookVertical, actionSet.Rotate}
@@ -55,10 +55,7 @@ namespace TwoForksVR.Input.Patches
         {
             if (!SteamVR_Input.initialized) return;
 
-            if (actionSet == null)
-            {
-                Initialize();
-            }
+            if (actionSet == null) Initialize();
 
             foreach (var name in __instance.names)
             {
@@ -77,13 +74,11 @@ namespace TwoForksVR.Input.Patches
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(vgButtonData), nameof(vgButtonData.Update))]
-        private static void ReadButtonValuesFromSteamVR(vgButtonData __instance){
+        private static void ReadButtonValuesFromSteamVR(vgButtonData __instance)
+        {
             if (!SteamVR_Input.initialized) return;
 
-            if (actionSet == null)
-            {
-                Initialize();
-            }
+            if (actionSet == null) Initialize();
 
             foreach (var name in __instance.names.Where(name => booleanActionMap.ContainsKey(name)))
             {
@@ -91,7 +86,7 @@ namespace TwoForksVR.Input.Patches
                 __instance.keyDown = booleanActionMap[name].stateDown;
             }
         }
-        
+
         [HarmonyPrefix]
         [HarmonyPatch(typeof(SteamVR_Input), nameof(SteamVR_Input.GetActionsFileFolder))]
         private static bool GetActionsFileFromMod(ref string __result)
