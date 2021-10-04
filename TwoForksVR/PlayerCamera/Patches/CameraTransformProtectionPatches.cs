@@ -13,14 +13,14 @@ namespace TwoForksVR.PlayerCamera.Patches
         [HarmonyPatch(typeof(vgCameraController), "ApplyPostAnimationTransform")]
         [HarmonyPatch(typeof(vgCameraController), "UpdateFOV")]
         [HarmonyPatch(typeof(vgCameraController), "UpdateClipPlaneOffset")]
-        public static bool DisableCameraModifications()
+        private static bool DisableCameraModifications()
         {
             return false;
         }
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgCameraController), "LateUpdate")]
-        public static bool DisableCameraLateUpdate()
+        private static bool DisableCameraLateUpdate()
         {
             // If I always disable this method, it will break the camera position.
             // Since it was only broken while paused, I'm disabling it only in that scenario.
