@@ -24,7 +24,7 @@ namespace TwoForksVR.UI.Patches
         {
             if (RightHand == null)
             {
-                TwoForksVRMod.LogError(
+                Logs.LogError(
                     "Right hand transform hasn't been set up properly in InventoryFollowMainCamera patch");
                 return;
             }

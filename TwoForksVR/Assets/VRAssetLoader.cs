@@ -1,10 +1,12 @@
 ﻿using System.IO;
+using TwoForksVR.Helpers;
 using UnityEngine;
 
 namespace TwoForksVR.Assets
 {
     public static class VRAssetLoader
     {
+        private const string assetsDir = "/BepInEx/plugins/TwoForksVR/Assets/";
         public static GameObject ToolPicker { get; private set; }
         public static GameObject HandLid { get; private set; }
         public static Texture2D ArmsCutoutTexture { get; private set; }
@@ -15,23 +17,16 @@ namespace TwoForksVR.Assets
             var handAsset = LoadBundle("hand");
             HandLid = handAsset.LoadAsset<GameObject>("HandLid");
             ArmsCutoutTexture = handAsset.LoadAsset<Texture2D>("arms-cutout");
-
             ToolPicker = LoadAssetPrefab("tool-picker", "ToolPicker");
             Hands = LoadAssetPrefab("hands", "VRHands");
         }
 
         private static AssetBundle LoadBundle(string assetName)
         {
-            var myLoadedAssetBundle =
-                AssetBundle.LoadFromFile(
-                    $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/TwoForksVR/Assets/{assetName}");
-            if (myLoadedAssetBundle == null)
-            {
-                TwoForksVRMod.LogError($"Failed to load AssetBundle {assetName}");
-                return null;
-            }
-
-            return myLoadedAssetBundle;
+            var bundle = AssetBundle.LoadFromFile($"{Directory.GetCurrentDirectory()}{assetsDir}{assetName}");
+            if (bundle != null) return bundle;
+            Logs.LogError($"Failed to load AssetBundle {assetName}");
+            return null;
         }
 
         private static GameObject LoadAssetPrefab(string assetName, string objectName)

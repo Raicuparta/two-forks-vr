@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using HarmonyLib;
+using TwoForksVR.Helpers;
 using UnityEngine;
 
 namespace TwoForksVR.Hands.Patches
@@ -25,9 +26,9 @@ namespace TwoForksVR.Hands.Patches
         [HarmonyPatch(typeof(vgAttachmentController), nameof(vgAttachmentController.AttachTemporarily))]
         private static bool HideBlacklistedHandAttachments(GameObject attachment)
         {
-            TwoForksVRMod.LogInfo("Attaching object to hand?");
+            Logs.LogInfo("Attaching object to hand?");
             if (!attachment) return true;
-            TwoForksVRMod.LogInfo($"Attaching object to hand: {attachment.name}");
+            Logs.LogInfo($"Attaching object to hand: {attachment.name}");
             if (!attachmentNameBlocklist.Contains(attachment.name)) return true;
             attachment.SetActive(false);
             return false;
