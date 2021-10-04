@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace TwoForksVR.Input.Patches
 {
+    [HarmonyPatch]
     public static class MousePatches
     {
         [HarmonyPrefix]
