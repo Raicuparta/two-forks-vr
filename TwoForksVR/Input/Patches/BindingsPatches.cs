@@ -51,7 +51,7 @@ namespace TwoForksVR.Input.Patches
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(vgAxisData), nameof(vgAxisData.Update))]
-        private static void ReadAxisValuesFromSteamVR(List<string> ___names, ref float ___axisValue, ref float ___axisValueLastFrame)
+        private static void ReadAxisValuesFromSteamVR(vgAxisData __instance)
         {
             if (!SteamVR_Input.initialized) return;
 
@@ -60,17 +60,17 @@ namespace TwoForksVR.Input.Patches
                 Initialize();
             }
 
-            foreach (var name in ___names)
+            foreach (var name in __instance.names)
             {
                 if (vector2XActionMap.ContainsKey(name))
                 {
-                    ___axisValue = vector2XActionMap[name].axis.x;
-                    ___axisValueLastFrame = vector2XActionMap[name].lastAxis.x;
+                    __instance.axisValue = vector2XActionMap[name].axis.x;
+                    __instance.axisValueLastFrame = vector2XActionMap[name].lastAxis.x;
                 }
                 else if (vector2YActionMap.ContainsKey(name))
                 {
-                    ___axisValue = vector2YActionMap[name].axis.y;
-                    ___axisValueLastFrame = vector2YActionMap[name].lastAxis.y;
+                    __instance.axisValue = vector2YActionMap[name].axis.y;
+                    __instance.axisValueLastFrame = vector2YActionMap[name].lastAxis.y;
                 }
             }
         }
