@@ -7,14 +7,14 @@ namespace TwoForksVR.UI.Patches
     public static class UIPatches
     {
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgHudManager), "ShowAbilityIcon")]
+        [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.ShowAbilityIcon))]
         private static bool PreventShowingAbilityIcon()
         {
             return false;
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgHudManager), "InitializeAbilityIcon")]
+        [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.InitializeAbilityIcon))]
         private static bool DestroyAbilityIcon(vgHudManager __instance)
         {
             Object.Destroy(__instance.abilityIcon);
@@ -22,7 +22,7 @@ namespace TwoForksVR.UI.Patches
         }
         
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgScrimManager), "ShowScrim")]
+        [HarmonyPatch(typeof(vgScrimManager), nameof(vgScrimManager.ShowScrim))]
         private static void DisablePauseBlur(ref bool blur)
         {
             blur = false;

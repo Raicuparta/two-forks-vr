@@ -7,7 +7,7 @@ namespace TwoForksVR.UI
         private static Transform cameraTransform;
         private const float offset = 0.8f;
         
-        public static void SetTargetCamera(Camera camera)
+        private static void SetTargetCamera(Camera camera)
         {
             cameraTransform = camera ? camera.transform : null;
         }

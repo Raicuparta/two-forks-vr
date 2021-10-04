@@ -10,12 +10,12 @@ namespace TwoForksVR.UI.Patches
         public static Transform RightHand;
 
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(vgInventoryScreenController), "OnEnable")]
-        private static void PreventInventoryDisablingMainCamera(Camera ___mainCamera, Camera ___menuCamera)
+        [HarmonyPatch(typeof(vgInventoryScreenController), nameof(vgInventoryScreenController.OnEnable))]
+        private static void PreventInventoryDisablingMainCamera(vgInventoryScreenController __instance)
         {
-            if (___mainCamera != null) ___mainCamera.enabled = true;
+            if (__instance.mainCamera != null) __instance.mainCamera.enabled = true;
 
-            if (___menuCamera != null) ___menuCamera.gameObject.SetActive(false);
+            if (__instance.menuCamera != null) __instance.menuCamera.gameObject.SetActive(false);
         }
 
         [HarmonyPrefix]

@@ -54,7 +54,7 @@ namespace TwoForksVR.UI.Patches
             var attachToCamera = canvas.GetComponent<AttachToCamera>();
             if (attachToCamera)
             {
-                
+                // TODO why was this here?
             }
 
             if (canvas.renderMode != RenderMode.ScreenSpaceOverlay) return;
