@@ -3,10 +3,11 @@ using UnityEngine;
 
 namespace TwoForksVR.Input.Patches
 {
-    [HarmonyPatch(typeof(vgCursorManager), "Awake")]
-    public class PatchCursorManager
+    public static class MousePatches
     {
-        public static bool Prefix(vgCursorManager __instance)
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgCursorManager), nameof(vgCursorManager.Awake))]
+        private static bool PatchCursorManager(vgCursorManager __instance)
         {
             Object.Destroy(__instance);
             return false;

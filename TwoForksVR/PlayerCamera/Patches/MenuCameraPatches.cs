@@ -4,10 +4,12 @@ using UnityEngine;
 
 namespace TwoForksVR.PlayerCamera.Patches
 {
-    [HarmonyPatch(typeof(vgMenuCameraController), "Start")]
-    public class CreateMenuStage
+    [HarmonyPatch]
+    public class MenuCameraPatches
     {
-        public static void Prefix(vgMenuCameraController __instance)
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgMenuCameraController), nameof(vgMenuCameraController.Start))]
+        private static void CreateMenuStage(vgMenuCameraController __instance)
         {
             VRStage.Instance.SetUp(__instance.GetComponentInChildren<Camera>(), null);
         }
