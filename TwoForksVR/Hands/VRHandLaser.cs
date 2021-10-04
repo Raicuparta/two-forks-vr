@@ -13,7 +13,7 @@ namespace TwoForksVR.Hands
 
         private void Start()
         {
-            UseHandLaserForTargeting.LaserTransform = transform;
+            PlayerTargetingPatches.LaserTransform = transform;
 
             lineRenderer = gameObject.AddComponent<LineRenderer>();
             lineRenderer.useWorldSpace = false;

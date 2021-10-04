@@ -4,35 +4,33 @@ using UnityEngine;
 
 namespace TwoForksVR.Hands.Patches
 {
-    [HarmonyPatch(typeof(vgInventoryController), "TossStart")]
-    public class SkipTossAnimation
+    [HarmonyPatch]
+    public static class HeldItemPatches
     {
-        public static bool Prefix(vgInventoryController __instance)
-        {
-            __instance.OnToss();
-            return false;
-        }
-    }
-
-
-    [HarmonyPatch(typeof(vgAttachmentController), "AttachTemporarily")]
-    public class HideBlacklistedHandAttachments
-    {
-        private static readonly string[] attachmentNameBlacklist =
+        private static readonly string[] attachmentNameBlocklist =
         {
             "Backpack",
             "BackPack"
         };
+        
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgInventoryController), nameof(vgInventoryController.TossStart))]
+        private static bool SkipTossAnimation(vgInventoryController __instance)
+        {
+            __instance.OnToss();
+            return false;
+        }
 
-        public static bool Prefix(GameObject attachment)
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgAttachmentController), nameof(vgAttachmentController.AttachTemporarily))]
+        private static bool HideBlacklistedHandAttachments(GameObject attachment)
         {
             TwoForksVRMod.LogInfo("Attaching object to hand?");
             if (!attachment) return true;
             TwoForksVRMod.LogInfo($"Attaching object to hand: {attachment.name}");
-            if (!attachmentNameBlacklist.Contains(attachment.name)) return true;
+            if (!attachmentNameBlocklist.Contains(attachment.name)) return true;
             attachment.SetActive(false);
             return false;
-
         }
     }
 }

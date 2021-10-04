@@ -3,12 +3,14 @@ using UnityEngine;
 
 namespace TwoForksVR.Hands.Patches
 {
-    [HarmonyPatch(typeof(vgPlayerTargeting), "UpdateTarget")]
-    public class UseHandLaserForTargeting
+    [HarmonyPatch]
+    public static class PlayerTargetingPatches
     {
         public static Transform LaserTransform;
 
-        public static void Prefix(ref Vector3 cameraFacing, ref Vector3 cameraOrigin)
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgPlayerTargeting), nameof(vgPlayerTargeting.UpdateTarget))]
+        private static void UseHandLaserForTargeting(ref Vector3 cameraFacing, ref Vector3 cameraOrigin)
         {
             if (!LaserTransform) return;
             cameraFacing = LaserTransform.forward;
