@@ -2,10 +2,12 @@
 
 namespace TwoForksVR.PlayerBody.Patches
 {
-    [HarmonyPatch(typeof(vgPlayerController), "SetBackpackVisibility")]
-    public class PreventShowingBackpack
+    [HarmonyPatch]
+    public class BodyPatches
     {
-        public static bool Prefix()
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.SetBackpackVisibility))]
+        private static bool PreventShowingBackpack()
         {
             return false;
         }
