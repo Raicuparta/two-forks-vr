@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using HarmonyLib;
+using TwoForksVR.Helpers;
 using UnityEngine;
 using Valve.VR;
 
@@ -20,24 +21,30 @@ namespace TwoForksVR.Input.Patches
             actionSet = SteamVR_Actions._default;
             booleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>
             {
-                {InputName.LocomotionAction, actionSet.Interact},
-                {InputName.DialogUp, actionSet.UIUp},
-                {InputName.DialogDown, actionSet.UIDown},
-                {InputName.Jog, actionSet.Jog},
-                {InputName.Pause, actionSet.Cancel},
+                // {InputName.LocomotionAction, actionSet.Interact},
                 {InputName.Use, actionSet.Interact},
-                {InputName.NextMenu, actionSet.NextPage},
-                {InputName.PreviousMenu, actionSet.PreviousPage}
+                // {InputName.Confirm, actionSet.Interact},
+                // {InputName.DialogUp, actionSet.UIUp},
+                // {InputName.DialogDown, actionSet.UIDown},
+                {InputName.ToggleJog, actionSet.Jog},
+                {InputName.Pause, actionSet.Cancel},
+                // {InputName.NextMenu, actionSet.NextPage},
+                // {InputName.PreviousMenu, actionSet.PreviousPage}
             };
             vector2XActionMap = new Dictionary<string, SteamVR_Action_Vector2>
             {
-                {InputName.MoveXAxis, actionSet.Move},
-                {InputName.LookXAxisStick, actionSet.Rotate}
+                {InputName.MoveStrafe, actionSet.Move},
+                {InputName.LookHorizontalStick, actionSet.Rotate},
+                // {InputName.UILeftStickHorizontal, actionSet.Move},
+                // {InputName.UIRightStickHorizontal, actionSet.Rotate}
             };
             vector2YActionMap = new Dictionary<string, SteamVR_Action_Vector2>
             {
-                {InputName.MoveYAxis, actionSet.Move},
-                {InputName.LookYAxisStick, actionSet.Rotate}
+                {InputName.MoveForward, actionSet.Move},
+                {InputName.LookVerticalStick, actionSet.Rotate},
+                // {InputName.ScrollUpDown, actionSet.Move},
+                // {InputName.UILeftStickVertical, actionSet.Move},
+                // {InputName.UIRightStickVertical, actionSet.Rotate}
             };
 
             // Pick dialog option with interact button.
@@ -124,13 +131,15 @@ namespace TwoForksVR.Input.Patches
         }
 
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(vgInputManager), nameof(vgInputManager.GetLayout))]
-        private static void ForceVrControllerLayout(vgControllerLayout __result)
+        [HarmonyPatch(typeof(vgInputManager), nameof(vgInputManager.BuildActiveKeyBinds))]
+        private static void ForceVrControllerLayout(vgInputManager __instance)
         {
-            if (__result.mapping == null) return;
-            foreach (var keyCodeToVirtualKey in __result.mapping)
+            Logs.LogInfo("## starting inputs");
+            foreach (var bind in __instance.virtualKeyKeyBindMap.Values)
             {
-                keyCodeToVirtualKey.keyCode = keyCodeToVirtualKey.virtualKey;
+                if (bind.keyData.names.Count == 0 || bind.commands.Count == 0) continue;
+                Logs.LogInfo($"{bind.commands[0]}");
+                bind.keyData.names[0] = bind.commands[0].command;
             }
         }
     }

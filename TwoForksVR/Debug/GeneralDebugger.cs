@@ -22,10 +22,11 @@ namespace TwoForksVR.Debug
             if (!UnityEngine.Input.GetKeyDown(KeyCode.Minus)) return;
             Logs.LogInfo("## Starting key bind logs##");
             var inputManager = FindObjectOfType<vgInputManager>();
-            foreach (var bind in inputManager.GetLayout((int) inputManager.currentControllerLayout).mapping)
+            foreach (var bind in inputManager.virtualKeyKeyBindMap.Values)
             {
-                Logs.LogInfo($"{bind.virtualKey}: {bind.keyCode}");
-                bind.keyCode = bind.virtualKey;
+                if (bind.keyData.names.Count == 0 || bind.commands.Count == 0) continue;
+                Logs.LogInfo($"{bind.commands[0].command}");
+                bind.keyData.names[0] = bind.commands[0].command;
             }
             Logs.LogInfo("## Ended key bind logs ##");
         }
