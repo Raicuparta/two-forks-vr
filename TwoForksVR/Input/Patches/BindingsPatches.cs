@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using HarmonyLib;
+using UnityEngine;
 using Valve.VR;
 
 namespace TwoForksVR.Input.Patches
@@ -19,24 +20,24 @@ namespace TwoForksVR.Input.Patches
             actionSet = SteamVR_Actions._default;
             booleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>
             {
-                {InputName.Climb, actionSet.Interact},
-                {InputName.ChooseUp, actionSet.UIUp},
-                {InputName.ChooseDown, actionSet.UIDown},
+                {InputName.LocomotionAction, actionSet.Interact},
+                {InputName.DialogUp, actionSet.UIUp},
+                {InputName.DialogDown, actionSet.UIDown},
                 {InputName.Jog, actionSet.Jog},
                 {InputName.Pause, actionSet.Cancel},
-                {InputName.Interact, actionSet.Interact},
-                {InputName.NextPage, actionSet.NextPage},
-                {InputName.PreviousPage, actionSet.PreviousPage}
+                {InputName.Use, actionSet.Interact},
+                {InputName.NextMenu, actionSet.NextPage},
+                {InputName.PreviousMenu, actionSet.PreviousPage}
             };
             vector2XActionMap = new Dictionary<string, SteamVR_Action_Vector2>
             {
-                {InputName.MoveStrafe, actionSet.Move},
-                {InputName.LookHorizontal, actionSet.Rotate}
+                {InputName.MoveXAxis, actionSet.Move},
+                {InputName.LookYAxisStick, actionSet.Rotate}
             };
             vector2YActionMap = new Dictionary<string, SteamVR_Action_Vector2>
             {
-                {InputName.MoveForward, actionSet.Move},
-                {InputName.LookVertical, actionSet.Rotate}
+                {InputName.MoveYAxis, actionSet.Move},
+                {InputName.LookYAxisStick, actionSet.Rotate}
             };
 
             // Pick dialog option with interact button.
@@ -49,12 +50,18 @@ namespace TwoForksVR.Input.Patches
             };
         }
 
-        [HarmonyPostfix]
+        [HarmonyPrefix]
         [HarmonyPatch(typeof(vgAxisData), nameof(vgAxisData.Update))]
-        private static void ReadAxisValuesFromSteamVR(vgAxisData __instance)
+        private static bool ReadAxisValuesFromSteamVR(vgAxisData __instance)
         {
-            if (!SteamVR_Input.initialized) return;
+            if (UnityEngine.Input.GetKey(KeyCode.Space))
+            {
+                return true;
+            }
+            if (!SteamVR_Input.initialized) return false;
 
+            __instance.axisValueLastFrame = __instance.axisValue;
+            
             if (actionSet == null) Initialize();
 
             foreach (var name in __instance.names)
@@ -70,13 +77,22 @@ namespace TwoForksVR.Input.Patches
                     __instance.axisValueLastFrame = vector2YActionMap[name].lastAxis.y;
                 }
             }
+
+            return false;
         }
 
-        [HarmonyPostfix]
+        [HarmonyPrefix]
         [HarmonyPatch(typeof(vgButtonData), nameof(vgButtonData.Update))]
-        private static void ReadButtonValuesFromSteamVR(vgButtonData __instance)
+        private static bool ReadButtonValuesFromSteamVR(vgButtonData __instance)
         {
-            if (!SteamVR_Input.initialized) return;
+            if (UnityEngine.Input.GetKey(KeyCode.Space))
+            {
+                return true;
+            }
+            
+            if (!SteamVR_Input.initialized) return false;
+            
+            // TODO leftover stuff (lastReleaseTime, lastHoldTime) from original method.
 
             if (actionSet == null) Initialize();
 
@@ -85,6 +101,8 @@ namespace TwoForksVR.Input.Patches
                 __instance.keyUp = booleanActionMap[name].stateUp;
                 __instance.keyDown = booleanActionMap[name].stateDown;
             }
+
+            return false;
         }
 
         [HarmonyPrefix]
@@ -103,6 +121,17 @@ namespace TwoForksVR.Input.Patches
         private static void ForceXboxController(vgInputManager __instance)
         {
             __instance.currentControllerLayout = vgControllerLayoutChoice.XBox;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgInputManager), nameof(vgInputManager.GetLayout))]
+        private static void ForceVrControllerLayout(vgControllerLayout __result)
+        {
+            if (__result.mapping == null) return;
+            foreach (var keyCodeToVirtualKey in __result.mapping)
+            {
+                keyCodeToVirtualKey.keyCode = keyCodeToVirtualKey.virtualKey;
+            }
         }
     }
 }

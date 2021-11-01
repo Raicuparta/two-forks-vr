@@ -74,6 +74,7 @@
         <Compile Include="Helpers\LayerFromName.cs" />
         <Compile Include="Helpers\Logs.cs" />
         <Compile Include="Helpers\ShaderProperty.cs" />
+        <Compile Include="Input\VrAxisData.cs" />
         <Compile Include="PlayerBody\Patches\BodyPatches.cs" />
         <Compile Include="PlayerBody\VRBodyManager.cs" />
         <Compile Include="Debug\DebugAxes.cs" />
