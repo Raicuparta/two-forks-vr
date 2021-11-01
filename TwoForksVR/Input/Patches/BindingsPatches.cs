@@ -95,5 +95,14 @@ namespace TwoForksVR.Input.Patches
             __result = $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/TwoForksVR/Bindings";
             return false;
         }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgInputManager), nameof(vgInputManager.Awake))]
+        [HarmonyPatch(typeof(vgInputManager), nameof(vgInputManager.SetControllerLayout))]
+        [HarmonyPatch(typeof(vgInputManager), nameof(vgInputManager.SetKeyBindFromPlayerPrefs))]
+        private static void ForceXboxController(vgInputManager __instance)
+        {
+            __instance.currentControllerLayout = vgControllerLayoutChoice.XBox;
+        }
     }
 }
