@@ -12,6 +12,19 @@ namespace TwoForksVR.Debug
         {
             UpdateTimeScale();
             UpdateAnimator();
+            UpdateInputsDebug();
+        }
+
+        private void UpdateInputsDebug()
+        {
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Minus))
+            {
+                Logs.LogInfo("Gonna log");
+                foreach (var bind in FindObjectOfType<vgInputManager>().virtualKeyKeyBindMap)
+                {
+                    Logs.LogInfo($"{bind.Key}: {string.Join(", ", bind.Value.commands.Select(command => command.command).ToArray())}");
+                }
+            }
         }
 
         private static void UpdateTimeScale()
