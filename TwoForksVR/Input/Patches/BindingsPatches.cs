@@ -21,29 +21,32 @@ namespace TwoForksVR.Input.Patches
             actionSet = SteamVR_Actions._default;
             booleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>
             {
-                // {InputName.LocomotionAction, actionSet.Interact},
+                {InputName.LocomotionAction, actionSet.Interact},
                 {InputName.Use, actionSet.Interact},
-                // {InputName.Confirm, actionSet.Interact},
-                // {InputName.DialogUp, actionSet.UIUp},
-                // {InputName.DialogDown, actionSet.UIDown},
+                {InputName.UISubmit, actionSet.Interact},
+                {InputName.UICancel, actionSet.Cancel},
+                {InputName.DialogSelectionUp, actionSet.UIUp},
+                {InputName.DialogSelectionDown, actionSet.UIDown},
+                {InputName.UIUp, actionSet.UIUp},
+                {InputName.UIDown, actionSet.UIDown},
                 {InputName.ToggleJog, actionSet.Jog},
                 {InputName.Pause, actionSet.Cancel},
-                // {InputName.NextMenu, actionSet.NextPage},
-                // {InputName.PreviousMenu, actionSet.PreviousPage}
+                {InputName.NextMenu, actionSet.NextPage},
+                {InputName.PreviousMenu, actionSet.PreviousPage}
             };
             vector2XActionMap = new Dictionary<string, SteamVR_Action_Vector2>
             {
                 {InputName.MoveStrafe, actionSet.Move},
                 {InputName.LookHorizontalStick, actionSet.Rotate},
-                // {InputName.UILeftStickHorizontal, actionSet.Move},
-                // {InputName.UIRightStickHorizontal, actionSet.Rotate}
+                {InputName.UIHorizontal, actionSet.Move},
+                // {InputName.ui, actionSet.Rotate}
             };
             vector2YActionMap = new Dictionary<string, SteamVR_Action_Vector2>
             {
                 {InputName.MoveForward, actionSet.Move},
                 {InputName.LookVerticalStick, actionSet.Rotate},
-                // {InputName.ScrollUpDown, actionSet.Move},
-                // {InputName.UILeftStickVertical, actionSet.Move},
+                {InputName.Scroll, actionSet.Move},
+                {InputName.UIVertical, actionSet.Move},
                 // {InputName.UIRightStickVertical, actionSet.Rotate}
             };
 
@@ -61,10 +64,6 @@ namespace TwoForksVR.Input.Patches
         [HarmonyPatch(typeof(vgAxisData), nameof(vgAxisData.Update))]
         private static bool ReadAxisValuesFromSteamVR(vgAxisData __instance)
         {
-            if (UnityEngine.Input.GetKey(KeyCode.Space))
-            {
-                return true;
-            }
             if (!SteamVR_Input.initialized) return false;
 
             __instance.axisValueLastFrame = __instance.axisValue;
@@ -92,11 +91,6 @@ namespace TwoForksVR.Input.Patches
         [HarmonyPatch(typeof(vgButtonData), nameof(vgButtonData.Update))]
         private static bool ReadButtonValuesFromSteamVR(vgButtonData __instance)
         {
-            if (UnityEngine.Input.GetKey(KeyCode.Space))
-            {
-                return true;
-            }
-            
             if (!SteamVR_Input.initialized) return false;
             
             // TODO leftover stuff (lastReleaseTime, lastHoldTime) from original method.
