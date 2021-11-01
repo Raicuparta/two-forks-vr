@@ -32,7 +32,7 @@ namespace TwoForksVR.Input.Patches
             vector2XActionMap = new Dictionary<string, SteamVR_Action_Vector2>
             {
                 {InputName.MoveXAxis, actionSet.Move},
-                {InputName.LookYAxisStick, actionSet.Rotate}
+                {InputName.LookXAxisStick, actionSet.Rotate}
             };
             vector2YActionMap = new Dictionary<string, SteamVR_Action_Vector2>
             {
