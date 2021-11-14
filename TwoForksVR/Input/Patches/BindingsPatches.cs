@@ -21,6 +21,7 @@ namespace TwoForksVR.Input.Patches
                 {InputName.LocomotionAction, actionSet.Interact},
                 {InputName.Use, actionSet.Interact},
                 {InputName.UISubmit, actionSet.Interact},
+                {InputName.StowHeldObject, actionSet.Jog},
                 {InputName.UICancel, actionSet.Cancel},
                 {InputName.DialogSelectionUp, actionSet.UIUp},
                 {InputName.DialogSelectionDown, actionSet.UIDown},
