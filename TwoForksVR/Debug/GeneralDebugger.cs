@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using TwoForksVR.Helpers;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace TwoForksVR.Debug
 {
@@ -12,6 +13,30 @@ namespace TwoForksVR.Debug
         {
             UpdateTimeScale();
             UpdateAnimator();
+            UpdateInputsDebug();
+            UpdateSaveActions();
+        }
+
+        private static void UpdateInputsDebug()
+        {
+            if (!UnityEngine.Input.GetKeyDown(KeyCode.Minus)) return;
+            Logs.LogInfo("## Starting key bind logs##");
+            var inputManager = FindObjectOfType<vgInputManager>();
+            foreach (var bind in inputManager.virtualKeyKeyBindMap.Values.Where(bind => bind.commands.Count != 0))
+            {
+                Logs.LogInfo($"{bind.commands[0].command}");
+                for (var i = 0; i < bind.keyData.names.Count; i++)
+                {
+                    bind.keyData.names[i] = bind.commands[0].command;
+                }
+            }
+            Logs.LogInfo("## Ended key bind logs ##");
+        }
+
+        private static void UpdateSaveActions()
+        {
+            if (!UnityEngine.Input.GetKeyDown(KeyCode.Alpha0)) return;
+            vgSaveManager.Instance.LoadMostRecent();
         }
 
         private static void UpdateTimeScale()
