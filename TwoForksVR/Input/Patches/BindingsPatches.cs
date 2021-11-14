@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using HarmonyLib;
-using TwoForksVR.Helpers;
-using UnityEngine;
 using Valve.VR;
 
 namespace TwoForksVR.Input.Patches
 {
     [HarmonyPatch]
-    public static class InputPatches
+    public static class BindingsPatches
     {
         private static SteamVR_Input_ActionSet_default actionSet;
         private static Dictionary<string, SteamVR_Action_Boolean> booleanActionMap;
@@ -29,6 +26,11 @@ namespace TwoForksVR.Input.Patches
                 {InputName.DialogSelectionDown, actionSet.UIDown},
                 {InputName.UIUp, actionSet.UIUp},
                 {InputName.UIDown, actionSet.UIDown},
+                {InputName.LockNumberUp, actionSet.UIUp},
+                {InputName.LockNumberDown, actionSet.UIDown},
+                {InputName.LockTumblerRight, actionSet.NextPage},
+                {InputName.LockTumblerLeft, actionSet.PreviousPage},
+                {InputName.LockCancel, actionSet.Cancel},
                 {InputName.ToggleJog, actionSet.Jog},
                 {InputName.Pause, actionSet.Cancel},
                 {InputName.NextMenu, actionSet.NextPage},
@@ -39,7 +41,6 @@ namespace TwoForksVR.Input.Patches
                 {InputName.MoveStrafe, actionSet.Move},
                 {InputName.LookHorizontalStick, actionSet.Rotate},
                 {InputName.UIHorizontal, actionSet.Move},
-                // {InputName.ui, actionSet.Rotate}
             };
             vector2YActionMap = new Dictionary<string, SteamVR_Action_Vector2>
             {
@@ -47,7 +48,6 @@ namespace TwoForksVR.Input.Patches
                 {InputName.LookVerticalStick, actionSet.Rotate},
                 {InputName.Scroll, actionSet.Move},
                 {InputName.UIVertical, actionSet.Move},
-                // {InputName.UIRightStickVertical, actionSet.Rotate}
             };
 
             // Pick dialog option with interact button.
@@ -58,52 +58,43 @@ namespace TwoForksVR.Input.Patches
                 vgDialogTreeManager.Instance.OnConfirmDialogChoice();
                 vgDialogTreeManager.Instance.ClearNonRadioDialogChoices();
             };
+
+            foreach (var entry in vector2XActionMap)
+            {
+                entry.Value.onChange += (action, source, axis, delta) => TriggerCommand(entry.Key, axis.x);
+            }
+            foreach (var entry in vector2YActionMap)
+            {
+                entry.Value.onChange += (action, source, axis, delta) => TriggerCommand(entry.Key, axis.y);
+            }
+            foreach (var entry in booleanActionMap)
+            {
+                entry.Value.onChange += (action, source, state) =>
+                {
+                    if (!state) return;
+                    TriggerCommand(entry.Key, 1);
+                };
+            }
         }
+        
+        public static void TriggerCommand(string command, float axisValue)
+        {
+            if (!vgInputManager.Instance || vgInputManager.Instance.commandCallbackMap == null) return;
+		    var commandCallbackMap = vgInputManager.Instance.commandCallbackMap;
+            if (!vgInputManager.Instance.flushCommands && commandCallbackMap.TryGetValue(command, out var inputDelegate))
+            {
+                inputDelegate?.Invoke(axisValue);
+            }
+	    }
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgAxisData), nameof(vgAxisData.Update))]
-        private static bool ReadAxisValuesFromSteamVR(vgAxisData __instance)
+        private static void ReadAxisValuesFromSteamVR(vgAxisData __instance)
         {
-            if (!SteamVR_Input.initialized) return false;
-
-            __instance.axisValueLastFrame = __instance.axisValue;
+            if (!SteamVR_Input.initialized) return;
             
+            // TODO move this elsewhere.
             if (actionSet == null) Initialize();
-
-            foreach (var name in __instance.names)
-            {
-                if (vector2XActionMap.ContainsKey(name))
-                {
-                    __instance.axisValue = vector2XActionMap[name].axis.x;
-                    __instance.axisValueLastFrame = vector2XActionMap[name].lastAxis.x;
-                }
-                else if (vector2YActionMap.ContainsKey(name))
-                {
-                    __instance.axisValue = vector2YActionMap[name].axis.y;
-                    __instance.axisValueLastFrame = vector2YActionMap[name].lastAxis.y;
-                }
-            }
-
-            return false;
-        }
-
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgButtonData), nameof(vgButtonData.Update))]
-        private static bool ReadButtonValuesFromSteamVR(vgButtonData __instance)
-        {
-            if (!SteamVR_Input.initialized) return false;
-            
-            // TODO leftover stuff (lastReleaseTime, lastHoldTime) from original method.
-
-            if (actionSet == null) Initialize();
-
-            foreach (var name in __instance.names.Where(name => booleanActionMap.ContainsKey(name)))
-            {
-                __instance.keyUp = booleanActionMap[name].stateUp;
-                __instance.keyDown = booleanActionMap[name].stateDown;
-            }
-
-            return false;
         }
 
         [HarmonyPrefix]
@@ -122,19 +113,6 @@ namespace TwoForksVR.Input.Patches
         private static void ForceXboxController(vgInputManager __instance)
         {
             __instance.currentControllerLayout = vgControllerLayoutChoice.XBox;
-        }
-
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(vgInputManager), nameof(vgInputManager.BuildActiveKeyBinds))]
-        private static void ForceVrControllerLayout(vgInputManager __instance)
-        {
-            Logs.LogInfo("## starting inputs");
-            foreach (var bind in __instance.virtualKeyKeyBindMap.Values)
-            {
-                if (bind.keyData.names.Count == 0 || bind.commands.Count == 0) continue;
-                Logs.LogInfo($"{bind.commands[0]}");
-                bind.keyData.names[0] = bind.commands[0].command;
-            }
         }
     }
 }
