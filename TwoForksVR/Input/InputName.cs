@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace TwoForksVR.Input
+﻿namespace TwoForksVR.Input
 {
     public struct InputName
     {

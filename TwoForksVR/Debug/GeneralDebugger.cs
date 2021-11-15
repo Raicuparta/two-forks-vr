@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using TwoForksVR.Helpers;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace TwoForksVR.Debug
 {

@@ -6,7 +6,7 @@ namespace TwoForksVR.PlayerBody.Patches
     public class BodyPatches
     {
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgPlayerController), "Awake")]
+        [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.Awake))]
         public static void CreateBodyManager(vgPlayerController __instance)
         {
             VRBodyManager.Create(__instance.transform);
