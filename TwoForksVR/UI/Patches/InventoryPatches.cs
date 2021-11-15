@@ -19,7 +19,7 @@ namespace TwoForksVR.UI.Patches
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgInventoryScreenController), "Start")]
+        [HarmonyPatch(typeof(vgInventoryScreenController), nameof(vgInventoryScreenController.Start))]
         private static void InventoryFollowMainCamera(vgInventoryScreenController __instance)
         {
             if (RightHand == null)

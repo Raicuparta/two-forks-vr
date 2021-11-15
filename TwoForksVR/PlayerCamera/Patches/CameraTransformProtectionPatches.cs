@@ -10,16 +10,16 @@ namespace TwoForksVR.PlayerCamera.Patches
     public class CameraTransformProtectionPatches
     {
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgCameraController), "ApplyPostAnimationTransform")]
-        [HarmonyPatch(typeof(vgCameraController), "UpdateFOV")]
-        [HarmonyPatch(typeof(vgCameraController), "UpdateClipPlaneOffset")]
+        [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.ApplyPostAnimationTransform))]
+        [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdateFOV))]
+        [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdateClipPlaneOffset))]
         private static bool DisableCameraModifications()
         {
             return false;
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgCameraController), "LateUpdate")]
+        [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.LateUpdate))]
         private static bool DisableCameraLateUpdate()
         {
             // If I always disable this method, it will break the camera position.
