@@ -34,20 +34,45 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="0Harmony">
-            <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\core\0Harmony.dll</HintPath>
+        <Reference Include="0Harmony, Version=2.5.5.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\packages\HarmonyX.2.5.5\lib\net35\0Harmony.dll</HintPath>
+          <Private>True</Private>
         </Reference>
         <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\stripped\Assembly-CSharp.dll</HintPath>
+          <HintPath>..\packages\FirewatchGameLibs.1.0.9.1\lib\net35\Assembly-CSharp.dll</HintPath>
+          <Private>True</Private>
         </Reference>
-        <Reference Include="Assembly-CSharp-firstpass">
-            <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+        <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\packages\FirewatchGameLibs.1.0.9.1\lib\net35\Assembly-CSharp-firstpass.dll</HintPath>
+          <Private>True</Private>
         </Reference>
-        <Reference Include="BepInEx">
-            <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\core\BepInEx.dll</HintPath>
+        <Reference Include="BepInEx, Version=5.4.15.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\packages\BepInEx.BaseLib.5.4.16\lib\net35\BepInEx.dll</HintPath>
+          <Private>True</Private>
         </Reference>
-        <Reference Include="BepInEx.Harmony">
-            <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\core\BepInEx.Harmony.dll</HintPath>
+        <Reference Include="Mono.Cecil, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
+          <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="Mono.Cecil.Mdb, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
+          <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.Mdb.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="Mono.Cecil.Pdb, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
+          <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.Pdb.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="Mono.Cecil.Rocks, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
+          <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.Rocks.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="MonoMod.RuntimeDetour, Version=21.8.19.1, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\packages\MonoMod.RuntimeDetour.21.8.19.1\lib\net35\MonoMod.RuntimeDetour.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="MonoMod.Utils, Version=21.8.19.1, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\packages\MonoMod.Utils.21.8.19.1\lib\net35\MonoMod.Utils.dll</HintPath>
+          <Private>True</Private>
         </Reference>
         <Reference Include="System" />
         <Reference Include="System.Core" />
@@ -55,12 +80,13 @@
         <Reference Include="System.Data.DataSetExtensions" />
         <Reference Include="System.Data" />
         <Reference Include="System.Xml" />
-        <Reference Include="UnityEngine">
-            <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.dll</HintPath>
+        <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\packages\FirewatchGameLibs.1.0.9.1\lib\net35\UnityEngine.dll</HintPath>
+          <Private>True</Private>
         </Reference>
-        <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.UI.dll</HintPath>
+        <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\packages\FirewatchGameLibs.1.0.9.1\lib\net35\UnityEngine.UI.dll</HintPath>
+          <Private>True</Private>
         </Reference>
         <Reference Include="Valve.Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, processorArchitecture=MSIL">
             <SpecificVersion>False</SpecificVersion>
@@ -272,6 +298,7 @@
         <None Include="Input\Bindings\binding_vive_cosmos.json" />
         <None Include="Input\Bindings\binding_vive_pro.json" />
         <None Include="Input\Bindings\binding_vive_tracker_camera.json" />
+        <None Include="packages.config" />
         <None Include="SteamVR\SteamVR\Input\Plugins\JSON.NET\LICENSE_James_Newton-King" />
         <None Include="SteamVR\SteamVR\Input\Plugins\JSON.NET\LICENSE_SaladLab" />
     </ItemGroup>
@@ -287,4 +314,11 @@
             xcopy /y /i "$(ProjectDir)\Input\Bindings" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\plugins\$(ProjectName)\Bindings"
         </PostBuildEvent>
     </PropertyGroup>
+    <Import Project="..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets" Condition="Exists('..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets')" />
+    <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+      <PropertyGroup>
+        <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
+      </PropertyGroup>
+      <Error Condition="!Exists('..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets'))" />
+    </Target>
 </Project>
