@@ -72,9 +72,6 @@
           <HintPath>..\packages\MonoMod.Utils.21.8.19.1\lib\net35\MonoMod.Utils.dll</HintPath>
           <Private>True</Private>
         </Reference>
-        <Reference Include="SteamVR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\UnityHelper\Build\UnityHelper_Data\Managed\Assembly-CSharp.dll</HintPath>
-        </Reference>
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="System.Xml.Linq" />
@@ -88,6 +85,9 @@
         <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>..\packages\FirewatchGameLibs.1.0.9.1\lib\net35\UnityEngine.UI.dll</HintPath>
           <Private>True</Private>
+        </Reference>
+        <Reference Include="UnityHelper, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\UnityHelper\obj\Debug\UnityHelper.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>
@@ -153,7 +153,11 @@
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <PropertyGroup>
-        <PostBuildEvent>copy /y "$(TargetPath)" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\plugins
+        <PreBuildEvent>
+            "$(MSBuildBinPath)\MSBuild.exe" "$(ProjectDir)..\UnityHelper\Assembly-CSharp.csproj" -property:AssemblyName="UnityHelper"
+        </PreBuildEvent>
+        <PostBuildEvent>
+            copy /y "$(TargetPath)" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\plugins
 
             xcopy /y /i "$(SolutionDir)\HelperUnityProject\AssetBundles" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\plugins\$(ProjectName)\Assets"
 
