@@ -3,10 +3,10 @@ using System.IO;
 
 public class CreateAssetBundles
 {
-    [MenuItem("AssetBundles/CreateAssetBundles")]
+    [MenuItem("Tools/Create Asset Bundles")]
     static void BuildAllAssetBundles()
     {
-        string assetBundleDirectory = "AssetBundles";
+        string assetBundleDirectory = "../TwoForksVR/TwoForksVrAssets/AssetBundles";
         if (!Directory.Exists(assetBundleDirectory))
         {
             Directory.CreateDirectory(assetBundleDirectory);
