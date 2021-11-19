@@ -6,7 +6,7 @@ public class CreateAssetBundles
     [MenuItem("Tools/Create Asset Bundles")]
     static void BuildAllAssetBundles()
     {
-        string assetBundleDirectory = "../TwoForksVR/TwoForksVrAssets/AssetBundles";
+        string assetBundleDirectory = "../TwoForksVr/TwoForksVrAssets/AssetBundles";
         if (!Directory.Exists(assetBundleDirectory))
         {
             Directory.CreateDirectory(assetBundleDirectory);

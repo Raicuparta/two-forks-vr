@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using HarmonyLib;
-using TwoForksVR.Helpers;
+using TwoForksVr.Helpers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace TwoForksVR.UI.Patches
+namespace TwoForksVr.UI.Patches
 {
     [HarmonyPatch]
     public static class CanvasToWorldSpacePatches

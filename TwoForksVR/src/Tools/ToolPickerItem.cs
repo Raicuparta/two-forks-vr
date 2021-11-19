@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace TwoForksVR.Tools
+namespace TwoForksVr.Tools
 {
     public class ToolPickerItem : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace TwoForksVR.UI
+namespace TwoForksVr.UI
 {
     public class AttachToCamera : MonoBehaviour
     {

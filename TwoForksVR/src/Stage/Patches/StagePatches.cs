@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace TwoForksVR.Stage.Patches
+namespace TwoForksVr.Stage.Patches
 {
     [HarmonyPatch]
     public static class StagePatches

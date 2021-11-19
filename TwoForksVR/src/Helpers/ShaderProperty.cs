@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace TwoForksVR.Helpers
+namespace TwoForksVr.Helpers
 {
     public static class ShaderProperty
     {

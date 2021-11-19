@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace TwoForksVR.Tools
+namespace TwoForksVr.Tools
 {
     public class VRMap : MonoBehaviour
     {

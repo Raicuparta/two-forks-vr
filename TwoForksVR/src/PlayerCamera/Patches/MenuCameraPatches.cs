@@ -1,8 +1,8 @@
 ﻿using HarmonyLib;
-using TwoForksVR.Stage;
+using TwoForksVr.Stage;
 using UnityEngine;
 
-namespace TwoForksVR.PlayerCamera.Patches
+namespace TwoForksVr.PlayerCamera.Patches
 {
     [HarmonyPatch]
     public class MenuCameraPatches

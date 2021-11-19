@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using UnityEngine;
 
-namespace TwoForksVR.UI.Patches
+namespace TwoForksVr.UI.Patches
 {
     [HarmonyPatch]
     public static class UIPatches

@@ -1,8 +1,8 @@
 ﻿using HarmonyLib;
-using TwoForksVR.Helpers;
+using TwoForksVr.Helpers;
 using UnityEngine;
 
-namespace TwoForksVR.UI.Patches
+namespace TwoForksVr.UI.Patches
 {
     [HarmonyPatch]
     public static class InventoryPatches

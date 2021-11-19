@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TwoForksVR.Input
+namespace TwoForksVr.Input
 {
 	public class VrAxisData : vgKeyData
 	{

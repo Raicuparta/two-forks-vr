@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
-using TwoForksVR.Stage;
+using TwoForksVr.Stage;
 
-namespace TwoForksVR.PlayerCamera.Patches
+namespace TwoForksVr.PlayerCamera.Patches
 {
     [HarmonyPatch]
     public class GameCameraPatches

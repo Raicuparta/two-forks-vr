@@ -1,11 +1,11 @@
-﻿using TwoForksVR.Assets;
-using TwoForksVR.Debug;
-using TwoForksVR.Stage;
-using TwoForksVR.Tools;
-using TwoForksVR.UI.Patches;
+﻿using TwoForksVr.Assets;
+using TwoForksVr.Debug;
+using TwoForksVr.Stage;
+using TwoForksVr.Tools;
+using TwoForksVr.UI.Patches;
 using UnityEngine;
 
-namespace TwoForksVR.Hands
+namespace TwoForksVr.Hands
 {
     public class VRHandsManager : MonoBehaviour
     {

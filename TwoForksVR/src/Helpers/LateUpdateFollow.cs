@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace TwoForksVR.Helpers
+namespace TwoForksVr.Helpers
 {
     // This component is useful when we need to simulate object parenting,
     // without actually changing the hierarchy.

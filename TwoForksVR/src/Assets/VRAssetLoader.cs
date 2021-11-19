@@ -1,12 +1,12 @@
 ﻿using System.IO;
-using TwoForksVR.Helpers;
+using TwoForksVr.Helpers;
 using UnityEngine;
 
-namespace TwoForksVR.Assets
+namespace TwoForksVr.Assets
 {
     public static class VRAssetLoader
     {
-        private const string assetsDir = "/BepInEx/plugins/TwoForksVR/Assets/";
+        private const string assetsDir = "/BepInEx/plugins/TwoForksVr/Assets/";
         public static GameObject ToolPicker { get; private set; }
         public static GameObject HandLid { get; private set; }
         public static Texture2D ArmsCutoutTexture { get; private set; }

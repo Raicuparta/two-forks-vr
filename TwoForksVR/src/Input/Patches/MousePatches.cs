@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using UnityEngine;
 
-namespace TwoForksVR.Input.Patches
+namespace TwoForksVr.Input.Patches
 {
     [HarmonyPatch]
     public static class MousePatches

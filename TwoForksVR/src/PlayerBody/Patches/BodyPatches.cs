@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace TwoForksVR.PlayerBody.Patches
+namespace TwoForksVr.PlayerBody.Patches
 {
     [HarmonyPatch]
     public class BodyPatches

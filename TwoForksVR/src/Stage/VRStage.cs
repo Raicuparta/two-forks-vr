@@ -1,11 +1,11 @@
 ﻿using System;
-using TwoForksVR.Debug;
-using TwoForksVR.Hands;
-using TwoForksVR.Helpers;
-using TwoForksVR.PlayerCamera;
+using TwoForksVr.Debug;
+using TwoForksVr.Hands;
+using TwoForksVr.Helpers;
+using TwoForksVr.PlayerCamera;
 using UnityEngine;
 
-namespace TwoForksVR.Stage
+namespace TwoForksVr.Stage
 {
     public class VRStage : MonoBehaviour
     {

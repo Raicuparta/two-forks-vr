@@ -7,8 +7,8 @@
         <ProjectGuid>{4FAEDEC8-3D86-4350-B42D-DAD4414E69D1}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>TwoForksVR</RootNamespace>
-        <AssemblyName>TwoForksVR</AssemblyName>
+        <RootNamespace>TwoForksVr</RootNamespace>
+        <AssemblyName>TwoForksVr</AssemblyName>
         <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <Deterministic>true</Deterministic>
@@ -128,7 +128,7 @@
         <Compile Include="src\Tools\ToolPickerItem.cs" />
         <Compile Include="src\Tools\VRMap.cs" />
         <Compile Include="src\Tools\VRToolItem.cs" />
-        <Compile Include="src\TwoForksVRMod.cs" />
+        <Compile Include="src\TwoForksVrMod.cs" />
         <Compile Include="src\UI\AttachToCamera.cs" />
         <Compile Include="src\UI\Patches\CanvasToWorldSpacePatches.cs" />
         <Compile Include="src\UI\Patches\InventoryPatches.cs" />

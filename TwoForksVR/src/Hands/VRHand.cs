@@ -1,9 +1,9 @@
-﻿using TwoForksVR.Assets;
-using TwoForksVR.Helpers;
+﻿using TwoForksVr.Assets;
+using TwoForksVr.Helpers;
 using UnityEngine;
 using Valve.VR;
 
-namespace TwoForksVR.Hands
+namespace TwoForksVr.Hands
 {
     public class VRHand : MonoBehaviour
     {

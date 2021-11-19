@@ -3,7 +3,7 @@ using System.IO;
 using HarmonyLib;
 using Valve.VR;
 
-namespace TwoForksVR.Input.Patches
+namespace TwoForksVr.Input.Patches
 {
     [HarmonyPatch]
     public static class BindingsPatches
@@ -103,7 +103,7 @@ namespace TwoForksVR.Input.Patches
         private static bool GetActionsFileFromMod(ref string __result)
         {
             // TODO: could probably just use the streamingassets folder and avoid doing this?
-            __result = $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/TwoForksVR/Bindings";
+            __result = $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/TwoForksVr/Bindings";
             return false;
         }
 

@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace TwoForksVR.Tools.Patches
+namespace TwoForksVr.Tools.Patches
 {
     [HarmonyPatch]
     public static class MapPatches

@@ -1,9 +1,9 @@
-﻿using TwoForksVR.Hands.Patches;
-using TwoForksVR.Helpers;
+﻿using TwoForksVr.Hands.Patches;
+using TwoForksVr.Helpers;
 using UnityEngine;
 using Valve.VR;
 
-namespace TwoForksVR.Hands
+namespace TwoForksVr.Hands
 {
     internal class VRHandLaser : MonoBehaviour
     {

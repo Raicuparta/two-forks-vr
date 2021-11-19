@@ -1,4 +1,4 @@
-﻿namespace TwoForksVR.Tools
+﻿namespace TwoForksVr.Tools
 {
     public enum VRToolItem
     {

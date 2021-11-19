@@ -1,12 +1,12 @@
 ﻿using System.Reflection;
 using BepInEx;
 using HarmonyLib;
-using TwoForksVR.Assets;
+using TwoForksVr.Assets;
 
-namespace TwoForksVR
+namespace TwoForksVr
 {
     [BepInPlugin("raicuparta.twoforksvr", "Two Forks VR", "0.0.7")]
-    public class TwoForksVRMod : BaseUnityPlugin
+    public class TwoForksVrMod : BaseUnityPlugin
     {
         private void Awake()
         {

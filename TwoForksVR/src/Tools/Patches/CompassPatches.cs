@@ -1,8 +1,8 @@
 ﻿using HarmonyLib;
-using TwoForksVR.Helpers;
+using TwoForksVr.Helpers;
 using UnityEngine;
 
-namespace TwoForksVR.Tools.Patches
+namespace TwoForksVr.Tools.Patches
 {
     [HarmonyPatch]
     public class CompassPatches

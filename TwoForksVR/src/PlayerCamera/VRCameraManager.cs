@@ -1,12 +1,12 @@
-﻿using TwoForksVR.Helpers;
-using TwoForksVR.Stage;
-using TwoForksVR.UI;
+﻿using TwoForksVr.Helpers;
+using TwoForksVr.Stage;
+using TwoForksVr.UI;
 using UnityEngine;
 using UnityEngine.VR;
 using UnityStandardAssets.ImageEffects;
 using Valve.VR;
 
-namespace TwoForksVR.PlayerCamera
+namespace TwoForksVr.PlayerCamera
 {
     public class VRCameraManager : MonoBehaviour
     {

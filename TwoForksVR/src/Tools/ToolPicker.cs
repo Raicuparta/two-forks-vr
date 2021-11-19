@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using TwoForksVR.Assets;
-using TwoForksVR.Helpers;
+using TwoForksVr.Assets;
+using TwoForksVr.Helpers;
 using UnityEngine;
 using Valve.VR;
 
-namespace TwoForksVR.Tools
+namespace TwoForksVr.Tools
 {
     public class ToolPicker : MonoBehaviour
     {

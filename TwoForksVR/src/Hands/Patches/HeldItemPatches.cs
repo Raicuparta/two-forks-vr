@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using HarmonyLib;
-using TwoForksVR.Helpers;
+using TwoForksVr.Helpers;
 using UnityEngine;
 
-namespace TwoForksVR.Hands.Patches
+namespace TwoForksVr.Hands.Patches
 {
     [HarmonyPatch]
     public static class HeldItemPatches

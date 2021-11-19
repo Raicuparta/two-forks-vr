@@ -1,10 +1,10 @@
-﻿using TwoForksVR.Assets;
-using TwoForksVR.Helpers;
-using TwoForksVR.Stage;
+﻿using TwoForksVr.Assets;
+using TwoForksVr.Helpers;
+using TwoForksVr.Stage;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace TwoForksVR.PlayerBody
+namespace TwoForksVr.PlayerBody
 {
     public class VRBodyManager : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using UnityEngine;
 
-namespace TwoForksVR.Hands.Patches
+namespace TwoForksVr.Hands.Patches
 {
     [HarmonyPatch]
     public static class PlayerTargetingPatches

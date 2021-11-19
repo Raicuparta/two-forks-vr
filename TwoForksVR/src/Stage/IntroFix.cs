@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace TwoForksVR.Stage
+namespace TwoForksVr.Stage
 {
     internal class IntroFix : MonoBehaviour
     {

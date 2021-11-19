@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
 
-namespace Raicuparta.TwoForksVR.UnityHelper
+namespace Raicuparta.TwoForksVr.UnityHelper
 {
 	public class ToolPicker : MonoBehaviour
 	{
