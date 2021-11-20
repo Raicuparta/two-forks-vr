@@ -96,10 +96,12 @@ namespace TwoForksVr.PlayerBody
             cameraMovement.y = 0;
             
             var worldCameraMovement = VRStage.Instance.transform.TransformVector(cameraMovement);
+
+            var magnitude = worldCameraMovement.magnitude;
+            if (magnitude < 0.005f) return;
             prevPlayerPosition = playerController.transform.position;
             prevCameraPosition = cameraPosition;
-            
-            if (worldCameraMovement.magnitude > 1f) return;
+            if (magnitude > 1f) return;
             // navigationController.positionLastFrame = playerBody.position;
             debugCube.position += worldCameraMovement;
             playerBody.position += worldCameraMovement;
@@ -108,7 +110,6 @@ namespace TwoForksVr.PlayerBody
             // characterController.Move(worldCameraMovement);
             // cameraFollow.LocalPosition -= worldCameraMovement;
             VRStage.Instance.transform.position -= worldCameraMovement;
-            Logs.LogInfo($"camera: {worldCameraMovement.x}, player: {playerMovement.x}");
         }
 
         private void HideBody()
