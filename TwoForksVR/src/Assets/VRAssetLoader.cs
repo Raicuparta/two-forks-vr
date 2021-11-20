@@ -6,7 +6,7 @@ namespace TwoForksVr.Assets
 {
     public static class VRAssetLoader
     {
-        private const string assetsDir = "/BepInEx/plugins/TwoForksVr/Assets/";
+        private const string assetsDir = "/BepInEx/plugins/TwoForksVrAssets/AssetBundles/";
         public static GameObject ToolPicker { get; private set; }
         public static GameObject HandLid { get; private set; }
         public static Texture2D ArmsCutoutTexture { get; private set; }

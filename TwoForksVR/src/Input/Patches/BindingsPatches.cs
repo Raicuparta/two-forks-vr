@@ -103,7 +103,7 @@ namespace TwoForksVr.Input.Patches
         private static bool GetActionsFileFromMod(ref string __result)
         {
             // TODO: could probably just use the streamingassets folder and avoid doing this?
-            __result = $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/TwoForksVr/Bindings";
+            __result = $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/TwoForksVrAssets/Bindings";
             return false;
         }
 

@@ -12,12 +12,12 @@
         <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <Deterministic>true</Deterministic>
+        <OutputPath>C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\plugins</OutputPath>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <DebugSymbols>false</DebugSymbols>
         <DebugType>none</DebugType>
         <Optimize>false</Optimize>
-        <OutputPath>bin\Debug\</OutputPath>
         <DefineConstants>TRACE;DEBUG</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
@@ -26,7 +26,6 @@
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
         <DebugType>pdbonly</DebugType>
         <Optimize>true</Optimize>
-        <OutputPath>bin\Release\</OutputPath>
         <DefineConstants>TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
@@ -197,15 +196,8 @@
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <PropertyGroup>
         <PreBuildEvent>
-            "$(MSBuildBinPath)\MSBuild.exe" "$(ProjectDir)..\UnityHelper\Assembly-CSharp.csproj" -p:AssemblyName="UnityHelper" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true"
+            "$(MSBuildBinPath)\MSBuild.exe" "$(ProjectDir)..\UnityHelper\Assembly-CSharp.csproj" -p:AssemblyName="UnityHelper" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_5;UNITY_5_6;UNITY_5;UNITY_64;"
         </PreBuildEvent>
-<!--        <PostBuildEvent>-->
-<!--            copy /y "$(TargetPath)" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\plugins-->
-<!--            -->
-<!--            xcopy /y /i "$(SolutionDir)\HelperUnityProject\AssetBundles" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\plugins\$(ProjectName)\Assets"-->
-
-<!--            xcopy /y /i "$(ProjectDir)\Input\Bindings" "C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\plugins\$(ProjectName)\Bindings"-->
-<!--        </PostBuildEvent>-->
     </PropertyGroup>
     <Import Project="..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets" Condition="Exists('..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets')" />
     <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
