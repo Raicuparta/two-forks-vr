@@ -3,7 +3,6 @@ using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
 using UnityEngine;
 using UnityEngine.Rendering;
-using Valve.VR;
 
 namespace TwoForksVr.PlayerBody
 {
@@ -11,11 +10,10 @@ namespace TwoForksVr.PlayerBody
     {
         private vgCameraController cameraController;
         private Camera camera;
-        private LateUpdateFollow cameraFollow;
         private CharacterController characterController;
         private vgPlayerController playerController;
         private vgPlayerNavigationController navigationController;
-
+        private Vector3 prevCameraPosition;
 
         public static void Create(vgPlayerController playerController)
         {
@@ -33,7 +31,6 @@ namespace TwoForksVr.PlayerBody
             );
 
             var instance = playerBody.AddComponent<VRBodyManager>();
-            instance.cameraFollow = playerController.cameraController.GetComponentInChildren<LateUpdateFollow>();
             instance.camera = camera;
             instance.cameraController = playerController.cameraController;
             instance.prevCameraPosition = camera.transform.position;
@@ -52,11 +49,10 @@ namespace TwoForksVr.PlayerBody
             {
                 characterController = playerController.characterController;
             }
-            UpdateCameraPosition();
+            UpdateRoomScalePosition();
         }
 
-        private Vector3 prevCameraPosition;
-        private void UpdateCameraPosition()
+        private void UpdateRoomScalePosition()
         {
             var playerBody = transform.parent.parent;
             
