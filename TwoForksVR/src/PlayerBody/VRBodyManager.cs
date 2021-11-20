@@ -93,15 +93,13 @@ namespace TwoForksVr.PlayerBody
 
         private void UpdateRotation()
         {
-            var playerBody = transform.parent.parent;
             var cameraForward = GetCameraForward();
             
             var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
             // if (Math.Abs(angleDelta) < 1) return;
             
             prevForward = cameraForward;
-            playerBody.Rotate(Vector3.up, angleDelta);
-            VRStage.Instance.transform.Rotate(Vector3.up, -angleDelta);
+            transform.parent.Rotate(Vector3.up, angleDelta);
         }
 
         private void HideBody()
