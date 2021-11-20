@@ -21,9 +21,10 @@ namespace TwoForksVr.PlayerBody.Patches
         
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgPlayerNavigationController), nameof(vgPlayerNavigationController.UpdatePosition))]
-        private static bool PreventNavigationControllerMovement()
+        private static void PreventNavigationControllerMovement(vgPlayerNavigationController __instance)
         {
-            return false;
+            // TODO this probably breaks a lot of things.
+            __instance.positionLastFrame = __instance.transform.position;
         }
     }
 }
