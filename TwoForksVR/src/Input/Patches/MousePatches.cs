@@ -8,7 +8,7 @@ namespace TwoForksVr.Input.Patches
     {
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgCursorManager), nameof(vgCursorManager.Awake))]
-        private static bool PatchCursorManager(vgCursorManager __instance)
+        private static bool DestroyCursorManager(vgCursorManager __instance)
         {
             Object.Destroy(__instance);
             return false;
