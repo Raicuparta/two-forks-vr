@@ -107,7 +107,7 @@ namespace TwoForksVr.PlayerBody
             //
             // characterController.Move(worldCameraMovement);
             // cameraFollow.LocalPosition -= worldCameraMovement;
-            camera.transform.parent.position -= worldCameraMovement;
+            VRStage.Instance.transform.position -= worldCameraMovement;
             Logs.LogInfo($"camera: {worldCameraMovement.x}, player: {playerMovement.x}");
         }
 
