@@ -72,9 +72,14 @@ namespace TwoForksVr.PlayerBody
             
             if (magnitude > 1f || !navigationController.onGround) return;
 
+            
             var groundMovement = Vector3.ProjectOnPlane(worldCameraMovement, navigationController.groundNormal);
                 
             characterController.Move(groundMovement);
+            
+            // This probably breaks stuff elsewhere.
+            navigationController.positionLastFrame = playerBody.position;
+
             VRStage.Instance.transform.position -= worldCameraMovement;
         }
 
