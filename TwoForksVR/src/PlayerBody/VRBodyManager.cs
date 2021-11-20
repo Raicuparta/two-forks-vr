@@ -59,7 +59,7 @@ namespace TwoForksVr.PlayerBody
 
         private Vector3 GetCameraForward()
         {
-            return camera.transform.parent.InverseTransformVector(
+            return camera.transform.parent.InverseTransformDirection(
                 Vector3.ProjectOnPlane(camera.transform.forward, Vector3.up));
         }
 
