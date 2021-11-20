@@ -18,5 +18,12 @@ namespace TwoForksVr.PlayerBody.Patches
         {
             return false;
         }
+        
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgPlayerNavigationController), nameof(vgPlayerNavigationController.UpdatePosition))]
+        private static bool PreventNavigationControllerMovement()
+        {
+            return false;
+        }
     }
 }
