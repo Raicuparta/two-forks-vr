@@ -1,5 +1,5 @@
 ﻿using System;
-using TwoForksVr.Debug;
+using TwoForksVr.Debugging;
 using TwoForksVr.Hands;
 using TwoForksVr.Helpers;
 using TwoForksVr.PlayerCamera;

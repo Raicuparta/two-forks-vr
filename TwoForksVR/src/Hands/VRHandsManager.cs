@@ -1,5 +1,5 @@
 ﻿using TwoForksVr.Assets;
-using TwoForksVr.Debug;
+using TwoForksVr.Debugging;
 using TwoForksVr.Stage;
 using TwoForksVr.Tools;
 using TwoForksVr.UI.Patches;
