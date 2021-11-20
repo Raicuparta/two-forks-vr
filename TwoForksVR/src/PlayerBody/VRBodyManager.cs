@@ -3,12 +3,17 @@ using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
 using UnityEngine;
 using UnityEngine.Rendering;
+using Valve.VR;
 
 namespace TwoForksVr.PlayerBody
 {
     public class VRBodyManager : MonoBehaviour
     {
         private vgCameraController cameraController;
+        private Camera camera;
+        private LateUpdateFollow cameraFollow;
+        private CharacterController characterController;
+        private vgPlayerController playerController;
 
         public static void Create(vgPlayerController playerController)
         {
@@ -18,17 +23,19 @@ namespace TwoForksVr.PlayerBody
             var existingBodyManager = playerBody.GetComponent<VRBodyManager>();
             if (existingBodyManager) return;
 
-            var camera = playerTransform
-                .parent
-                .GetComponentInChildren<vgCameraController>()
-                .GetComponentInChildren<Camera>();
+            var camera = playerController.cameraController.GetComponentInChildren<Camera>();
 
             VRStage.Instance.SetUp(
                 camera,
                 playerTransform
             );
+
             var instance = playerBody.AddComponent<VRBodyManager>();
+            instance.cameraFollow = playerController.cameraController.GetComponentInChildren<LateUpdateFollow>();
+            instance.camera = camera;
             instance.cameraController = playerController.cameraController;
+            instance.prevCameraPosition = camera.transform.position;
+            instance.playerController = playerController;
         }
         
         private void Start()
@@ -38,12 +45,45 @@ namespace TwoForksVr.PlayerBody
 
         private void Update()
         {
+            if (characterController == null)
+            {
+                characterController = playerController.characterController;
+            }
             UpdateCameraPosition();
         }
-        
+
+        private Vector3 prevCameraPosition;
         private void UpdateCameraPosition()
         {
-            cameraController.transform.position = transform.position;
+            if (SteamVR_Actions.default_Recenter.state)
+            {
+                return;
+            }
+
+            if (characterController == null)
+            {
+                Logs.LogInfo("No character controller");
+                return;
+            }
+            
+            var playerBody = transform.parent.parent;
+            cameraController.transform.position = playerBody.position;
+            
+            var cameraTransform = camera.transform;
+            var cameraPosition = cameraTransform.localPosition;
+            
+            var cameraMovement = cameraPosition - prevCameraPosition;
+            cameraMovement.y = 0;
+
+            var worldCameraMovement = cameraTransform.TransformVector(cameraMovement);
+            
+            if (worldCameraMovement.magnitude <= 0.005f) return;
+            
+            // playerBody.position += worldCameraMovement;
+            characterController.Move(worldCameraMovement);
+            cameraController.transform.position -= worldCameraMovement;
+            prevCameraPosition = cameraPosition;
+            Logs.LogInfo(worldCameraMovement.x);
         }
 
         private void HideBody()
