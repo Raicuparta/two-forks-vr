@@ -14,6 +14,7 @@ namespace TwoForksVr.PlayerBody
         private vgPlayerController playerController;
         private vgPlayerNavigationController navigationController;
         private Vector3 prevCameraPosition;
+        private Vector3 prevForward;
 
         public static void Create(vgPlayerController playerController)
         {
@@ -40,6 +41,7 @@ namespace TwoForksVr.PlayerBody
         
         private void Start()
         {
+            prevForward = GetCameraForward();
             HideBody();
         }
 
@@ -52,6 +54,12 @@ namespace TwoForksVr.PlayerBody
             UpdateRoomScalePosition();
         }
 
+        private Vector3 GetCameraForward()
+        {
+            return camera.transform.parent.InverseTransformVector(
+                Vector3.ProjectOnPlane(camera.transform.forward, Vector3.up));
+        }
+
         private void UpdateRoomScalePosition()
         {
             var playerBody = transform.parent.parent;
@@ -60,27 +68,34 @@ namespace TwoForksVr.PlayerBody
 
             var cameraTransform = camera.transform;
             var cameraPosition = cameraTransform.localPosition;
+            var cameraForward = GetCameraForward();
             
-            var cameraMovement = cameraPosition - prevCameraPosition;
-            cameraMovement.y = 0;
-            
-            var worldCameraMovement = VRStage.Instance.transform.TransformVector(cameraMovement);
+            var localPositionDelta = cameraPosition - prevCameraPosition;
+            localPositionDelta.y = 0;
+            var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
 
-            var magnitude = worldCameraMovement.magnitude;
+            var worldPositionDelta = VRStage.Instance.transform.TransformVector(localPositionDelta);
+
+            prevForward = cameraForward;
+            playerBody.Rotate(Vector3.up, angleDelta);
+            
+            VRStage.Instance.transform.Rotate(Vector3.up, -angleDelta);
+
+            var magnitude = worldPositionDelta.magnitude;
             if (magnitude < 0.005f) return;
             prevCameraPosition = cameraPosition;
             
             if (magnitude > 1f || !navigationController.onGround) return;
 
             
-            var groundMovement = Vector3.ProjectOnPlane(worldCameraMovement, navigationController.groundNormal);
+            var groundedPositionDelta = Vector3.ProjectOnPlane(worldPositionDelta, navigationController.groundNormal);
 
-            characterController.Move(groundMovement);
+            characterController.Move(groundedPositionDelta);
             
             // This probably breaks stuff elsewhere.
             navigationController.positionLastFrame = playerBody.position;
 
-            VRStage.Instance.transform.position -= groundMovement;
+            VRStage.Instance.transform.position -= groundedPositionDelta;
         }
 
         private void HideBody()
