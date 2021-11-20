@@ -67,15 +67,10 @@ namespace TwoForksVr.PlayerCamera
             // the tracking will always be incorrect.
             // So I disable VR, reset the camera position, and then enable VR again.
             VRSettings.enabled = false;
-
-
+            
             var cameraParent = new GameObject("VRCameraParent").transform;
             cameraParent.SetParent(cameraTransform.parent, false);
-
-            var cameraOffset = new GameObject("VRCameraOffset").transform;
-            cameraOffset.SetParent(cameraParent, false);
-            
-            cameraTransform.SetParent(cameraOffset);
+            cameraTransform.SetParent(cameraParent.transform);
             cameraTransform.localPosition = Vector3.zero;
             cameraTransform.localRotation = Quaternion.identity;
             cameraParent.gameObject.AddComponent<LateUpdateFollow>().Target = stage.transform;
