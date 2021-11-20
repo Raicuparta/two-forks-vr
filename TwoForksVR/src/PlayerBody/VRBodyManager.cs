@@ -64,8 +64,6 @@ namespace TwoForksVr.PlayerBody
         {
             var playerBody = transform.parent.parent;
             
-            cameraController.transform.position = playerBody.position;
-
             var cameraTransform = camera.transform;
             var cameraPosition = cameraTransform.localPosition;
             var cameraForward = GetCameraForward();
