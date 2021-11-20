@@ -68,7 +68,7 @@ namespace TwoForksVr.PlayerBody
             var playerBody = transform.parent.parent;
 
             var playerMovement = playerController.transform.position - prevPlayerPosition;
-            if (SteamVR_Actions.default_Recenter.state)
+            if (true)
             {
                 // return;
             }
@@ -76,8 +76,8 @@ namespace TwoForksVr.PlayerBody
             {
                 debugCube.position = playerBody.position;
                 debugCube.rotation = playerBody.rotation;
-                cameraController.transform.position = playerBody.position;
             }
+            cameraController.transform.position = playerBody.position;
 
             // if (characterController == null)
             // {
@@ -93,16 +93,17 @@ namespace TwoForksVr.PlayerBody
             cameraMovement.y = 0;
             
             var worldCameraMovement = VRStage.Instance.transform.TransformVector(cameraMovement);
+            prevPlayerPosition = playerController.transform.position;
+            prevCameraPosition = cameraPosition;
             
-            if (worldCameraMovement.magnitude <= 0.005f) return;
+            if (worldCameraMovement.magnitude > 1f) return;
             debugCube.position += worldCameraMovement;
             playerBody.position += worldCameraMovement;
             //
             //
             // characterController.Move(worldCameraMovement);
+            cameraFollow.LocalPosition -= worldCameraMovement;
             // cameraController.transform.position -= worldCameraMovement;
-            prevCameraPosition = cameraPosition;
-            prevPlayerPosition = playerController.transform.position;
             Logs.LogInfo($"camera: {worldCameraMovement.x}, player: {playerMovement.x}");
         }
 
