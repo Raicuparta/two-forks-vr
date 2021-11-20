@@ -50,10 +50,6 @@ namespace TwoForksVr.PlayerBody
                 characterController = playerController.characterController;
             }
             UpdateRoomScalePosition();
-        }
-
-        private void LateUpdate()
-        {
             UpdateRotation();
         }
 
