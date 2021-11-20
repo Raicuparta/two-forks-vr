@@ -104,7 +104,11 @@ namespace TwoForksVr.PlayerBody
             if (magnitude > 1f) return;
             // navigationController.positionLastFrame = playerBody.position;
             debugCube.position += worldCameraMovement;
-            playerBody.position += worldCameraMovement;
+
+            var groundMovement = navigationController.onGround
+                ? Vector3.ProjectOnPlane(worldCameraMovement, navigationController.groundNormal)
+                : worldCameraMovement;
+            playerBody.position += groundMovement;
             //
             //
             // characterController.Move(worldCameraMovement);
