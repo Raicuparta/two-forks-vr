@@ -49,6 +49,7 @@ namespace TwoForksVr.PlayerBody
             {
                 characterController = playerController.characterController;
             }
+            
             UpdateRoomScalePosition();
             UpdateRotation();
         }
@@ -75,7 +76,7 @@ namespace TwoForksVr.PlayerBody
             if (magnitude < 0.005f) return;
             prevCameraPosition = cameraPosition;
             
-            if (magnitude > 1f || !navigationController.onGround) return;
+            if (magnitude > 1f || !navigationController.onGround || !navigationController.enabled) return;
             
             var groundedPositionDelta = Vector3.ProjectOnPlane(worldPositionDelta, navigationController.groundNormal);
 
@@ -89,10 +90,13 @@ namespace TwoForksVr.PlayerBody
 
         private void UpdateRotation()
         {
+            // TODO: prevent rotation if navigationController is disabled.
+            // Probably can't rotate transform.parent, it breaks stuff.
+            // Remember to fix the GetChild(0) too, somewhere.
+            
             var cameraForward = GetCameraForward();
             
             var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
-            // if (Math.Abs(angleDelta) < 1) return;
             
             prevForward = cameraForward;
             transform.parent.Rotate(Vector3.up, angleDelta);
