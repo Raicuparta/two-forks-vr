@@ -112,6 +112,7 @@
         <Compile Include="src\Input\Patches\MousePatches.cs" />
         <Compile Include="src\Input\VrAxisData.cs" />
         <Compile Include="src\PlayerBody\Patches\BodyPatches.cs" />
+        <Compile Include="src\PlayerBody\Patches\NavigationPatches.cs" />
         <Compile Include="src\PlayerBody\VRBodyManager.cs" />
         <Compile Include="src\PlayerCamera\Patches\CameraTransformProtectionPatches.cs" />
         <Compile Include="src\PlayerCamera\Patches\GameCameraPatches.cs" />
