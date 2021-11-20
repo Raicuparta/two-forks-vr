@@ -14,7 +14,6 @@ namespace TwoForksVr.PlayerBody
         private LateUpdateFollow cameraFollow;
         private CharacterController characterController;
         private vgPlayerController playerController;
-        private Transform debugCube;
         private vgPlayerNavigationController navigationController;
 
 
@@ -40,14 +39,6 @@ namespace TwoForksVr.PlayerBody
             instance.prevCameraPosition = camera.transform.position;
             instance.playerController = playerController;
             instance.navigationController = playerController.GetComponentInChildren<vgPlayerNavigationController>();
-
-            var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            cube.transform.localScale = Vector3.one * 0.5f;
-            cube.GetComponent<Collider>().enabled = false;
-            var cubeParent = new GameObject("DebugCube");
-            cube.transform.SetParent(cubeParent.transform, false);
-            cube.transform.localPosition = Vector3.forward * 1f;
-            instance.debugCube = cubeParent.transform;
         }
         
         private void Start()
@@ -65,30 +56,12 @@ namespace TwoForksVr.PlayerBody
         }
 
         private Vector3 prevCameraPosition;
-        private Vector3 prevPlayerPosition;
         private void UpdateCameraPosition()
         {
             var playerBody = transform.parent.parent;
-
-            var playerMovement = playerController.transform.position - prevPlayerPosition;
-            if (true)
-            {
-                // return;
-            }
-            else
-            {
-                debugCube.position = playerBody.position;
-                debugCube.rotation = playerBody.rotation;
-            }
+            
             cameraController.transform.position = playerBody.position;
 
-            // if (characterController == null)
-            // {
-            //     Logs.LogInfo("No character controller");
-            //     return;
-            // }
-            //
-            //
             var cameraTransform = camera.transform;
             var cameraPosition = cameraTransform.localPosition;
             
@@ -99,20 +72,13 @@ namespace TwoForksVr.PlayerBody
 
             var magnitude = worldCameraMovement.magnitude;
             if (magnitude < 0.005f) return;
-            prevPlayerPosition = playerController.transform.position;
             prevCameraPosition = cameraPosition;
-            if (magnitude > 1f) return;
-            // navigationController.positionLastFrame = playerBody.position;
-            debugCube.position += worldCameraMovement;
+            
+            if (magnitude > 1f || !navigationController.onGround) return;
 
-            var groundMovement = navigationController.onGround
-                ? Vector3.ProjectOnPlane(worldCameraMovement, navigationController.groundNormal)
-                : worldCameraMovement;
-            playerBody.position += groundMovement;
-            //
-            //
-            // characterController.Move(worldCameraMovement);
-            // cameraFollow.LocalPosition -= worldCameraMovement;
+            var groundMovement = Vector3.ProjectOnPlane(worldCameraMovement, navigationController.groundNormal);
+                
+            characterController.Move(groundMovement);
             VRStage.Instance.transform.position -= worldCameraMovement;
         }
 
