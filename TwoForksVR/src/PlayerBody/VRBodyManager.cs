@@ -14,6 +14,7 @@ namespace TwoForksVr.PlayerBody
         private LateUpdateFollow cameraFollow;
         private CharacterController characterController;
         private vgPlayerController playerController;
+        private Transform debugCube;
 
         public static void Create(vgPlayerController playerController)
         {
@@ -36,6 +37,14 @@ namespace TwoForksVr.PlayerBody
             instance.cameraController = playerController.cameraController;
             instance.prevCameraPosition = camera.transform.position;
             instance.playerController = playerController;
+
+            var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            cube.transform.localScale = Vector3.one * 0.5f;
+            cube.GetComponent<Collider>().enabled = false;
+            var cubeParent = new GameObject("DebugCube");
+            cube.transform.SetParent(cubeParent.transform, false);
+            cube.transform.localPosition = Vector3.forward * 1f;
+            instance.debugCube = cubeParent.transform;
         }
         
         private void Start()
@@ -53,37 +62,48 @@ namespace TwoForksVr.PlayerBody
         }
 
         private Vector3 prevCameraPosition;
+        private Vector3 prevPlayerPosition;
         private void UpdateCameraPosition()
         {
+            var playerBody = transform.parent.parent;
+
+            var playerMovement = playerController.transform.position - prevPlayerPosition;
             if (SteamVR_Actions.default_Recenter.state)
             {
-                return;
+                // return;
+            }
+            else
+            {
+                debugCube.position = playerBody.position;
+                debugCube.rotation = playerBody.rotation;
+                cameraController.transform.position = playerBody.position;
             }
 
-            if (characterController == null)
-            {
-                Logs.LogInfo("No character controller");
-                return;
-            }
-            
-            var playerBody = transform.parent.parent;
-            cameraController.transform.position = playerBody.position;
-            
+            // if (characterController == null)
+            // {
+            //     Logs.LogInfo("No character controller");
+            //     return;
+            // }
+            //
+            //
             var cameraTransform = camera.transform;
             var cameraPosition = cameraTransform.localPosition;
             
             var cameraMovement = cameraPosition - prevCameraPosition;
             cameraMovement.y = 0;
-
-            var worldCameraMovement = cameraTransform.TransformVector(cameraMovement);
+            
+            var worldCameraMovement = VRStage.Instance.transform.TransformVector(cameraMovement);
             
             if (worldCameraMovement.magnitude <= 0.005f) return;
-            
-            // playerBody.position += worldCameraMovement;
-            characterController.Move(worldCameraMovement);
-            cameraController.transform.position -= worldCameraMovement;
+            debugCube.position += worldCameraMovement;
+            playerBody.position = debugCube.position;
+            //
+            //
+            // characterController.Move(worldCameraMovement);
+            // cameraController.transform.position -= worldCameraMovement;
             prevCameraPosition = cameraPosition;
-            Logs.LogInfo(worldCameraMovement.x);
+            prevPlayerPosition = playerController.transform.position;
+            Logs.LogInfo($"camera: {worldCameraMovement.x}, player: {playerMovement.x}");
         }
 
         private void HideBody()
@@ -94,7 +114,7 @@ namespace TwoForksVr.PlayerBody
             var materials = renderer.materials;
 
             var bodyMaterial = materials[0];
-            MakeMaterialTextureTransparent(bodyMaterial);
+            // MakeMaterialTextureTransparent(bodyMaterial);
 
             var backpackMaterial = materials[1];
             MakeMaterialTextureTransparent(backpackMaterial);
