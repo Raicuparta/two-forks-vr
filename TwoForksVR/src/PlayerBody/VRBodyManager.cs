@@ -43,7 +43,7 @@ namespace TwoForksVr.PlayerBody
             HideBody();
         }
 
-        private void LateUpdate()
+        private void Update()
         {
             if (characterController == null)
             {
@@ -74,13 +74,13 @@ namespace TwoForksVr.PlayerBody
 
             
             var groundMovement = Vector3.ProjectOnPlane(worldCameraMovement, navigationController.groundNormal);
-                
+
             characterController.Move(groundMovement);
             
             // This probably breaks stuff elsewhere.
             navigationController.positionLastFrame = playerBody.position;
 
-            VRStage.Instance.transform.position -= worldCameraMovement;
+            VRStage.Instance.transform.position -= groundMovement;
         }
 
         private void HideBody()
