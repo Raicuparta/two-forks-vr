@@ -96,7 +96,7 @@ namespace TwoForksVr.PlayerBody
             
             if (worldCameraMovement.magnitude <= 0.005f) return;
             debugCube.position += worldCameraMovement;
-            playerBody.position = debugCube.position;
+            playerBody.position += worldCameraMovement;
             //
             //
             // characterController.Move(worldCameraMovement);
