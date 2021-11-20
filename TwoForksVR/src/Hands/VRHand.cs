@@ -10,7 +10,7 @@ namespace TwoForksVr.Hands
         private GameObject fallbackHandModel;
         private string handName;
         private bool isLeft;
-        private Transform rootBone;
+        // private Transform rootBone;
 
         private void Start()
         {
@@ -33,11 +33,10 @@ namespace TwoForksVr.Hands
         public void SetUp(Transform playerRootBone)
         {
             gameObject.SetActive(false);
-            rootBone = playerRootBone;
             if (playerRootBone)
             {
                 SetFallbackHandActive(false);
-                EnableAnimatedHand();
+                EnableAnimatedHand(playerRootBone);
             }
             else
             {
@@ -68,19 +67,20 @@ namespace TwoForksVr.Hands
             fallbackHandModel.SetActive(active);
         }
 
-        private void EnableAnimatedHand()
+        private void EnableAnimatedHand(Transform playerRootBone)
         {
-            if (!rootBone) return;
+            if (!playerRootBone) return;
 
-            var armBone = SetUpArmBone();
+            var armBone = SetUpArmBone(playerRootBone);
             SetUpHandLid(armBone);
             SetUpHandBone(armBone);
+            SetUpShoeLid(playerRootBone);
         }
 
-        private Transform SetUpArmBone()
+        private Transform SetUpArmBone(Transform playerRootBone)
         {
             var armBone =
-                rootBone.Find(
+                playerRootBone.Find(
                     $"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2");
             var updateFollow = armBone.GetComponent<LateUpdateFollow>() ??
                                armBone.gameObject.AddComponent<LateUpdateFollow>();
@@ -93,6 +93,21 @@ namespace TwoForksVr.Hands
             var handLid = Instantiate(VRAssetLoader.HandLid).transform;
             handLid.Find("HandLidModel").gameObject.layer = LayerMask.NameToLayer("UI");
             handLid.SetParent(armBone, false);
+            if (isLeft) handLid.localScale = new Vector3(1, 1, -1);
+        }
+        
+        private void SetUpShoeLid(Transform playerRootBone)
+        {
+            var shoeBone = playerRootBone.Find(
+                                    $"henryPelvis/henryHips/henryLeg{handName}1/henryLeg{handName}2/henryLeg{handName}Foot");
+            if (!shoeBone)
+            {
+                Logs.LogError("### could not find shoe bone");
+                return;
+            }
+            var handLid = Instantiate(VRAssetLoader.ShoeLid).transform;
+            handLid.Find("ShoeLidModel").gameObject.layer = LayerMask.NameToLayer("UI");
+            handLid.SetParent(shoeBone, false);
             if (isLeft) handLid.localScale = new Vector3(1, 1, -1);
         }
 
