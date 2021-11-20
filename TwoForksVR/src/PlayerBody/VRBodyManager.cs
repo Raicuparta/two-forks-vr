@@ -119,7 +119,7 @@ namespace TwoForksVr.PlayerBody
             var materials = renderer.materials;
 
             var bodyMaterial = materials[0];
-            // MakeMaterialTextureTransparent(bodyMaterial);
+            MakeMaterialTextureTransparent(bodyMaterial, VRAssetLoader.BodyCutoutTexture);
 
             var backpackMaterial = materials[1];
             MakeMaterialTextureTransparent(backpackMaterial);

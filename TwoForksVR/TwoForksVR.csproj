@@ -183,6 +183,9 @@
         </None>
     </ItemGroup>
     <ItemGroup>
+      <Content Include="TwoForksVrAssets\AssetBundles\body">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
       <Content Include="TwoForksVrAssets\AssetBundles\hand">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
