@@ -15,6 +15,8 @@ namespace TwoForksVr.PlayerBody
         private CharacterController characterController;
         private vgPlayerController playerController;
         private Transform debugCube;
+        private vgPlayerNavigationController navigationController;
+
 
         public static void Create(vgPlayerController playerController)
         {
@@ -37,6 +39,7 @@ namespace TwoForksVr.PlayerBody
             instance.cameraController = playerController.cameraController;
             instance.prevCameraPosition = camera.transform.position;
             instance.playerController = playerController;
+            instance.navigationController = playerController.GetComponentInChildren<vgPlayerNavigationController>();
 
             var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             cube.transform.localScale = Vector3.one * 0.5f;
@@ -52,7 +55,7 @@ namespace TwoForksVr.PlayerBody
             HideBody();
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             if (characterController == null)
             {
@@ -97,6 +100,7 @@ namespace TwoForksVr.PlayerBody
             prevCameraPosition = cameraPosition;
             
             if (worldCameraMovement.magnitude > 1f) return;
+            // navigationController.positionLastFrame = playerBody.position;
             debugCube.position += worldCameraMovement;
             playerBody.position += worldCameraMovement;
             //
