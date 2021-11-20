@@ -7,11 +7,12 @@ namespace TwoForksVr.Helpers
     public class LateUpdateFollow : MonoBehaviour
     {
         public Transform Target;
+        public Vector3 LocalPosition;
 
         private void LateUpdate()
         {
             if (!Target) return;
-            transform.position = Target.position;
+            transform.position = Target.position + LocalPosition;
             transform.rotation = Target.rotation;
         }
     }
