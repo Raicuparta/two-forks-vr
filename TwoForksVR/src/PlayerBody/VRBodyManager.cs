@@ -8,13 +8,11 @@ namespace TwoForksVr.PlayerBody
 {
     public class VRBodyManager : MonoBehaviour
     {
-        private void Start()
-        {
-            HideBody();
-        }
+        private vgCameraController cameraController;
 
-        public static void Create(Transform playerTransform)
+        public static void Create(vgPlayerController playerController)
         {
+            var playerTransform = playerController.transform;
             var playerBody = playerTransform.Find("henry/body").gameObject;
             playerBody.layer = LayerMask.NameToLayer("UI");
             var existingBodyManager = playerBody.GetComponent<VRBodyManager>();
@@ -29,7 +27,23 @@ namespace TwoForksVr.PlayerBody
                 camera,
                 playerTransform
             );
-            playerBody.AddComponent<VRBodyManager>();
+            var instance = playerBody.AddComponent<VRBodyManager>();
+            instance.cameraController = playerController.cameraController;
+        }
+        
+        private void Start()
+        {
+            HideBody();
+        }
+
+        private void Update()
+        {
+            UpdateCameraPosition();
+        }
+        
+        private void UpdateCameraPosition()
+        {
+            cameraController.transform.position = transform.position;
         }
 
         private void HideBody()

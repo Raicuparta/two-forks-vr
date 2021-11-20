@@ -30,5 +30,12 @@ namespace TwoForksVr.PlayerCamera.Patches
         {
             isDone = false;
         }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdatePosition))]
+        private static bool DisableGameCameraFollow()
+        {
+            return false;
+        }
     }
 }

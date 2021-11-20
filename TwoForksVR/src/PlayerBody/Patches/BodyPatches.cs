@@ -9,7 +9,7 @@ namespace TwoForksVr.PlayerBody.Patches
         [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.Awake))]
         public static void CreateBodyManager(vgPlayerController __instance)
         {
-            VRBodyManager.Create(__instance.transform);
+            VRBodyManager.Create(__instance);
         }
         
         [HarmonyPrefix]
