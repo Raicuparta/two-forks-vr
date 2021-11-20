@@ -15,8 +15,8 @@
         <OutputPath>C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\plugins</OutputPath>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <DebugSymbols>false</DebugSymbols>
-        <DebugType>none</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
         <Optimize>false</Optimize>
         <DefineConstants>TRACE;DEBUG</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
@@ -87,7 +87,7 @@
           <Private>False</Private>
         </Reference>
         <Reference Include="UnityHelper, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\UnityHelper\obj\Debug\UnityHelper.dll</HintPath>
+          <HintPath>..\UnityHelper\obj\Release\UnityHelper.dll</HintPath>
         </Reference>
         <Reference Include="Valve.Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>..\UnityHelper\Assets\SteamVR\Input\Plugins\JSON.NET\Valve.Newtonsoft.Json.dll</HintPath>
