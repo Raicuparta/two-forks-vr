@@ -102,7 +102,7 @@
         <Compile Include="src\Hands\VRHand.cs" />
         <Compile Include="src\Hands\VRHandLaser.cs" />
         <Compile Include="src\Hands\VRHandsManager.cs" />
-        <Compile Include="src\Helpers\LateUpdateFollow.cs" />
+        <Compile Include="src\Helpers\FollowTarget.cs" />
         <Compile Include="src\Helpers\LayerFromName.cs" />
         <Compile Include="src\Helpers\Logs.cs" />
         <Compile Include="src\Helpers\MathHelper.cs" />

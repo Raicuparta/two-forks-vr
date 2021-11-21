@@ -30,9 +30,9 @@ namespace TwoForksVr.UI.Patches
             }
 
             var objectStage = __instance.transform.Find("ObjectStage").gameObject;
-            if (objectStage.GetComponent<LateUpdateFollow>()) return;
+            if (objectStage.GetComponent<FollowTarget>()) return;
 
-            objectStage.AddComponent<LateUpdateFollow>().Target = RightHand;
+            objectStage.AddComponent<FollowTarget>().Target = RightHand;
 
             var inventoryObjectParent = objectStage.transform.Find("InventoryObjectParent");
             inventoryObjectParent.localPosition = new Vector3(-0.16f, -0.04f, 0f);

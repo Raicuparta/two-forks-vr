@@ -73,7 +73,7 @@ namespace TwoForksVr.PlayerCamera
             cameraTransform.SetParent(cameraParent.transform);
             cameraTransform.localPosition = Vector3.zero;
             cameraTransform.localRotation = Quaternion.identity;
-            cameraParent.gameObject.AddComponent<LateUpdateFollow>().Target = stage.transform;
+            cameraParent.gameObject.AddComponent<FollowTarget>().Target = stage.transform;
             VRSettings.enabled = true;
         }
 

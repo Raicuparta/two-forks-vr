@@ -82,9 +82,10 @@ namespace TwoForksVr.Hands
             var armBone =
                 playerRootBone.Find(
                     $"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2");
-            var updateFollow = armBone.GetComponent<LateUpdateFollow>() ??
-                               armBone.gameObject.AddComponent<LateUpdateFollow>();
+            var updateFollow = armBone.GetComponent<FollowTarget>() ??
+                               armBone.gameObject.AddComponent<FollowTarget>();
             updateFollow.Target = transform.Find("ArmTarget");
+            updateFollow.TransformUpdateType = UpdateType.LateUpdate;
             return armBone;
         }
 
@@ -121,8 +122,8 @@ namespace TwoForksVr.Hands
             wristTarget.localEulerAngles = new Vector3(3.949f * stabilizerAngleMultiplier,
                 17.709f * stabilizerAngleMultiplier, 12.374f);
             var handBone = armBone.transform.Find($"henryArm{handName}Hand");
-            var handBoneFollow = handBone.GetComponent<LateUpdateFollow>() ??
-                                 handBone.gameObject.AddComponent<LateUpdateFollow>();
+            var handBoneFollow = handBone.GetComponent<FollowTarget>() ??
+                                 handBone.gameObject.AddComponent<FollowTarget>();
             handBoneFollow.Target = wristTarget;
         }
     }
