@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using TwoForksVr.Stage;
+using UnityEngine;
 
 namespace TwoForksVr.Helpers
 {
@@ -8,9 +10,19 @@ namespace TwoForksVr.Helpers
     {
         public Transform Target;
 
-        private void LateUpdate()
+        private void Awake()
         {
-            if (!Target) return;
+            Camera.onPreCull += UpdateTransform;
+        }
+
+        private void OnDestroy()
+        {
+            Camera.onPreCull -= UpdateTransform;
+        }
+
+        private void UpdateTransform(Camera camera)
+        {
+            if (!Target || camera != VRStage.Instance.MainCamera) return;
             transform.position = Target.position;
             transform.rotation = Target.rotation;
         }

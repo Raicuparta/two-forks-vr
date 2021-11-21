@@ -15,14 +15,14 @@ namespace TwoForksVr.Stage
         private LateUpdateFollow follow;
         private VRHandsManager handsManager;
         private IntroFix introFix;
-        private Camera mainCamera;
+        public Camera MainCamera { get; private set; }
 
         // No idea why, but if I don't make this static, it gets lost
         public static Camera FallbackCamera { get; private set; }
 
         private void Update()
         {
-            if (!FallbackCamera.enabled && !(mainCamera && mainCamera.enabled)) SetUp(null, null);
+            if (!FallbackCamera.enabled && !(MainCamera && MainCamera.enabled)) SetUp(null, null);
         }
 
         private void OnDisable()
@@ -64,10 +64,10 @@ namespace TwoForksVr.Stage
 
         public void SetUp(Camera camera, Transform playerTransform)
         {
-            mainCamera = camera;
-            if (mainCamera)
+            MainCamera = camera;
+            if (MainCamera)
             {
-                follow.Target = mainCamera.transform.parent;
+                follow.Target = MainCamera.transform.parent;
                 FallbackCamera.enabled = false;
                 FallbackCamera.tag = "Untagged";
             }
@@ -77,7 +77,7 @@ namespace TwoForksVr.Stage
                 if (!introFix) introFix = IntroFix.Create();
             }
 
-            cameraManager.SetUp(mainCamera ? mainCamera : FallbackCamera);
+            cameraManager.SetUp(MainCamera ? MainCamera : FallbackCamera);
             handsManager.SetUp(playerTransform);
         }
 
