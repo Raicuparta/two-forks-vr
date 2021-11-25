@@ -97,7 +97,8 @@ namespace TwoForksVr.PlayerBody
             var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
             
             prevForward = cameraForward;
-            transform.parent.Rotate(Vector3.up, angleDelta);
+            characterController.transform.Rotate(Vector3.up, angleDelta);
+            VRStage.Instance.Recenter();
         }
 
         private void HideBody()
