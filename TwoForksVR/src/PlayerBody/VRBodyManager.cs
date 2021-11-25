@@ -95,6 +95,7 @@ namespace TwoForksVr.PlayerBody
             prevForward = cameraForward;
             characterController.transform.Rotate(Vector3.up, angleDelta);
             VRStage.Instance.Recenter();
+            // navigationController.currentPlayerRotationSpeed = 0;
         }
 
         private void HideBody()
