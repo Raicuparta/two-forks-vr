@@ -94,8 +94,10 @@ namespace TwoForksVr.PlayerBody
             var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
             prevForward = cameraForward;
             characterController.transform.Rotate(Vector3.up, angleDelta);
+            
+            // TODO can't just recenter completely, as that would prevent vertical head movement.
+            // Maybe just recenter everything except Y position?
             VRStage.Instance.Recenter();
-            // navigationController.currentPlayerRotationSpeed = 0;
         }
 
         private void HideBody()
