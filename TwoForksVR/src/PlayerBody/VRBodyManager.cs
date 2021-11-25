@@ -88,14 +88,10 @@ namespace TwoForksVr.PlayerBody
 
         private void UpdateRotation()
         {
-            // TODO: prevent rotation if navigationController is disabled.
-            // Probably can't rotate transform.parent, it breaks stuff.
-            // Remember to fix the GetChild(0) too, somewhere.
-            
+            if (!navigationController.onGround || !navigationController.enabled) return;
+
             var cameraForward = GetCameraForward();
-            
             var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
-            
             prevForward = cameraForward;
             characterController.transform.Rotate(Vector3.up, angleDelta);
             VRStage.Instance.Recenter();
