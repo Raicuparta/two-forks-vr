@@ -17,7 +17,7 @@ namespace TwoForksVr.PlayerCamera
 
         private void Update()
         {
-            if (SteamVR_Actions.default_Recenter.stateDown) Recenter();
+            if (SteamVR_Actions.default_Recenter.stateDown) Recenter(true);
             UpdateCulling();
         }
 
@@ -117,10 +117,14 @@ namespace TwoForksVr.PlayerCamera
             }
         }
 
-        public void Recenter()
+        public void Recenter(bool recenterVertically = false)
         {
             if (!cameraController || !cameraController.eyeTransform) return;
             var cameraOffset = GetCameraOffset();
+            if (!recenterVertically)
+            {
+                cameraOffset.y = 0;
+            }
             transform.position -= cameraOffset;
             var angleOffset = cameraController.eyeTransform.eulerAngles.y - camera.transform.eulerAngles.y - 90f;
             transform.Rotate(Vector3.up * angleOffset);

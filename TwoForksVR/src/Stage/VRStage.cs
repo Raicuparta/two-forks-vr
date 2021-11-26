@@ -81,9 +81,9 @@ namespace TwoForksVr.Stage
             handsManager.SetUp(playerTransform);
         }
 
-        public void Recenter()
+        public void Recenter(bool recenterVertically = false)
         {
-            cameraManager.Recenter();
+            cameraManager.Recenter(recenterVertically);
         }
     }
 }
