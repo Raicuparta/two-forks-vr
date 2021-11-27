@@ -34,12 +34,13 @@ namespace TwoForksVr.Debugging
 
         private static void UpdateSaveActions()
         {
-            if (!UnityEngine.Input.GetKeyDown(KeyCode.Alpha0)) return;
+            if (!UnityEngine.Input.GetKeyDown(KeyCode.Alpha1)) return;
             vgSaveManager.Instance.LoadMostRecent();
         }
 
         private static void UpdateTimeScale()
         {
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Minus)) Time.timeScale = 0.1f;
             if (UnityEngine.Input.GetKeyDown(KeyCode.Equals)) Time.timeScale = Time.timeScale > 1 ? 1 : 10;
         }
 
