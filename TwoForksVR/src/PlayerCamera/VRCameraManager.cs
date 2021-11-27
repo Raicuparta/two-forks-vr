@@ -50,10 +50,14 @@ namespace TwoForksVr.PlayerCamera
             camera = newCamera;
             cameraController = FindObjectOfType<vgCameraController>();
             SetUpCamera();
-            LimitVerticalRotation();
             DisableCameraComponents();
             // Recenter camera after a while. Just in case it didn't work the first time.
-            Invoke(nameof(Recenter), 1);
+            Invoke(nameof(RecenterIncludingVertical), 1);
+        }
+
+        private void RecenterIncludingVertical()
+        {
+            Recenter(true);
         }
 
         private void SetUpCamera()
