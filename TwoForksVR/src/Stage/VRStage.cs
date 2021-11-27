@@ -41,10 +41,7 @@ namespace TwoForksVr.Stage
                 tag = "MAIN",
                 transform = {parent = parent}
             };
-
-            stageParent.AddComponent<vgOnlyLoadOnce>().dontDestroyOnLoad = true;
-
-            DontDestroyOnLoad(stageParent);
+            
             Instance = new GameObject("VRStage").AddComponent<VRStage>();
             Instance.transform.SetParent(stageParent.transform, false);
             Instance.cameraManager = VRCameraManager.Create(Instance);
