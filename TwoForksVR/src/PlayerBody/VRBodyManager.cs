@@ -19,7 +19,7 @@ namespace TwoForksVr.PlayerBody
         {
             var playerTransform = playerController.transform;
             var playerBody = playerTransform.Find("henry/body").gameObject;
-            playerBody.layer = LayerMask.NameToLayer("UI");
+            playerBody.layer = LayerFromName.PlayerBody;
             var existingBodyManager = playerBody.GetComponent<VRBodyManager>();
             if (existingBodyManager) return;
 
