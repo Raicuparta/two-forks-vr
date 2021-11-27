@@ -30,8 +30,16 @@ namespace TwoForksVr.UI.Patches
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(CanvasScaler), "OnEnable")]
-        private static void CanvasScalerEnable(CanvasScaler __instance)
+        private static void MoveCanvasesToWorldSpace(CanvasScaler __instance)
         {
+            PatchCanvases(__instance);
+        }
+        
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(AkGameObj), nameof(AkGameObj.Awake))]
+        private static void MoveLoadingCanvasToWorldSpace(AkGameObj __instance)
+        {
+            if (__instance.name != "Loading Screen") return;
             PatchCanvases(__instance);
         }
 

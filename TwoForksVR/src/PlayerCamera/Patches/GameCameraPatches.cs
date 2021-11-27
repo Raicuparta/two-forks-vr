@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using TwoForksVr.Stage;
+using UnityEngine;
 
 namespace TwoForksVr.PlayerCamera.Patches
 {
@@ -26,9 +27,10 @@ namespace TwoForksVr.PlayerCamera.Patches
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgLoadingCamera), nameof(vgLoadingCamera.OnEnable))]
-        private static void ResetIsDoneOnLoading()
+        private static void ResetIsDoneOnLoading(vgLoadingCamera __instance)
         {
             isDone = false;
+            __instance.GetComponent<Camera>().cullingMask = LayerMask.GetMask("UI");
         }
 
         [HarmonyPrefix]
