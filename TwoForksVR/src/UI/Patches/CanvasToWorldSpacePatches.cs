@@ -41,6 +41,11 @@ namespace TwoForksVr.UI.Patches
         {
             if (__instance.name != "Loading Screen") return;
             PatchCanvases(__instance);
+            
+            // Move loading spinner from corner to center.
+            var loadSpinner = __instance.transform.Find("LoadSpinner/UI_LoadSpinner/");
+            var loadSpinnerPosition = loadSpinner.localPosition;
+            loadSpinner.localPosition = new Vector3(0, loadSpinnerPosition.y, loadSpinnerPosition.z);
         }
 
         private static void PatchCanvases(Component component)
