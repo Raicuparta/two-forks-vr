@@ -5,16 +5,10 @@ namespace TwoForksVr.PlayerCamera.Patches
     [HarmonyPatch]
     public class LoadingCameraPatches
     {
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgLoadingCamera), nameof(vgLoadingCamera.OnEnable))]
-        private static bool DisableVgLoadingCamera(vgLoadingCamera __instance)
-        {
-            __instance.enabled = false;
-            return false;
-        }
-        
         [HarmonyPatch(typeof(vgLoadingCamera), nameof(vgLoadingCamera.OnDestroy))]
         [HarmonyPatch(typeof(vgLoadingCamera), nameof(vgLoadingCamera.OnDisable))]
+        [HarmonyPatch(typeof(vgLoadingCamera), nameof(vgLoadingCamera.OnEnable))]
+        [HarmonyPatch(typeof(vgLoadingCamera), nameof(vgLoadingCamera.LateUpdate))]
         private static bool SkipLoadingCameraDisableAndDestroy()
         {
             return false;
