@@ -30,5 +30,13 @@ namespace TwoForksVr.PlayerCamera.Patches
         {
             isDone = false;
         }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgCameraLimit), nameof(vgCameraLimit.SetLimits))]
+        private static void PreventCameraVerticalRotation(ref float minVerticalAngle, ref float maxVerticalAngle)
+        {
+            minVerticalAngle = 0;
+            maxVerticalAngle = 0;
+        }
     }
 }
