@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using HarmonyLib;
+using TwoForksVr.Helpers;
 using Valve.VR;
 
 namespace TwoForksVr.Input.Patches
@@ -59,11 +60,13 @@ namespace TwoForksVr.Input.Patches
 
             foreach (var entry in vector2XActionMap)
             {
-                entry.Value.onChange += (action, source, axis, delta) => TriggerCommand(entry.Key, axis.x);
+                entry.Value.onChange += (action, source, axis, delta) =>
+                    TriggerCommand(entry.Key, MathHelper.ConvertCircleVectorToSquare(axis).x);
             }
             foreach (var entry in vector2YActionMap)
             {
-                entry.Value.onChange += (action, source, axis, delta) => TriggerCommand(entry.Key, axis.y);
+                entry.Value.onChange += (action, source, axis, delta) =>
+                    TriggerCommand(entry.Key, MathHelper.ConvertCircleVectorToSquare(axis).y);
             }
             foreach (var entry in booleanActionMap)
             {
