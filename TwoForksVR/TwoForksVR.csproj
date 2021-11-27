@@ -116,6 +116,7 @@
         <Compile Include="src\PlayerBody\VRBodyManager.cs" />
         <Compile Include="src\PlayerCamera\Patches\CameraTransformProtectionPatches.cs" />
         <Compile Include="src\PlayerCamera\Patches\GameCameraPatches.cs" />
+        <Compile Include="src\PlayerCamera\Patches\LoadingCameraPatches.cs" />
         <Compile Include="src\PlayerCamera\Patches\MenuCameraPatches.cs" />
         <Compile Include="src\PlayerCamera\VRCameraManager.cs" />
         <Compile Include="src\Settings\Patches\SettingsPatches.cs" />
