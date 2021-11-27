@@ -81,17 +81,6 @@ namespace TwoForksVr.PlayerCamera
             VRSettings.enabled = true;
         }
 
-        private static void LimitVerticalRotation()
-        {
-            var cameraController = FindObjectOfType<vgCameraController>();
-            if (!cameraController) return;
-            cameraController.defaultCameraTuning.ForEach(tuning =>
-            {
-                tuning.minVerticalAngle = 0;
-                tuning.maxVerticalAngle = 0;
-            });
-        }
-
         private void DisableCameraComponents()
         {
             DisableCameraComponent<Animation>();
