@@ -68,6 +68,10 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/Grip",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     }
@@ -154,7 +158,8 @@
       "/actions/default/in/UiDown": "UiDown",
       "/actions/default/in/UIUp": "UI Up",
       "/actions/default/in/UIDown": "UI Down",
-      "/actions/default/in/Recenter": "Recenter"
+      "/actions/default/in/Recenter": "Recenter",
+      "/actions/default/in/Grip": "Grip"
     }
   ]
 }

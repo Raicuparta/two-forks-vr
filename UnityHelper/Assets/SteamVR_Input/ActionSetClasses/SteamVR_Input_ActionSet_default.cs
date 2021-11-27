@@ -10,6 +10,10 @@
 
 namespace Valve.VR
 {
+    using System;
+    using UnityEngine;
+    
+    
     public class SteamVR_Input_ActionSet_default : Valve.VR.SteamVR_ActionSet
     {
         
@@ -138,6 +142,14 @@ namespace Valve.VR
             get
             {
                 return SteamVR_Actions.default_Recenter;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean Grip
+        {
+            get
+            {
+                return SteamVR_Actions.default_Grip;
             }
         }
         

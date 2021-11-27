@@ -10,6 +10,7 @@ namespace TwoForksVr.Input.Patches
     {
         private static SteamVR_Input_ActionSet_default actionSet;
         private static Dictionary<string, SteamVR_Action_Boolean> booleanActionMap;
+        private static Dictionary<string, SteamVR_Action_Boolean> invertedBooleanActionMap;
         private static Dictionary<string, SteamVR_Action_Vector2> vector2XActionMap;
         private static Dictionary<string, SteamVR_Action_Vector2> vector2YActionMap;
 
@@ -35,7 +36,12 @@ namespace TwoForksVr.Input.Patches
                 {InputName.ToggleJog, actionSet.Jog},
                 {InputName.Pause, actionSet.Cancel},
                 {InputName.NextMenu, actionSet.NextPage},
-                {InputName.PreviousMenu, actionSet.PreviousPage}
+                {InputName.PreviousMenu, actionSet.PreviousPage},
+                {InputName.RadioUp, actionSet.Grip},
+            };
+            invertedBooleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>
+            {
+                {InputName.RadioDown, actionSet.Grip}
             };
             vector2XActionMap = new Dictionary<string, SteamVR_Action_Vector2>
             {
@@ -73,6 +79,14 @@ namespace TwoForksVr.Input.Patches
                 entry.Value.onChange += (action, source, state) =>
                 {
                     if (!state) return;
+                    TriggerCommand(entry.Key, 1);
+                };
+            }
+            foreach (var entry in invertedBooleanActionMap)
+            {
+                entry.Value.onChange += (action, source, state) =>
+                {
+                    if (state) return;
                     TriggerCommand(entry.Key, 1);
                 };
             }
