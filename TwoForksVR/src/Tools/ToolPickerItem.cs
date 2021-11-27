@@ -69,15 +69,6 @@ namespace TwoForksVr.Tools
 
                     return;
                 }
-                case VRToolItem.Radio:
-                {
-                    var radioController = FindObjectOfType<vgPlayerRadioControl>();
-                    if (!radioController) return;
-
-                    radioController.OnRadioUp();
-
-                    return;
-                }
                 case VRToolItem.Flashlight:
                 {
                     var flashlightController = FindObjectOfType<vgFlashlightController>();
@@ -123,14 +114,6 @@ namespace TwoForksVr.Tools
 
                     mapController.OnToggleMap();
 
-                    return;
-                }
-                case VRToolItem.Radio:
-                {
-                    var radioController = FindObjectOfType<vgPlayerRadioControl>();
-                    if (!radioController) return;
-
-                    radioController.OnRadioDown();
                     return;
                 }
                 case VRToolItem.Flashlight:

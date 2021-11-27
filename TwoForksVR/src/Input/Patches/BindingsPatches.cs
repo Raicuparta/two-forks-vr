@@ -57,15 +57,6 @@ namespace TwoForksVr.Input.Patches
                 {InputName.UIVertical, actionSet.Move},
             };
 
-            // Pick dialog option with interact button.
-            // TODO: move this somewhere else.
-            actionSet.Interact.onStateDown += (fromAction, fromSource) =>
-            {
-                if (!vgDialogTreeManager.Instance) return;
-                vgDialogTreeManager.Instance.OnConfirmDialogChoice();
-                vgDialogTreeManager.Instance.ClearNonRadioDialogChoices();
-            };
-
             foreach (var entry in vector2XActionMap)
             {
                 entry.Value.onChange += (action, source, axis, delta) => TriggerCommand(entry.Key, axis.x);

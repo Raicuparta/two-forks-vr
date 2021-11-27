@@ -2,7 +2,6 @@
 {
     public enum VRToolItem
     {
-        Radio,
         Map,
         Compass,
         Flashlight,
