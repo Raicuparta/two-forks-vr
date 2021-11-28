@@ -21,6 +21,7 @@ namespace TwoForksVr.Input.Patches
             booleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>
             {
                 {InputName.LocomotionAction, actionSet.Interact},
+                {InputName.UseCamera, actionSet.Interact},
                 {InputName.Use, actionSet.Interact},
                 {InputName.UISubmit, actionSet.Interact},
                 {InputName.StowHeldObject, actionSet.Jog},
