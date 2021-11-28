@@ -1,7 +1,7 @@
 ﻿using System;
 using TwoForksVr.Debugging;
-using TwoForksVr.Hands;
 using TwoForksVr.Helpers;
+using TwoForksVr.Limbs;
 using TwoForksVr.PlayerCamera;
 using UnityEngine;
 
@@ -13,7 +13,7 @@ namespace TwoForksVr.Stage
 
         private VRCameraManager cameraManager;
         private LateUpdateFollow follow;
-        private VRHandsManager handsManager;
+        private VrLimbManager limbManager;
         private IntroFix introFix;
         private Camera mainCamera;
 
@@ -48,7 +48,7 @@ namespace TwoForksVr.Stage
             Instance = new GameObject("VRStage").AddComponent<VRStage>();
             Instance.transform.SetParent(stageParent.transform, false);
             Instance.cameraManager = VRCameraManager.Create(Instance);
-            Instance.handsManager = VRHandsManager.Create(Instance);
+            Instance.limbManager = VrLimbManager.Create(Instance);
             Instance.follow = stageParent.AddComponent<LateUpdateFollow>();
 
             FallbackCamera = new GameObject("VRFallbackCamera").AddComponent<Camera>();
@@ -78,7 +78,7 @@ namespace TwoForksVr.Stage
             }
 
             cameraManager.SetUp(mainCamera ? mainCamera : FallbackCamera);
-            handsManager.SetUp(playerTransform);
+            limbManager.SetUp(playerTransform);
         }
 
         public void Recenter(bool recenterVertically = false)

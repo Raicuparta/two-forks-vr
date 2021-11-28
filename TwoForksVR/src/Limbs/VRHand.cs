@@ -3,7 +3,7 @@ using TwoForksVr.Helpers;
 using UnityEngine;
 using Valve.VR;
 
-namespace TwoForksVr.Hands
+namespace TwoForksVr.Limbs
 {
     public class VRHand : MonoBehaviour
     {

@@ -5,18 +5,18 @@ using TwoForksVr.Tools;
 using TwoForksVr.UI.Patches;
 using UnityEngine;
 
-namespace TwoForksVr.Hands
+namespace TwoForksVr.Limbs
 {
-    public class VRHandsManager : MonoBehaviour
+    public class VrLimbManager : MonoBehaviour
     {
         private VRHand leftHand;
         private VRHand rightHand;
         private VrFoot rightFoot;
         private VrFoot leftFoot;
 
-        public static VRHandsManager Create(VRStage stage)
+        public static VrLimbManager Create(VRStage stage)
         {
-            var instance = Instantiate(VRAssetLoader.Hands).AddComponent<VRHandsManager>();
+            var instance = Instantiate(VRAssetLoader.Hands).AddComponent<VrLimbManager>();
             var instanceTransform = instance.transform;
             instanceTransform.SetParent(stage.transform, false);
 

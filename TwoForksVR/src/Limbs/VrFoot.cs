@@ -2,7 +2,7 @@
 using TwoForksVr.Helpers;
 using UnityEngine;
 
-namespace TwoForksVr.Hands
+namespace TwoForksVr.Limbs
 {
     public class VrFoot : MonoBehaviour
     {

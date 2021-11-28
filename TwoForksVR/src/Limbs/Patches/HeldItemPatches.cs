@@ -3,7 +3,7 @@ using HarmonyLib;
 using TwoForksVr.Helpers;
 using UnityEngine;
 
-namespace TwoForksVr.Hands.Patches
+namespace TwoForksVr.Limbs.Patches
 {
     [HarmonyPatch]
     public static class HeldItemPatches
