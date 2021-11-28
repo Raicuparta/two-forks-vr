@@ -14,6 +14,7 @@ namespace TwoForksVr.PlayerCamera
         private vgCameraController cameraController;
         private int cameraCullingMask;
         private VrStage stage;
+        private Transform playerTransform;
 
         private void Update()
         {
@@ -44,10 +45,11 @@ namespace TwoForksVr.PlayerCamera
             return instance;
         }
 
-        public void SetUp(Camera newCamera)
+        public void SetUp(Camera newCamera, Transform newPlayerTransform)
         {
             AttachToCamera.SetTargetCamera(newCamera);
             camera = newCamera;
+            playerTransform = newPlayerTransform;
             cameraController = FindObjectOfType<vgCameraController>();
             SetUpCamera();
             DisableCameraComponents();
@@ -111,14 +113,14 @@ namespace TwoForksVr.PlayerCamera
 
         public void Recenter(bool recenterVertically = false)
         {
-            if (!cameraController || !cameraController.eyeTransform) return;
+            if (!playerTransform || !camera) return;
             var cameraOffset = GetCameraOffset();
             if (!recenterVertically)
             {
                 cameraOffset.y = 0;
             }
             transform.position -= cameraOffset;
-            var angleOffset = cameraController.eyeTransform.eulerAngles.y - camera.transform.eulerAngles.y - 90f;
+            var angleOffset = playerTransform.eulerAngles.y - camera.transform.eulerAngles.y;
             transform.Rotate(Vector3.up * angleOffset);
         }
     }
