@@ -91,7 +91,7 @@ namespace TwoForksVr.Hands
         private void SetUpHandLid(Transform armBone)
         {
             var handLid = Instantiate(VRAssetLoader.HandLid).transform;
-            handLid.Find("HandLidModel").gameObject.layer = LayerFromName.PlayerBody;
+            LayerHelper.SetLayer(handLid.Find("HandLidModel"), GameLayer.PlayerBody);
             handLid.SetParent(armBone, false);
             if (isLeft) handLid.localScale = new Vector3(1, 1, -1);
         }
@@ -106,7 +106,7 @@ namespace TwoForksVr.Hands
                 return;
             }
             var handLid = Instantiate(VRAssetLoader.ShoeLid).transform;
-            handLid.Find("ShoeLidModel").gameObject.layer = LayerFromName.PlayerBody;
+            LayerHelper.SetLayer(handLid.Find("ShoeLidModel"), GameLayer.PlayerBody);
             handLid.SetParent(shoeBone, false);
             if (isLeft) handLid.localScale = new Vector3(1, 1, -1);
         }

@@ -25,7 +25,7 @@ namespace TwoForksVr.UI.Patches
         [HarmonyPatch(typeof(UIBehaviour), "Awake")]
         private static void UIBehaviourAwake(UIBehaviour __instance)
         {
-            __instance.gameObject.layer = LayerFromName.UI;
+            LayerHelper.SetLayer(__instance, GameLayer.UI);
         }
 
         [HarmonyPrefix]
@@ -52,8 +52,9 @@ namespace TwoForksVr.UI.Patches
         {
             var camera = Camera.main;
             if (!camera || canvasesToIgnore.Contains(component.name)) return;
-
-            component.gameObject.layer = LayerFromName.UI;
+            
+            // TODO: layer is being set twice? is it needed?
+            LayerHelper.SetLayer(component, GameLayer.UI);
             var canvas = component.GetComponentInParent<Canvas>();
 
             if (!canvas) return;
@@ -74,7 +75,7 @@ namespace TwoForksVr.UI.Patches
 
             canvas.worldCamera = camera;
             canvas.renderMode = RenderMode.WorldSpace;
-            canvas.gameObject.layer = LayerFromName.UI;
+            LayerHelper.SetLayer(canvas, GameLayer.UI);
             canvas.gameObject.AddComponent<AttachToCamera>();
             canvas.transform.localScale = Vector3.one * 0.0005f;
         }

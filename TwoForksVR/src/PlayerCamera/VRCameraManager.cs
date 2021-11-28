@@ -28,7 +28,7 @@ namespace TwoForksVr.PlayerCamera
             if (cameraCullingMask == 0 && vgPauseManager.Instance.isPaused)
             {
                 cameraCullingMask = camera.cullingMask;
-                camera.cullingMask = LayerMask.GetMask("UI", "MenuBackground") | (1 << LayerFromName.PlayerBody);
+                camera.cullingMask = LayerHelper.GetMask(GameLayer.UI, GameLayer.MenuBackground, GameLayer.PlayerBody);
             }
             else if (cameraCullingMask != 0 && !vgPauseManager.Instance.isPaused)
             {
