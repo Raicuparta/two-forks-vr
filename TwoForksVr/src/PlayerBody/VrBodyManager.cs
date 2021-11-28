@@ -8,13 +8,6 @@ namespace TwoForksVr.PlayerBody
 {
     public class VrBodyManager : MonoBehaviour
     {
-        private Camera camera;
-        private CharacterController characterController;
-        private vgPlayerController playerController;
-        private vgPlayerNavigationController navigationController;
-        private Vector3 prevCameraPosition;
-        private Vector3 prevForward;
-
         public static void Create(vgPlayerController playerController)
         {
             var playerTransform = playerController.transform;
@@ -30,72 +23,12 @@ namespace TwoForksVr.PlayerBody
                 playerTransform
             );
 
-            var instance = playerBody.AddComponent<VrBodyManager>();
-            instance.camera = camera;
-            instance.prevCameraPosition = camera.transform.position;
-            instance.playerController = playerController;
-            instance.navigationController = playerController.GetComponentInChildren<vgPlayerNavigationController>();
+            playerBody.AddComponent<VrBodyManager>();
         }
         
         private void Start()
         {
-            prevForward = GetCameraForward();
             HideBodyParts();
-        }
-
-        private void Update()
-        {
-            if (characterController == null)
-            {
-                characterController = playerController.characterController;
-            }
-            
-            UpdateRoomScalePosition();
-            UpdateRotation();
-        }
-
-        private Vector3 GetCameraForward()
-        {
-            return camera.transform.parent.InverseTransformDirection(
-                Vector3.ProjectOnPlane(camera.transform.forward, Vector3.up));
-        }
-
-        private void UpdateRoomScalePosition()
-        {
-            var playerBody = transform.parent.parent;
-            
-            var cameraTransform = camera.transform;
-            var cameraPosition = cameraTransform.localPosition;
-            
-            var localPositionDelta = cameraPosition - prevCameraPosition;
-            localPositionDelta.y = 0;
-
-            var worldPositionDelta = VrStage.Instance.transform.TransformVector(localPositionDelta);
-
-            prevCameraPosition = cameraPosition;
-            
-            if (worldPositionDelta.sqrMagnitude > 1f || !navigationController.onGround || !navigationController.enabled) return;
-            
-            var groundedPositionDelta = Vector3.ProjectOnPlane(worldPositionDelta, navigationController.groundNormal);
-
-            characterController.Move(groundedPositionDelta);
-            
-            // TODO This probably breaks stuff elsewhere.
-            navigationController.positionLastFrame = playerBody.position;
-
-            VrStage.Instance.transform.position -= groundedPositionDelta;
-        }
-
-        private void UpdateRotation()
-        {
-            if (!navigationController.onGround || !navigationController.enabled) return;
-
-            var cameraForward = GetCameraForward();
-            var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
-            prevForward = cameraForward;
-            characterController.transform.Rotate(Vector3.up, angleDelta);
-            
-            VrStage.Instance.Recenter();
         }
 
         // Hides body parts by either making them completely invisible,
