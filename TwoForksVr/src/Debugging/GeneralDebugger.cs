@@ -29,18 +29,18 @@ namespace TwoForksVr.Debugging
                     Logs.LogInfo($"command: {command.command}");
                 }
             }
-            // foreach (var context in inputManager.contextStack)
-            // {
-            //     Logs.LogInfo($"## Context {context.name}:");
-            //     foreach (var mapping in context.commandMap)
-            //     {
-            //         Logs.LogInfo($"# mapping: {mapping.virtualKey}");
-            //         foreach (var command in mapping.commands)
-            //         {
-            //             Logs.LogInfo($"command: {command.command}");
-            //         }
-            //     }
-            // }
+            foreach (var context in inputManager.contextStack)
+            {
+                Logs.LogInfo($"## Context {context.name}:");
+                foreach (var mapping in context.commandMap)
+                {
+                    Logs.LogInfo($"# mapping: {mapping.virtualKey}");
+                    foreach (var command in mapping.commands)
+                    {
+                        Logs.LogInfo($"command: {command.command}");
+                    }
+                }
+            }
             Logs.LogInfo("## Ended key bind logs ##");
         }
 
