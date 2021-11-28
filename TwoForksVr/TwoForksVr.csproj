@@ -111,7 +111,6 @@
         <Compile Include="src\Input\InputName.cs" />
         <Compile Include="src\Input\Patches\BindingsPatches.cs" />
         <Compile Include="src\Input\Patches\MousePatches.cs" />
-        <Compile Include="src\Input\VrAxisData.cs" />
         <Compile Include="src\PlayerBody\Patches\BodyPatches.cs" />
         <Compile Include="src\PlayerBody\Patches\NavigationPatches.cs" />
         <Compile Include="src\PlayerBody\RoomScaleBodyTransform.cs" />
