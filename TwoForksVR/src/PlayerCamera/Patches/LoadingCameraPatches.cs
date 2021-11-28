@@ -5,6 +5,7 @@ namespace TwoForksVr.PlayerCamera.Patches
     [HarmonyPatch]
     public class LoadingCameraPatches
     {
+        [HarmonyPrefix]
         [HarmonyPatch(typeof(vgLoadingCamera), nameof(vgLoadingCamera.OnDestroy))]
         [HarmonyPatch(typeof(vgLoadingCamera), nameof(vgLoadingCamera.OnDisable))]
         [HarmonyPatch(typeof(vgLoadingCamera), nameof(vgLoadingCamera.OnEnable))]
