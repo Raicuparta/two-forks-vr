@@ -5,7 +5,7 @@ using TwoForksVr.Assets;
 
 namespace TwoForksVr
 {
-    [BepInPlugin("raicuparta.twoforksvr", "Two Forks VR", "0.0.7")]
+    [BepInPlugin("raicuparta.twoforksvr", "Two Forks VR", "0.0.8")]
     public class TwoForksVrMod : BaseUnityPlugin
     {
         private void Awake()
