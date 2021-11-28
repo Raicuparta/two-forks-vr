@@ -40,7 +40,7 @@ namespace TwoForksVr.PlayerBody
         private void Start()
         {
             prevForward = GetCameraForward();
-            HideBody();
+            HideBodyParts();
         }
 
         private void Update()
@@ -98,16 +98,18 @@ namespace TwoForksVr.PlayerBody
             VRStage.Instance.Recenter();
         }
 
-        private void HideBody()
+        // Hides body parts by either making them completely invisible,
+        // or by using transparent textures to leave parts visible (hands and feet).
+        private void HideBodyParts()
         {
             var renderer = transform.GetComponent<SkinnedMeshRenderer>();
             renderer.shadowCastingMode = ShadowCastingMode.TwoSided;
 
             var materials = renderer.materials;
-
+            
             var bodyMaterial = materials[0];
             MakeMaterialTextureTransparent(bodyMaterial, VRAssetLoader.BodyCutoutTexture);
-
+            
             var backpackMaterial = materials[1];
             MakeMaterialTextureTransparent(backpackMaterial);
 
