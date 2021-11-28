@@ -18,15 +18,27 @@ namespace TwoForksVr.Debugging
 
         private static void UpdateInputsDebug()
         {
-            if (!UnityEngine.Input.GetKeyDown(KeyCode.Minus)) return;
+            if (!UnityEngine.Input.GetKeyDown(KeyCode.Alpha9)) return;
             Logs.LogInfo("## Starting key bind logs##");
             var inputManager = FindObjectOfType<vgInputManager>();
-            foreach (var bind in inputManager.virtualKeyKeyBindMap.Values.Where(bind => bind.commands.Count != 0))
+            foreach (var bind in inputManager.virtualKeyKeyBindMap.Values)
             {
-                Logs.LogInfo($"{bind.commands[0].command}");
-                for (var i = 0; i < bind.keyData.names.Count; i++)
+                Logs.LogInfo($"bind");
+                foreach (var command in bind.commands)
                 {
-                    bind.keyData.names[i] = bind.commands[0].command;
+                    Logs.LogInfo($"command: {command.command}");
+                }
+            }
+            foreach (var context in inputManager.contextStack)
+            {
+                Logs.LogInfo($"## Context {context.name}:");
+                foreach (var mapping in context.commandMap)
+                {
+                    Logs.LogInfo($"# mapping: {mapping.virtualKey}");
+                    foreach (var command in mapping.commands)
+                    {
+                        Logs.LogInfo($"command: {command.command}");
+                    }
                 }
             }
             Logs.LogInfo("## Ended key bind logs ##");
