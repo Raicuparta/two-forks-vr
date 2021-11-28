@@ -91,12 +91,11 @@ namespace TwoForksVr.Input.Patches
         public static void TriggerCommand(string command, float axisValue)
         {
             if (!vgInputManager.Instance || vgInputManager.Instance.commandCallbackMap == null) return;
-
-            var inputContext = vgInputManager.Instance.GetTopContext();
-
-            var isCommandInCurrentContext = inputContext.commandMap.Any(mapping => mapping.commands.Any(mappingCommand => mappingCommand.command == command));
-
-            if (!isCommandInCurrentContext) return;
+            
+            var isCommandAllowed = vgInputManager.Instance.virtualKeyKeyBindMap.Values.Any(keyBind =>
+                keyBind.commands.Any(keyBindCommand => keyBindCommand.command == command));
+            
+            if (!isCommandAllowed) return;
             
 		    var commandCallbackMap = vgInputManager.Instance.commandCallbackMap;
             if (!vgInputManager.Instance.flushCommands && commandCallbackMap.TryGetValue(command, out var inputDelegate))
