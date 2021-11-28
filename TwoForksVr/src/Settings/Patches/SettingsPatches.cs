@@ -1,5 +1,4 @@
-﻿using System.Data;
-using HarmonyLib;
+﻿using HarmonyLib;
 using UnityEngine;
 
 // Some of the available game settings don't go well with VR.
