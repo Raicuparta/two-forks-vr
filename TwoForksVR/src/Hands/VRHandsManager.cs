@@ -11,6 +11,8 @@ namespace TwoForksVr.Hands
     {
         private VRHand leftHand;
         private VRHand rightHand;
+        private VrFoot rightFoot;
+        private VrFoot leftFoot;
 
         public static VRHandsManager Create(VRStage stage)
         {
@@ -25,6 +27,8 @@ namespace TwoForksVr.Hands
                 instanceTransform,
                 true
             );
+            instance.rightFoot = VrFoot.Create();
+            instance.leftFoot = VrFoot.Create(true);
             ToolPicker.Create(
                 instanceTransform,
                 instance.leftHand.transform,
@@ -46,6 +50,8 @@ namespace TwoForksVr.Hands
             var rootBone = henry != null ? henry.Find("henryroot") : null;
             rightHand.SetUp(rootBone);
             leftHand.SetUp(rootBone);
+            rightFoot.SetUp(rootBone);
+            leftFoot.SetUp(rootBone);
             GeneralDebugger.PlayerAnimator = henry != null ? henry.GetComponent<Animator>() : null;
         }
     }

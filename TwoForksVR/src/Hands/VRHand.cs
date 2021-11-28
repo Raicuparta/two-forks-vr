@@ -12,12 +12,6 @@ namespace TwoForksVr.Hands
         private bool isLeft;
         // private Transform rootBone;
 
-        private void Start()
-        {
-            // Reset the tracking. For some reason if I don't do this the hands will be frozen.
-            gameObject.SetActive(true);
-        }
-
         public static VRHand Create(Transform parent, bool isLeft = false)
         {
             var handName = isLeft ? "Left" : "Right";
@@ -43,6 +37,12 @@ namespace TwoForksVr.Hands
                 SetFallbackHandActive(true);
             }
 
+            gameObject.SetActive(true);
+        }
+        
+        private void Start()
+        {
+            // Reset the tracking. For some reason if I don't do this the hands will be frozen.
             gameObject.SetActive(true);
         }
 
@@ -74,7 +74,6 @@ namespace TwoForksVr.Hands
             var armBone = SetUpArmBone(playerRootBone);
             SetUpHandLid(armBone);
             SetUpHandBone(armBone);
-            SetUpShoeLid(playerRootBone);
         }
 
         private Transform SetUpArmBone(Transform playerRootBone)
@@ -87,27 +86,12 @@ namespace TwoForksVr.Hands
             updateFollow.Target = transform.Find("ArmTarget");
             return armBone;
         }
-
+        
         private void SetUpHandLid(Transform armBone)
         {
             var handLid = Instantiate(VRAssetLoader.HandLid).transform;
             LayerHelper.SetLayer(handLid.Find("HandLidModel"), GameLayer.PlayerBody);
             handLid.SetParent(armBone, false);
-            if (isLeft) handLid.localScale = new Vector3(1, 1, -1);
-        }
-        
-        private void SetUpShoeLid(Transform playerRootBone)
-        {
-            var shoeBone = playerRootBone.Find(
-                                    $"henryPelvis/henryHips/henryLeg{handName}1/henryLeg{handName}2/henryLeg{handName}Foot");
-            if (!shoeBone)
-            {
-                Logs.LogError("### could not find shoe bone");
-                return;
-            }
-            var handLid = Instantiate(VRAssetLoader.ShoeLid).transform;
-            LayerHelper.SetLayer(handLid.Find("ShoeLidModel"), GameLayer.PlayerBody);
-            handLid.SetParent(shoeBone, false);
             if (isLeft) handLid.localScale = new Vector3(1, 1, -1);
         }
 
