@@ -131,30 +131,5 @@ namespace TwoForksVr.Input.Patches
         {
             __instance.currentControllerLayout = vgControllerLayoutChoice.XBox;
         }
-        
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(vgPlayerRadioControl), nameof(vgPlayerRadioControl.OnRadioUp))]
-        private static void LogRadioUp()
-        {
-            Logs.LogInfo("##### RADIO UP");
-        }
-        
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(vgPlayerRadioControl), nameof(vgPlayerRadioControl.OnRadioDown))]
-        private static void LogRadioDown()
-        {
-            Logs.LogInfo("##### RADIO DOWN");
-        }
-        
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(InputHandler), nameof(InputHandler.ProcessControlUp))]
-        private static void ProcessControlUp(InputContext context)
-        {
-            Logs.LogInfo("##### Process Control UP");
-            foreach (var control in context.Controls)
-            {
-                Logs.LogInfo("##### Process Control UP " + control.ControlName);
-            }
-        }
     }
 }
