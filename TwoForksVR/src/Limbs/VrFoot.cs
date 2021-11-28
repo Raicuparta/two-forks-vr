@@ -29,7 +29,7 @@ namespace TwoForksVr.Limbs
                 Logs.LogError("### could not find shoe bone");
                 return;
             }
-            var handLid = Instantiate(VRAssetLoader.ShoeLid).transform;
+            var handLid = Instantiate(VrAssetLoader.ShoeLid).transform;
             LayerHelper.SetLayer(handLid.Find("ShoeLidModel"), GameLayer.PlayerBody);
             handLid.SetParent(shoeBone, false);
             if (isLeft) handLid.localScale = new Vector3(1, 1, -1);

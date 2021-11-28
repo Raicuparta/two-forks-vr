@@ -1,6 +1,6 @@
 ﻿namespace TwoForksVr.Tools
 {
-    public enum VRToolItem
+    public enum VrToolItem
     {
         Map,
         Compass,

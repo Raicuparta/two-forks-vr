@@ -5,7 +5,7 @@ using Valve.VR;
 
 namespace TwoForksVr.Limbs
 {
-    internal class VRHandLaser : MonoBehaviour
+    internal class VrHandLaser : MonoBehaviour
     {
         private Transform leftHand;
         private LineRenderer lineRenderer;
@@ -35,7 +35,7 @@ namespace TwoForksVr.Limbs
 
         public static void Create(Transform leftHand, Transform rightHand)
         {
-            var instance = new GameObject("VRHandLaser").AddComponent<VRHandLaser>();
+            var instance = new GameObject("VrHandLaser").AddComponent<VrHandLaser>();
             var instanceTransform = instance.transform;
             instanceTransform.SetParent(rightHand, false);
             instanceTransform.localEulerAngles = new Vector3(39.132f, 356.9302f, 0.3666f);

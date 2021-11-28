@@ -11,7 +11,7 @@ namespace TwoForksVr
         private void Awake()
         {
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
-            VRAssetLoader.LoadAssets();
+            VrAssetLoader.LoadAssets();
         }
     }
 }

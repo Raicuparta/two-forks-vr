@@ -8,13 +8,13 @@ namespace TwoForksVr.Tools
         private const float circleRadius = 0.25f;
         private bool isHovered;
 
-        private VRToolItem itemType;
+        private VrToolItem itemType;
 
         public static ToolPickerItem Create(Transform parent, int index)
         {
             var transform = parent.GetChild(index);
             var instance = transform.gameObject.AddComponent<ToolPickerItem>();
-            instance.itemType = (VRToolItem) Enum.Parse(typeof(VRToolItem), transform.name);
+            instance.itemType = (VrToolItem) Enum.Parse(typeof(VrToolItem), transform.name);
 
             var angle = index * Mathf.PI * 2f / parent.childCount;
             instance.transform.localPosition =
@@ -51,7 +51,7 @@ namespace TwoForksVr.Tools
         {
             switch (itemType)
             {
-                case VRToolItem.Compass:
+                case VrToolItem.Compass:
                 {
                     var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
                     if (!mapController || mapController.compassEquipped) return;
@@ -60,7 +60,7 @@ namespace TwoForksVr.Tools
 
                     return;
                 }
-                case VRToolItem.Map:
+                case VrToolItem.Map:
                 {
                     var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
                     if (!mapController || mapController.mapEquipped) return;
@@ -69,7 +69,7 @@ namespace TwoForksVr.Tools
 
                     return;
                 }
-                case VRToolItem.Flashlight:
+                case VrToolItem.Flashlight:
                 {
                     var flashlightController = FindObjectOfType<vgFlashlightController>();
                     if (!flashlightController || flashlightController.isActive) return;
@@ -77,7 +77,7 @@ namespace TwoForksVr.Tools
                     flashlightController.ToggleFlashlight();
                     return;
                 }
-                case VRToolItem.DisposableCamera:
+                case VrToolItem.DisposableCamera:
                 {
                     var playerController = FindObjectOfType<vgPlayerController>();
                     if (!playerController || playerController.cameraActive) return;
@@ -85,7 +85,7 @@ namespace TwoForksVr.Tools
                     playerController.OnCameraToggle();
                     return;
                 }
-                case VRToolItem.Inventory:
+                case VrToolItem.Inventory:
                 {
                     var inventoryController = FindObjectOfType<vgInventoryController>();
                     inventoryController.OnDisplayInventory();
@@ -98,7 +98,7 @@ namespace TwoForksVr.Tools
         {
             switch (itemType)
             {
-                case VRToolItem.Compass:
+                case VrToolItem.Compass:
                 {
                     var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
                     if (!mapController || !mapController.compassEquipped) return;
@@ -107,7 +107,7 @@ namespace TwoForksVr.Tools
 
                     return;
                 }
-                case VRToolItem.Map:
+                case VrToolItem.Map:
                 {
                     var mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
                     if (!mapController || !mapController.mapEquipped) return;
@@ -116,7 +116,7 @@ namespace TwoForksVr.Tools
 
                     return;
                 }
-                case VRToolItem.Flashlight:
+                case VrToolItem.Flashlight:
                 {
                     var flashlightController = FindObjectOfType<vgFlashlightController>();
                     if (!flashlightController || !flashlightController.isActive) return;
@@ -124,7 +124,7 @@ namespace TwoForksVr.Tools
                     flashlightController.ToggleFlashlight();
                     return;
                 }
-                case VRToolItem.DisposableCamera:
+                case VrToolItem.DisposableCamera:
                 {
                     var playerController = FindObjectOfType<vgPlayerController>();
                     if (!playerController || !playerController.cameraActive) return;
@@ -132,7 +132,7 @@ namespace TwoForksVr.Tools
                     playerController.OnCameraToggle();
                     return;
                 }
-                case VRToolItem.Inventory:
+                case VrToolItem.Inventory:
                 {
                     var inventoryMenuController = FindObjectOfType<vgInventoryMenuController>();
                     if (!inventoryMenuController) return;

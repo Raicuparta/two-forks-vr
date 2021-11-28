@@ -9,21 +9,21 @@ namespace TwoForksVr.Limbs
 {
     public class VrLimbManager : MonoBehaviour
     {
-        private VRHand leftHand;
-        private VRHand rightHand;
+        private VrHand leftHand;
+        private VrHand rightHand;
         private VrFoot rightFoot;
         private VrFoot leftFoot;
 
-        public static VrLimbManager Create(VRStage stage)
+        public static VrLimbManager Create(VrStage stage)
         {
-            var instance = Instantiate(VRAssetLoader.Hands).AddComponent<VrLimbManager>();
+            var instance = Instantiate(VrAssetLoader.Hands).AddComponent<VrLimbManager>();
             var instanceTransform = instance.transform;
             instanceTransform.SetParent(stage.transform, false);
 
-            instance.rightHand = VRHand.Create(
+            instance.rightHand = VrHand.Create(
                 instanceTransform
             );
-            instance.leftHand = VRHand.Create(
+            instance.leftHand = VrHand.Create(
                 instanceTransform,
                 true
             );
@@ -34,7 +34,7 @@ namespace TwoForksVr.Limbs
                 instance.leftHand.transform,
                 instance.rightHand.transform
             );
-            VRHandLaser.Create(
+            VrHandLaser.Create(
                 instance.leftHand.transform,
                 instance.rightHand.transform
             );

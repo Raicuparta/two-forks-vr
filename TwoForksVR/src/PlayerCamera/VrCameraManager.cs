@@ -13,7 +13,7 @@ namespace TwoForksVr.PlayerCamera
         private Camera camera;
         private vgCameraController cameraController;
         private int cameraCullingMask;
-        private VRStage stage;
+        private VrStage stage;
 
         private void Update()
         {
@@ -37,7 +37,7 @@ namespace TwoForksVr.PlayerCamera
             }
         }
 
-        public static VRCameraManager Create(VRStage stage)
+        public static VRCameraManager Create(VrStage stage)
         {
             var instance = stage.gameObject.AddComponent<VRCameraManager>();
             instance.stage = stage;
@@ -65,14 +65,14 @@ namespace TwoForksVr.PlayerCamera
             camera.nearClipPlane = 0.03f;
             var cameraTransform = camera.transform;
 
-            if (cameraTransform.parent && cameraTransform.parent.name == "VRCameraParent") return;
+            if (cameraTransform.parent && cameraTransform.parent.name == "VrCameraParent") return;
 
             // Probably an old Unity bug: if the camera starts with an offset position,
             // the tracking will always be incorrect.
             // So I disable VR, reset the camera position, and then enable VR again.
             VRSettings.enabled = false;
             
-            var cameraParent = new GameObject("VRCameraParent").transform;
+            var cameraParent = new GameObject("VrCameraParent").transform;
             cameraParent.SetParent(cameraTransform.parent, false);
             cameraTransform.SetParent(cameraParent.transform);
             cameraTransform.localPosition = Vector3.zero;

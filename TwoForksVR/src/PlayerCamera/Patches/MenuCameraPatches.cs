@@ -11,7 +11,7 @@ namespace TwoForksVr.PlayerCamera.Patches
         [HarmonyPatch(typeof(vgMenuCameraController), nameof(vgMenuCameraController.Start))]
         private static void CreateMenuStage(vgMenuCameraController __instance)
         {
-            VRStage.Instance.SetUp(__instance.GetComponentInChildren<Camera>(), null);
+            VrStage.Instance.SetUp(__instance.GetComponentInChildren<Camera>(), null);
         }
     }
 }

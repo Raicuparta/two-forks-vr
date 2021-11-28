@@ -2,7 +2,7 @@
 
 namespace TwoForksVr.Tools
 {
-    public class VRMap : MonoBehaviour
+    public class VrMap : MonoBehaviour
     {
         private const float mapScale = 2f;
 
@@ -17,15 +17,15 @@ namespace TwoForksVr.Tools
             ForceHighResolutionMap();
         }
 
-        public static VRMap Create(Transform mapInHand, string handName)
+        public static VrMap Create(Transform mapInHand, string handName)
         {
-            if (!mapInHand || mapInHand.GetComponent<VRMap>()) return null;
+            if (!mapInHand || mapInHand.GetComponent<VrMap>()) return null;
 
             // Very hard to read the map in VR since we can't zoom in.
             // So making it bigger to make it easier, especially for lower resolution headsets.
             mapInHand.parent.parent.localScale = Vector3.one * mapScale;
 
-            return mapInHand.gameObject.AddComponent<VRMap>();
+            return mapInHand.gameObject.AddComponent<VrMap>();
         }
 
         // Map doesn't quite fit the hand after scaling, need to move it a bit.

@@ -5,18 +5,18 @@ using Valve.VR;
 
 namespace TwoForksVr.Limbs
 {
-    public class VRHand : MonoBehaviour
+    public class VrHand : MonoBehaviour
     {
         private GameObject fallbackHandModel;
         private string handName;
         private bool isLeft;
         // private Transform rootBone;
 
-        public static VRHand Create(Transform parent, bool isLeft = false)
+        public static VrHand Create(Transform parent, bool isLeft = false)
         {
             var handName = isLeft ? "Left" : "Right";
             var transform = parent.Find($"{handName}Hand");
-            var instance = transform.gameObject.AddComponent<VRHand>();
+            var instance = transform.gameObject.AddComponent<VrHand>();
             instance.handName = handName;
             instance.isLeft = isLeft;
             instance.fallbackHandModel = transform.Find("HandModel")?.gameObject;
@@ -89,7 +89,7 @@ namespace TwoForksVr.Limbs
         
         private void SetUpHandLid(Transform armBone)
         {
-            var handLid = Instantiate(VRAssetLoader.HandLid).transform;
+            var handLid = Instantiate(VrAssetLoader.HandLid).transform;
             LayerHelper.SetLayer(handLid.Find("HandLidModel"), GameLayer.PlayerBody);
             handLid.SetParent(armBone, false);
             if (isLeft) handLid.localScale = new Vector3(1, 1, -1);

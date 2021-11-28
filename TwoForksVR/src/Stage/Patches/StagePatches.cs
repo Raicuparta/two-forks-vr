@@ -11,7 +11,7 @@ namespace TwoForksVr.Stage.Patches
         {
             // All objects are eventually destroyed, unless they are children of this "reset object".
             // So we make the reset object the parent of the VR Stage, to make sure we keep it alive.
-            VRStage.Create(__instance.transform);
+            VrStage.Create(__instance.transform);
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TwoForksVr.Assets
 {
-    public static class VRAssetLoader
+    public static class VrAssetLoader
     {
         private const string assetsDir = "/BepInEx/plugins/TwoForksVrAssets/AssetBundles/";
         public static GameObject ToolPicker { get; private set; }
@@ -23,7 +23,7 @@ namespace TwoForksVr.Assets
             ArmsCutoutTexture = handAsset.LoadAsset<Texture2D>("arms-cutout");
             BodyCutoutTexture = bodyAsset.LoadAsset<Texture2D>("body-cutout");
             ToolPicker = LoadAssetPrefab("tool-picker", "ToolPicker");
-            Hands = LoadAssetPrefab("hands", "VRHands");
+            Hands = LoadAssetPrefab("hands", "VrHands");
         }
 
         private static AssetBundle LoadBundle(string assetName)

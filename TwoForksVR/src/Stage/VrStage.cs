@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace TwoForksVr.Stage
 {
-    public class VRStage : MonoBehaviour
+    public class VrStage : MonoBehaviour
     {
-        public static VRStage Instance;
+        public static VrStage Instance;
 
         private VRCameraManager cameraManager;
         private LateUpdateFollow follow;
@@ -31,10 +31,10 @@ namespace TwoForksVr.Stage
                 "The VR Stage is being disabled. This should never happen. Check the call stack of this error to find the culprit.");
         }
 
-        public static VRStage Create(Transform parent)
+        public static VrStage Create(Transform parent)
         {
             if (Instance) return Instance;
-            var stageParent = new GameObject("VRStageParent")
+            var stageParent = new GameObject("VrStageParent")
             {
                 // Apparently Firewatch will destroy all DontDrestroyOnLoad objects between scenes,
                 // unless they have the MAIN tag.
@@ -45,13 +45,13 @@ namespace TwoForksVr.Stage
             stageParent.AddComponent<vgOnlyLoadOnce>().dontDestroyOnLoad = true;
 
             DontDestroyOnLoad(stageParent);
-            Instance = new GameObject("VRStage").AddComponent<VRStage>();
+            Instance = new GameObject("VrStage").AddComponent<VrStage>();
             Instance.transform.SetParent(stageParent.transform, false);
             Instance.cameraManager = VRCameraManager.Create(Instance);
             Instance.limbManager = VrLimbManager.Create(Instance);
             Instance.follow = stageParent.AddComponent<LateUpdateFollow>();
 
-            FallbackCamera = new GameObject("VRFallbackCamera").AddComponent<Camera>();
+            FallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
             FallbackCamera.enabled = false;
             FallbackCamera.clearFlags = CameraClearFlags.Color;
             FallbackCamera.backgroundColor = Color.black;

@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 
 namespace TwoForksVr.PlayerBody
 {
-    public class VRBodyManager : MonoBehaviour
+    public class VrBodyManager : MonoBehaviour
     {
         private Camera camera;
         private CharacterController characterController;
@@ -20,17 +20,17 @@ namespace TwoForksVr.PlayerBody
             var playerTransform = playerController.transform;
             var playerBody = playerTransform.Find("henry/body").gameObject;
             LayerHelper.SetLayer(playerBody, GameLayer.PlayerBody);
-            var existingBodyManager = playerBody.GetComponent<VRBodyManager>();
+            var existingBodyManager = playerBody.GetComponent<VrBodyManager>();
             if (existingBodyManager) return;
 
             var camera = playerController.cameraController.GetComponentInChildren<Camera>();
 
-            VRStage.Instance.SetUp(
+            VrStage.Instance.SetUp(
                 camera,
                 playerTransform
             );
 
-            var instance = playerBody.AddComponent<VRBodyManager>();
+            var instance = playerBody.AddComponent<VrBodyManager>();
             instance.camera = camera;
             instance.prevCameraPosition = camera.transform.position;
             instance.playerController = playerController;
@@ -70,7 +70,7 @@ namespace TwoForksVr.PlayerBody
             var localPositionDelta = cameraPosition - prevCameraPosition;
             localPositionDelta.y = 0;
 
-            var worldPositionDelta = VRStage.Instance.transform.TransformVector(localPositionDelta);
+            var worldPositionDelta = VrStage.Instance.transform.TransformVector(localPositionDelta);
 
             prevCameraPosition = cameraPosition;
             
@@ -83,7 +83,7 @@ namespace TwoForksVr.PlayerBody
             // This probably breaks stuff elsewhere.
             navigationController.positionLastFrame = playerBody.position;
 
-            VRStage.Instance.transform.position -= groundedPositionDelta;
+            VrStage.Instance.transform.position -= groundedPositionDelta;
         }
 
         private void UpdateRotation()
@@ -95,7 +95,7 @@ namespace TwoForksVr.PlayerBody
             prevForward = cameraForward;
             characterController.transform.Rotate(Vector3.up, angleDelta);
             
-            VRStage.Instance.Recenter();
+            VrStage.Instance.Recenter();
         }
 
         // Hides body parts by either making them completely invisible,
@@ -108,13 +108,13 @@ namespace TwoForksVr.PlayerBody
             var materials = renderer.materials;
             
             var bodyMaterial = materials[0];
-            MakeMaterialTextureTransparent(bodyMaterial, VRAssetLoader.BodyCutoutTexture);
+            MakeMaterialTextureTransparent(bodyMaterial, VrAssetLoader.BodyCutoutTexture);
             
             var backpackMaterial = materials[1];
             MakeMaterialTextureTransparent(backpackMaterial);
 
             var armsMaterial = materials[2];
-            MakeMaterialTextureTransparent(armsMaterial, VRAssetLoader.ArmsCutoutTexture);
+            MakeMaterialTextureTransparent(armsMaterial, VrAssetLoader.ArmsCutoutTexture);
         }
 
         private static void MakeMaterialTextureTransparent(Material material, Texture2D texture = null)

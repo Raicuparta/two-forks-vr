@@ -94,13 +94,13 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="src\Assets\VRAssetLoader.cs" />
+        <Compile Include="src\Assets\VrAssetLoader.cs" />
         <Compile Include="src\Debugging\DebugAxes.cs" />
         <Compile Include="src\Debugging\GeneralDebugger.cs" />
         <Compile Include="src\Limbs\Patches\HeldItemPatches.cs" />
         <Compile Include="src\Limbs\Patches\PlayerTargetingPatches.cs" />
-        <Compile Include="src\Limbs\VRHand.cs" />
-        <Compile Include="src\Limbs\VRHandLaser.cs" />
+        <Compile Include="src\Limbs\VrHand.cs" />
+        <Compile Include="src\Limbs\VrHandLaser.cs" />
         <Compile Include="src\Limbs\VrLimbManager.cs" />
         <Compile Include="src\Limbs\VrFoot.cs" />
         <Compile Include="src\Helpers\LateUpdateFollow.cs" />
@@ -114,22 +114,22 @@
         <Compile Include="src\Input\VrAxisData.cs" />
         <Compile Include="src\PlayerBody\Patches\BodyPatches.cs" />
         <Compile Include="src\PlayerBody\Patches\NavigationPatches.cs" />
-        <Compile Include="src\PlayerBody\VRBodyManager.cs" />
+        <Compile Include="src\PlayerBody\VrBodyManager.cs" />
         <Compile Include="src\PlayerCamera\Patches\CameraTransformProtectionPatches.cs" />
         <Compile Include="src\PlayerCamera\Patches\GameCameraPatches.cs" />
         <Compile Include="src\PlayerCamera\Patches\LoadingCameraPatches.cs" />
         <Compile Include="src\PlayerCamera\Patches\MenuCameraPatches.cs" />
-        <Compile Include="src\PlayerCamera\VRCameraManager.cs" />
+        <Compile Include="src\PlayerCamera\VrCameraManager.cs" />
         <Compile Include="src\Settings\Patches\SettingsPatches.cs" />
         <Compile Include="src\Stage\IntroFix.cs" />
         <Compile Include="src\Stage\Patches\StagePatches.cs" />
-        <Compile Include="src\Stage\VRStage.cs" />
+        <Compile Include="src\Stage\VrStage.cs" />
         <Compile Include="src\Tools\Patches\CompassPatches.cs" />
         <Compile Include="src\Tools\Patches\MapPatches.cs" />
         <Compile Include="src\Tools\ToolPicker.cs" />
         <Compile Include="src\Tools\ToolPickerItem.cs" />
-        <Compile Include="src\Tools\VRMap.cs" />
-        <Compile Include="src\Tools\VRToolItem.cs" />
+        <Compile Include="src\Tools\VrMap.cs" />
+        <Compile Include="src\Tools\VrToolItem.cs" />
         <Compile Include="src\TwoForksVrMod.cs" />
         <Compile Include="src\UI\AttachToCamera.cs" />
         <Compile Include="src\UI\Patches\CanvasToWorldSpacePatches.cs" />
