@@ -36,14 +36,14 @@ namespace TwoForksVr.UI.Patches
         }
         
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(AkGameObj), nameof(AkGameObj.Awake))]
-        private static void MoveLoadingCanvasToWorldSpace(AkGameObj __instance)
+        [HarmonyPatch(typeof(vgLoadingCamera), nameof(vgLoadingCamera.OnEnable))]
+        private static void MoveLoadingCanvasToWorldSpace(vgLoadingCamera __instance)
         {
-            if (__instance.name != "Loading Screen") return;
-            PatchCanvases(__instance);
+            var canvasTransform = __instance.transform.parent;
+            PatchCanvases(canvasTransform);
             
             // Move loading spinner from corner to center.
-            var loadSpinner = __instance.transform.Find("LoadSpinner/UI_LoadSpinner/");
+            var loadSpinner = canvasTransform.Find("LoadSpinner/UI_LoadSpinner/");
             var loadSpinnerPosition = loadSpinner.localPosition;
             loadSpinner.localPosition = new Vector3(0, loadSpinnerPosition.y, loadSpinnerPosition.z);
         }
