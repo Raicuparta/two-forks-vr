@@ -80,7 +80,7 @@ namespace TwoForksVr.PlayerBody
 
             characterController.Move(groundedPositionDelta);
             
-            // This probably breaks stuff elsewhere.
+            // TODO This probably breaks stuff elsewhere.
             navigationController.positionLastFrame = playerBody.position;
 
             VrStage.Instance.transform.position -= groundedPositionDelta;
