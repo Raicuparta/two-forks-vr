@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using HarmonyLib;
 using TwoForksVr.Helpers;
 using Valve.VR;
@@ -90,6 +91,13 @@ namespace TwoForksVr.Input.Patches
         public static void TriggerCommand(string command, float axisValue)
         {
             if (!vgInputManager.Instance || vgInputManager.Instance.commandCallbackMap == null) return;
+
+            var inputContext = vgInputManager.Instance.GetTopContext();
+
+            var isCommandInCurrentContext = inputContext.commandMap.Any(mapping => mapping.commands.Any(mappingCommand => mappingCommand.command == command));
+
+            if (!isCommandInCurrentContext) return;
+            
 		    var commandCallbackMap = vgInputManager.Instance.commandCallbackMap;
             if (!vgInputManager.Instance.flushCommands && commandCallbackMap.TryGetValue(command, out var inputDelegate))
             {
@@ -123,6 +131,31 @@ namespace TwoForksVr.Input.Patches
         private static void ForceXboxController(vgInputManager __instance)
         {
             __instance.currentControllerLayout = vgControllerLayoutChoice.XBox;
+        }
+        
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgPlayerRadioControl), nameof(vgPlayerRadioControl.OnRadioUp))]
+        private static void LogRadioUp()
+        {
+            Logs.LogInfo("##### RADIO UP");
+        }
+        
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgPlayerRadioControl), nameof(vgPlayerRadioControl.OnRadioDown))]
+        private static void LogRadioDown()
+        {
+            Logs.LogInfo("##### RADIO DOWN");
+        }
+        
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(InputHandler), nameof(InputHandler.ProcessControlUp))]
+        private static void ProcessControlUp(InputContext context)
+        {
+            Logs.LogInfo("##### Process Control UP");
+            foreach (var control in context.Controls)
+            {
+                Logs.LogInfo("##### Process Control UP " + control.ControlName);
+            }
         }
     }
 }
