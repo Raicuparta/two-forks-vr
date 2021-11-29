@@ -32,7 +32,7 @@ namespace TwoForksVr.Tools
             if (input.stateUp) CloseToolPicker();
         }
 
-        public static ToolPicker Create(Transform parent, Transform leftHand, Transform rightHand)
+        public static void Create(Transform parent, Transform leftHand, Transform rightHand)
         {
             var instance = Instantiate(VrAssetLoader.ToolPicker).AddComponent<ToolPicker>();
             instance.transform.SetParent(parent, false);
@@ -46,8 +46,6 @@ namespace TwoForksVr.Tools
                     index
                 )
             ).ToArray();
-
-            return instance;
         }
 
         private void SelectCurrentlyHoveredTool()

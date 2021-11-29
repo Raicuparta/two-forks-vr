@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using HarmonyLib;
+﻿using HarmonyLib;
 using TwoForksVr.Helpers;
 using UnityEngine;
 
@@ -29,8 +28,16 @@ namespace TwoForksVr.Limbs.Patches
             Logs.LogInfo("Attaching object to hand?");
             if (!attachment) return true;
             Logs.LogInfo($"Attaching object to hand: {attachment.name}");
-            if (!attachmentNameBlocklist.Contains(attachment.name)) return true;
+            if (!IsAttachmentBlockListed(attachment.name)) return true;
             attachment.SetActive(false);
+            return false;
+        }
+
+        private static bool IsAttachmentBlockListed(string name)
+        {
+            foreach (var s in attachmentNameBlocklist)
+                if (Equals(s, name))
+                    return true;
             return false;
         }
     }

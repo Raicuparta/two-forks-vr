@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using HarmonyLib;
+﻿using HarmonyLib;
 using TwoForksVr.Helpers;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -48,10 +47,26 @@ namespace TwoForksVr.UI.Patches
             loadSpinner.localPosition = new Vector3(0, loadSpinnerPosition.y, loadSpinnerPosition.z);
         }
 
+        private static bool IsCanvasToIgnore(string canvasName)
+        {
+            foreach (var s in canvasesToIgnore)
+                if (Equals(s, canvasName))
+                    return true;
+            return false;
+        }
+        
+        private static bool IsCanvasToDisable(string canvasName)
+        {
+            foreach (var s in canvasesToDisable)
+                if (Equals(s, canvasName))
+                    return true;
+            return false;
+        }
+        
         private static void PatchCanvases(Component component)
         {
             var camera = Camera.main;
-            if (!camera || canvasesToIgnore.Contains(component.name)) return;
+            if (!camera || IsCanvasToIgnore(component.name)) return;
             
             // TODO: layer is being set twice? is it needed?
             LayerHelper.SetLayer(component, GameLayer.UI);
@@ -59,7 +74,7 @@ namespace TwoForksVr.UI.Patches
 
             if (!canvas) return;
 
-            if (canvasesToDisable.Contains(canvas.name))
+            if (IsCanvasToDisable(canvas.name))
             {
                 canvas.enabled = false;
                 return;

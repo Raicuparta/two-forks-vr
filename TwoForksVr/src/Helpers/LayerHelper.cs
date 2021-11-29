@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using UnityEngine;
 
 namespace TwoForksVr.Helpers
@@ -31,7 +30,13 @@ namespace TwoForksVr.Helpers
         public static int GetMask(params GameLayer[] layers)
         {
           if (layers == null) throw new ArgumentNullException(nameof (layers));
-          return layers.Aggregate(0, (current, layer) => current | 1 << (int) layer);
+          var result = 0;
+          foreach (var layer in layers)
+          {
+              result |= 1 << (int) layer;
+          }
+
+          return result;
         }
         
         public static void SetLayer(Component component, GameLayer layer) {

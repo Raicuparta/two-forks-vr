@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using HarmonyLib;
 using TwoForksVr.Helpers;
 using Valve.VR;
@@ -88,14 +87,11 @@ namespace TwoForksVr.Input.Patches
             }
         }
         
-        public static void TriggerCommand(string command, float axisValue)
+        private static void TriggerCommand(string command, float axisValue)
         {
             if (!vgInputManager.Instance || vgInputManager.Instance.commandCallbackMap == null) return;
             
-            var isCommandAllowed = vgInputManager.Instance.virtualKeyKeyBindMap.Values.Any(keyBind =>
-                keyBind.commands.Any(keyBindCommand => keyBindCommand.command == command));
-            
-            if (!isCommandAllowed) return;
+            if (!IsCommandAllowed(command)) return;
             
 		    var commandCallbackMap = vgInputManager.Instance.commandCallbackMap;
             if (!vgInputManager.Instance.flushCommands && commandCallbackMap.TryGetValue(command, out var inputDelegate))
@@ -103,6 +99,19 @@ namespace TwoForksVr.Input.Patches
                 inputDelegate?.Invoke(axisValue);
             }
 	    }
+
+        private static bool IsCommandAllowed(string command)
+        {
+            foreach (var keyBind in vgInputManager.Instance.virtualKeyKeyBindMap.Values)
+            {
+                foreach (var keyBindCommand in keyBind.commands)
+                {
+                    if (keyBindCommand.command == command) return true;
+                }
+            }
+
+            return false;
+        }
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgAxisData), nameof(vgAxisData.Update))]
