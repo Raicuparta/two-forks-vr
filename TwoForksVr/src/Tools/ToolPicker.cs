@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
 using UnityEngine;
@@ -15,7 +15,7 @@ namespace TwoForksVr.Tools
         private Transform leftHand;
         private Transform rightHand;
         private ToolPickerItem selectedTool;
-        private ToolPickerItem[] tools;
+        private List<ToolPickerItem> tools;
         private Transform toolsContainer;
 
         private void Start()
@@ -40,12 +40,14 @@ namespace TwoForksVr.Tools
             instance.rightHand = rightHand;
             instance.leftHand = leftHand;
 
-            instance.tools = instance.toolsContainer.Cast<Transform>().Select(
-                (child, index) => ToolPickerItem.Create(
+            instance.tools = new List<ToolPickerItem>();
+            for (var index = 0; index < instance.toolsContainer.childCount; index++)
+            {
+                instance.tools.Add(ToolPickerItem.Create(
                     instance.toolsContainer,
                     index
-                )
-            ).ToArray();
+                ));
+            }
         }
 
         private void SelectCurrentlyHoveredTool()
