@@ -1,4 +1,5 @@
 ﻿using System;
+using TwoForksVr.Tools.ToolPickerActions;
 using UnityEngine;
 
 namespace TwoForksVr.Tools
@@ -8,11 +9,7 @@ namespace TwoForksVr.Tools
         private const float circleRadius = 0.25f;
         private bool isHovered;
         private VrToolItem itemType;
-        private vgMapController mapController;
-        private vgFlashlightController flashlightController;
-        private vgPlayerController playerController;
-        private vgInventoryController inventoryController;
-        private vgInventoryMenuController inventoryMenuController;
+        private ToolPickerAction toolPickerAction;
 
         public static ToolPickerItem Create(Transform parent, int index)
         {
@@ -25,11 +22,7 @@ namespace TwoForksVr.Tools
                 new Vector3(Mathf.Cos(angle) * circleRadius, Mathf.Sin(angle) * circleRadius, 0);
 
             // TODO separate into individual classes for each item?
-            instance.mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
-            instance.flashlightController = FindObjectOfType<vgFlashlightController>();
-            instance.playerController = FindObjectOfType<vgPlayerController>();
-            instance.inventoryController = FindObjectOfType<vgInventoryController>();
-            instance.inventoryMenuController = FindObjectOfType<vgInventoryMenuController>();
+            instance.toolPickerAction = ToolPickerAction.GetToolPickerAction(instance.itemType);
 
             instance.SetUpIcon();
 
@@ -60,94 +53,12 @@ namespace TwoForksVr.Tools
 
         public void Select()
         {
-            switch (itemType)
-            {
-                case VrToolItem.Compass:
-                {
-                    if (!mapController || mapController.compassEquipped) return;
-
-                    mapController.OnToggleCompass();
-
-                    return;
-                }
-                case VrToolItem.Map:
-                {
-                    if (!mapController || mapController.mapEquipped) return;
-
-                    mapController.OnToggleMap();
-
-                    return;
-                }
-                case VrToolItem.Flashlight:
-                {
-                    if (!flashlightController || flashlightController.isActive) return;
-
-                    flashlightController.ToggleFlashlight();
-                    return;
-                }
-                case VrToolItem.DisposableCamera:
-                {
-                    if (!playerController || playerController.cameraActive) return;
-
-                    playerController.OnCameraToggle();
-                    return;
-                }
-                case VrToolItem.Inventory:
-                {
-                    if (!inventoryController) return;
-
-                    inventoryController.OnDisplayInventory();
-                    return;
-                }
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            toolPickerAction.Select();
         }
 
         public void Deselect()
         {
-            switch (itemType)
-            {
-                case VrToolItem.Compass:
-                {
-                    if (!mapController || !mapController.compassEquipped) return;
-
-                    mapController.OnToggleCompass();
-
-                    return;
-                }
-                case VrToolItem.Map:
-                {
-                    if (!mapController || !mapController.mapEquipped) return;
-
-                    mapController.OnToggleMap();
-
-                    return;
-                }
-                case VrToolItem.Flashlight:
-                {
-                    if (!flashlightController || !flashlightController.isActive) return;
-
-                    flashlightController.ToggleFlashlight();
-                    return;
-                }
-                case VrToolItem.DisposableCamera:
-                {
-                    if (!playerController || !playerController.cameraActive) return;
-
-                    playerController.OnCameraToggle();
-                    return;
-                }
-                case VrToolItem.Inventory:
-                {
-                    if (!inventoryMenuController) return;
-
-                    inventoryMenuController.OnCloseInventory();
-                    return;
-                }
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            toolPickerAction.Deselect();
         }
     }
 }

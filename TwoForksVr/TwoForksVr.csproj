@@ -127,6 +127,12 @@
         <Compile Include="src\Tools\Patches\CompassPatches.cs" />
         <Compile Include="src\Tools\Patches\MapPatches.cs" />
         <Compile Include="src\Tools\ToolPicker.cs" />
+        <Compile Include="src\Tools\ToolPickerActions\ToolPickerAction.cs" />
+        <Compile Include="src\Tools\ToolPickerActions\ToolPickerCamera.cs" />
+        <Compile Include="src\Tools\ToolPickerActions\ToolPickerCompass.cs" />
+        <Compile Include="src\Tools\ToolPickerActions\ToolPickerFlashlight.cs" />
+        <Compile Include="src\Tools\ToolPickerActions\ToolPickerInventory.cs" />
+        <Compile Include="src\Tools\ToolPickerActions\ToolPickerMap.cs" />
         <Compile Include="src\Tools\ToolPickerItem.cs" />
         <Compile Include="src\Tools\VrMap.cs" />
         <Compile Include="src\Tools\VrToolItem.cs" />
