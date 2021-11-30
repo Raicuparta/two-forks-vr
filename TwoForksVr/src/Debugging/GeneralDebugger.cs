@@ -18,9 +18,9 @@ namespace TwoForksVr.Debugging
 
         private static void UpdateInputsDebug()
         {
+            var inputManager = vgInputManager.Instance;
             if (!UnityEngine.Input.GetKeyDown(KeyCode.Alpha9)) return;
             Logs.LogInfo("## Starting key bind logs##");
-            var inputManager = FindObjectOfType<vgInputManager>();
             foreach (var bind in inputManager.virtualKeyKeyBindMap.Values)
             {
                 Logs.LogInfo($"bind");
@@ -64,10 +64,11 @@ namespace TwoForksVr.Debugging
             for (var layerIndex = 0; layerIndex < PlayerAnimator.layerCount; layerIndex++)
             {
                 if (PlayerAnimator.GetCurrentAnimatorClipInfoCount(layerIndex) == 0) continue;
-                Logs.LogInfo($"Layer Index: {layerIndex}");
+                Logs.LogInfo($"Layer Index: {layerIndex.ToString()}");
                 Logs.LogInfo($"Layer Name: {PlayerAnimator.GetLayerName(layerIndex)}");
                 var animations = PlayerAnimator.GetCurrentAnimatorClipInfo(layerIndex);
                 var animationNames =
+                    // ReSharper disable once HeapView.ObjectAllocation
                     string.Join(", ", animations.Select(animation => animation.clip.name).ToArray());
                 Logs.LogInfo($"Animations [{animationNames}]");
             }
