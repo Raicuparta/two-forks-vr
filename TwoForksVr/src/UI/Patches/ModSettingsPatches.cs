@@ -36,5 +36,23 @@ namespace TwoForksVr.UI.Patches
             vrSettingsButton.name = "VR Settings Button";
             vrSettingsButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "VR Settings";
         }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.Awake))]
+        private static void CreateModSettingsPauseMenuButton(vgHudManager __instance)
+        {
+            var settingsMenuGroup = __instance.transform.Find("PauseRoot/Pause Canvas/SafeZoner/Settings Menu Group");
+            var gameSettingsButton = settingsMenuGroup.Find("ButtonSettings").GetComponent<Button>();
+            
+            var vrSettingsButton = Object.Instantiate(gameSettingsButton, settingsMenuGroup, false);
+            vrSettingsButton.transform.SetSiblingIndex(gameSettingsButton.transform.GetSiblingIndex() + 1);
+            vrSettingsButton.name = "VR Settings Button";
+            vrSettingsButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "VR Settings";
+
+            var subtitlesCheckbox = settingsMenuGroup.Find("Subtitles Checkbox").GetComponent<Toggle>();
+            var subtitlesCheckboxNavigation = subtitlesCheckbox.navigation;
+            subtitlesCheckboxNavigation.selectOnUp = vrSettingsButton;
+            subtitlesCheckbox.navigation = subtitlesCheckboxNavigation;
+        }
     }
 }
