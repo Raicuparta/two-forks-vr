@@ -140,6 +140,7 @@
         <Compile Include="src\UI\AttachToCamera.cs" />
         <Compile Include="src\UI\Patches\CanvasToWorldSpacePatches.cs" />
         <Compile Include="src\UI\Patches\InventoryPatches.cs" />
+        <Compile Include="src\UI\Patches\ModSettingsPatches.cs" />
         <Compile Include="src\UI\Patches\UIPatches.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
