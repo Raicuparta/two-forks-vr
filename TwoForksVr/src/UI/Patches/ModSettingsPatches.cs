@@ -31,6 +31,15 @@ namespace TwoForksVr.UI.Patches
             if (selectOnDown) navigation.selectOnDown = selectOnDown;
             selectable.navigation = navigation;
         }
+
+        private static Button CreateVrSettingsButton(Button original, Transform parent)
+        {
+            var vrSettingsButton = Object.Instantiate(original, parent, false);
+            vrSettingsButton.transform.SetSiblingIndex(original.transform.GetSiblingIndex() + 1);
+            vrSettingsButton.name = "VR Settings Button";
+            vrSettingsButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "VR Settings";
+            return vrSettingsButton;
+        }
         
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgMainMenuController), nameof(vgMainMenuController.Start))]
@@ -39,16 +48,10 @@ namespace TwoForksVr.UI.Patches
             var mainMenuGroup = __instance.transform.Find("Main Menu Group");
             var gameSettingsButton = mainMenuGroup.Find("Settings Button").GetComponent<Button>();
             var specialFeaturesButton = mainMenuGroup.Find("Special Features Button").GetComponent<Button>();
-
-            var vrSettingsButton = Object.Instantiate(gameSettingsButton, mainMenuGroup, false);
-
+            var vrSettingsButton = CreateVrSettingsButton(gameSettingsButton, mainMenuGroup);
             SetNavigation(gameSettingsButton, null, vrSettingsButton);
             SetNavigation(vrSettingsButton, gameSettingsButton, specialFeaturesButton);
             SetNavigation(specialFeaturesButton, vrSettingsButton);
-
-            vrSettingsButton.transform.SetSiblingIndex(gameSettingsButton.transform.GetSiblingIndex() + 1);
-            vrSettingsButton.name = "VR Settings Button";
-            vrSettingsButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "VR Settings";
         }
 
         [HarmonyPrefix]
@@ -57,12 +60,7 @@ namespace TwoForksVr.UI.Patches
         {
             var settingsMenuGroup = __instance.transform.Find("PauseRoot/Pause Canvas/SafeZoner/Settings Menu Group");
             var gameSettingsButton = settingsMenuGroup.Find("ButtonSettings").GetComponent<Button>();
-            
-            var vrSettingsButton = Object.Instantiate(gameSettingsButton, settingsMenuGroup, false);
-            vrSettingsButton.transform.SetSiblingIndex(gameSettingsButton.transform.GetSiblingIndex() + 1);
-            vrSettingsButton.name = "VR Settings Button";
-            vrSettingsButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "VR Settings";
-
+            var vrSettingsButton = CreateVrSettingsButton(gameSettingsButton, settingsMenuGroup);
             var subtitlesCheckbox = settingsMenuGroup.Find("Subtitles Checkbox").GetComponent<Toggle>();
             SetNavigation(subtitlesCheckbox, vrSettingsButton);
         }
