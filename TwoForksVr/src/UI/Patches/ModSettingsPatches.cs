@@ -10,6 +10,7 @@ namespace TwoForksVr.UI.Patches
     {
         private static void SetNavigation(Selectable selectable, Selectable selectOnUp = null, Selectable selectOnDown = null)
         {
+            if (!selectable) return;
             var navigationFixer = selectable.GetComponent<vgButtonNavigationFixer>();
             if (navigationFixer) SetNavigationWithFixer(navigationFixer, selectOnUp, selectOnDown);
             else SetNavigationWithoutFixer(selectable, selectOnUp, selectOnDown);
@@ -27,18 +28,48 @@ namespace TwoForksVr.UI.Patches
         private static void SetNavigationWithoutFixer(Selectable selectable, Selectable selectOnUp = null, Selectable selectOnDown = null)
         {
             var navigation = selectable.navigation;
+            if (navigation.mode != Navigation.Mode.Explicit) return;
             if (selectOnUp) navigation.selectOnUp = selectOnUp;
             if (selectOnDown) navigation.selectOnDown = selectOnDown;
             selectable.navigation = navigation;
         }
 
-        private static Button CreateVrSettingsButton(Button original, Transform parent)
+        private static Selectable GetNavigationUp(Selectable selectable)
         {
-            var vrSettingsButton = Object.Instantiate(original, parent, false);
-            vrSettingsButton.transform.SetSiblingIndex(original.transform.GetSiblingIndex() + 1);
-            vrSettingsButton.name = "VR Settings Button";
-            vrSettingsButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "VR Settings";
-            return vrSettingsButton;
+            var navigationFixer = selectable.GetComponent<vgButtonNavigationFixer>();
+            if (navigationFixer) return navigationFixer.selectOnUp;
+
+            var navigation = selectable.navigation;
+            return navigation.mode == Navigation.Mode.Explicit ? navigation.selectOnUp : null;
+        }
+        
+        private static Selectable GetNavigationDown(Selectable selectable)
+        {
+            var navigationFixer = selectable.GetComponent<vgButtonNavigationFixer>();
+            if (navigationFixer) return navigationFixer.selectOnDown;
+
+            var navigation = selectable.navigation;
+            return navigation.mode == Navigation.Mode.Explicit ? navigation.selectOnDown : null;
+        }
+
+        private static Button CreateVrSettingsButton(Button buttonAbove, Transform parent)
+        {
+            return CreateButton(buttonAbove, parent, "VR Settings");
+        }
+        
+        private static Button CreateButton(Button buttonAbove, Transform parent, string name)
+        {
+            var newButton = Object.Instantiate(buttonAbove, parent, false);
+            newButton.transform.SetSiblingIndex(buttonAbove.transform.GetSiblingIndex() + 1);
+            newButton.name = name;
+            newButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = name;
+            
+            var buttonBelow = GetNavigationDown(buttonAbove);
+            SetNavigation(buttonAbove, null, newButton);
+            SetNavigation(newButton, buttonAbove, buttonBelow);
+            SetNavigation(buttonBelow, newButton);
+            
+            return newButton;
         }
         
         [HarmonyPrefix]
@@ -47,11 +78,7 @@ namespace TwoForksVr.UI.Patches
         {
             var mainMenuGroup = __instance.transform.Find("Main Menu Group");
             var gameSettingsButton = mainMenuGroup.Find("Settings Button").GetComponent<Button>();
-            var specialFeaturesButton = mainMenuGroup.Find("Special Features Button").GetComponent<Button>();
-            var vrSettingsButton = CreateVrSettingsButton(gameSettingsButton, mainMenuGroup);
-            SetNavigation(gameSettingsButton, null, vrSettingsButton);
-            SetNavigation(vrSettingsButton, gameSettingsButton, specialFeaturesButton);
-            SetNavigation(specialFeaturesButton, vrSettingsButton);
+            CreateVrSettingsButton(gameSettingsButton, mainMenuGroup);
         }
 
         [HarmonyPrefix]
