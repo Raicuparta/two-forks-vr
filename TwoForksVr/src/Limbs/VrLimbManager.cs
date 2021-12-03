@@ -16,7 +16,7 @@ namespace TwoForksVr.Limbs
 
         public static VrLimbManager Create(VrStage stage)
         {
-            var instance = Instantiate(VrAssetLoader.Hands).AddComponent<VrLimbManager>();
+            var instance = Instantiate(VrAssetLoader.HandsPrefab).AddComponent<VrLimbManager>();
             var instanceTransform = instance.transform;
             instanceTransform.SetParent(stage.transform, false);
 

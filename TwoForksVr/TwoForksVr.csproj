@@ -143,6 +143,7 @@
         <Compile Include="src\UI\Patches\ModSettingsPatches.cs" />
         <Compile Include="src\UI\Patches\UIPatches.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="src\VrSettingsMenu.cs" />
     </ItemGroup>
     <ItemGroup>
         <None Include="..\.editorconfig">
@@ -200,6 +201,9 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <Content Include="TwoForksVrAssets\AssetBundles\hands">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="TwoForksVrAssets\AssetBundles\settings-menu">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <Content Include="TwoForksVrAssets\AssetBundles\tool-picker">
