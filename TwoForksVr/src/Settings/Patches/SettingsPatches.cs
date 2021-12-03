@@ -21,7 +21,14 @@ namespace TwoForksVr.Settings.Patches
         {
             value = true;
         }
-        
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.MotionBlurQuality), MethodType.Setter)]
+        private static void ForceNoMotionBlur(ref int value)
+        {
+            value = 0;
+        }
+
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.SetResolution), typeof(Resolution), typeof(bool))]
         private static void ForceResolution(ref Resolution newResolution, ref bool newFullscreen)
