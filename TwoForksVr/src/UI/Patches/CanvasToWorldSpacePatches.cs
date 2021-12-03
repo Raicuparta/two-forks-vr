@@ -92,7 +92,7 @@ namespace TwoForksVr.UI.Patches
             canvas.renderMode = RenderMode.WorldSpace;
             LayerHelper.SetLayer(canvas, GameLayer.UI);
             canvas.gameObject.AddComponent<AttachToCamera>();
-            canvas.transform.localScale = Vector3.one * 0.0005f;
+            canvas.transform.localScale = Vector3.one * 0.002f;
         }
     }
 }
