@@ -26,6 +26,7 @@ namespace TwoForksVr.Settings.Patches
         [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.MotionBlurQuality), MethodType.Setter)]
         private static void ForceNoMotionBlur(ref int value)
         {
+            // they use an int and then convert it into an enum later, pain
             value = 0;
         }
 
