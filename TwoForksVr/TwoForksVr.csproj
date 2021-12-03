@@ -97,6 +97,7 @@
         <Compile Include="src\Assets\VrAssetLoader.cs" />
         <Compile Include="src\Debugging\DebugAxes.cs" />
         <Compile Include="src\Debugging\GeneralDebugger.cs" />
+        <Compile Include="src\Limbs\VrLaserMouse.cs" />
         <Compile Include="src\Limbs\Patches\HeldItemPatches.cs" />
         <Compile Include="src\Limbs\Patches\PlayerTargetingPatches.cs" />
         <Compile Include="src\Limbs\VrHand.cs" />
@@ -108,9 +109,9 @@
         <Compile Include="src\Helpers\Logs.cs" />
         <Compile Include="src\Helpers\MathHelper.cs" />
         <Compile Include="src\Helpers\ShaderProperty.cs" />
-        <Compile Include="src\Input\InputName.cs" />
-        <Compile Include="src\Input\Patches\BindingsPatches.cs" />
-        <Compile Include="src\Input\Patches\MousePatches.cs" />
+        <Compile Include="src\VrInput\InputName.cs" />
+        <Compile Include="src\VrInput\Patches\BindingsPatches.cs" />
+        <Compile Include="src\VrInput\Patches\MousePatches.cs" />
         <Compile Include="src\PlayerBody\Patches\BodyPatches.cs" />
         <Compile Include="src\PlayerBody\Patches\NavigationPatches.cs" />
         <Compile Include="src\PlayerBody\RoomScaleBodyTransform.cs" />

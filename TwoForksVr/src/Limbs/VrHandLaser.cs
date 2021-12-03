@@ -10,10 +10,12 @@ namespace TwoForksVr.Limbs
         private Transform leftHand;
         private LineRenderer lineRenderer;
         private Transform rightHand;
+        private Transform laserTransform;
 
         private void Start()
         {
-            PlayerTargetingPatches.LaserTransform = transform;
+            laserTransform = transform;
+            PlayerTargetingPatches.LaserTransform = laserTransform;
 
             lineRenderer = gameObject.AddComponent<LineRenderer>();
             lineRenderer.useWorldSpace = false;
@@ -25,6 +27,8 @@ namespace TwoForksVr.Limbs
             lineRenderer.material.shader = Shader.Find("Particles/Alpha Blended Premultiply");
             lineRenderer.material.SetColor(ShaderProperty.Color, new Color(0.8f, 0.8f, 0.8f));
             lineRenderer.enabled = false;
+
+            gameObject.AddComponent<VrLaserMouse>();
         }
 
         private void Update()
@@ -59,9 +63,10 @@ namespace TwoForksVr.Limbs
 
         private void UpdateLaserVisibility()
         {
-            if (!vgHudManager.Instance) return;
-            lineRenderer.enabled =
-                HasCurrentTarget() || SteamVR_Actions.default_Interact.state;
+            lineRenderer.enabled = true;
+            // if (!vgHudManager.Instance) return;
+            // lineRenderer.enabled =
+            //     HasCurrentTarget() || SteamVR_Actions.default_Interact.state;
         }
     }
 }

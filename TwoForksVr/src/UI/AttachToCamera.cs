@@ -38,7 +38,8 @@ namespace TwoForksVr.UI
         {
             if (!cameraTransform) return;
             var targetPosition = cameraTransform.position;
-            transform.position = targetPosition + cameraTransform.forward * offset;
+            var forward = Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up);
+            transform.position = targetPosition + forward * offset;
             transform.LookAt(2 * transform.position - targetPosition);
         }
 

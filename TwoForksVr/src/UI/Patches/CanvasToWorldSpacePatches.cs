@@ -93,6 +93,24 @@ namespace TwoForksVr.UI.Patches
             LayerHelper.SetLayer(canvas, GameLayer.UI);
             canvas.gameObject.AddComponent<AttachToCamera>();
             canvas.transform.localScale = Vector3.one * 0.002f;
+
+            SetupInteractableCanvasCollider(canvas);
+        }
+        
+        private static void  SetupInteractableCanvasCollider(Canvas canvas, GameObject proxy = null)
+        {
+            if (proxy == null) proxy = canvas.gameObject;
+            var collider = proxy.GetComponent<BoxCollider>();
+            if(collider == null)
+            {
+                var rectTransform = canvas.GetComponent<RectTransform>();
+                var thickness = 0.1f;
+                collider = proxy.gameObject.AddComponent<BoxCollider>();
+                collider.size = rectTransform.sizeDelta;
+                collider.center = new Vector3(0, 0, thickness * 0.5f);
+                proxy.layer = LayerMask.NameToLayer("UI");
+                canvas.worldCamera = Camera.main;
+            }
         }
     }
 }

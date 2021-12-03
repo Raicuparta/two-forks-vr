@@ -4,7 +4,7 @@ using HarmonyLib;
 using TwoForksVr.Helpers;
 using Valve.VR;
 
-namespace TwoForksVr.Input.Patches
+namespace TwoForksVr.VrInput.Patches
 {
     [HarmonyPatch]
     public static class BindingsPatches
