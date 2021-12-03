@@ -5,13 +5,15 @@ using Valve.VR;
 
 namespace TwoForksVr.Limbs
 {
-    internal class VrHandLaser : MonoBehaviour
+    public class VrHandLaser : MonoBehaviour
     {
         private Transform leftHand;
         private LineRenderer lineRenderer;
         private Transform rightHand;
         private Transform laserTransform;
-
+        private float laserLength = 10f;
+        private Vector3? target;
+        
         private void Start()
         {
             laserTransform = transform;
@@ -19,22 +21,38 @@ namespace TwoForksVr.Limbs
 
             lineRenderer = gameObject.AddComponent<LineRenderer>();
             lineRenderer.useWorldSpace = false;
-            lineRenderer.SetPositions(new[] {Vector3.zero, Vector3.forward});
+            lineRenderer.SetPositions(new[] {Vector3.zero, Vector3.forward * laserLength});
             lineRenderer.startWidth = 0.005f;
             lineRenderer.endWidth = 0.001f;
+            // TODO change colors depending on laser state.
             lineRenderer.endColor = new Color(1, 1, 1, 0.3f);
-            lineRenderer.startColor = Color.clear;
+            lineRenderer.startColor = new Color(1, 1, 1, 0.3f);
+            // lineRenderer.startColor = Color.clear;
             lineRenderer.material.shader = Shader.Find("Particles/Alpha Blended Premultiply");
             lineRenderer.material.SetColor(ShaderProperty.Color, new Color(0.8f, 0.8f, 0.8f));
             lineRenderer.enabled = false;
 
-            gameObject.AddComponent<VrLaserMouse>();
+            VrLaserMouse.Create(this);
+        }
+
+        public void SetTarget(Vector3? newTarget)
+        {
+            target = newTarget;
         }
 
         private void Update()
         {
             UpdateLaserParent();
             UpdateLaserVisibility();
+            UpdateLaserTarget();
+        }
+
+        private void UpdateLaserTarget()
+        {
+            lineRenderer.SetPosition(1,
+                target != null
+                    ? transform.InverseTransformPoint((Vector3) target)
+                    : Vector3.forward * laserLength);
         }
 
         public static void Create(Transform leftHand, Transform rightHand)

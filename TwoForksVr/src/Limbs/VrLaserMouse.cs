@@ -7,6 +7,14 @@ namespace TwoForksVr.Limbs
 {
     public class VrLaserMouse : StandaloneInputModule
     {
+        private VrHandLaser handLaser;
+        
+        public static void Create(VrHandLaser handLaser)
+        {
+            var instance = handLaser.gameObject.AddComponent<VrLaserMouse>();
+            instance.handLaser = handLaser;
+        }
+        
         public void ClickAt(Vector3 worldPoint)
         {
             ClickAt((Vector2) Camera.main.WorldToScreenPoint(worldPoint));
@@ -26,10 +34,15 @@ namespace TwoForksVr.Limbs
         private void Update()
         {
             var isHit = Physics.Raycast(transform.position, transform.forward, out var hit, 30, LayerHelper.GetMask(GameLayer.UI));
-            if (!isHit) return;
+            if (!isHit)
+            {
+                handLaser.SetTarget(null);
+                return;
+            }
+
+            handLaser.SetTarget(hit.point);
 
             var screenPoint = (Vector2) Camera.main.WorldToScreenPoint(hit.point);
-            
             if (SteamVR_Actions.default_Grip.stateDown)
             {
                 ClickAt(screenPoint);
