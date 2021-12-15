@@ -92,7 +92,6 @@ namespace TwoForksVr.UI.Patches
             if (canvas.GetComponent<GraphicRaycaster>())
             {
                 canvas.gameObject.AddComponent<AttachMenuToCamera>();
-                SetupInteractableCanvasCollider(canvas);
                 canvas.transform.localScale = Vector3.one * 0.002f;
             }
             else
@@ -100,22 +99,6 @@ namespace TwoForksVr.UI.Patches
                 canvas.gameObject.AddComponent<AttachHudToCamera>();
                 canvas.transform.localScale = Vector3.one * 0.0005f;
             }
-        }
-        
-        private static void  SetupInteractableCanvasCollider(Canvas canvas, GameObject proxy = null)
-        {
-            if (proxy == null) proxy = canvas.gameObject;
-            var collider = proxy.GetComponent<BoxCollider>();
-            if (collider != null) return;
-
-            var rectTransform = canvas.GetComponent<RectTransform>();
-            collider = proxy.gameObject.AddComponent<BoxCollider>();
-            var rectSize = rectTransform.sizeDelta;
-            collider.size = new Vector3(rectSize.x, rectSize.y, 0.1f);
-            proxy.layer = LayerMask.NameToLayer("UI");
-            canvas.worldCamera = Camera.main;
-
-            proxy.AddComponent<DebugCollider>();
         }
     }
 }
