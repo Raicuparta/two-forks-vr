@@ -8,7 +8,8 @@ namespace TwoForksVr.Limbs
     public class VrLaserMouse : StandaloneInputModule
     {
         private VrHandLaser handLaser;
-        
+        private readonly SteamVR_Action_Boolean clickAction = SteamVR_Actions.default_Grip;
+
         public static void Create(VrHandLaser handLaser)
         {
             var instance = handLaser.gameObject.AddComponent<VrLaserMouse>();
@@ -32,20 +33,9 @@ namespace TwoForksVr.Limbs
                 position =  Camera.main.WorldToScreenPoint(hit.point),
             }, out _, out _);
             
-            var pressed = false;
-            var released = false;
-            if (SteamVR_Actions.default_Grip.stateDown)
-            {
-                pressed = true;
-            }
-            else if (SteamVR_Actions.default_Grip.stateUp)
-            {
-                released = true;
-            }
+            ProcessTouchPress(pointerData, clickAction.stateDown, clickAction.stateUp);
 
-            ProcessTouchPress(pointerData, pressed, released);
-
-            if (released)
+            if (clickAction.stateUp)
             {
                 RemovePointerData(pointerData);
             }
