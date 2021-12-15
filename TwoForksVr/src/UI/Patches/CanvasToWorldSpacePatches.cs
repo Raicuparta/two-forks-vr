@@ -91,13 +91,13 @@ namespace TwoForksVr.UI.Patches
             // Those need to be handled differently, with colliders for the laser ray.
             if (canvas.GetComponent<GraphicRaycaster>())
             {
-                canvas.gameObject.AddComponent<AttachToCamera>();
+                canvas.gameObject.AddComponent<AttachMenuToCamera>();
                 SetupInteractableCanvasCollider(canvas);
                 canvas.transform.localScale = Vector3.one * 0.002f;
             }
             else
             {
-                canvas.gameObject.AddComponent<OldAttachToCamera>();
+                canvas.gameObject.AddComponent<AttachHudToCamera>();
                 canvas.transform.localScale = Vector3.one * 0.0005f;
             }
         }

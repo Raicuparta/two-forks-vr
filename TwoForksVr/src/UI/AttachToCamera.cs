@@ -3,11 +3,10 @@ using UnityEngine;
 
 namespace TwoForksVr.UI
 {
-    public class AttachToCamera : MonoBehaviour
+    public abstract class AttachToCamera : MonoBehaviour
     {
-        private const float offset = 3f;
-        // TODO: not public.
-        public static Transform cameraTransform;
+        protected static Transform CameraTransform;
+
         private static Action onTargetCameraSet;
 
         private void Awake()
@@ -20,33 +19,11 @@ namespace TwoForksVr.UI
             onTargetCameraSet -= HandleTargetCameraSet;
         }
 
-        private void HandleTargetCameraSet()
-        {
-            UpdateTransform();
-        }
-
-        private void OnEnable()
-        {
-            UpdateTransform();
-        }
-
-        private void Start()
-        {
-            UpdateTransform();
-        }
-
-        private void UpdateTransform()
-        {
-            if (!cameraTransform) return;
-            var targetPosition = cameraTransform.position;
-            var forward = Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up);
-            transform.position = targetPosition + forward * offset;
-            transform.LookAt(2 * transform.position - targetPosition);
-        }
+        protected abstract void HandleTargetCameraSet();
 
         public static void SetTargetCamera(Camera camera)
         {
-            cameraTransform = camera ? camera.transform : null;
+            CameraTransform = camera ? camera.transform : null;
             onTargetCameraSet?.Invoke();
         }
     }

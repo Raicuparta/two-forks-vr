@@ -111,7 +111,8 @@
     <Compile Include="src\Helpers\Logs.cs" />
     <Compile Include="src\Helpers\MathHelper.cs" />
     <Compile Include="src\Helpers\ShaderProperty.cs" />
-    <Compile Include="src\UI\OldAttachToCamera.cs" />
+    <Compile Include="src\UI\AttachMenuToCamera.cs" />
+    <Compile Include="src\UI\AttachHudToCamera.cs" />
     <Compile Include="src\UI\Patches\MainMenuPatches.cs" />
     <Compile Include="src\VrInput\InputName.cs" />
     <Compile Include="src\VrInput\Patches\BindingsPatches.cs" />
