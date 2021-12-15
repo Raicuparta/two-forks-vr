@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="src\Assets\VrAssetLoader.cs" />
     <Compile Include="src\Debugging\DebugAxes.cs" />
+    <Compile Include="src\Debugging\DebugCollider.cs" />
     <Compile Include="src\Debugging\GeneralDebugger.cs" />
     <Compile Include="src\Limbs\VrLaserMouse.cs" />
     <Compile Include="src\Limbs\Patches\HeldItemPatches.cs" />

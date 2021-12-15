@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using TwoForksVr.Debugging;
 using TwoForksVr.Helpers;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -92,9 +93,10 @@ namespace TwoForksVr.UI.Patches
             canvas.renderMode = RenderMode.WorldSpace;
             LayerHelper.SetLayer(canvas, GameLayer.UI);
             canvas.gameObject.AddComponent<AttachToCamera>();
-            canvas.transform.localScale = Vector3.one * 0.002f;
-
+            
             SetupInteractableCanvasCollider(canvas);
+            
+            canvas.transform.localScale = Vector3.one * 0.002f;
         }
         
         private static void  SetupInteractableCanvasCollider(Canvas canvas, GameObject proxy = null)
@@ -109,6 +111,8 @@ namespace TwoForksVr.UI.Patches
             collider.size = new Vector3(rectSize.x, rectSize.y, 0.1f);
             proxy.layer = LayerMask.NameToLayer("UI");
             canvas.worldCamera = Camera.main;
+
+            proxy.AddComponent<DebugCollider>();
         }
     }
 }
