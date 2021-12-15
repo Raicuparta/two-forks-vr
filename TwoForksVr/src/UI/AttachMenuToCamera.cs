@@ -1,5 +1,11 @@
+using System.Collections.Generic;
+using System.Linq;
+using HarmonyLib;
 using TwoForksVr.Debugging;
+using TwoForksVr.Helpers;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 namespace TwoForksVr.UI
 {
@@ -7,12 +13,8 @@ namespace TwoForksVr.UI
     {
         private const float offset = 3f;
         private BoxCollider collider;
-
-        protected override void HandleTargetCameraSet()
-        {
-            UpdateTransform();
-        }
-
+        private vgUIInputModule[] inputModules = new vgUIInputModule[]{};
+        
         private void OnEnable()
         {
             UpdateTransform();
@@ -22,6 +24,49 @@ namespace TwoForksVr.UI
         {
             UpdateTransform();
             SetUpCollider();
+            SetUpInputModule();
+        }
+
+        private void Update()
+        {
+            var active = IsAnyInputModuleActive();
+            if (active && !collider.enabled)
+            {
+                collider.enabled = true;
+            }
+            else if (!active && collider.enabled)
+            {
+                collider.enabled = false;
+            }
+        }
+
+        private bool IsAnyInputModuleActive()
+        {
+            if (inputModules.Length == 0) return false;
+            foreach (var inputModule in inputModules)
+            {
+                if (inputModule && inputModule.gameObject.activeInHierarchy && inputModule.enabled)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void SetUpInputModule()
+        {
+            // TODO clean this up.
+            
+            var rootSceneObjects = gameObject.scene.GetRootGameObjects();
+            foreach (var sceneObject in rootSceneObjects)
+            {
+                var modules = sceneObject.GetComponentsInChildren<vgUIInputModule>(true);
+                foreach (var module in modules)
+                {
+                    inputModules = modules.AddItem(module).ToArray();
+                }
+            }
         }
         
         private void SetUpCollider()
@@ -37,6 +82,11 @@ namespace TwoForksVr.UI
             gameObject.GetComponent<Canvas>().worldCamera = Camera.main; // TODO update this from cameratransform?
             
             gameObject.AddComponent<DebugCollider>();
+        }
+        
+        protected override void HandleTargetCameraSet()
+        {
+            UpdateTransform();
         }
 
         private void UpdateTransform()
