@@ -6,7 +6,8 @@ namespace TwoForksVr.UI
     public class AttachToCamera : MonoBehaviour
     {
         private const float offset = 3f;
-        private static Transform cameraTransform;
+        // TODO: not public.
+        public static Transform cameraTransform;
         private static Action onTargetCameraSet;
 
         private void Awake()
@@ -46,7 +47,7 @@ namespace TwoForksVr.UI
         public static void SetTargetCamera(Camera camera)
         {
             cameraTransform = camera ? camera.transform : null;
-            onTargetCameraSet();
+            onTargetCameraSet?.Invoke();
         }
     }
 }

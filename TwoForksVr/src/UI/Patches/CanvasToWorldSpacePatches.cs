@@ -81,22 +81,25 @@ namespace TwoForksVr.UI.Patches
                 return;
             }
 
-            var attachToCamera = canvas.GetComponent<AttachToCamera>();
-            if (attachToCamera)
-            {
-                // TODO why was this here?
-            }
-
             if (canvas.renderMode != RenderMode.ScreenSpaceOverlay) return;
 
             canvas.worldCamera = camera;
             canvas.renderMode = RenderMode.WorldSpace;
             LayerHelper.SetLayer(canvas, GameLayer.UI);
-            canvas.gameObject.AddComponent<AttachToCamera>();
             
-            SetupInteractableCanvasCollider(canvas);
-            
-            canvas.transform.localScale = Vector3.one * 0.002f;
+            // Canvases with graphic raycasters are the ones that receive click events.
+            // Those need to be handled differently, with colliders for the laser ray.
+            if (canvas.GetComponent<GraphicRaycaster>())
+            {
+                canvas.gameObject.AddComponent<AttachToCamera>();
+                SetupInteractableCanvasCollider(canvas);
+                canvas.transform.localScale = Vector3.one * 0.002f;
+            }
+            else
+            {
+                canvas.gameObject.AddComponent<OldAttachToCamera>();
+                canvas.transform.localScale = Vector3.one * 0.0005f;
+            }
         }
         
         private static void  SetupInteractableCanvasCollider(Canvas canvas, GameObject proxy = null)
