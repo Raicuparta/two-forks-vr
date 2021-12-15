@@ -1,222 +1,222 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-    <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{4FAEDEC8-3D86-4350-B42D-DAD4414E69D1}</ProjectGuid>
-        <OutputType>Library</OutputType>
-        <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>TwoForksVr</RootNamespace>
-        <AssemblyName>TwoForksVr</AssemblyName>
-        <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-        <FileAlignment>512</FileAlignment>
-        <Deterministic>true</Deterministic>
-        <OutputPath>C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\plugins</OutputPath>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <DefineConstants>TRACE;DEBUG</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <DebugType>pdbonly</DebugType>
-        <Optimize>true</Optimize>
-        <DefineConstants>TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="0Harmony, Version=2.5.5.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\packages\HarmonyX.2.5.5\lib\net35\0Harmony.dll</HintPath>
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\packages\FirewatchGameLibs.1.0.9.1\lib\net35\Assembly-CSharp.dll</HintPath>
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\packages\FirewatchGameLibs.1.0.9.1\lib\net35\Assembly-CSharp-firstpass.dll</HintPath>
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="BepInEx, Version=5.4.15.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\packages\BepInEx.BaseLib.5.4.16\lib\net35\BepInEx.dll</HintPath>
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Mono.Cecil, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
-          <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.dll</HintPath>
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Mono.Cecil.Mdb, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
-          <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.Mdb.dll</HintPath>
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Mono.Cecil.Pdb, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
-          <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.Pdb.dll</HintPath>
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Mono.Cecil.Rocks, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
-          <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.Rocks.dll</HintPath>
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="MonoMod.RuntimeDetour, Version=21.8.19.1, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\packages\MonoMod.RuntimeDetour.21.8.19.1\lib\net35\MonoMod.RuntimeDetour.dll</HintPath>
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="MonoMod.Utils, Version=21.8.19.1, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\packages\MonoMod.Utils.21.8.19.1\lib\net35\MonoMod.Utils.dll</HintPath>
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="System" />
-        <Reference Include="System.Core" />
-        <Reference Include="System.Xml.Linq" />
-        <Reference Include="System.Data.DataSetExtensions" />
-        <Reference Include="System.Data" />
-        <Reference Include="System.Xml" />
-        <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\packages\FirewatchGameLibs.1.0.9.1\lib\net35\UnityEngine.dll</HintPath>
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\packages\FirewatchGameLibs.1.0.9.1\lib\net35\UnityEngine.UI.dll</HintPath>
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="UnityHelper, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\UnityHelper\obj\Release\UnityHelper.dll</HintPath>
-        </Reference>
-        <Reference Include="Valve.Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\UnityHelper\Assets\SteamVR\Input\Plugins\JSON.NET\Valve.Newtonsoft.Json.dll</HintPath>
-        </Reference>
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="src\Assets\VrAssetLoader.cs" />
-        <Compile Include="src\Debugging\DebugAxes.cs" />
-        <Compile Include="src\Debugging\GeneralDebugger.cs" />
-        <Compile Include="src\Limbs\VrLaserMouse.cs" />
-        <Compile Include="src\Limbs\Patches\HeldItemPatches.cs" />
-        <Compile Include="src\Limbs\Patches\PlayerTargetingPatches.cs" />
-        <Compile Include="src\Limbs\VrHand.cs" />
-        <Compile Include="src\Limbs\VrHandLaser.cs" />
-        <Compile Include="src\Limbs\VrLimbManager.cs" />
-        <Compile Include="src\Limbs\VrFoot.cs" />
-        <Compile Include="src\Helpers\LateUpdateFollow.cs" />
-        <Compile Include="src\Helpers\LayerHelper.cs" />
-        <Compile Include="src\Helpers\Logs.cs" />
-        <Compile Include="src\Helpers\MathHelper.cs" />
-        <Compile Include="src\Helpers\ShaderProperty.cs" />
-        <Compile Include="src\VrInput\InputName.cs" />
-        <Compile Include="src\VrInput\Patches\BindingsPatches.cs" />
-        <Compile Include="src\VrInput\Patches\MousePatches.cs" />
-        <Compile Include="src\PlayerBody\Patches\BodyPatches.cs" />
-        <Compile Include="src\PlayerBody\Patches\NavigationPatches.cs" />
-        <Compile Include="src\PlayerBody\RoomScaleBodyTransform.cs" />
-        <Compile Include="src\PlayerBody\VrBodyManager.cs" />
-        <Compile Include="src\PlayerCamera\Patches\CameraTransformProtectionPatches.cs" />
-        <Compile Include="src\PlayerCamera\Patches\GameCameraPatches.cs" />
-        <Compile Include="src\PlayerCamera\Patches\LoadingCameraPatches.cs" />
-        <Compile Include="src\PlayerCamera\Patches\MenuCameraPatches.cs" />
-        <Compile Include="src\PlayerCamera\VrCameraManager.cs" />
-        <Compile Include="src\Settings\Patches\SettingsPatches.cs" />
-        <Compile Include="src\Stage\IntroFix.cs" />
-        <Compile Include="src\Stage\Patches\StagePatches.cs" />
-        <Compile Include="src\Stage\VrStage.cs" />
-        <Compile Include="src\Tools\Patches\CompassPatches.cs" />
-        <Compile Include="src\Tools\Patches\MapPatches.cs" />
-        <Compile Include="src\Tools\ToolPicker.cs" />
-        <Compile Include="src\Tools\ToolPickerActions\ToolPickerAction.cs" />
-        <Compile Include="src\Tools\ToolPickerActions\ToolPickerCamera.cs" />
-        <Compile Include="src\Tools\ToolPickerActions\ToolPickerCompass.cs" />
-        <Compile Include="src\Tools\ToolPickerActions\ToolPickerFlashlight.cs" />
-        <Compile Include="src\Tools\ToolPickerActions\ToolPickerInventory.cs" />
-        <Compile Include="src\Tools\ToolPickerActions\ToolPickerMap.cs" />
-        <Compile Include="src\Tools\ToolPickerItem.cs" />
-        <Compile Include="src\Tools\VrMap.cs" />
-        <Compile Include="src\Tools\VrToolItem.cs" />
-        <Compile Include="src\TwoForksVrMod.cs" />
-        <Compile Include="src\UI\AttachToCamera.cs" />
-        <Compile Include="src\UI\Patches\CanvasToWorldSpacePatches.cs" />
-        <Compile Include="src\UI\Patches\InventoryPatches.cs" />
-        <Compile Include="src\UI\Patches\UIPatches.cs" />
-        <Compile Include="Properties\AssemblyInfo.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="..\.editorconfig">
-            <Link>SteamVR\.editorconfig</Link>
-        </None>
-        <None Include="packages.config" />
-        <None Include="TwoForksVrAssets\Bindings\actions.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Include="TwoForksVrAssets\Bindings\bindings_holographic_controller.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Include="TwoForksVrAssets\Bindings\bindings_knuckles.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Include="TwoForksVrAssets\Bindings\bindings_logitech_stylus.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Include="TwoForksVrAssets\Bindings\bindings_oculus_touch.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Include="TwoForksVrAssets\Bindings\bindings_vive_controller.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Include="TwoForksVrAssets\Bindings\bindings_vive_cosmos_controller.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Include="TwoForksVrAssets\Bindings\binding_holographic_hmd.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Include="TwoForksVrAssets\Bindings\binding_index_hmd.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Include="TwoForksVrAssets\Bindings\binding_rift.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Include="TwoForksVrAssets\Bindings\binding_vive.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Include="TwoForksVrAssets\Bindings\binding_vive_cosmos.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Include="TwoForksVrAssets\Bindings\binding_vive_pro.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Include="TwoForksVrAssets\Bindings\binding_vive_tracker_camera.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
-    <ItemGroup>
-      <Content Include="TwoForksVrAssets\AssetBundles\body">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="TwoForksVrAssets\AssetBundles\hand">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="TwoForksVrAssets\AssetBundles\hands">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="TwoForksVrAssets\AssetBundles\tool-picker">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-    </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-    <PropertyGroup>
-        <PreBuildEvent>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4FAEDEC8-3D86-4350-B42D-DAD4414E69D1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TwoForksVr</RootNamespace>
+    <AssemblyName>TwoForksVr</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <OutputPath>C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\plugins</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony, Version=2.5.5.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\HarmonyX.2.5.5\lib\net35\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\FirewatchGameLibs.1.0.9.1\lib\net35\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\FirewatchGameLibs.1.0.9.1\lib\net35\Assembly-CSharp-firstpass.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="BepInEx, Version=5.4.15.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\BepInEx.BaseLib.5.4.16\lib\net35\BepInEx.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
+      <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
+      <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.Mdb.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
+      <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.Pdb.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
+      <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.Rocks.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MonoMod.RuntimeDetour, Version=21.8.19.1, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\MonoMod.RuntimeDetour.21.8.19.1\lib\net35\MonoMod.RuntimeDetour.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MonoMod.Utils, Version=21.8.19.1, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\MonoMod.Utils.21.8.19.1\lib\net35\MonoMod.Utils.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\FirewatchGameLibs.1.0.9.1\lib\net35\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\FirewatchGameLibs.1.0.9.1\lib\net35\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityHelper, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\UnityHelper\obj\Release\UnityHelper.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Valve.Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\UnityHelper\Assets\SteamVR\Input\Plugins\JSON.NET\Valve.Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="src\Assets\VrAssetLoader.cs" />
+    <Compile Include="src\Debugging\DebugAxes.cs" />
+    <Compile Include="src\Debugging\GeneralDebugger.cs" />
+    <Compile Include="src\Limbs\Patches\HeldItemPatches.cs" />
+    <Compile Include="src\Limbs\Patches\PlayerTargetingPatches.cs" />
+    <Compile Include="src\Limbs\VrHand.cs" />
+    <Compile Include="src\Limbs\VrHandLaser.cs" />
+    <Compile Include="src\Limbs\VrLimbManager.cs" />
+    <Compile Include="src\Limbs\VrFoot.cs" />
+    <Compile Include="src\Helpers\LateUpdateFollow.cs" />
+    <Compile Include="src\Helpers\LayerHelper.cs" />
+    <Compile Include="src\Helpers\Logs.cs" />
+    <Compile Include="src\Helpers\MathHelper.cs" />
+    <Compile Include="src\Helpers\ShaderProperty.cs" />
+    <Compile Include="src\Input\InputName.cs" />
+    <Compile Include="src\Input\Patches\BindingsPatches.cs" />
+    <Compile Include="src\Input\Patches\MousePatches.cs" />
+    <Compile Include="src\PlayerBody\Patches\BodyPatches.cs" />
+    <Compile Include="src\PlayerBody\Patches\NavigationPatches.cs" />
+    <Compile Include="src\PlayerBody\RoomScaleBodyTransform.cs" />
+    <Compile Include="src\PlayerBody\VrBodyManager.cs" />
+    <Compile Include="src\PlayerCamera\Patches\CameraTransformProtectionPatches.cs" />
+    <Compile Include="src\PlayerCamera\Patches\GameCameraPatches.cs" />
+    <Compile Include="src\PlayerCamera\Patches\LoadingCameraPatches.cs" />
+    <Compile Include="src\PlayerCamera\Patches\MenuCameraPatches.cs" />
+    <Compile Include="src\PlayerCamera\VrCameraManager.cs" />
+    <Compile Include="src\Settings\Patches\SettingsPatches.cs" />
+    <Compile Include="src\Stage\IntroFix.cs" />
+    <Compile Include="src\Stage\Patches\StagePatches.cs" />
+    <Compile Include="src\Stage\VrStage.cs" />
+    <Compile Include="src\Tools\Patches\CompassPatches.cs" />
+    <Compile Include="src\Tools\Patches\MapPatches.cs" />
+    <Compile Include="src\Tools\ToolPicker.cs" />
+    <Compile Include="src\Tools\ToolPickerActions\ToolPickerAction.cs" />
+    <Compile Include="src\Tools\ToolPickerActions\ToolPickerCamera.cs" />
+    <Compile Include="src\Tools\ToolPickerActions\ToolPickerCompass.cs" />
+    <Compile Include="src\Tools\ToolPickerActions\ToolPickerFlashlight.cs" />
+    <Compile Include="src\Tools\ToolPickerActions\ToolPickerInventory.cs" />
+    <Compile Include="src\Tools\ToolPickerActions\ToolPickerMap.cs" />
+    <Compile Include="src\Tools\ToolPickerItem.cs" />
+    <Compile Include="src\Tools\VrMap.cs" />
+    <Compile Include="src\Tools\VrToolItem.cs" />
+    <Compile Include="src\TwoForksVrMod.cs" />
+    <Compile Include="src\UI\AttachToCamera.cs" />
+    <Compile Include="src\UI\Patches\CanvasToWorldSpacePatches.cs" />
+    <Compile Include="src\UI\Patches\InventoryPatches.cs" />
+    <Compile Include="src\UI\Patches\UIPatches.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.editorconfig">
+      <Link>SteamVR\.editorconfig</Link>
+    </None>
+    <None Include="packages.config" />
+    <None Include="TwoForksVrAssets\Bindings\actions.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TwoForksVrAssets\Bindings\bindings_holographic_controller.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TwoForksVrAssets\Bindings\bindings_knuckles.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TwoForksVrAssets\Bindings\bindings_logitech_stylus.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TwoForksVrAssets\Bindings\bindings_oculus_touch.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TwoForksVrAssets\Bindings\bindings_vive_controller.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TwoForksVrAssets\Bindings\bindings_vive_cosmos_controller.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TwoForksVrAssets\Bindings\binding_holographic_hmd.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TwoForksVrAssets\Bindings\binding_index_hmd.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TwoForksVrAssets\Bindings\binding_rift.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TwoForksVrAssets\Bindings\binding_vive.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TwoForksVrAssets\Bindings\binding_vive_cosmos.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TwoForksVrAssets\Bindings\binding_vive_pro.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TwoForksVrAssets\Bindings\binding_vive_tracker_camera.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TwoForksVrAssets\AssetBundles\body">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TwoForksVrAssets\AssetBundles\hand">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TwoForksVrAssets\AssetBundles\hands">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TwoForksVrAssets\AssetBundles\tool-picker">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
             "$(MSBuildBinPath)\MSBuild.exe" "$(ProjectDir)..\UnityHelper\Assembly-CSharp.csproj" -p:AssemblyName="UnityHelper" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_5;UNITY_5_6;UNITY_5;UNITY_64;"
         </PreBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets" Condition="Exists('..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Import Project="..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets" Condition="Exists('..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets')" />
-    <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-      <PropertyGroup>
-        <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
-      </PropertyGroup>
-      <Error Condition="!Exists('..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets'))" />
-    </Target>
+    <Error Condition="!Exists('..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets'))" />
+  </Target>
 </Project>
