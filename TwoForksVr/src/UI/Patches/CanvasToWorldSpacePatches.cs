@@ -101,16 +101,14 @@ namespace TwoForksVr.UI.Patches
         {
             if (proxy == null) proxy = canvas.gameObject;
             var collider = proxy.GetComponent<BoxCollider>();
-            if(collider == null)
-            {
-                var rectTransform = canvas.GetComponent<RectTransform>();
-                var thickness = 0.1f;
-                collider = proxy.gameObject.AddComponent<BoxCollider>();
-                collider.size = rectTransform.sizeDelta;
-                collider.center = new Vector3(0, 0, thickness * 0.5f);
-                proxy.layer = LayerMask.NameToLayer("UI");
-                canvas.worldCamera = Camera.main;
-            }
+            if (collider != null) return;
+
+            var rectTransform = canvas.GetComponent<RectTransform>();
+            collider = proxy.gameObject.AddComponent<BoxCollider>();
+            var rectSize = rectTransform.sizeDelta;
+            collider.size = new Vector3(rectSize.x, rectSize.y, 0.1f);
+            proxy.layer = LayerMask.NameToLayer("UI");
+            canvas.worldCamera = Camera.main;
         }
     }
 }
