@@ -31,20 +31,27 @@ namespace TwoForksVr.Limbs
             {
                 position =  Camera.main.WorldToScreenPoint(hit.point),
             }, out _, out _);
-
-            ProcessMove(pointerData);
             
+            var pressed = false;
+            var released = false;
             if (SteamVR_Actions.default_Grip.stateDown)
             {
-                ProcessTouchPress(pointerData, true, false);
+                pressed = true;
             }
             else if (SteamVR_Actions.default_Grip.stateUp)
             {
-                ProcessTouchPress(pointerData, false, true);
+                released = true;
             }
-            else if (SteamVR_Actions.default_Grip.state)
+
+            ProcessTouchPress(pointerData, pressed, released);
+
+            if (released)
             {
-                ProcessTouchPress(pointerData, false, false);
+                RemovePointerData(pointerData);
+            }
+            else
+            {
+                ProcessMove(pointerData);
             }
         }
     }
