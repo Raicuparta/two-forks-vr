@@ -15,12 +15,12 @@ namespace TwoForksVr.Limbs
             instance.handLaser = handLaser;
         }
         
-        public void ClickAt(Vector3 worldPoint)
+        public void ClickAt(Vector3 worldPoint, bool pressed, bool released)
         {
-            ClickAt((Vector2) Camera.main.WorldToScreenPoint(worldPoint));
+            ClickAt((Vector2) Camera.main.WorldToScreenPoint(worldPoint), pressed, released);
         }
         
-        public void ClickAt(Vector2 screenPoint)
+        public void ClickAt(Vector2 screenPoint, bool pressed, bool released)
         {
             Input.simulateMouseWithTouches = true;
             var pointerData = GetTouchPointerEventData(new Touch()
@@ -28,7 +28,7 @@ namespace TwoForksVr.Limbs
                 position = new Vector2(screenPoint.x, screenPoint.y),
             }, out _, out _);
 
-            ProcessTouchPress(pointerData, true, true);
+            ProcessTouchPress(pointerData, pressed, released);
         }
 
         private void Update()
@@ -43,19 +43,26 @@ namespace TwoForksVr.Limbs
             handLaser.SetTarget(hit.point);
 
             var screenPoint = (Vector2) Camera.main.WorldToScreenPoint(hit.point);
-            if (SteamVR_Actions.default_Grip.stateDown)
+            if (SteamVR_Actions.default_Grip.state)
             {
-                ClickAt(screenPoint);
+                ClickAt(screenPoint, true, false);
+            }
+            else if (SteamVR_Actions.default_Grip.stateUp)
+            {
+                ClickAt(screenPoint, false, true);
             }
             else
             {
-                var pointerData = GetTouchPointerEventData(new Touch()
-                {
-                    position = new Vector2(screenPoint.x, screenPoint.y),
-                }, out _, out _);
-                
-                ProcessMove(pointerData);
+                ClickAt(screenPoint, false, false);
             }
+            
+
+            var pointerData = GetTouchPointerEventData(new Touch()
+            {
+                position = new Vector2(screenPoint.x, screenPoint.y),
+            }, out _, out _);
+            
+            ProcessMove(pointerData);
         }
     }
 }
