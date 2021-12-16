@@ -147,5 +147,13 @@ namespace TwoForksVr.Input.Patches
 
             return false;
         }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.CheckForPCControls))]
+        private static bool ForceDisablePcControls(vgPlayerController __instance)
+        {
+            __instance.PCControlsActive = false;
+            return false;
+        }
     }
 }
