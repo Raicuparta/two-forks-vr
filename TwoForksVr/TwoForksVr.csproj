@@ -36,16 +36,72 @@
       <HintPath>..\packages\HarmonyX.2.5.5\lib\net35\0Harmony.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="AmplifyBloom, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\AmplifyBloom.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AmplifyColor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\AmplifyColor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AmplifyMotion, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\AmplifyMotion.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AmplifyOcclusion, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\AmplifyOcclusion.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\Assembly-CSharp-nstrip.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\Assembly-CSharp-firstpass-nstrip.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\Assembly-CSharp-firstpass.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="BepInEx, Version=5.4.15.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\BepInEx.BaseLib.5.4.16\lib\net35\BepInEx.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ConditionalExpression, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\ConditionalExpression.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="GalaxyCSharp, Version=1.0.5919.29692, Culture=neutral, PublicKeyToken=c78c4b7d4be3eaf9">
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\GalaxyCSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\Mono.Security.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\mscorlib.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PlayMaker, Version=1.6.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\PlayMaker.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67">
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\protobuf-net.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Rewired_Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\Rewired_Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Rewired_Windows, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\Rewired_Windows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SampleClassLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\SampleClassLibrary.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="sharedRuntime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\sharedRuntime.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SteamVR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -54,222 +110,239 @@
     <Reference Include="SteamVR_Actions, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\UnityHelper\Build\Build_Data\Managed\SteamVR_Actions.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <Reference Include="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <HintPath>..\..\ow-game-libs\package\lib\net35\System.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <HintPath>..\..\ow-game-libs\package\lib\net35\System.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\System.Xml.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.AccessibilityModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.AccessibilityModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.AccessibilityModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.AIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.AIModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.AIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.AnimationModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ARModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.ARModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.ARModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.AssetBundleModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.AssetBundleModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.AudioModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ClothModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.ClothModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.ClothModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ClusterInputModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.ClusterInputModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.ClusterInputModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ClusterRendererModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.ClusterRendererModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.ClusterRendererModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CrashReportingModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.CrashReportingModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.CrashReportingModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.DirectorModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.DirectorModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.DirectorModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.GameCenterModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.GameCenterModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.GameCenterModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.GridModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.GridModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.GridModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ImageConversionModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.ImageConversionModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.IMGUIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.InputModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.InputModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.InputModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.JSONSerializeModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.JSONSerializeModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.Networking, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.Networking.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.Networking.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ParticlesLegacyModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.ParticlesLegacyModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.ParticlesLegacyModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ParticleSystemModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.ParticleSystemModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.PerformanceReportingModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.PerformanceReportingModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.PerformanceReportingModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.Physics2DModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.Physics2DModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.Physics2DModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.PhysicsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ScreenCaptureModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.ScreenCaptureModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.ScreenCaptureModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.SharedInternalsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.SharedInternalsModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.SharedInternalsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.SpatialTracking, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.SpatialTracking.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.SpatialTracking.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.SpriteMaskModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.SpriteMaskModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.SpriteMaskModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.SpriteShapeModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.SpriteShapeModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.SpriteShapeModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.StandardEvents, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.StandardEvents.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.StandardEvents.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.StyleSheetsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.StyleSheetsModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.StyleSheetsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TerrainModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.TerrainModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.TerrainModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TerrainPhysicsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.TerrainPhysicsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.TextRenderingModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TilemapModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.TilemapModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.TilemapModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.Timeline, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.Timeline.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.Timeline.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UIElementsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UIElementsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UNETModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.UNETModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UNETModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityAnalyticsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UnityAnalyticsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityConnectModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.UnityConnectModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UnityConnectModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestAudioModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UnityWebRequestModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestTextureModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestWWWModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.VehiclesModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.VehiclesModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.VehiclesModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.VideoModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.VideoModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.VideoModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.VRModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.VRModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.VRModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.WebModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.WebModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.WebModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.WindModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files (x86)\GOG Galaxy\Games\Firewatch\Firewatch_Data\Managed\UnityEngine.WindModule.dll</HintPath>
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.WindModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="urecordRuntime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\urecordRuntime.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Valve.Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\UnityHelper\Assets\SteamVR\Input\Plugins\JSON.NET\Valve.Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="XGamingRuntime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\XGamingRuntime.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
