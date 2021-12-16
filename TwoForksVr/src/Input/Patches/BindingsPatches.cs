@@ -132,13 +132,20 @@ namespace TwoForksVr.Input.Patches
             return false;
         }
 
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(vgInputManager), nameof(vgInputManager.Awake))]
-        [HarmonyPatch(typeof(vgInputManager), nameof(vgInputManager.SetControllerLayout))]
-        [HarmonyPatch(typeof(vgInputManager), nameof(vgInputManager.SetKeyBindFromPlayerPrefs))]
-        private static void ForceXboxController(vgInputManager __instance)
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.UpdateActiveController))]
+        private static bool ForceXboxController(vgRewiredInput __instance)
         {
-            __instance.currentControllerLayout = vgControllerLayoutChoice.XBox;
+            __instance.activeController = vgControllerLayoutChoice.XBox;
+            __instance.mCurrentIconMap = __instance.IconMap_Xbox;
+            __instance.mCurrentIconMap.Init();
+            
+		    if (vgSettingsManager.Instance && vgSettingsManager.Instance.controller != (int)__instance.activeController)
+		    {
+			    vgSettingsManager.Instance.controller = (int)__instance.activeController;
+		    }
+
+            return false;
         }
     }
 }
