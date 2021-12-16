@@ -152,6 +152,7 @@ namespace TwoForksVr.Input.Patches
         [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.CheckForPCControls))]
         private static bool ForceDisablePcControls(vgPlayerController __instance)
         {
+            __instance.minimumInputForJog = 0f;
             __instance.PCControlsActive = false;
             return false;
         }
