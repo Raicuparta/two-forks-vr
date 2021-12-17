@@ -8,8 +8,7 @@ namespace TwoForksVr.Tools.ToolPickerActions
 
         protected override void OnInitialize()
         {
-            // TODO do this without FindObjectsOfTypeAll.
-            mapController = Resources.FindObjectsOfTypeAll<vgMapController>()[0];
+            mapController = vgPlayerController.playerGameObject.GetComponent<vgMapController>();
         }
 
         protected override void OnSelect()

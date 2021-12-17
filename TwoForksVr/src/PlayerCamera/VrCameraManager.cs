@@ -2,7 +2,7 @@
 using TwoForksVr.Stage;
 using TwoForksVr.UI;
 using UnityEngine;
-using UnityEngine.VR;
+using UnityEngine.XR;
 using UnityStandardAssets.ImageEffects;
 using Valve.VR;
 
@@ -71,7 +71,7 @@ namespace TwoForksVr.PlayerCamera
 
             // If the camera starts with an offset position, the tracking will always be incorrect.
             // So I disable VR, reset the camera position, and then enable VR again.
-            VRSettings.enabled = false;
+            XRSettings.enabled = false;
             
             var cameraParent = new GameObject("VrCameraParent").transform;
             cameraParent.SetParent(cameraTransform.parent, false);
@@ -79,7 +79,7 @@ namespace TwoForksVr.PlayerCamera
             cameraTransform.localPosition = Vector3.zero;
             cameraTransform.localRotation = Quaternion.identity;
             cameraParent.gameObject.AddComponent<LateUpdateFollow>().Target = stage.transform;
-            VRSettings.enabled = true;
+            XRSettings.enabled = true;
         }
 
         private void DisableCameraComponents()

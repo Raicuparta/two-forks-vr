@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 4030565347
+CRC: 6843940
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a06a7efbf6c3677d23fb427df2cdbccd
+    Hash: 3365714c2080f5df4d3f764517e6cd06
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 8c82af9f276b27ec2a396fecb7931109
+    Hash: 2fadfedff0f6a204d68f5fe828d16a52
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -26,4 +26,4 @@ ClassTypes:
 Assets:
 - Assets/Prefabs/ToolPicker.prefab
 Dependencies:
-- C:/Users/rai/Repos/two-forks-vr/UnityHelper/../TwoForksVr/TwoForksVrAssets/AssetBundles/hand
+- C:/Users/rai/Repos/two-forks-vr/UnityHelperOld/../TwoForksVr/TwoForksVrAssets/AssetBundles/hand
