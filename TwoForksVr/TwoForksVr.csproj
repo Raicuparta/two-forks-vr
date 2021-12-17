@@ -89,5 +89,8 @@
     <Content Include="TwoForksVrAssets\AssetBundles\tool-picker">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+      <Content Include="TwoForksVrAssets\AssetBundles\settings-menu">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
   </ItemGroup>
 </Project>
