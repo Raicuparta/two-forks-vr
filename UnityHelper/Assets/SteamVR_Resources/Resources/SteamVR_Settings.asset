@@ -19,7 +19,7 @@ MonoBehaviour:
   inputUpdateMode: 2
   poseUpdateMode: 8
   activateFirstActionSetOnStart: 1
-  editorAppKey: application.generated.unity.twoforksvrunityhelper.exe
+  editorAppKey: steam.app.383870
   autoEnableVR: 1
   legacyMixedRealityCamera: 1
   mixedRealityCameraPose:
