@@ -1,109 +1,39 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4FAEDEC8-3D86-4350-B42D-DAD4414E69D1}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TwoForksVr</RootNamespace>
-    <AssemblyName>TwoForksVr</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <TargetFramework>net35</TargetFramework>
     <OutputPath>C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\plugins</OutputPath>
+    <AssemblyTitle>TwoForksVr</AssemblyTitle>
+    <Product>TwoForksVr</Product>
+    <Copyright>Copyright ©  2020</Copyright>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PreBuildEvent>
+      "$(MSBuildBinPath)\MSBuild.exe" "$(ProjectDir)..\UnityHelper\SteamVR.csproj" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_40;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64"
+      "$(MSBuildBinPath)\MSBuild.exe" "$(ProjectDir)..\UnityHelper\SteamVR_Actions.csproj" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_40;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64"
+    </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+      "$(MSBuildBinPath)\MSBuild.exe" "$(SolutionDir)\UnityHelper\SteamVR.csproj" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_40;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64"
+      "$(MSBuildBinPath)\MSBuild.exe" "$(SolutionDir)\UnityHelper\SteamVR_Actions.csproj" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_40;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64"
+    </PreBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony, Version=2.5.5.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\HarmonyX.2.5.5\lib\net35\0Harmony.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AmplifyBloom, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\AmplifyBloom.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AmplifyColor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\AmplifyColor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AmplifyMotion, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\AmplifyMotion.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AmplifyOcclusion, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\AmplifyOcclusion.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\Assembly-CSharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\Assembly-CSharp-firstpass.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="BepInEx, Version=5.4.15.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\BepInEx.BaseLib.5.4.16\lib\net35\BepInEx.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="ConditionalExpression, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\ConditionalExpression.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="GalaxyCSharp, Version=1.0.5919.29692, Culture=neutral, PublicKeyToken=c78c4b7d4be3eaf9">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\GalaxyCSharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\Mono.Security.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\mscorlib.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="PlayMaker, Version=1.6.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\PlayMaker.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\protobuf-net.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Rewired_Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\Rewired_Core.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Rewired_Windows, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\Rewired_Windows.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="SampleClassLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\SampleClassLibrary.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="sharedRuntime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\sharedRuntime.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+    <PackageReference Include="BepInEx.BaseLib" Version="5.4.16" />
+    <PackageReference Include="BepInEx.Core" Version="5.4.16" />
+    <PackageReference Include="FirewatchGameLibs" Version="1.1.0" />
+    <PackageReference Include="HarmonyX" Version="2.5.5" />
+    <PackageReference Include="Mono.Cecil" Version="0.10.4" />
+    <PackageReference Include="MonoMod.RuntimeDetour" Version="21.8.19.1" />
+    <PackageReference Include="MonoMod.Utils" Version="21.8.19.1" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="SteamVR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\UnityHelper\obj\Release\SteamVR.dll</HintPath>
     </Reference>
@@ -118,288 +48,15 @@
       <HintPath>..\..\ow-game-libs\package\lib\net35\System.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\System.Xml.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.AccessibilityModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.AccessibilityModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.AIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.AIModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.AnimationModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.ARModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.ARModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.AssetBundleModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.AssetBundleModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.AudioModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.ClothModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.ClothModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.ClusterInputModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.ClusterInputModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.ClusterRendererModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.ClusterRendererModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.CoreModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.CrashReportingModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.CrashReportingModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.DirectorModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.DirectorModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.GameCenterModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.GameCenterModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.GridModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.GridModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.ImageConversionModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.ImageConversionModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.IMGUIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.IMGUIModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.InputModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.InputModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.JSONSerializeModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.JSONSerializeModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.Networking, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.Networking.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.ParticlesLegacyModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.ParticlesLegacyModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.ParticleSystemModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.ParticleSystemModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.PerformanceReportingModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.PerformanceReportingModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.Physics2DModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.Physics2DModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.PhysicsModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.ScreenCaptureModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.ScreenCaptureModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.SharedInternalsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.SharedInternalsModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.SpatialTracking, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.SpatialTracking.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.SpriteMaskModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.SpriteMaskModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.SpriteShapeModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.SpriteShapeModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.StandardEvents, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.StandardEvents.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.StyleSheetsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.StyleSheetsModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.TerrainModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.TerrainModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.TerrainPhysicsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.TerrainPhysicsModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.TextRenderingModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.TilemapModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.TilemapModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.Timeline, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.Timeline.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UIElementsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UIElementsModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UIModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UNETModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UNETModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UnityAnalyticsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UnityAnalyticsModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UnityConnectModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UnityConnectModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestAudioModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UnityWebRequestModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestTextureModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestWWWModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.VehiclesModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.VehiclesModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.VideoModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.VideoModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.VRModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.VRModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.WebModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.WebModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.WindModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\UnityEngine.WindModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="urecordRuntime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\urecordRuntime.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Valve.Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\UnityHelper\Assets\SteamVR\Input\Plugins\JSON.NET\Valve.Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="XGamingRuntime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\FirewatchGameLibs.1.1.0\lib\XGamingRuntime.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="src\Assets\VrAssetLoader.cs" />
-    <Compile Include="src\Debugging\DebugAxes.cs" />
-    <Compile Include="src\Debugging\GeneralDebugger.cs" />
-    <Compile Include="src\Limbs\Patches\HeldItemPatches.cs" />
-    <Compile Include="src\Limbs\Patches\PlayerTargetingPatches.cs" />
-    <Compile Include="src\Limbs\VrHand.cs" />
-    <Compile Include="src\Limbs\VrHandLaser.cs" />
-    <Compile Include="src\Limbs\VrLimbManager.cs" />
-    <Compile Include="src\Limbs\VrFoot.cs" />
-    <Compile Include="src\Helpers\LateUpdateFollow.cs" />
-    <Compile Include="src\Helpers\LayerHelper.cs" />
-    <Compile Include="src\Helpers\Logs.cs" />
-    <Compile Include="src\Helpers\MathHelper.cs" />
-    <Compile Include="src\Helpers\ShaderProperty.cs" />
-    <Compile Include="src\Input\InputName.cs" />
-    <Compile Include="src\Input\Patches\BindingsPatches.cs" />
-    <Compile Include="src\Input\Patches\MousePatches.cs" />
-    <Compile Include="src\PlayerBody\Patches\BodyPatches.cs" />
-    <Compile Include="src\PlayerBody\Patches\NavigationPatches.cs" />
-    <Compile Include="src\PlayerBody\RoomScaleBodyTransform.cs" />
-    <Compile Include="src\PlayerBody\VrBodyManager.cs" />
-    <Compile Include="src\PlayerCamera\Patches\CameraTransformProtectionPatches.cs" />
-    <Compile Include="src\PlayerCamera\Patches\GameCameraPatches.cs" />
-    <Compile Include="src\PlayerCamera\Patches\LoadingCameraPatches.cs" />
-    <Compile Include="src\PlayerCamera\Patches\MenuCameraPatches.cs" />
-    <Compile Include="src\PlayerCamera\VrCameraManager.cs" />
-    <Compile Include="src\Settings\Patches\SettingsPatches.cs" />
-    <Compile Include="src\Stage\IntroFix.cs" />
-    <Compile Include="src\Stage\Patches\StagePatches.cs" />
-    <Compile Include="src\Stage\VrStage.cs" />
-    <Compile Include="src\Tools\Patches\CompassPatches.cs" />
-    <Compile Include="src\Tools\Patches\MapPatches.cs" />
-    <Compile Include="src\Tools\ToolPicker.cs" />
-    <Compile Include="src\Tools\ToolPickerActions\ToolPickerAction.cs" />
-    <Compile Include="src\Tools\ToolPickerActions\ToolPickerCamera.cs" />
-    <Compile Include="src\Tools\ToolPickerActions\ToolPickerCompass.cs" />
-    <Compile Include="src\Tools\ToolPickerActions\ToolPickerFlashlight.cs" />
-    <Compile Include="src\Tools\ToolPickerActions\ToolPickerInventory.cs" />
-    <Compile Include="src\Tools\ToolPickerActions\ToolPickerMap.cs" />
-    <Compile Include="src\Tools\ToolPickerItem.cs" />
-    <Compile Include="src\Tools\VrMap.cs" />
-    <Compile Include="src\Tools\VrToolItem.cs" />
-    <Compile Include="src\TwoForksVrMod.cs" />
-    <Compile Include="src\UI\AttachToCamera.cs" />
-    <Compile Include="src\UI\Patches\CanvasToWorldSpacePatches.cs" />
-    <Compile Include="src\UI\Patches\InventoryPatches.cs" />
-    <Compile Include="src\UI\Patches\UIPatches.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig">
       <Link>SteamVR\.editorconfig</Link>
     </None>
-    <None Include="packages.config" />
     <None Include="TwoForksVrAssets\Bindings\actions.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -457,18 +114,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>
-      "$(MSBuildBinPath)\MSBuild.exe" "$(ProjectDir)..\UnityHelper\SteamVR.csproj" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_40;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64"
-      "$(MSBuildBinPath)\MSBuild.exe" "$(ProjectDir)..\UnityHelper\SteamVR_Actions.csproj" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_40;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64"
-    </PreBuildEvent>
-  </PropertyGroup>
-  <Import Project="..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets" Condition="Exists('..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets'))" />
-  </Target>
 </Project>
