@@ -105,10 +105,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="SteamVR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\UnityHelper\Build\Build_Data\Managed\SteamVR.dll</HintPath>
+      <HintPath>..\UnityHelper\obj\Release\SteamVR.dll</HintPath>
     </Reference>
     <Reference Include="SteamVR_Actions, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\UnityHelper\Build\Build_Data\Managed\SteamVR_Actions.dll</HintPath>
+      <HintPath>..\UnityHelper\obj\Release\SteamVR_Actions.dll</HintPath>
     </Reference>
     <Reference Include="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <HintPath>..\..\ow-game-libs\package\lib\net35\System.dll</HintPath>
@@ -459,9 +459,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-<!--    <PreBuildEvent>-->
-<!--            "$(MSBuildBinPath)\MSBuild.exe" "$(ProjectDir)..\UnityHelper\Assembly-CSharp.csproj" -p:AssemblyName="UnityHelper" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_5;UNITY_5_6;UNITY_5;UNITY_64;"-->
-<!--        </PreBuildEvent>-->
+    <PreBuildEvent>
+      "$(MSBuildBinPath)\MSBuild.exe" "$(ProjectDir)..\UnityHelper\SteamVR.csproj" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_40;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64"
+      "$(MSBuildBinPath)\MSBuild.exe" "$(ProjectDir)..\UnityHelper\SteamVR_Actions.csproj" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_40;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64"
+    </PreBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets" Condition="Exists('..\packages\BepInEx.Core.5.4.16\build\BepInEx.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
