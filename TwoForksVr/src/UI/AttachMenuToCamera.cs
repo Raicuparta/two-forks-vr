@@ -10,7 +10,7 @@ namespace TwoForksVr.UI
     public class AttachMenuToCamera: MonoBehaviour
     {
         private BoxCollider collider;
-        private vgUIInputModule[] inputModules = new vgUIInputModule[]{};
+        private vgUIInputModule[] inputModules = {};
 
         private void Start()
         {
@@ -57,8 +57,9 @@ namespace TwoForksVr.UI
                 var modules = sceneObject.GetComponentsInChildren<vgUIInputModule>(true);
                 foreach (var module in modules)
                 {
-                    inputModules = modules.AddItem(module).ToArray();
+                    modules.AddItem(module);
                 }
+                inputModules = modules.ToArray();
             }
         }
         
