@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
@@ -29,6 +30,8 @@ namespace TwoForksVr.UI
 
         private void Update()
         {
+            UpdateTransform();
+            
             var active = IsAnyInputModuleActive();
             if (active && !collider.enabled)
             {
@@ -86,16 +89,43 @@ namespace TwoForksVr.UI
         
         protected override void HandleTargetCameraSet()
         {
-            UpdateTransform();
+            transform.position = GetTargetPosition();
+            velocity = Vector3.zero;
         }
 
+        private static Vector3 GetTargetPosition()
+        {
+            if (!CameraTransform) return Vector3.zero;
+
+            var cameraPosition = CameraTransform.position;
+            var forward = Vector3.ProjectOnPlane(CameraTransform.forward, Vector3.up).normalized;
+            return cameraPosition + forward * offset;
+        }
+        
+        private float maxSquareDistance = 3f;
+        
+        public float smoothTime = 0.3F;
+        private Vector3 velocity = Vector3.zero;
+
+        private Vector3? currentTarget;
+        
         private void UpdateTransform()
         {
             if (!CameraTransform) return;
-            var targetPosition = CameraTransform.position;
-            var forward = Vector3.ProjectOnPlane(CameraTransform.forward, Vector3.up);
-            transform.position = targetPosition + forward * offset;
-            transform.LookAt(2 * transform.position - targetPosition);
+            var targetThisFrame = GetTargetPosition();
+
+            var squareDistance = Vector3.SqrMagnitude(targetThisFrame - transform.position);
+
+            currentTarget = (squareDistance > maxSquareDistance || currentTarget == null) ? targetThisFrame : currentTarget;
+
+            transform.position = Vector3.SmoothDamp(
+                transform.position,
+                currentTarget ?? targetThisFrame,
+                ref velocity,
+                smoothTime,
+                float.PositiveInfinity,
+                Time.unscaledDeltaTime);
+            transform.LookAt(2 * transform.position - CameraTransform.position);
         }
     }
 }
