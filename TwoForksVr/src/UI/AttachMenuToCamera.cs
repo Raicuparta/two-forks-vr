@@ -35,6 +35,7 @@ namespace TwoForksVr.UI
 
         private bool IsAnyInputModuleActive()
         {
+            // TODO: maybe this is why settings is so slow?
             if (inputModules.Length == 0) return false;
             foreach (var inputModule in inputModules)
             {
