@@ -16,6 +16,7 @@ namespace TwoForksVr.Stage
         private VrLimbManager limbManager;
         private IntroFix introFix;
         private Camera mainCamera;
+        private MenuFollowTarget menuFollowTarget;
 
         // No idea why, but if I don't make this static, it gets lost
         public static Camera FallbackCamera { get; private set; }
@@ -50,6 +51,7 @@ namespace TwoForksVr.Stage
             Instance.cameraManager = VRCameraManager.Create(Instance);
             Instance.limbManager = VrLimbManager.Create(Instance);
             Instance.follow = stageParent.AddComponent<LateUpdateFollow>();
+            Instance.menuFollowTarget = MenuFollowTarget.Create(Instance);
 
             FallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
             FallbackCamera.enabled = false;
@@ -79,6 +81,7 @@ namespace TwoForksVr.Stage
 
             cameraManager.SetUp(mainCamera ? mainCamera : FallbackCamera, playerTransform);
             limbManager.SetUp(playerTransform);
+            menuFollowTarget.SetUp(camera);
         }
 
         public void Recenter(bool recenterVertically = false)

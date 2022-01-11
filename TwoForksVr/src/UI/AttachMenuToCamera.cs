@@ -1,29 +1,19 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using TwoForksVr.Debugging;
-using TwoForksVr.Helpers;
+using TwoForksVr.Stage;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 namespace TwoForksVr.UI
 {
-    public class AttachMenuToCamera : AttachToCamera
+    public class AttachMenuToCamera: MonoBehaviour
     {
-        private const float offset = 3f;
         private BoxCollider collider;
         private vgUIInputModule[] inputModules = new vgUIInputModule[]{};
-        
-        private void OnEnable()
-        {
-            UpdateTransform();
-        }
 
         private void Start()
         {
-            UpdateTransform();
             SetUpCollider();
             SetUpInputModule();
         }
@@ -87,45 +77,10 @@ namespace TwoForksVr.UI
             gameObject.AddComponent<DebugCollider>();
         }
         
-        protected override void HandleTargetCameraSet()
-        {
-            transform.position = GetTargetPosition();
-            velocity = Vector3.zero;
-        }
-
-        private static Vector3 GetTargetPosition()
-        {
-            if (!CameraTransform) return Vector3.zero;
-
-            var cameraPosition = CameraTransform.position;
-            var forward = Vector3.ProjectOnPlane(CameraTransform.forward, Vector3.up).normalized;
-            return cameraPosition + forward * offset;
-        }
-        
-        private float maxSquareDistance = 3f;
-        
-        public float smoothTime = 0.3F;
-        private Vector3 velocity = Vector3.zero;
-
-        private Vector3? currentTarget;
-        
         private void UpdateTransform()
         {
-            if (!CameraTransform) return;
-            var targetThisFrame = GetTargetPosition();
-
-            var squareDistance = Vector3.SqrMagnitude(targetThisFrame - transform.position);
-
-            currentTarget = (squareDistance > maxSquareDistance || currentTarget == null) ? targetThisFrame : currentTarget;
-
-            transform.position = Vector3.SmoothDamp(
-                transform.position,
-                currentTarget ?? targetThisFrame,
-                ref velocity,
-                smoothTime,
-                float.PositiveInfinity,
-                Time.unscaledDeltaTime);
-            transform.LookAt(2 * transform.position - CameraTransform.position);
+            transform.position = MenuFollowTarget.Instance.transform.position;
+            transform.rotation =  MenuFollowTarget.Instance.transform.rotation;
         }
     }
 }
