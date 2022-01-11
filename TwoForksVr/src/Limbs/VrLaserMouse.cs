@@ -8,7 +8,7 @@ namespace TwoForksVr.Limbs
     public class VrLaserMouse : StandaloneInputModule
     {
         private VrHandLaser handLaser;
-        private readonly SteamVR_Action_Boolean clickAction = SteamVR_Actions.default_Grip;
+        private readonly SteamVR_Action_Boolean clickAction = SteamVR_Actions.default_Interact;
 
         public static void Create(VrHandLaser handLaser)
         {
@@ -19,7 +19,13 @@ namespace TwoForksVr.Limbs
 
         private void Update()
         {
-            var isHit = Physics.Raycast(transform.position, transform.forward, out var hit, 30, LayerHelper.GetMask(GameLayer.UI));
+            var isHit = Physics.Raycast(
+                transform.position,
+                transform.forward,
+                out var hit,
+                30,
+                LayerHelper.GetMask(GameLayer.UI));
+
             if (!isHit)
             {
                 handLaser.SetTarget(null);
@@ -30,7 +36,7 @@ namespace TwoForksVr.Limbs
             
             var pointerData = GetTouchPointerEventData(new Touch()
             {
-                position =  Camera.main.WorldToScreenPoint(hit.point),
+                position =  Camera.main.WorldToScreenPoint(hit.point), // TODO dont use camera.main
             }, out _, out _);
             
             ProcessTouchPress(pointerData, clickAction.stateDown, clickAction.stateUp);

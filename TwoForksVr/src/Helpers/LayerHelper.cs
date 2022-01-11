@@ -27,13 +27,20 @@ namespace TwoForksVr.Helpers
 
     public static class LayerHelper
     {
+        public static readonly int UiMask = GetMask(GameLayer.UI);
+
+        public static int GetMask(GameLayer layer, int baseMask = 0)
+        {
+          return baseMask | 1 << (int) layer;
+        }
+
         public static int GetMask(params GameLayer[] layers)
         {
           if (layers == null) throw new ArgumentNullException(nameof (layers));
           var result = 0;
           foreach (var layer in layers)
           {
-              result |= 1 << (int) layer;
+              result = GetMask(layer, result);
           }
 
           return result;
