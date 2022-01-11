@@ -15,7 +15,7 @@ namespace TwoForksVr.UI
         private void Start()
         {
             SetUpCollider();
-            SetUpInputModule();
+            SetUpInputModules();
         }
 
         private void Update()
@@ -47,7 +47,7 @@ namespace TwoForksVr.UI
             return false;
         }
 
-        private void SetUpInputModule()
+        private void SetUpInputModules()
         {
             // TODO clean this up.
             
