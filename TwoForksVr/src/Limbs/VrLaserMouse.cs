@@ -1,3 +1,5 @@
+using System;
+using Rewired;
 using TwoForksVr.Helpers;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,7 +19,7 @@ namespace TwoForksVr.Limbs
             Input.simulateMouseWithTouches = true;
         }
 
-        private void Update()
+        public override void Process()
         {
             var isHit = Physics.Raycast(
                 transform.position,
