@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace TwoForksVr.UI
 {
-    public class VrInteractiveUi: MonoBehaviour
+    public class InteractiveUi: MonoBehaviour
     {
         private BoxCollider collider;
         private vgUIInputModule[] inputModules = {};

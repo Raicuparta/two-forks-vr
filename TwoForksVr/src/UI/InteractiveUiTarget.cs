@@ -1,11 +1,11 @@
-using TwoForksVr.UI;
+using TwoForksVr.Stage;
 using UnityEngine;
 
-namespace TwoForksVr.Stage
+namespace TwoForksVr.UI
 {
     // This is an invisible object that's always(ish) somewhere in front of the player.
     // To be used as the position for UI elements that need to be visible or interacted with.
-    public class MenuFollowTarget: MonoBehaviour
+    public class InteractiveUiTarget: MonoBehaviour
     {
         private const float maxSquareDistance = 3f;
         private const float smoothTime = 0.3F;
@@ -14,19 +14,13 @@ namespace TwoForksVr.Stage
         private Transform cameraTransform;
         private const float offset = 3f;
     
-        public static MenuFollowTarget Create(VrStage stage)
+        public static InteractiveUiTarget Create(VrStage stage)
         {
-            var instance = new GameObject("MenuFollowTarget").AddComponent<MenuFollowTarget>();
+            var instance = new GameObject(nameof(InteractiveUiTarget)).AddComponent<InteractiveUiTarget>();
             instance.transform.SetParent(stage.transform, false);
-            VrInteractiveUi.SetTargetTransform(instance.transform);
+            InteractiveUi.SetTargetTransform(instance.transform);
             return instance;
         }
-
-        // private void Start()
-        // {
-        //     var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //     cube.transform.SetParent(transform, false);
-        // }
 
         public void SetUp(Camera camera)
         {
