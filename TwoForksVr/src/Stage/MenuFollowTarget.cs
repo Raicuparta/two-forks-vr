@@ -1,4 +1,4 @@
-using System;
+using TwoForksVr.UI;
 using UnityEngine;
 
 namespace TwoForksVr.Stage
@@ -7,19 +7,19 @@ namespace TwoForksVr.Stage
     // To be used as the position for UI elements that need to be visible or interacted with.
     public class MenuFollowTarget: MonoBehaviour
     {
-        private float maxSquareDistance = 3f;
-        private float smoothTime = 0.3F;
+        private const float maxSquareDistance = 3f;
+        private const float smoothTime = 0.3F;
         private Vector3 velocity = Vector3.zero;
         private Vector3? currentTarget;
         private Transform cameraTransform;
         private const float offset = 3f;
-        public static MenuFollowTarget Instance; // TODO not public static
     
         public static MenuFollowTarget Create(VrStage stage)
         {
-            Instance = new GameObject("MenuFollowTarget").AddComponent<MenuFollowTarget>();
-            Instance.transform.SetParent(stage.transform, false);
-            return Instance;
+            var instance = new GameObject("MenuFollowTarget").AddComponent<MenuFollowTarget>();
+            instance.transform.SetParent(stage.transform, false);
+            VrInteractiveUi.SetTargetTransform(instance.transform);
+            return instance;
         }
 
         // private void Start()

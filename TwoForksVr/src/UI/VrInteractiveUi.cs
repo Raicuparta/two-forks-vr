@@ -1,16 +1,16 @@
 using System.Linq;
 using HarmonyLib;
 using TwoForksVr.Debugging;
-using TwoForksVr.Stage;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace TwoForksVr.UI
 {
-    public class AttachMenuToCamera: MonoBehaviour
+    public class VrInteractiveUi: MonoBehaviour
     {
         private BoxCollider collider;
-        private vgUIInputModule[] inputModules = new vgUIInputModule[]{};
+        private vgUIInputModule[] inputModules = {};
+        private static Transform targetTransform;
 
         private void Start()
         {
@@ -33,6 +33,11 @@ namespace TwoForksVr.UI
             }
         }
 
+        public static void SetTargetTransform(Transform transform)
+        {
+            targetTransform = transform;
+        }
+
         private bool IsAnyInputModuleActive()
         {
             // TODO: maybe this is why settings is so slow?
@@ -50,16 +55,11 @@ namespace TwoForksVr.UI
 
         private void SetUpInputModules()
         {
-            // TODO clean this up.
-            
-            var rootSceneObjects = gameObject.scene.GetRootGameObjects();
-            foreach (var sceneObject in rootSceneObjects)
+            var rootObjects = gameObject.scene.GetRootGameObjects();
+            foreach (var rootObject in rootObjects)
             {
-                var modules = sceneObject.GetComponentsInChildren<vgUIInputModule>(true);
-                foreach (var module in modules)
-                {
-                    inputModules = modules.AddItem(module).ToArray();
-                }
+                var modules = rootObject.GetComponentsInChildren<vgUIInputModule>(true);
+                inputModules = inputModules.AddRangeToArray(modules);
             }
         }
         
@@ -80,8 +80,8 @@ namespace TwoForksVr.UI
         
         private void UpdateTransform()
         {
-            transform.position = MenuFollowTarget.Instance.transform.position;
-            transform.rotation =  MenuFollowTarget.Instance.transform.rotation;
+            transform.position = targetTransform.position;
+            transform.rotation =  targetTransform.rotation;
         }
     }
 }
