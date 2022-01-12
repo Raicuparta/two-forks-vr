@@ -17,6 +17,7 @@ namespace TwoForksVr.VrInput.Patches
         
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgUIInputModule), nameof(vgUIInputModule.ProcessMouseEvent))]
+        [HarmonyPatch(typeof(vgUIInputModule), nameof(vgUIInputModule.GetDefaultSelectedGameObject))]
         private static bool DisableMouse(vgUIInputModule __instance)
         {
             return false;
