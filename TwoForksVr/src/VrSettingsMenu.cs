@@ -16,15 +16,21 @@ namespace TwoForksVr
             var canvas = instance.GetComponent<Canvas>();
             canvas.sortingOrder = 1;
 
+            var exitButton = instance.transform.Find("ExitButton").GetComponent<Button>();
+            exitButton.onClick.AddListener(() =>
+            {
+                instance.gameObject.SetActive(false);
+            });
+
             var layoutGroup = instance.transform.Find("LayoutGroup");
-            var firstSelectable = layoutGroup.gameObject.GetComponentInChildren<Selectable>();
-            firstSelectable.Select();
 
-            var toggleObject = layoutGroup.GetComponentInChildren<Toggle>().gameObject;
-
+            var toggleObject = layoutGroup.GetComponentInChildren<Toggle>(true).gameObject;
+            toggleObject.SetActive(false);
+                
             foreach (var configEntry in TwoForksVrMod.ModConfig)
             {
                 var toggleInstance = Instantiate(toggleObject, layoutGroup, false);
+                toggleInstance.SetActive(true);
                 toggleInstance.GetComponentInChildren<Text>().text = configEntry.Value.Description.Description;
                 var toggleInput = toggleInstance.GetComponentInChildren<Toggle>();
                 toggleInput.isOn = (bool) configEntry.Value.BoxedValue;
