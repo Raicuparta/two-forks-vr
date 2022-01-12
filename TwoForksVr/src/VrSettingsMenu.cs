@@ -8,7 +8,7 @@ namespace TwoForksVr
 {
     public class VrSettingsMenu: MonoBehaviour
     {
-        public static void Create(VrStage stage)
+        public static VrSettingsMenu Create(VrStage stage)
         {
             var instance = Instantiate(VrAssetLoader.VrSettingsMenuPrefab, stage.transform, false).AddComponent<VrSettingsMenu>();
             instance.gameObject.AddComponent<InteractiveUi>();
@@ -19,6 +19,8 @@ namespace TwoForksVr
             var layoutGroup = instance.transform.Find("LayoutGroup");
             var firstSelectable = layoutGroup.gameObject.GetComponentInChildren<Selectable>();
             firstSelectable.Select();
+
+            return instance;
         }
     }
 }

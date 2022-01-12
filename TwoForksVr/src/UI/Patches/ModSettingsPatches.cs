@@ -1,6 +1,8 @@
 using HarmonyLib;
 using TMPro;
+using TwoForksVr.Stage;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace TwoForksVr.UI.Patches
@@ -71,6 +73,17 @@ namespace TwoForksVr.UI.Patches
             
             return newButton;
         }
+
+        private static void RemoveAllClickListeners(Button button)
+        {
+            button.onClick.RemoveAllListeners();
+
+            // "Persistent" events are the ones set in the Unity editor. They don't get removed by RemoveAllListeners.
+            for (var index = 0; index < button.onClick.GetPersistentEventCount(); index++)
+            {
+                button.onClick.SetPersistentListenerState(index, UnityEventCallState.Off);
+            }
+        }
         
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgMainMenuController), nameof(vgMainMenuController.Start))]
@@ -78,7 +91,17 @@ namespace TwoForksVr.UI.Patches
         {
             var mainMenuGroup = __instance.transform.Find("Main Menu Group");
             var gameSettingsButton = mainMenuGroup.Find("Settings Button").GetComponent<Button>();
-            CreateVrSettingsButton(gameSettingsButton, mainMenuGroup);
+            
+            var vrSettingsButton = CreateVrSettingsButton(gameSettingsButton, mainMenuGroup);
+
+            var vrSettingsMenu = VrSettingsMenu.Create(VrStage.Instance); // TODO don't pass singleton
+            vrSettingsMenu.gameObject.SetActive(false);
+            RemoveAllClickListeners(vrSettingsButton);
+            vrSettingsButton.onClick.AddListener(() =>
+            {
+                Debug.LogWarning("######## yoyoyo clicked");
+                vrSettingsMenu.gameObject.SetActive(true);
+            });
         }
 
         [HarmonyPrefix]
