@@ -69,8 +69,6 @@ namespace TwoForksVr.UI.Patches
             var camera = Camera.main;
             if (!camera || IsCanvasToIgnore(component.name)) return;
             
-            // TODO: layer is being set twice? is it needed?
-            LayerHelper.SetLayer(component, GameLayer.UI);
             var canvas = component.GetComponentInParent<Canvas>();
 
             if (!canvas) return;
