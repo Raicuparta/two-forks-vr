@@ -7,6 +7,7 @@ namespace TwoForksVr.Limbs
 {
     public class VrLaserInputModule : StandaloneInputModule
     {
+        private const float rayMaxDistance = 30f;
         private VrHandLaser handLaser;
         private readonly SteamVR_Action_Boolean clickAction = SteamVR_Actions.default_Interact;
 
@@ -23,7 +24,7 @@ namespace TwoForksVr.Limbs
                 transform.position,
                 transform.forward,
                 out var hit,
-                30,
+                rayMaxDistance,
                 LayerHelper.GetMask(GameLayer.UI));
 
             if (!isHit)

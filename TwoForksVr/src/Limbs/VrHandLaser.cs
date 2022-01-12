@@ -7,11 +7,11 @@ namespace TwoForksVr.Limbs
 {
     public class VrHandLaser : MonoBehaviour
     {
+        private const float laserLength = 1f;
         private Transform leftHand;
         private LineRenderer lineRenderer;
         private Transform rightHand;
         private Transform laserTransform;
-        private float laserLength = 10f;
         private Vector3? target;
         
         private void Start()
@@ -25,9 +25,8 @@ namespace TwoForksVr.Limbs
             lineRenderer.startWidth = 0.005f;
             lineRenderer.endWidth = 0.001f;
             // TODO change colors depending on laser state.
-            lineRenderer.endColor = new Color(1, 1, 1, 0.3f);
-            lineRenderer.startColor = new Color(1, 1, 1, 0.3f);
-            // lineRenderer.startColor = Color.clear;
+            lineRenderer.endColor = new Color(1, 1, 1, 1f);
+            lineRenderer.startColor = Color.clear;
             lineRenderer.material.shader = Shader.Find("Particles/Alpha Blended Premultiply");
             lineRenderer.material.SetColor(ShaderProperty.Color, new Color(0.8f, 0.8f, 0.8f));
             lineRenderer.enabled = false;
@@ -73,18 +72,15 @@ namespace TwoForksVr.Limbs
                 transform.SetParent(rightHand, false);
         }
 
-        private static bool HasCurrentTarget()
+        private bool HasCurrentTarget()
         {
-            if (!vgHudManager.Instance) return false;
-            return vgHudManager.Instance.currentTarget != null;
+            return (vgHudManager.Instance && vgHudManager.Instance.currentTarget != null) || target != null;
         }
 
         private void UpdateLaserVisibility()
         {
-            lineRenderer.enabled = true;
-            // if (!vgHudManager.Instance) return;
-            // lineRenderer.enabled =
-            //     HasCurrentTarget() || SteamVR_Actions.default_Interact.state;
+            lineRenderer.enabled =
+                HasCurrentTarget() || SteamVR_Actions.default_Interact.state;
         }
     }
 }
