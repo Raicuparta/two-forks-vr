@@ -7,7 +7,6 @@ namespace TwoForksVr.Limbs
 {
     public class VrHand : MonoBehaviour
     {
-        // TODO make hand and foot extend from Limb
         private GameObject fallbackHandModel;
         private string handName;
         private bool isLeft;
