@@ -32,7 +32,7 @@ namespace TwoForksVr.PlayerCamera
         private void UpdateCulling()
         {
             if (!vgPauseManager.Instance) return;
-            // TODO: maybe need to do this some other way? Some menus don't have UI layer.
+
             if (cameraCullingMask == 0 && vgPauseManager.Instance.isPaused)
             {
                 cameraCullingMask = camera.cullingMask;
