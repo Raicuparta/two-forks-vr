@@ -11,7 +11,7 @@ namespace TwoForksVr
         public static void Create(VrStage stage)
         {
             var instance = Instantiate(VrAssetLoader.VrSettingsMenuPrefab, stage.transform, false).AddComponent<VrSettingsMenu>();
-            instance.gameObject.AddComponent<AttachToCamera>();
+            instance.gameObject.AddComponent<InteractiveUi>();
 
             var canvas = instance.GetComponent<Canvas>();
             canvas.sortingOrder = 1;
