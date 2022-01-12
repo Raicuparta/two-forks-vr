@@ -6,15 +6,15 @@ namespace TwoForksVr.Limbs
 {
     public class VrFoot : MonoBehaviour
     {
-        private string handName;
+        private string footName;
         private bool isLeft;
 
         public static VrFoot Create(bool isLeft = false)
         {
-            var handName = isLeft ? "Left" : "Right";
-            var instance = new GameObject($"Vr{handName}Foot").AddComponent<VrFoot>();
+            var footName = isLeft ? "Left" : "Right";
+            var instance = new GameObject($"Vr{footName}Foot").AddComponent<VrFoot>();
             instance.isLeft = isLeft;
-            instance.handName = handName;
+            instance.footName = footName;
             return instance;
         }
 
@@ -23,17 +23,17 @@ namespace TwoForksVr.Limbs
             if (!playerRootBone) return;
 
             var shoeBone = playerRootBone.Find(
-                $"henryPelvis/henryHips/henryLeg{handName}1/henryLeg{handName}2/henryLeg{handName}Foot");
+                $"henryPelvis/henryHips/henryLeg{footName}1/henryLeg{footName}2/henryLeg{footName}Foot");
             if (!shoeBone)
             {
                 Logs.LogError("### could not find shoe bone");
                 return;
             }
 
-            var handLid = Instantiate(VrAssetLoader.ShoeLid).transform;
-            LayerHelper.SetLayer(handLid.Find("ShoeLidModel"), GameLayer.PlayerBody);
-            handLid.SetParent(shoeBone, false);
-            if (isLeft) handLid.localScale = new Vector3(1, 1, -1);
+            var shoeLid = Instantiate(VrAssetLoader.ShoeLid).transform;
+            LayerHelper.SetLayer(shoeLid.Find("ShoeLidModel"), GameLayer.PlayerBody);
+            shoeLid.SetParent(shoeBone, false);
+            if (isLeft) shoeLid.localScale = new Vector3(1, 1, -1);
         }
     }
 }
