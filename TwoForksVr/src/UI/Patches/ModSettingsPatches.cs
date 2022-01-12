@@ -1,5 +1,6 @@
 using HarmonyLib;
 using TMPro;
+using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using UnityEngine;
 using UnityEngine.Events;
