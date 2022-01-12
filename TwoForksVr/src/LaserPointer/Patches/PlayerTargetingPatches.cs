@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using UnityEngine;
 
-namespace TwoForksVr.VrLaser.Patches
+namespace TwoForksVr.LaserPointer.Patches
 {
     [HarmonyPatch]
     public static class PlayerTargetingPatches

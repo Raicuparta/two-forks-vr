@@ -3,23 +3,27 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Valve.VR;
 
-namespace TwoForksVr.VrLaser
+namespace TwoForksVr.LaserPointer
 {
-    public class VrLaserInputModule : StandaloneInputModule
+    public class LaserInputModule : StandaloneInputModule
     {
         private const float rayMaxDistance = 30f;
-        private VrLaser laser;
         private readonly SteamVR_Action_Boolean clickAction = SteamVR_Actions.default_Interact;
+        private Laser laser;
+        public Camera EventCamera;
 
-        public static void Create(VrLaser laser)
+        public static LaserInputModule Create(Laser laser)
         {
-            var instance = laser.gameObject.AddComponent<VrLaserInputModule>();
+            var instance = laser.gameObject.AddComponent<LaserInputModule>();
             instance.laser = laser;
             Input.simulateMouseWithTouches = true;
+            return instance;
         }
 
         public override void Process()
         {
+            if (!EventCamera) return;
+
             var isHit = Physics.Raycast(
                 transform.position,
                 transform.forward,
@@ -37,7 +41,7 @@ namespace TwoForksVr.VrLaser
             
             var pointerData = GetTouchPointerEventData(new Touch()
             {
-                position =  Camera.main.WorldToScreenPoint(hit.point), // TODO dont use camera.main
+                position =  EventCamera.WorldToScreenPoint(hit.point),
             }, out _, out _);
             
             ProcessTouchPress(pointerData, clickAction.stateDown, clickAction.stateUp);

@@ -1,11 +1,11 @@
 ﻿using TwoForksVr.Helpers;
-using TwoForksVr.VrLaser.Patches;
+using TwoForksVr.LaserPointer.Patches;
 using UnityEngine;
 using Valve.VR;
 
-namespace TwoForksVr.VrLaser
+namespace TwoForksVr.LaserPointer
 {
-    public class VrLaser : MonoBehaviour
+    public class Laser : MonoBehaviour
     {
         private const float laserLength = 1f;
         private Transform leftHand;
@@ -13,6 +13,7 @@ namespace TwoForksVr.VrLaser
         private Transform rightHand;
         private Transform laserTransform;
         private Vector3? target;
+        private LaserInputModule inputModule;
         
         private void Start()
         {
@@ -30,7 +31,7 @@ namespace TwoForksVr.VrLaser
             lineRenderer.material.SetColor(ShaderProperty.Color, new Color(0.8f, 0.8f, 0.8f));
             lineRenderer.enabled = false;
 
-            VrLaserInputModule.Create(this);
+            inputModule = LaserInputModule.Create(this);
         }
 
         public void SetTarget(Vector3? newTarget)
@@ -53,14 +54,20 @@ namespace TwoForksVr.VrLaser
                     : Vector3.forward * laserLength);
         }
 
-        public static void Create(Transform leftHand, Transform rightHand)
+        public static Laser Create(Transform leftHand, Transform rightHand)
         {
-            var instance = new GameObject("VrHandLaser").AddComponent<VrLaser>();
+            var instance = new GameObject("VrHandLaser").AddComponent<Laser>();
             var instanceTransform = instance.transform;
             instanceTransform.SetParent(rightHand, false);
             instanceTransform.localEulerAngles = new Vector3(39.132f, 356.9302f, 0.3666f);
             instance.rightHand = rightHand;
             instance.leftHand = leftHand;
+            return instance;
+        }
+
+        public void SetUp(Camera camera)
+        {
+            inputModule.EventCamera = camera;
         }
 
         private void UpdateLaserParent()
