@@ -1,5 +1,3 @@
-using System;
-using Rewired;
 using TwoForksVr.Helpers;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,14 +5,14 @@ using Valve.VR;
 
 namespace TwoForksVr.Limbs
 {
-    public class VrLaserMouse : StandaloneInputModule
+    public class VrLaserInputModule : StandaloneInputModule
     {
         private VrHandLaser handLaser;
         private readonly SteamVR_Action_Boolean clickAction = SteamVR_Actions.default_Interact;
 
         public static void Create(VrHandLaser handLaser)
         {
-            var instance = handLaser.gameObject.AddComponent<VrLaserMouse>();
+            var instance = handLaser.gameObject.AddComponent<VrLaserInputModule>();
             instance.handLaser = handLaser;
             Input.simulateMouseWithTouches = true;
         }

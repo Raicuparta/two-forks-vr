@@ -32,7 +32,7 @@ namespace TwoForksVr.Limbs
             lineRenderer.material.SetColor(ShaderProperty.Color, new Color(0.8f, 0.8f, 0.8f));
             lineRenderer.enabled = false;
 
-            VrLaserMouse.Create(this);
+            VrLaserInputModule.Create(this);
         }
 
         public void SetTarget(Vector3? newTarget)
