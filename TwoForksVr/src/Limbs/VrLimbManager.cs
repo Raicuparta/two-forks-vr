@@ -1,5 +1,6 @@
 ﻿using TwoForksVr.Assets;
 using TwoForksVr.Debugging;
+using TwoForksVr.LaserPointer;
 using TwoForksVr.Stage;
 using TwoForksVr.Tools;
 using TwoForksVr.UI.Patches;
@@ -9,10 +10,11 @@ namespace TwoForksVr.Limbs
 {
     public class VrLimbManager : MonoBehaviour
     {
-        private VrHand leftHand;
-        private VrHand rightHand;
-        private VrFoot rightFoot;
+        private Laser laser;
         private VrFoot leftFoot;
+        private VrHand leftHand;
+        private VrFoot rightFoot;
+        private VrHand rightHand;
 
         public static VrLimbManager Create(VrStage stage)
         {
@@ -34,7 +36,7 @@ namespace TwoForksVr.Limbs
                 instance.leftHand.transform,
                 instance.rightHand.transform
             );
-            VrHandLaser.Create(
+            instance.laser = Laser.Create(
                 instance.leftHand.transform,
                 instance.rightHand.transform
             );
@@ -44,7 +46,7 @@ namespace TwoForksVr.Limbs
             return instance;
         }
 
-        public void SetUp(Transform playerTransform)
+        public void SetUp(Transform playerTransform, Camera camera)
         {
             var henry = playerTransform != null ? playerTransform.Find("henry") : null;
             var rootBone = henry != null ? henry.Find("henryroot") : null;
@@ -52,6 +54,7 @@ namespace TwoForksVr.Limbs
             leftHand.SetUp(rootBone);
             rightFoot.SetUp(rootBone);
             leftFoot.SetUp(rootBone);
+            laser.SetUp(camera);
             GeneralDebugger.PlayerAnimator = henry != null ? henry.GetComponent<Animator>() : null;
         }
     }

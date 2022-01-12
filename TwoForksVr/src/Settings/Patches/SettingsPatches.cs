@@ -31,10 +31,11 @@ namespace TwoForksVr.Settings.Patches
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.SetResolution), typeof(Resolution), typeof(bool))]
+        [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.SetResolution), typeof(Resolution),
+            typeof(bool))]
         private static void ForceResolution(ref Resolution newResolution, ref bool newFullscreen)
         {
-            newResolution = new Resolution() { width = 1920, height = 1080 };
+            newResolution = new Resolution {width = 1920, height = 1080};
             newFullscreen = false;
         }
     }

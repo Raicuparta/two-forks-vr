@@ -4,6 +4,8 @@ namespace TwoForksVr.Helpers
 {
     public static class MathHelper
     {
+        private const float cos45 = 0.70710678f;
+
         public static float SignedAngle(Vector3 from, Vector3 to, Vector3 axis)
         {
             var unsignedAngle = Vector3.Angle(from, to);
@@ -31,35 +33,23 @@ namespace TwoForksVr.Helpers
             return GetSquareDistance(transformA.position, transformB.position);
         }
 
-        private const float cos45 = 0.70710678f;
         public static Vector2 ConvertCircleVectorToSquare(Vector2 input)
         {
-            if (input.sqrMagnitude == 0)
-            {
-                return Vector2.zero;
-            }
- 
+            if (input.sqrMagnitude == 0) return Vector2.zero;
+
             var normal = input.normalized;
             float vectorX;
             float vectorY;
- 
+
             if (normal.x != 0 && normal.y >= -cos45 && normal.y <= cos45)
-            {
                 vectorX = normal.x >= 0 ? input.x / normal.x : -input.x / normal.x;
-            }
             else
-            {
                 vectorX = input.x / Mathf.Abs(normal.y);
-            }
- 
+
             if (normal.y != 0 && normal.x >= -cos45 && normal.x <= cos45)
-            {
                 vectorY = normal.y >= 0 ? input.y / normal.y : -input.y / normal.y;
-            }
             else
-            {
                 vectorY = input.y / Mathf.Abs(normal.x);
-            }
 
             return new Vector2(vectorX, vectorY);
         }

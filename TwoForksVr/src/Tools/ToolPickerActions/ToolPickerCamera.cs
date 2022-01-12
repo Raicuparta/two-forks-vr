@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace TwoForksVr.Tools.ToolPickerActions
 {
-    public class ToolPickerCamera: ToolPickerAction
+    public class ToolPickerCamera : ToolPickerAction
     {
         private vgPlayerController playerController;
 

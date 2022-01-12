@@ -8,7 +8,7 @@ namespace TwoForksVr.Limbs
     {
         private string handName;
         private bool isLeft;
-        
+
         public static VrFoot Create(bool isLeft = false)
         {
             var handName = isLeft ? "Left" : "Right";
@@ -23,12 +23,13 @@ namespace TwoForksVr.Limbs
             if (!playerRootBone) return;
 
             var shoeBone = playerRootBone.Find(
-                                    $"henryPelvis/henryHips/henryLeg{handName}1/henryLeg{handName}2/henryLeg{handName}Foot");
+                $"henryPelvis/henryHips/henryLeg{handName}1/henryLeg{handName}2/henryLeg{handName}Foot");
             if (!shoeBone)
             {
                 Logs.LogError("### could not find shoe bone");
                 return;
             }
+
             var handLid = Instantiate(VrAssetLoader.ShoeLid).transform;
             LayerHelper.SetLayer(handLid.Find("ShoeLidModel"), GameLayer.PlayerBody);
             handLid.SetParent(shoeBone, false);

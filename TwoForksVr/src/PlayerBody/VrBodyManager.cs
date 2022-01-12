@@ -8,6 +8,11 @@ namespace TwoForksVr.PlayerBody
 {
     public class VrBodyManager : MonoBehaviour
     {
+        private void Start()
+        {
+            HideBodyParts();
+        }
+
         public static void Create(vgPlayerController playerController)
         {
             var playerTransform = playerController.transform;
@@ -25,11 +30,6 @@ namespace TwoForksVr.PlayerBody
 
             playerBody.AddComponent<VrBodyManager>();
         }
-        
-        private void Start()
-        {
-            HideBodyParts();
-        }
 
         // Hides body parts by either making them completely invisible,
         // or by using transparent textures to leave parts visible (hands and feet).
@@ -39,10 +39,10 @@ namespace TwoForksVr.PlayerBody
             renderer.shadowCastingMode = ShadowCastingMode.TwoSided;
 
             var materials = renderer.materials;
-            
+
             var bodyMaterial = materials[0];
             MakeMaterialTextureTransparent(bodyMaterial, VrAssetLoader.BodyCutoutTexture);
-            
+
             var backpackMaterial = materials[1];
             MakeMaterialTextureTransparent(backpackMaterial);
 

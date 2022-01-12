@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
-using TwoForksVr.Tools.ToolPickerActions;
 using UnityEngine;
 using Valve.VR;
 
@@ -43,12 +42,10 @@ namespace TwoForksVr.Tools
 
             instance.tools = new List<ToolPickerItem>();
             for (var index = 0; index < instance.toolsContainer.childCount; index++)
-            {
                 instance.tools.Add(ToolPickerItem.Create(
                     instance.toolsContainer,
                     index
                 ));
-            }
         }
 
         private void SelectCurrentlyHoveredTool()

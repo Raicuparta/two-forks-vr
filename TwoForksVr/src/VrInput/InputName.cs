@@ -1,4 +1,4 @@
-﻿namespace TwoForksVr.Input
+﻿namespace TwoForksVr.VrInput
 {
     public struct InputName
     {

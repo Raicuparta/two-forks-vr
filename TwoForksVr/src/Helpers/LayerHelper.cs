@@ -20,30 +20,36 @@ namespace TwoForksVr.Helpers
         RopeClimbCollision = 14,
         PhysicsHackCollision = 15,
         PutBack = 16,
-        
+
         // Custom VR layers:
-        PlayerBody = 17,
+        PlayerBody = 17
     }
 
     public static class LayerHelper
     {
+        public static readonly int UiMask = GetMask(GameLayer.UI);
+
+        public static int GetMask(GameLayer layer, int baseMask = 0)
+        {
+            return baseMask | (1 << (int) layer);
+        }
+
         public static int GetMask(params GameLayer[] layers)
         {
-          if (layers == null) throw new ArgumentNullException(nameof (layers));
-          var result = 0;
-          foreach (var layer in layers)
-          {
-              result |= 1 << (int) layer;
-          }
+            if (layers == null) throw new ArgumentNullException(nameof(layers));
+            var result = 0;
+            foreach (var layer in layers) result = GetMask(layer, result);
 
-          return result;
+            return result;
         }
-        
-        public static void SetLayer(Component component, GameLayer layer) {
+
+        public static void SetLayer(Component component, GameLayer layer)
+        {
             SetLayer(component.gameObject, layer);
         }
-        
-        public static void SetLayer(GameObject gameObject, GameLayer layer) {
+
+        public static void SetLayer(GameObject gameObject, GameLayer layer)
+        {
             gameObject.layer = (int) layer;
         }
     }

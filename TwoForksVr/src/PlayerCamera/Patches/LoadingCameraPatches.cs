@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 
 namespace TwoForksVr.PlayerCamera.Patches
-{    
+{
     [HarmonyPatch]
     public class LoadingCameraPatches
     {
