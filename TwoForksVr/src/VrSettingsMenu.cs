@@ -27,12 +27,12 @@ namespace TwoForksVr
                 var toggleInstance = Instantiate(toggleObject, layoutGroup, false);
                 toggleInstance.GetComponentInChildren<Text>().text = configEntry.Value.Description.Description;
                 var toggleInput = toggleInstance.GetComponentInChildren<Toggle>();
+                toggleInput.isOn = (bool) configEntry.Value.BoxedValue;
                 
-                toggleInput.onValueChanged.AddListener((value) =>
+                toggleInput.onValueChanged.AddListener((isOn) =>
                 {
-                    configEntry.Value.SetSerializedValue(value.ToString());
+                    configEntry.Value.BoxedValue = isOn;
                 });
-                
             }
 
             return instance;
