@@ -3,18 +3,18 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Valve.VR;
 
-namespace TwoForksVr.Limbs
+namespace TwoForksVr.VrLaser
 {
     public class VrLaserInputModule : StandaloneInputModule
     {
         private const float rayMaxDistance = 30f;
-        private VrHandLaser handLaser;
+        private VrLaser laser;
         private readonly SteamVR_Action_Boolean clickAction = SteamVR_Actions.default_Interact;
 
-        public static void Create(VrHandLaser handLaser)
+        public static void Create(VrLaser laser)
         {
-            var instance = handLaser.gameObject.AddComponent<VrLaserInputModule>();
-            instance.handLaser = handLaser;
+            var instance = laser.gameObject.AddComponent<VrLaserInputModule>();
+            instance.laser = laser;
             Input.simulateMouseWithTouches = true;
         }
 
@@ -29,11 +29,11 @@ namespace TwoForksVr.Limbs
 
             if (!isHit)
             {
-                handLaser.SetTarget(null);
+                laser.SetTarget(null);
                 return;
             }
 
-            handLaser.SetTarget(hit.point);
+            laser.SetTarget(hit.point);
             
             var pointerData = GetTouchPointerEventData(new Touch()
             {

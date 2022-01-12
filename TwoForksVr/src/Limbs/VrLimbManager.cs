@@ -34,7 +34,7 @@ namespace TwoForksVr.Limbs
                 instance.leftHand.transform,
                 instance.rightHand.transform
             );
-            VrHandLaser.Create(
+            VrLaser.VrLaser.Create(
                 instance.leftHand.transform,
                 instance.rightHand.transform
             );

@@ -1,11 +1,11 @@
 ﻿using TwoForksVr.Helpers;
-using TwoForksVr.Limbs.Patches;
+using TwoForksVr.VrLaser.Patches;
 using UnityEngine;
 using Valve.VR;
 
-namespace TwoForksVr.Limbs
+namespace TwoForksVr.VrLaser
 {
-    public class VrHandLaser : MonoBehaviour
+    public class VrLaser : MonoBehaviour
     {
         private const float laserLength = 1f;
         private Transform leftHand;
@@ -24,7 +24,6 @@ namespace TwoForksVr.Limbs
             lineRenderer.SetPositions(new[] {Vector3.zero, Vector3.forward * laserLength});
             lineRenderer.startWidth = 0.005f;
             lineRenderer.endWidth = 0.001f;
-            // TODO change colors depending on laser state.
             lineRenderer.endColor = new Color(1, 1, 1, 1f);
             lineRenderer.startColor = Color.clear;
             lineRenderer.material.shader = Shader.Find("Particles/Alpha Blended Premultiply");
@@ -56,7 +55,7 @@ namespace TwoForksVr.Limbs
 
         public static void Create(Transform leftHand, Transform rightHand)
         {
-            var instance = new GameObject("VrHandLaser").AddComponent<VrHandLaser>();
+            var instance = new GameObject("VrHandLaser").AddComponent<VrLaser>();
             var instanceTransform = instance.transform;
             instanceTransform.SetParent(rightHand, false);
             instanceTransform.localEulerAngles = new Vector3(39.132f, 356.9302f, 0.3666f);
@@ -74,7 +73,7 @@ namespace TwoForksVr.Limbs
 
         private bool HasCurrentTarget()
         {
-            return (vgHudManager.Instance && vgHudManager.Instance.currentTarget != null) || target != null;
+            return (vgHudManager.Instance && vgHudManager.Instance.currentTarget) || target != null;
         }
 
         private void UpdateLaserVisibility()
