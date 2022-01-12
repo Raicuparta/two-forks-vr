@@ -11,9 +11,7 @@ namespace TwoForksVr.Limbs
     public class VrLimbManager : MonoBehaviour
     {
         private Laser laser;
-        private VrFoot leftFoot;
         private VrHand leftHand;
-        private VrFoot rightFoot;
         private VrHand rightHand;
 
         public static VrLimbManager Create(VrStage stage)
@@ -29,8 +27,6 @@ namespace TwoForksVr.Limbs
                 instanceTransform,
                 true
             );
-            instance.rightFoot = VrFoot.Create();
-            instance.leftFoot = VrFoot.Create(true);
             ToolPicker.Create(
                 instanceTransform,
                 instance.leftHand.transform,
@@ -52,10 +48,11 @@ namespace TwoForksVr.Limbs
             var rootBone = henry != null ? henry.Find("henryroot") : null;
             rightHand.SetUp(rootBone);
             leftHand.SetUp(rootBone);
-            rightFoot.SetUp(rootBone);
-            leftFoot.SetUp(rootBone);
             laser.SetUp(camera);
             GeneralDebugger.PlayerAnimator = henry != null ? henry.GetComponent<Animator>() : null;
+
+            VrFoot.Create(rootBone);
+            VrFoot.Create(rootBone, true);
         }
     }
 }

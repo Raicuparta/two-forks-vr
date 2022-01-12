@@ -1,25 +1,17 @@
-﻿using TwoForksVr.Assets;
+﻿using System;
+using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
+using TwoForksVr.Settings;
 using UnityEngine;
 
 namespace TwoForksVr.Limbs
 {
     public class VrFoot : MonoBehaviour
     {
-        private string footName;
-        private bool isLeft;
-
-        public static VrFoot Create(bool isLeft = false)
+        public static void Create(Transform playerRootBone, bool isLeft = false)
         {
             var footName = isLeft ? "Left" : "Right";
-            var instance = new GameObject($"Vr{footName}Foot").AddComponent<VrFoot>();
-            instance.isLeft = isLeft;
-            instance.footName = footName;
-            return instance;
-        }
 
-        public void SetUp(Transform playerRootBone)
-        {
             if (!playerRootBone) return;
 
             var shoeBone = playerRootBone.Find(
@@ -31,9 +23,35 @@ namespace TwoForksVr.Limbs
             }
 
             var shoeLid = Instantiate(VrAssetLoader.ShoeLid).transform;
+            shoeLid.gameObject.AddComponent<VrFoot>();
             LayerHelper.SetLayer(shoeLid.Find("ShoeLidModel"), GameLayer.PlayerBody);
             shoeLid.SetParent(shoeBone, false);
             if (isLeft) shoeLid.localScale = new Vector3(1, 1, -1);
+        }
+        
+        private void Awake()
+        {
+            VrSettings.HideFeet.SettingChanged += HandleHideFeetChanged;
+        }
+
+        private void Start()
+        {
+            SetUpVisibility();
+        }
+
+        private void OnDestroy()
+        {
+            VrSettings.HideFeet.SettingChanged -= HandleHideFeetChanged;
+        }
+
+        private void HandleHideFeetChanged(object sender, EventArgs e)
+        {
+            SetUpVisibility();
+        }
+
+        private void SetUpVisibility()
+        {
+            gameObject.SetActive(!VrSettings.HideFeet.Value);
         }
     }
 }
