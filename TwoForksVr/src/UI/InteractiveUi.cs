@@ -1,4 +1,3 @@
-using System.Linq;
 using HarmonyLib;
 using TwoForksVr.Debugging;
 using UnityEngine;
@@ -72,7 +71,6 @@ namespace TwoForksVr.UI
             var rectSize = rectTransform.sizeDelta;
             collider.size = new Vector3(rectSize.x, rectSize.y, 0.1f);
             gameObject.layer = LayerMask.NameToLayer("UI");
-            gameObject.GetComponent<Canvas>().worldCamera = Camera.main; // TODO update this from cameratransform?
             
             gameObject.AddComponent<DebugCollider>();
         }
