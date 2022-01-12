@@ -96,7 +96,7 @@ namespace TwoForksVr.UI.Patches
             }
             else
             {
-                canvas.gameObject.AddComponent<AttachHudToCamera>();
+                canvas.gameObject.AddComponent<StaticUi>();
                 canvas.transform.localScale = Vector3.one * 0.0005f;
             }
         }
