@@ -1,9 +1,8 @@
-using TwoForksVr.Helpers;
 using UnityEngine;
 
 namespace TwoForksVr.Tools.ToolPickerActions
 {
-    public class ToolPickerInventory: ToolPickerAction
+    public class ToolPickerInventory : ToolPickerAction
     {
         private vgInventoryController inventoryController;
         private vgInventoryMenuController inventoryMenuController;

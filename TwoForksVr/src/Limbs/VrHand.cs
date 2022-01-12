@@ -10,6 +10,12 @@ namespace TwoForksVr.Limbs
         private GameObject fallbackHandModel;
         private string handName;
         private bool isLeft;
+
+        private void Start()
+        {
+            // Reset the tracking. For some reason if I don't do this the hands will be frozen.
+            gameObject.SetActive(true);
+        }
         // private Transform rootBone;
 
         public static VrHand Create(Transform parent, bool isLeft = false)
@@ -37,12 +43,6 @@ namespace TwoForksVr.Limbs
                 SetFallbackHandActive(true);
             }
 
-            gameObject.SetActive(true);
-        }
-        
-        private void Start()
-        {
-            // Reset the tracking. For some reason if I don't do this the hands will be frozen.
             gameObject.SetActive(true);
         }
 
@@ -86,7 +86,7 @@ namespace TwoForksVr.Limbs
             updateFollow.Target = transform.Find("ArmTarget");
             return armBone;
         }
-        
+
         private void SetUpHandLid(Transform armBone)
         {
             var handLid = Instantiate(VrAssetLoader.HandLid).transform;

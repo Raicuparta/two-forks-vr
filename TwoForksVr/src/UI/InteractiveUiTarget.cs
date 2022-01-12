@@ -5,15 +5,20 @@ namespace TwoForksVr.UI
 {
     // This is an invisible object that's always(ish) somewhere in front of the player.
     // To be used as the position for UI elements that need to be visible or interacted with.
-    public class InteractiveUiTarget: MonoBehaviour
+    public class InteractiveUiTarget : MonoBehaviour
     {
         private const float maxSquareDistance = 3f;
         private const float smoothTime = 0.3F;
-        private Vector3 velocity = Vector3.zero;
-        private Vector3? currentTarget;
-        private Transform cameraTransform;
         private const float offset = 3f;
-    
+        private Transform cameraTransform;
+        private Vector3? currentTarget;
+        private Vector3 velocity = Vector3.zero;
+
+        private void Update()
+        {
+            UpdateTransform();
+        }
+
         public static InteractiveUiTarget Create(VrStage stage)
         {
             var instance = new GameObject(nameof(InteractiveUiTarget)).AddComponent<InteractiveUiTarget>();
@@ -25,11 +30,6 @@ namespace TwoForksVr.UI
         public void SetUp(Camera camera)
         {
             cameraTransform = camera ? camera.transform : null;
-        }
-
-        private void Update()
-        {
-            UpdateTransform();
         }
 
         private Vector3 GetTargetPosition()
@@ -48,7 +48,9 @@ namespace TwoForksVr.UI
 
             var squareDistance = Vector3.SqrMagnitude(targetThisFrame - transform.position);
 
-            currentTarget = (squareDistance > maxSquareDistance || currentTarget == null) ? targetThisFrame : currentTarget;
+            currentTarget = squareDistance > maxSquareDistance || currentTarget == null
+                ? targetThisFrame
+                : currentTarget;
 
             transform.position = Vector3.SmoothDamp(
                 transform.position,

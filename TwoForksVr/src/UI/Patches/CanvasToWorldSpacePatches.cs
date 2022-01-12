@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using TwoForksVr.Debugging;
 using TwoForksVr.Helpers;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -34,14 +33,14 @@ namespace TwoForksVr.UI.Patches
         {
             PatchCanvases(__instance);
         }
-        
+
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgLoadingCamera), nameof(vgLoadingCamera.OnEnable))]
         private static void MoveLoadingCanvasToWorldSpace(vgLoadingCamera __instance)
         {
             var canvasTransform = __instance.transform.parent;
             PatchCanvases(canvasTransform);
-            
+
             // Move loading spinner from corner to center.
             var loadSpinner = canvasTransform.Find("LoadSpinner/UI_LoadSpinner/");
             var loadSpinnerPosition = loadSpinner.localPosition;
@@ -55,7 +54,7 @@ namespace TwoForksVr.UI.Patches
                     return true;
             return false;
         }
-        
+
         private static bool IsCanvasToDisable(string canvasName)
         {
             foreach (var s in canvasesToDisable)
@@ -63,12 +62,12 @@ namespace TwoForksVr.UI.Patches
                     return true;
             return false;
         }
-        
+
         private static void PatchCanvases(Component component)
         {
             var camera = Camera.main;
             if (!camera || IsCanvasToIgnore(component.name)) return;
-            
+
             var canvas = component.GetComponentInParent<Canvas>();
 
             if (!canvas) return;
@@ -84,7 +83,7 @@ namespace TwoForksVr.UI.Patches
             canvas.worldCamera = camera;
             canvas.renderMode = RenderMode.WorldSpace;
             LayerHelper.SetLayer(canvas, GameLayer.UI);
-            
+
             // Canvases with graphic raycasters are the ones that receive click events.
             // Those need to be handled differently, with colliders for the laser ray.
             if (canvas.GetComponent<GraphicRaycaster>())

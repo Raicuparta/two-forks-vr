@@ -39,7 +39,7 @@ namespace TwoForksVr.VrInput.Patches
                 {InputName.Pause, actionSet.Cancel},
                 {InputName.NextMenu, actionSet.NextPage},
                 {InputName.PreviousMenu, actionSet.PreviousPage},
-                {InputName.RadioUp, actionSet.Grip},
+                {InputName.RadioUp, actionSet.Grip}
             };
             invertedBooleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>
             {
@@ -49,66 +49,53 @@ namespace TwoForksVr.VrInput.Patches
             {
                 {InputName.MoveStrafe, actionSet.Move},
                 {InputName.LookHorizontalStick, actionSet.Rotate},
-                {InputName.UIHorizontal, actionSet.Move},
+                {InputName.UIHorizontal, actionSet.Move}
             };
             vector2YActionMap = new Dictionary<string, SteamVR_Action_Vector2>
             {
                 {InputName.MoveForward, actionSet.Move},
                 {InputName.LookVerticalStick, actionSet.Rotate},
                 {InputName.Scroll, actionSet.Move},
-                {InputName.UIVertical, actionSet.Move},
+                {InputName.UIVertical, actionSet.Move}
             };
 
             foreach (var entry in vector2XActionMap)
-            {
                 entry.Value.onChange += (action, source, axis, delta) =>
                     TriggerCommand(entry.Key, MathHelper.ConvertCircleVectorToSquare(axis).x);
-            }
             foreach (var entry in vector2YActionMap)
-            {
                 entry.Value.onChange += (action, source, axis, delta) =>
                     TriggerCommand(entry.Key, MathHelper.ConvertCircleVectorToSquare(axis).y);
-            }
             foreach (var entry in booleanActionMap)
-            {
                 entry.Value.onChange += (action, source, state) =>
                 {
                     if (!state) return;
                     TriggerCommand(entry.Key, 1);
                 };
-            }
             foreach (var entry in invertedBooleanActionMap)
-            {
                 entry.Value.onChange += (action, source, state) =>
                 {
                     if (state) return;
                     TriggerCommand(entry.Key, 1);
                 };
-            }
         }
-        
+
         private static void TriggerCommand(string command, float axisValue)
         {
             if (!vgInputManager.Instance || vgInputManager.Instance.commandCallbackMap == null) return;
-            
+
             if (!IsCommandAllowed(command)) return;
-            
-		    var commandCallbackMap = vgInputManager.Instance.commandCallbackMap;
-            if (!vgInputManager.Instance.flushCommands && commandCallbackMap.TryGetValue(command, out var inputDelegate))
-            {
-                inputDelegate?.Invoke(axisValue);
-            }
-	    }
+
+            var commandCallbackMap = vgInputManager.Instance.commandCallbackMap;
+            if (!vgInputManager.Instance.flushCommands &&
+                commandCallbackMap.TryGetValue(command, out var inputDelegate)) inputDelegate?.Invoke(axisValue);
+        }
 
         private static bool IsCommandAllowed(string command)
         {
             foreach (var keyBind in vgInputManager.Instance.virtualKeyKeyBindMap.Values)
-            {
-                foreach (var keyBindCommand in keyBind.commands)
-                {
-                    if (keyBindCommand.command == command) return true;
-                }
-            }
+            foreach (var keyBindCommand in keyBind.commands)
+                if (keyBindCommand.command == command)
+                    return true;
 
             return false;
         }
@@ -118,7 +105,7 @@ namespace TwoForksVr.VrInput.Patches
         private static void ReadAxisValuesFromSteamVR(vgAxisData __instance)
         {
             if (!SteamVR_Input.initialized) return;
-            
+
             // TODO move this elsewhere.
             if (actionSet == null) Initialize();
         }
@@ -139,11 +126,10 @@ namespace TwoForksVr.VrInput.Patches
             __instance.activeController = vgControllerLayoutChoice.XBox;
             __instance.mCurrentIconMap = __instance.IconMap_Xbox;
             __instance.mCurrentIconMap.Init();
-            
-		    if (vgSettingsManager.Instance && vgSettingsManager.Instance.controller != (int)__instance.activeController)
-		    {
-			    vgSettingsManager.Instance.controller = (int)__instance.activeController;
-		    }
+
+            if (vgSettingsManager.Instance &&
+                vgSettingsManager.Instance.controller != (int) __instance.activeController)
+                vgSettingsManager.Instance.controller = (int) __instance.activeController;
 
             return false;
         }

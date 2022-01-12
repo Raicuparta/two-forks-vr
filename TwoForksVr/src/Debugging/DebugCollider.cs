@@ -1,4 +1,3 @@
-using TwoForksVr.Helpers;
 using UnityEngine;
 
 namespace TwoForksVr.Debugging

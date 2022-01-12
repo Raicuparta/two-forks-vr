@@ -10,11 +10,11 @@ namespace TwoForksVr.Limbs
 {
     public class VrLimbManager : MonoBehaviour
     {
-        private VrHand leftHand;
-        private VrHand rightHand;
-        private VrFoot rightFoot;
-        private VrFoot leftFoot;
         private Laser laser;
+        private VrFoot leftFoot;
+        private VrHand leftHand;
+        private VrFoot rightFoot;
+        private VrHand rightHand;
 
         public static VrLimbManager Create(VrStage stage)
         {

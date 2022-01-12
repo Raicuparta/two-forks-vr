@@ -8,13 +8,13 @@ namespace TwoForksVr.LaserPointer
     public class Laser : MonoBehaviour
     {
         private const float laserLength = 1f;
+        private LaserInputModule inputModule;
+        private Transform laserTransform;
         private Transform leftHand;
         private LineRenderer lineRenderer;
         private Transform rightHand;
-        private Transform laserTransform;
         private Vector3? target;
-        private LaserInputModule inputModule;
-        
+
         private void Start()
         {
             laserTransform = transform;
@@ -34,16 +34,16 @@ namespace TwoForksVr.LaserPointer
             inputModule = LaserInputModule.Create(this);
         }
 
-        public void SetTarget(Vector3? newTarget)
-        {
-            target = newTarget;
-        }
-
         private void Update()
         {
             UpdateLaserParent();
             UpdateLaserVisibility();
             UpdateLaserTarget();
+        }
+
+        public void SetTarget(Vector3? newTarget)
+        {
+            target = newTarget;
         }
 
         private void UpdateLaserTarget()
@@ -80,7 +80,7 @@ namespace TwoForksVr.LaserPointer
 
         private bool HasCurrentTarget()
         {
-            return (vgHudManager.Instance && vgHudManager.Instance.currentTarget) || target != null;
+            return vgHudManager.Instance && vgHudManager.Instance.currentTarget || target != null;
         }
 
         private void UpdateLaserVisibility()

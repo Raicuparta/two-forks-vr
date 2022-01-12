@@ -14,7 +14,7 @@ namespace TwoForksVr.VrInput.Patches
             Object.Destroy(__instance);
             return false;
         }
-        
+
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgUIInputModule), nameof(vgUIInputModule.ProcessMouseEvent))]
         [HarmonyPatch(typeof(vgUIInputModule), nameof(vgUIInputModule.GetDefaultSelectedGameObject))]

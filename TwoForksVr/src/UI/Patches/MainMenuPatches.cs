@@ -20,13 +20,8 @@ namespace TwoForksVr.UI.Patches
         private static void DisableUnnecessaryMainMenuObjects(vgMainMenuController __instance)
         {
             foreach (Transform child in __instance.transform)
-            {
                 if (objectsToDisable.Contains(child.name))
-                {
                     child.gameObject.SetActive(false);
-                }
-            }
         }
-
     }
 }

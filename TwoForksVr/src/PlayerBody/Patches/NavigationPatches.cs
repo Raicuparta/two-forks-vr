@@ -21,7 +21,7 @@ namespace TwoForksVr.PlayerBody.Patches
             __instance.playerRotationDamping = 0;
             __instance.largestAllowedYawDelta = 0;
         }
-        
+
         [HarmonyPostfix]
         [HarmonyPatch(typeof(vgPlayerNavigationController), nameof(vgPlayerNavigationController.Start))]
         public static void MakeRotationInstant(vgPlayerNavigationController __instance)

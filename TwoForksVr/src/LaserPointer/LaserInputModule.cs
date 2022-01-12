@@ -8,9 +8,9 @@ namespace TwoForksVr.LaserPointer
     public class LaserInputModule : StandaloneInputModule
     {
         private const float rayMaxDistance = 30f;
+        public Camera EventCamera;
         private readonly SteamVR_Action_Boolean clickAction = SteamVR_Actions.default_Interact;
         private Laser laser;
-        public Camera EventCamera;
 
         public static LaserInputModule Create(Laser laser)
         {
@@ -38,22 +38,18 @@ namespace TwoForksVr.LaserPointer
             }
 
             laser.SetTarget(hit.point);
-            
-            var pointerData = GetTouchPointerEventData(new Touch()
+
+            var pointerData = GetTouchPointerEventData(new Touch
             {
-                position =  EventCamera.WorldToScreenPoint(hit.point),
+                position = EventCamera.WorldToScreenPoint(hit.point)
             }, out _, out _);
-            
+
             ProcessTouchPress(pointerData, clickAction.stateDown, clickAction.stateUp);
 
             if (clickAction.stateUp)
-            {
                 RemovePointerData(pointerData);
-            }
             else
-            {
                 ProcessMove(pointerData);
-            }
         }
     }
 }

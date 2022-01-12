@@ -14,7 +14,7 @@ namespace TwoForksVr.UI
             transform.position = targetPosition + cameraTransform.forward * offset;
             transform.LookAt(2 * transform.position - targetPosition);
         }
-        
+
         public static void SetTargetCamera(Camera camera)
         {
             cameraTransform = camera ? camera.transform : null;
