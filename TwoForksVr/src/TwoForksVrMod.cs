@@ -3,31 +3,18 @@ using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
 using TwoForksVr.Assets;
+using TwoForksVr.Settings;
 
 namespace TwoForksVr
 {
     [BepInPlugin("raicuparta.twoforksvr", "Two Forks VR", "0.0.8")]
     public class TwoForksVrMod : BaseUnityPlugin
     {
-        public static ConfigFile ModConfig;
-
-        private ConfigEntry<bool> handOrientedMovement;
-        private ConfigEntry<bool> snapTurning;
-
         private void Awake()
         {
-            SetUpConfig();
+            VrSettings.SetUp(Config);
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
             VrAssetLoader.LoadAssets();
-        }
-        
-        private void SetUpConfig()
-        {
-            ModConfig = Config;
-            handOrientedMovement = Config.Bind("Config", "HandOrientedMovement", false,
-                "True: hand oriented movement. False: head oriented movement.");
-            snapTurning = Config.Bind("Config", "SnapTurning", false,
-                "True: snap turning. False: smooth turning.");
         }
     }
 }

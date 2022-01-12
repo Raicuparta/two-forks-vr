@@ -1,5 +1,7 @@
-﻿using TwoForksVr.Assets;
+﻿using System;
+using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
+using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -8,9 +10,22 @@ namespace TwoForksVr.PlayerBody
 {
     public class VrBodyManager : MonoBehaviour
     {
+        private Material bodyMaterial;
+        private Texture bodyTexture;
+
+        private void Awake()
+        {
+            VrSettings.HideFeet.SettingChanged += HandleHideFeetChanged;
+        }
+
         private void Start()
         {
             HideBodyParts();
+        }
+
+        private void OnDestroy()
+        {
+            VrSettings.HideFeet.SettingChanged -= HandleHideFeetChanged;
         }
 
         public static void Create(vgPlayerController playerController)
@@ -40,8 +55,9 @@ namespace TwoForksVr.PlayerBody
 
             var materials = renderer.materials;
 
-            var bodyMaterial = materials[0];
-            MakeMaterialTextureTransparent(bodyMaterial, VrAssetLoader.BodyCutoutTexture);
+            bodyMaterial = materials[0];
+            bodyTexture = bodyMaterial.mainTexture;
+            SetUpBodyVisibility();
 
             var backpackMaterial = materials[1];
             MakeMaterialTextureTransparent(backpackMaterial);
@@ -50,12 +66,30 @@ namespace TwoForksVr.PlayerBody
             MakeMaterialTextureTransparent(armsMaterial, VrAssetLoader.ArmsCutoutTexture);
         }
 
-        private static void MakeMaterialTextureTransparent(Material material, Texture2D texture = null)
+        private static void MakeMaterialTextureTransparent(Material material, Texture texture = null)
         {
             var cutoutShader = Shader.Find("Marmoset/Transparent/Cutout/Bumped Specular IBL");
             material.shader = cutoutShader;
             material.SetTexture(ShaderProperty.MainTexture, texture);
-            if (!texture) material.SetColor(ShaderProperty.Color, Color.clear);
+            if (!texture)
+            {
+                material.SetColor(ShaderProperty.Color, Color.clear);
+            }
+            else
+            {
+                material.SetColor(ShaderProperty.Color, Color.white);
+            }
+        }
+        
+        private void HandleHideFeetChanged(object sender, EventArgs e)
+        {
+            SetUpBodyVisibility();
+        }
+
+        private void SetUpBodyVisibility()
+        {
+            if (!bodyMaterial) return;
+            MakeMaterialTextureTransparent(bodyMaterial, VrSettings.HideFeet.Value ? null : VrAssetLoader.BodyCutoutTexture);
         }
     }
 }

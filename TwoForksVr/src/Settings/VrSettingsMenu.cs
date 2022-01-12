@@ -4,7 +4,7 @@ using TwoForksVr.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace TwoForksVr
+namespace TwoForksVr.Settings
 {
     public class VrSettingsMenu: MonoBehaviour
     {
@@ -28,7 +28,7 @@ namespace TwoForksVr
             var toggleObject = layoutGroup.GetComponentInChildren<Toggle>(true).gameObject;
             toggleObject.SetActive(false);
                 
-            foreach (var configEntry in TwoForksVrMod.ModConfig)
+            foreach (var configEntry in VrSettings.Config)
             {
                 var toggleInstance = Instantiate(toggleObject, layoutGroup, false);
                 toggleInstance.SetActive(true);
