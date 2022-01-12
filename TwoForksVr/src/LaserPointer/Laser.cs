@@ -1,46 +1,73 @@
 ﻿using TwoForksVr.Helpers;
-using TwoForksVr.Limbs.Patches;
+using TwoForksVr.LaserPointer.Patches;
 using UnityEngine;
 using Valve.VR;
 
-namespace TwoForksVr.Limbs
+namespace TwoForksVr.LaserPointer
 {
-    internal class VrHandLaser : MonoBehaviour
+    public class Laser : MonoBehaviour
     {
+        private const float laserLength = 1f;
+        private LaserInputModule inputModule;
+        private Transform laserTransform;
         private Transform leftHand;
         private LineRenderer lineRenderer;
         private Transform rightHand;
+        private Vector3? target;
 
         private void Start()
         {
-            PlayerTargetingPatches.LaserTransform = transform;
+            laserTransform = transform;
+            PlayerTargetingPatches.LaserTransform = laserTransform;
 
             lineRenderer = gameObject.AddComponent<LineRenderer>();
             lineRenderer.useWorldSpace = false;
-            lineRenderer.SetPositions(new[] {Vector3.zero, Vector3.forward});
+            lineRenderer.SetPositions(new[] {Vector3.zero, Vector3.forward * laserLength});
             lineRenderer.startWidth = 0.005f;
             lineRenderer.endWidth = 0.001f;
-            lineRenderer.endColor = new Color(1, 1, 1, 0.3f);
+            lineRenderer.endColor = new Color(1, 1, 1, 1f);
             lineRenderer.startColor = Color.clear;
             lineRenderer.material.shader = Shader.Find("Particles/Alpha Blended Premultiply");
             lineRenderer.material.SetColor(ShaderProperty.Color, new Color(0.8f, 0.8f, 0.8f));
             lineRenderer.enabled = false;
+
+            inputModule = LaserInputModule.Create(this);
         }
 
         private void Update()
         {
             UpdateLaserParent();
             UpdateLaserVisibility();
+            UpdateLaserTarget();
         }
 
-        public static void Create(Transform leftHand, Transform rightHand)
+        public void SetTarget(Vector3? newTarget)
         {
-            var instance = new GameObject("VrHandLaser").AddComponent<VrHandLaser>();
+            target = newTarget;
+        }
+
+        private void UpdateLaserTarget()
+        {
+            lineRenderer.SetPosition(1,
+                target != null
+                    ? transform.InverseTransformPoint((Vector3) target)
+                    : Vector3.forward * laserLength);
+        }
+
+        public static Laser Create(Transform leftHand, Transform rightHand)
+        {
+            var instance = new GameObject("VrHandLaser").AddComponent<Laser>();
             var instanceTransform = instance.transform;
             instanceTransform.SetParent(rightHand, false);
             instanceTransform.localEulerAngles = new Vector3(39.132f, 356.9302f, 0.3666f);
             instance.rightHand = rightHand;
             instance.leftHand = leftHand;
+            return instance;
+        }
+
+        public void SetUp(Camera camera)
+        {
+            inputModule.EventCamera = camera;
         }
 
         private void UpdateLaserParent()
@@ -51,15 +78,13 @@ namespace TwoForksVr.Limbs
                 transform.SetParent(rightHand, false);
         }
 
-        private static bool HasCurrentTarget()
+        private bool HasCurrentTarget()
         {
-            if (!vgHudManager.Instance) return false;
-            return vgHudManager.Instance.currentTarget != null;
+            return vgHudManager.Instance && vgHudManager.Instance.currentTarget || target != null;
         }
 
         private void UpdateLaserVisibility()
         {
-            if (!vgHudManager.Instance) return;
             lineRenderer.enabled =
                 HasCurrentTarget() || SteamVR_Actions.default_Interact.state;
         }

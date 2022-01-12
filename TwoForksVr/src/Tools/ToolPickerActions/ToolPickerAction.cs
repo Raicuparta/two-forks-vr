@@ -15,7 +15,7 @@ namespace TwoForksVr.Tools.ToolPickerActions
             OnInitialize();
             isInitialized = true;
         }
-        
+
         public void Select()
         {
             if (!isInitialized || IsEquipped()) Initialize();
@@ -27,7 +27,7 @@ namespace TwoForksVr.Tools.ToolPickerActions
             if (!isInitialized || !IsEquipped()) Initialize();
             OnDeselect();
         }
-        
+
         public static ToolPickerAction GetToolPickerAction(VrToolItem itemType)
         {
             switch (itemType)

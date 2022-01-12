@@ -33,14 +33,14 @@ namespace TwoForksVr.UI.Patches
         {
             PatchCanvases(__instance);
         }
-        
+
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgLoadingCamera), nameof(vgLoadingCamera.OnEnable))]
         private static void MoveLoadingCanvasToWorldSpace(vgLoadingCamera __instance)
         {
             var canvasTransform = __instance.transform.parent;
             PatchCanvases(canvasTransform);
-            
+
             // Move loading spinner from corner to center.
             var loadSpinner = canvasTransform.Find("LoadSpinner/UI_LoadSpinner/");
             var loadSpinnerPosition = loadSpinner.localPosition;
@@ -54,7 +54,7 @@ namespace TwoForksVr.UI.Patches
                     return true;
             return false;
         }
-        
+
         private static bool IsCanvasToDisable(string canvasName)
         {
             foreach (var s in canvasesToDisable)
@@ -62,14 +62,12 @@ namespace TwoForksVr.UI.Patches
                     return true;
             return false;
         }
-        
+
         private static void PatchCanvases(Component component)
         {
             var camera = Camera.main;
             if (!camera || IsCanvasToIgnore(component.name)) return;
-            
-            // TODO: layer is being set twice? is it needed?
-            LayerHelper.SetLayer(component, GameLayer.UI);
+
             var canvas = component.GetComponentInParent<Canvas>();
 
             if (!canvas) return;
@@ -80,19 +78,24 @@ namespace TwoForksVr.UI.Patches
                 return;
             }
 
-            var attachToCamera = canvas.GetComponent<AttachToCamera>();
-            if (attachToCamera)
-            {
-                // TODO why was this here?
-            }
-
             if (canvas.renderMode != RenderMode.ScreenSpaceOverlay) return;
 
             canvas.worldCamera = camera;
             canvas.renderMode = RenderMode.WorldSpace;
             LayerHelper.SetLayer(canvas, GameLayer.UI);
-            canvas.gameObject.AddComponent<AttachToCamera>();
-            canvas.transform.localScale = Vector3.one * 0.0005f;
+
+            // Canvases with graphic raycasters are the ones that receive click events.
+            // Those need to be handled differently, with colliders for the laser ray.
+            if (canvas.GetComponent<GraphicRaycaster>())
+            {
+                canvas.gameObject.AddComponent<InteractiveUi>();
+                canvas.transform.localScale = Vector3.one * 0.002f;
+            }
+            else
+            {
+                canvas.gameObject.AddComponent<StaticUi>();
+                canvas.transform.localScale = Vector3.one * 0.0005f;
+            }
         }
     }
 }

@@ -1,8 +1,6 @@
-using UnityEngine;
-
 namespace TwoForksVr.Tools.ToolPickerActions
 {
-    public class ToolPickerCompass: ToolPickerAction
+    public class ToolPickerCompass : ToolPickerAction
     {
         private vgMapController mapController;
 

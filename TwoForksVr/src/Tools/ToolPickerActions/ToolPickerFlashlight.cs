@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace TwoForksVr.Tools.ToolPickerActions
 {
-    public class ToolPickerFlashlight: ToolPickerAction
+    public class ToolPickerFlashlight : ToolPickerAction
     {
         private vgFlashlightController flashlightController;
 

@@ -1,4 +1,5 @@
-﻿using TwoForksVr.Helpers;
+﻿using System;
+using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
 using TwoForksVr.UI;
 using UnityEngine;
@@ -15,6 +16,12 @@ namespace TwoForksVr.PlayerCamera
         private int cameraCullingMask;
         private VrStage stage;
         private Transform playerTransform;
+        private int pauseCameraCullingMask;
+
+        private void Start()
+        {
+            pauseCameraCullingMask = LayerHelper.GetMask(GameLayer.UI, GameLayer.MenuBackground, GameLayer.PlayerBody);
+        }
 
         private void Update()
         {
@@ -25,11 +32,11 @@ namespace TwoForksVr.PlayerCamera
         private void UpdateCulling()
         {
             if (!vgPauseManager.Instance) return;
-            // TODO: maybe need to do this some other way? Some menus don't have UI layer.
+
             if (cameraCullingMask == 0 && vgPauseManager.Instance.isPaused)
             {
                 cameraCullingMask = camera.cullingMask;
-                camera.cullingMask = LayerHelper.GetMask(GameLayer.UI, GameLayer.MenuBackground, GameLayer.PlayerBody);
+                camera.cullingMask = pauseCameraCullingMask;
             }
             else if (cameraCullingMask != 0 && !vgPauseManager.Instance.isPaused)
             {
@@ -47,7 +54,7 @@ namespace TwoForksVr.PlayerCamera
 
         public void SetUp(Camera newCamera, Transform newPlayerTransform)
         {
-            AttachToCamera.SetTargetCamera(newCamera);
+            StaticUi.SetTargetCamera(newCamera);
             camera = newCamera;
             playerTransform = newPlayerTransform;
             cameraController = FindObjectOfType<vgCameraController>();
