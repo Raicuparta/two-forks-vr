@@ -20,6 +20,21 @@ namespace TwoForksVr
             var firstSelectable = layoutGroup.gameObject.GetComponentInChildren<Selectable>();
             firstSelectable.Select();
 
+            var toggleObject = layoutGroup.GetComponentInChildren<Toggle>().gameObject;
+
+            foreach (var configEntry in TwoForksVrMod.ModConfig)
+            {
+                var toggleInstance = Instantiate(toggleObject, layoutGroup, false);
+                toggleInstance.GetComponentInChildren<Text>().text = configEntry.Value.Description.Description;
+                var toggleInput = toggleInstance.GetComponentInChildren<Toggle>();
+                
+                toggleInput.onValueChanged.AddListener((value) =>
+                {
+                    configEntry.Value.SetSerializedValue(value.ToString());
+                });
+                
+            }
+
             return instance;
         }
     }
