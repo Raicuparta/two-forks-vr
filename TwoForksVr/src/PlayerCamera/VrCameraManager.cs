@@ -54,7 +54,7 @@ namespace TwoForksVr.PlayerCamera
 
         public void SetUp(Camera newCamera, Transform newPlayerTransform)
         {
-            StaticUi.SetTargetCamera(newCamera);
+            AttachToCamera.SetTargetCamera(newCamera);
             camera = newCamera;
             playerTransform = newPlayerTransform;
             cameraController = FindObjectOfType<vgCameraController>();
