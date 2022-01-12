@@ -14,7 +14,8 @@ namespace TwoForksVr
             instance.gameObject.AddComponent<InteractiveUi>();
 
             var canvas = instance.GetComponent<Canvas>();
-            canvas.sortingOrder = 1;
+            // High sorting order so it has priority over other menus underneath.
+            canvas.sortingOrder = 100;
 
             var exitButton = instance.transform.Find("ExitButton").GetComponent<Button>();
             exitButton.onClick.AddListener(() =>

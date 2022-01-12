@@ -396,7 +396,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 500, y: 400, z: 10}
-  m_Center: {x: 0, y: 0, z: 5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114136610948532050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -559,7 +559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.641}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.884}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1301,7 +1301,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!224 &224088981704774288
 RectTransform:

@@ -56,7 +56,17 @@ namespace TwoForksVr.UI.Patches
 
         private static Button CreateVrSettingsButton(Button buttonAbove, Transform parent)
         {
-            return CreateButton(buttonAbove, parent, "VR Settings");
+            var vrSettingsButton = CreateButton(buttonAbove, parent, "VR Settings");
+            
+            var vrSettingsMenu = VrSettingsMenu.Create(VrStage.Instance); // TODO don't pass singleton
+            vrSettingsMenu.gameObject.SetActive(false);
+            RemoveAllClickListeners(vrSettingsButton);
+            vrSettingsButton.onClick.AddListener(() =>
+            {
+                vrSettingsMenu.gameObject.SetActive(true);
+            });
+
+            return vrSettingsButton;
         }
         
         private static Button CreateButton(Button buttonAbove, Transform parent, string name)
@@ -92,16 +102,7 @@ namespace TwoForksVr.UI.Patches
             var mainMenuGroup = __instance.transform.Find("Main Menu Group");
             var gameSettingsButton = mainMenuGroup.Find("Settings Button").GetComponent<Button>();
             
-            var vrSettingsButton = CreateVrSettingsButton(gameSettingsButton, mainMenuGroup);
-
-            var vrSettingsMenu = VrSettingsMenu.Create(VrStage.Instance); // TODO don't pass singleton
-            vrSettingsMenu.gameObject.SetActive(false);
-            RemoveAllClickListeners(vrSettingsButton);
-            vrSettingsButton.onClick.AddListener(() =>
-            {
-                Debug.LogWarning("######## yoyoyo clicked");
-                vrSettingsMenu.gameObject.SetActive(true);
-            });
+            CreateVrSettingsButton(gameSettingsButton, mainMenuGroup);
         }
 
         [HarmonyPrefix]
