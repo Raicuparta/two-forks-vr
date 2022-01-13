@@ -1,7 +1,9 @@
 ﻿using System.Reflection;
 using BepInEx;
+using BepInEx.Configuration;
 using HarmonyLib;
 using TwoForksVr.Assets;
+using TwoForksVr.Settings;
 
 namespace TwoForksVr
 {
@@ -10,6 +12,7 @@ namespace TwoForksVr
     {
         private void Awake()
         {
+            VrSettings.SetUp(Config);
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
             VrAssetLoader.LoadAssets();
         }

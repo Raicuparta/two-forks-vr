@@ -61,7 +61,7 @@ namespace TwoForksVr.Stage
             FallbackCamera.transform.SetParent(Instance.transform, false);
 
             Instance.gameObject.AddComponent<GeneralDebugger>();
-
+            
             return Instance;
         }
 

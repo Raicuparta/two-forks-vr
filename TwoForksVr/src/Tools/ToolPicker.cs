@@ -34,7 +34,7 @@ namespace TwoForksVr.Tools
 
         public static void Create(Transform parent, Transform leftHand, Transform rightHand)
         {
-            var instance = Instantiate(VrAssetLoader.ToolPicker).AddComponent<ToolPicker>();
+            var instance = Instantiate(VrAssetLoader.ToolPickerPrefab).AddComponent<ToolPicker>();
             instance.transform.SetParent(parent, false);
             instance.toolsContainer = instance.transform.Find("Tools");
             instance.rightHand = rightHand;
