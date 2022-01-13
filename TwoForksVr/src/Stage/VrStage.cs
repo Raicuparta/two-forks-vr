@@ -62,8 +62,6 @@ namespace TwoForksVr.Stage
 
             Instance.gameObject.AddComponent<GeneralDebugger>();
             
-            // VrSettingsMenu.Create(Instance);
-
             return Instance;
         }
 
