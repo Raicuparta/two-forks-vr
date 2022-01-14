@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace TwoForksVr.Helpers
 {
@@ -8,7 +9,27 @@ namespace TwoForksVr.Helpers
     {
         public Transform Target;
 
+        private void Awake()
+        {
+            Camera.onPreCull += HandlePreCull;
+        }
+
+        private void OnDestroy()
+        {
+            Camera.onPreCull -= HandlePreCull;
+        }
+
+        private void HandlePreCull(Camera cam)
+        {
+            UpdateTransform();
+        }
+
         private void LateUpdate()
+        {
+            UpdateTransform();
+        }
+
+        private void UpdateTransform()
         {
             if (!Target) return;
             transform.position = Target.position;

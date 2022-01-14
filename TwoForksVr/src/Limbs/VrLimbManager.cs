@@ -13,12 +13,12 @@ namespace TwoForksVr.Limbs
         private Laser laser;
         private VrHand leftHand;
         private VrHand rightHand;
+        private Transform vrBody;
 
         public static VrLimbManager Create(VrStage stage)
         {
-            var instance = Instantiate(VrAssetLoader.HandsPrefab).AddComponent<VrLimbManager>();
+            var instance = Instantiate(VrAssetLoader.HandsPrefab, stage.transform, false).AddComponent<VrLimbManager>();
             var instanceTransform = instance.transform;
-            instanceTransform.SetParent(stage.transform, false);
 
             instance.rightHand = VrHand.Create(
                 instanceTransform
@@ -37,6 +37,8 @@ namespace TwoForksVr.Limbs
                 instance.rightHand.transform
             );
 
+            instance.vrBody = Instantiate(VrAssetLoader.PlayerPrefab, instanceTransform, false).transform;
+
             InventoryPatches.RightHand = instance.rightHand.transform;
 
             return instance;
@@ -44,15 +46,17 @@ namespace TwoForksVr.Limbs
 
         public void SetUp(Transform playerTransform, Camera camera)
         {
-            var henry = playerTransform != null ? playerTransform.Find("henry") : null;
-            var rootBone = henry != null ? henry.Find("henryroot") : null;
-            rightHand.SetUp(rootBone);
-            leftHand.SetUp(rootBone);
+            var cloneHenry = vrBody.Find("PlayerModel/henry");
+            var cloneRootBone = cloneHenry.Find("henryroot");
+            var animatedHenry = playerTransform ? playerTransform.Find("henry") : null;
+            var animatedRootBone = animatedHenry ? animatedHenry.Find("henryroot") : null;
+            rightHand.SetUp(animatedRootBone, cloneRootBone);
+            leftHand.SetUp(animatedRootBone, cloneRootBone);
             laser.SetUp(camera);
-            GeneralDebugger.PlayerAnimator = henry != null ? henry.GetComponent<Animator>() : null;
+            GeneralDebugger.PlayerAnimator = animatedHenry != null ? animatedHenry.GetComponent<Animator>() : null;
 
-            VrFoot.Create(rootBone);
-            VrFoot.Create(rootBone, true);
+            VrFoot.Create(animatedRootBone);
+            VrFoot.Create(animatedRootBone, true);
         }
     }
 }

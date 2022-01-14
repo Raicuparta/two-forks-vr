@@ -30,19 +30,11 @@ namespace TwoForksVr.Limbs
             return instance;
         }
 
-        public void SetUp(Transform playerRootBone)
+        public void SetUp(Transform playerRootBone, Transform cloneRootBone)
         {
             gameObject.SetActive(false);
-            if (playerRootBone)
-            {
-                SetFallbackHandActive(false);
-                EnableAnimatedHand(playerRootBone);
-            }
-            else
-            {
-                SetFallbackHandActive(true);
-            }
-
+            SetFallbackHandActive(false);
+            EnableAnimatedHand(playerRootBone, cloneRootBone);
             gameObject.SetActive(true);
         }
 
@@ -67,17 +59,18 @@ namespace TwoForksVr.Limbs
             fallbackHandModel.SetActive(active);
         }
 
-        private void EnableAnimatedHand(Transform playerRootBone)
+        private void EnableAnimatedHand(Transform animatedRootBone, Transform cloneRootBone)
         {
-            if (!playerRootBone) return;
-
-            var armBone = SetUpArmBone(playerRootBone);
-            SetUpHandLid(armBone);
-            SetUpHandBone(armBone);
+            var animatedArmBone = SetUpArmBone(animatedRootBone);
+            var clonedArmBone = SetUpArmBone(cloneRootBone);
+            // SetUpHandLid(armBone);
+            SetUpHandBone(clonedArmBone);
         }
 
         private Transform SetUpArmBone(Transform playerRootBone)
         {
+            if (!playerRootBone) return null;
+
             var armBone =
                 playerRootBone.Find(
                     $"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2");
