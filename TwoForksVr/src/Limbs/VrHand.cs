@@ -62,12 +62,12 @@ namespace TwoForksVr.Limbs
 
         private void FollowAllChildrenRecursive(Transform clone, Transform target)
         {
-            clone.gameObject.AddComponent<FollowLocalTransform>().Target = target;
             foreach (Transform cloneChild in clone)
             {
                 var targetChild = target.Find(cloneChild.name);
                 if (targetChild)
                 {
+                    cloneChild.gameObject.AddComponent<FollowLocalTransform>().Target = targetChild;
                     FollowAllChildrenRecursive(cloneChild, target.Find(cloneChild.name));
                 }
                 else

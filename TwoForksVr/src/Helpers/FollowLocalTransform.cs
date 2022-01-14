@@ -8,6 +8,11 @@ namespace TwoForksVr.Helpers
 
         private void LateUpdate()
         {
+            if (!Target)
+            {
+                Destroy(this);
+                return;
+            }
             transform.localRotation = Target.localRotation;
             transform.localRotation = Target.localRotation;
             transform.localScale = Target.localScale;
