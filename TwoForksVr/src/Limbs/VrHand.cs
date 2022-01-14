@@ -1,4 +1,5 @@
-﻿using TwoForksVr.Assets;
+﻿using System;
+using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
 using UnityEngine;
 using Valve.VR;
@@ -59,12 +60,42 @@ namespace TwoForksVr.Limbs
             fallbackHandModel.SetActive(active);
         }
 
+        private void FollowAllChildrenRecursive(Transform clone, Transform target)
+        {
+            clone.gameObject.AddComponent<FollowLocalTransform>().Target = target;
+            foreach (Transform cloneChild in clone)
+            {
+                var targetChild = target.Find(cloneChild.name);
+                if (targetChild)
+                {
+                    FollowAllChildrenRecursive(cloneChild, target.Find(cloneChild.name));
+                }
+                else
+                {
+                    Logs.LogInfo($"Found no child in ${target.name} with name ${cloneChild.name}");
+                }
+            }
+        }
+
         private void EnableAnimatedHand(Transform animatedRootBone, Transform cloneRootBone)
         {
             var animatedArmBone = SetUpArmBone(animatedRootBone);
+            if (!animatedArmBone)
+            {
+                Logs.LogWarning("found no animated arm bone");
+            }
             var clonedArmBone = SetUpArmBone(cloneRootBone);
+            if (!clonedArmBone)
+            {
+                Logs.LogWarning("found no clonedArmBone arm bone");
+            }
+            if (animatedArmBone)
+            {
+                FollowAllChildrenRecursive(clonedArmBone, animatedArmBone);
+            }
+            
             // SetUpHandLid(armBone);
-            SetUpHandBone(clonedArmBone);
+            // SetUpHandBone(clonedArmBone);
         }
 
         private Transform SetUpArmBone(Transform playerRootBone)
@@ -77,7 +108,7 @@ namespace TwoForksVr.Limbs
             var updateFollow = armBone.GetComponent<LateUpdateFollow>() ??
                                armBone.gameObject.AddComponent<LateUpdateFollow>();
             updateFollow.Target = transform.Find("ArmTarget");
-            return armBone;
+            return armBone.Find($"henryArm{handName}Hand");
         }
 
         private void SetUpHandLid(Transform armBone)

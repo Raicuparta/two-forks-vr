@@ -20,8 +20,8 @@ namespace TwoForksVr.PlayerBody
 
         private void Update()
         {
-            // UpdateRoomScalePosition();
-            // UpdateRotation();
+            UpdateRoomScalePosition();
+            UpdateRotation();
         }
 
         public static void Create(CharacterController characterController, Camera camera)
