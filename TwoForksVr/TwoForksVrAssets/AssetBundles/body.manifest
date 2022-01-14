@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2943325630
+CRC: 3748525411
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d022aceb78da5906c9e5292c8905476f
+    Hash: 49757d9013e20709deec7dc3f305dea7
   TypeTreeHash:
     serializedVersion: 2
-    Hash: a8d54e996dab67403b044e48dded9e75
+    Hash: fec26152b53254489b6ee64300d76afb
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -25,15 +25,16 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 48
   Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
 - Class: 114
-  Script: {fileID: 11500000, guid: aadeb7441e8080f4dbe8a75aada6c5c1, type: 3}
-- Class: 115
   Script: {instanceID: 0}
 - Class: 137
+  Script: {instanceID: 0}
+- Class: 143
   Script: {instanceID: 0}
 Assets:
 - Assets/Prefabs/Player Prefab.prefab
 - Assets/Prefabs/ShoeLid.prefab
 - Assets/Textures/body-cutout.png
-Dependencies:
-- C:/Users/rai/Repos/two-forks-vr/UnityHelper/../TwoForksVr/TwoForksVrAssets/AssetBundles/hand
+Dependencies: []

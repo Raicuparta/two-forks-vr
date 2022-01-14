@@ -95,7 +95,10 @@ namespace TwoForksVr.Limbs
             }
             
             // SetUpHandLid(armBone);
-            // SetUpHandBone(clonedArmBone);
+            if (animatedArmBone)
+            {
+                SetUpHandBone(animatedArmBone);
+            }
         }
 
         private Transform SetUpArmBone(Transform playerRootBone)
@@ -119,8 +122,9 @@ namespace TwoForksVr.Limbs
             if (isLeft) handLid.localScale = new Vector3(1, 1, -1);
         }
 
-        private void SetUpHandBone(Transform armBone)
+        private void SetUpHandBone(Transform armBoneChild)
         {
+            var armBone = armBoneChild.parent; // TODO cleanup;
             var wristTargetName = $"{handName}WristTarget";
             var wristTarget = armBone.Find(wristTargetName) ?? new GameObject(wristTargetName).transform;
             wristTarget.SetParent(armBone);

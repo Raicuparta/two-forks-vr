@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 2756499886
+CRC: 1208488158
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -14,8 +14,7 @@ AssetBundleManifest:
         Dependency_0: hand
     Info_3:
       Name: body
-      Dependencies:
-        Dependency_0: hand
+      Dependencies: {}
     Info_4:
       Name: settings-menu
       Dependencies: {}
