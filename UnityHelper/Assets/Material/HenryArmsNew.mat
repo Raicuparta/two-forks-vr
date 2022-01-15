@@ -3,6 +3,9 @@
 --- !u!21 &2100000
 Material:
   serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_Name: HenryArmsNew
   m_Shader: {fileID: 4800000, guid: c547061925b283443ae575b2e2573f29, type: 3}
   m_ShaderKeywords: MARMO_BOX_PROJECTION_OFF

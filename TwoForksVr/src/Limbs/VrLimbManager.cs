@@ -49,12 +49,6 @@ namespace TwoForksVr.Limbs
             var cloneHenry = vrBody.Find("PlayerModel/henry");
             var cloneRootBone = cloneHenry.Find("henryroot");
             var animatedHenry = playerTransform ? playerTransform.Find("henry") : null;
-            if (animatedHenry)
-            {
-                var clonedRenderer = cloneHenry.Find("body").GetComponent<SkinnedMeshRenderer>().materials[2];
-                var animatedArmsMaterial = animatedHenry.Find("body").GetComponent<SkinnedMeshRenderer>().materials[2];
-                clonedRenderer.shader = animatedArmsMaterial.shader;
-            }
             var animatedRootBone = animatedHenry ? animatedHenry.Find("henryroot") : null;
             rightHand.SetUp(animatedRootBone, cloneRootBone);
             leftHand.SetUp(animatedRootBone, cloneRootBone);
