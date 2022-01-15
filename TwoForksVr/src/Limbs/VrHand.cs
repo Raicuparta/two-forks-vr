@@ -11,6 +11,7 @@ namespace TwoForksVr.Limbs
         private GameObject fallbackHandModel;
         private string handName;
         private bool isLeft;
+        private Transform cloneRootBone;
 
         private void Start()
         {
@@ -19,7 +20,7 @@ namespace TwoForksVr.Limbs
         }
         // private Transform rootBone;
 
-        public static VrHand Create(Transform parent, bool isLeft = false)
+        public static VrHand Create(Transform parent, Transform cloneRootBone, bool isLeft = false)
         {
             var handName = isLeft ? "Left" : "Right";
             var transform = parent.Find($"{handName}Hand");
@@ -28,10 +29,11 @@ namespace TwoForksVr.Limbs
             instance.isLeft = isLeft;
             instance.fallbackHandModel = transform.Find("HandModel")?.gameObject;
             instance.SetUpPose();
+            instance.cloneRootBone = cloneRootBone;
             return instance;
         }
 
-        public void SetUp(Transform playerRootBone, Transform cloneRootBone)
+        public void SetUp(Transform playerRootBone)
         {
             gameObject.SetActive(false);
             SetFallbackHandActive(false);
