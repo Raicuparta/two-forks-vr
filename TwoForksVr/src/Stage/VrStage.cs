@@ -13,7 +13,7 @@ namespace TwoForksVr.Stage
         public static VrStage Instance;
 
         private VRCameraManager cameraManager;
-        private LateUpdateFollow follow;
+        private FakeParenting follow;
         private VrLimbManager limbManager;
         private IntroFix introFix;
         private Camera mainCamera;
@@ -51,7 +51,7 @@ namespace TwoForksVr.Stage
             Instance.transform.SetParent(stageParent.transform, false);
             Instance.cameraManager = VRCameraManager.Create(Instance);
             Instance.limbManager = VrLimbManager.Create(Instance);
-            Instance.follow = stageParent.AddComponent<LateUpdateFollow>();
+            Instance.follow = stageParent.AddComponent<FakeParenting>();
             Instance.interactiveUiTarget = InteractiveUiTarget.Create(Instance);
 
             FallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();

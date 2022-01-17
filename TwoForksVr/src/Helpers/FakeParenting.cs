@@ -5,7 +5,7 @@ namespace TwoForksVr.Helpers
 {
     // This component is useful when we need to simulate object parenting,
     // without actually changing the hierarchy.
-    public class LateUpdateFollow : MonoBehaviour
+    public class FakeParenting : MonoBehaviour
     {
         public Transform Target;
 
@@ -20,11 +20,6 @@ namespace TwoForksVr.Helpers
         }
 
         private void HandlePreCull(Camera cam)
-        {
-            UpdateTransform();
-        }
-
-        private void LateUpdate()
         {
             UpdateTransform();
         }

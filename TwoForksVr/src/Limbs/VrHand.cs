@@ -69,7 +69,7 @@ namespace TwoForksVr.Limbs
                     var isCloneWeddingRing = cloneChild.name.Equals("HenryWeddingRing 1");
                     if (isCloneWeddingRing || isCloneAttachment)
                     {
-                        targetChild.gameObject.AddComponent<LateUpdateFollow>().Target = cloneChild;
+                        targetChild.gameObject.AddComponent<FakeParenting>().Target = cloneChild;
                     }
                     
                     if (!isCloneWeddingRing)
