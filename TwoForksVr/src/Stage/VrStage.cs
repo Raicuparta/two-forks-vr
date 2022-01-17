@@ -13,7 +13,7 @@ namespace TwoForksVr.Stage
         public static VrStage Instance;
 
         private VRCameraManager cameraManager;
-        private LateUpdateFollow follow;
+        private FakeParenting follow;
         private VrLimbManager limbManager;
         private IntroFix introFix;
         private Camera mainCamera;
@@ -51,7 +51,7 @@ namespace TwoForksVr.Stage
             Instance.transform.SetParent(stageParent.transform, false);
             Instance.cameraManager = VRCameraManager.Create(Instance);
             Instance.limbManager = VrLimbManager.Create(Instance);
-            Instance.follow = stageParent.AddComponent<LateUpdateFollow>();
+            Instance.follow = stageParent.AddComponent<FakeParenting>();
             Instance.interactiveUiTarget = InteractiveUiTarget.Create(Instance);
 
             FallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
@@ -80,9 +80,10 @@ namespace TwoForksVr.Stage
                 if (!introFix) introFix = IntroFix.Create();
             }
 
-            cameraManager.SetUp(mainCamera ? mainCamera : FallbackCamera, playerTransform);
-            limbManager.SetUp(playerTransform, camera);
-            interactiveUiTarget.SetUp(camera);
+            var nextCamera = mainCamera ? mainCamera : FallbackCamera;
+            cameraManager.SetUp(nextCamera, playerTransform);
+            limbManager.SetUp(playerTransform, nextCamera);
+            interactiveUiTarget.SetUp(nextCamera);
         }
 
         public void Recenter(bool recenterVertically = false)

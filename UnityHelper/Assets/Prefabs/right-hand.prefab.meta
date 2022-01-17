@@ -1,9 +1,8 @@
 fileFormatVersion: 2
-guid: 9840433de31b73c48b92b13e2d596f1b
-timeCreated: 1626794719
-licenseType: Free
+guid: 448f305bf64730e4495d001046b9806a
 NativeFormatImporter:
+  externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: hands
+  assetBundleName: body
   assetBundleVariant: 

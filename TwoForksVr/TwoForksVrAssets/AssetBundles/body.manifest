@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1590667417
+CRC: 136591508
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f3047adb1d12f74df16d3826f8f1c9ab
+    Hash: c2f09dcc6d1f3f84010764045263ee6b
   TypeTreeHash:
     serializedVersion: 2
-    Hash: bc193d49e7d16f71ac778acf3c7bfc27
+    Hash: eb433a1dd3890210545c30a0862c467f
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -25,7 +25,11 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 48
   Script: {instanceID: 0}
+- Class: 137
+  Script: {instanceID: 0}
 Assets:
 - Assets/Prefabs/ShoeLid.prefab
-- Assets/Textures/body-cutout.png
+- Assets/Texture2D/body-cutout.png
+- Assets/Prefabs/right-hand.prefab
+- Assets/Prefabs/left-hand.prefab
 Dependencies: []

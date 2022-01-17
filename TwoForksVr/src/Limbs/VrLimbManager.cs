@@ -1,6 +1,4 @@
-﻿using TwoForksVr.Assets;
-using TwoForksVr.Debugging;
-using TwoForksVr.LaserPointer;
+﻿using TwoForksVr.LaserPointer;
 using TwoForksVr.Stage;
 using TwoForksVr.Tools;
 using TwoForksVr.UI.Patches;
@@ -16,17 +14,12 @@ namespace TwoForksVr.Limbs
 
         public static VrLimbManager Create(VrStage stage)
         {
-            var instance = Instantiate(VrAssetLoader.HandsPrefab).AddComponent<VrLimbManager>();
+            var instance = new GameObject("VrLimbManager").AddComponent<VrLimbManager>();
             var instanceTransform = instance.transform;
             instanceTransform.SetParent(stage.transform, false);
-
-            instance.rightHand = VrHand.Create(
-                instanceTransform
-            );
-            instance.leftHand = VrHand.Create(
-                instanceTransform,
-                true
-            );
+            
+            instance.rightHand = VrHand.Create(instanceTransform);
+            instance.leftHand = VrHand.Create(instanceTransform, true);
             ToolPicker.Create(
                 instanceTransform,
                 instance.leftHand.transform,
@@ -44,15 +37,26 @@ namespace TwoForksVr.Limbs
 
         public void SetUp(Transform playerTransform, Camera camera)
         {
-            var henry = playerTransform != null ? playerTransform.Find("henry") : null;
-            var rootBone = henry != null ? henry.Find("henryroot") : null;
-            rightHand.SetUp(rootBone);
-            leftHand.SetUp(rootBone);
+            var skeletonRoot = GetSkeletonRoot(playerTransform);
+            var armsMaterial = GetArmsMaterial(playerTransform);
+            rightHand.SetUp(skeletonRoot, armsMaterial);
+            leftHand.SetUp(skeletonRoot, armsMaterial);
             laser.SetUp(camera);
-            GeneralDebugger.PlayerAnimator = henry != null ? henry.GetComponent<Animator>() : null;
 
-            VrFoot.Create(rootBone);
-            VrFoot.Create(rootBone, true);
+            VrFoot.Create(skeletonRoot);
+            VrFoot.Create(skeletonRoot, true);
+        }
+
+        private static Material GetArmsMaterial(Transform playerTransform)
+        {
+            return !playerTransform
+                ? null
+                : playerTransform.Find("henry/body")?.GetComponent<SkinnedMeshRenderer>().materials[2];
+        }
+
+        private static Transform GetSkeletonRoot(Transform playerTransform)
+        {
+            return playerTransform ? playerTransform.Find("henry/henryroot") : null;
         }
     }
 }

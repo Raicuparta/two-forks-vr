@@ -7,47 +7,42 @@ namespace TwoForksVr.Limbs
 {
     public class VrHand : MonoBehaviour
     {
-        private GameObject fallbackHandModel;
         private string handName;
         private bool isLeft;
-
-        private void Start()
-        {
-            // Reset the tracking. For some reason if I don't do this the hands will be frozen.
-            gameObject.SetActive(true);
-        }
-        // private Transform rootBone;
 
         public static VrHand Create(Transform parent, bool isLeft = false)
         {
             var handName = isLeft ? "Left" : "Right";
-            var transform = parent.Find($"{handName}Hand");
+            var transform = Instantiate(isLeft ? VrAssetLoader.LeftHandPrefab : VrAssetLoader.RightHandPrefab, parent, false).transform;
+            transform.name = $"{handName}Hand";
             var instance = transform.gameObject.AddComponent<VrHand>();
             instance.handName = handName;
             instance.isLeft = isLeft;
-            instance.fallbackHandModel = transform.Find("HandModel")?.gameObject;
             instance.SetUpPose();
             return instance;
         }
 
-        public void SetUp(Transform playerRootBone)
+        public void SetUp(Transform playerRootBone, Material armsMaterial)
         {
+            // Need to deactive and reactivate the object to make SteamVR_Behaviour_Pose work properly.
             gameObject.SetActive(false);
-            if (playerRootBone)
+            if (armsMaterial)
             {
-                SetFallbackHandActive(false);
-                EnableAnimatedHand(playerRootBone);
+                var material = GetComponentInChildren<SkinnedMeshRenderer>().material;
+                material.shader = armsMaterial.shader;
+                material.CopyPropertiesFromMaterial(armsMaterial);
             }
-            else
-            {
-                SetFallbackHandActive(true);
-            }
-
+            EnableAnimatedHand(playerRootBone);
             gameObject.SetActive(true);
         }
 
         private void SetUpPose()
         {
+            if (gameObject.GetComponent<SteamVR_Behaviour_Pose>())
+            {
+                Logs.LogError($"Found existing SteamVR pose in {name}. Aborting.");
+                return;
+            }
             var pose = gameObject.AddComponent<SteamVR_Behaviour_Pose>();
             if (isLeft)
             {
@@ -61,53 +56,56 @@ namespace TwoForksVr.Limbs
             }
         }
 
-        private void SetFallbackHandActive(bool active)
+        private void FollowAllChildrenRecursive(Transform clone, Transform target)
         {
-            if (!fallbackHandModel) return;
-            fallbackHandModel.SetActive(active);
+            foreach (Transform cloneChild in clone)
+            {
+                var targetChild = target.Find(cloneChild.name);
+                if (targetChild)
+                {
+                    // Wedding ring and attachment objects are special cases, the originals need to follow the copies.
+                    // The "hand attachment" transform is what's used for holding objects in the palyer's hand.
+                    var isCloneAttachment = cloneChild.name.Equals($"henryHand{handName}Attachment");
+                    var isCloneWeddingRing = cloneChild.name.Equals("HenryWeddingRing 1");
+                    if (isCloneWeddingRing || isCloneAttachment)
+                    {
+                        targetChild.gameObject.AddComponent<FakeParenting>().Target = cloneChild;
+                    }
+                    
+                    if (!isCloneWeddingRing)
+                    {
+                        cloneChild.gameObject.AddComponent<FollowLocalTransform>().Target = targetChild;
+                        FollowAllChildrenRecursive(cloneChild, target.Find(cloneChild.name));
+                    }
+                }
+                else
+                {
+                    Logs.LogInfo($"Found no child in ${target.name} with name ${cloneChild.name}");
+                }
+            }
         }
 
-        private void EnableAnimatedHand(Transform playerRootBone)
+        private void EnableAnimatedHand(Transform animatedRootBone)
         {
-            if (!playerRootBone) return;
+            var animatedArmBone = GetArmBone(animatedRootBone);
+            if (!animatedArmBone) return;
 
-            var armBone = SetUpArmBone(playerRootBone);
-            SetUpHandLid(armBone);
-            SetUpHandBone(armBone);
+            var clonedArmBone = transform.Find($"henry/henryroot/henryPelvis/henryArm{handName}Hand");
+            if (!clonedArmBone)
+            {
+                Logs.LogError("found no cloned arm bone");
+            }
+            FollowAllChildrenRecursive(clonedArmBone, animatedArmBone);
         }
 
-        private Transform SetUpArmBone(Transform playerRootBone)
+        private Transform GetArmBone(Transform playerRootBone)
         {
+            if (!playerRootBone) return null;
+
             var armBone =
                 playerRootBone.Find(
                     $"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2");
-            var updateFollow = armBone.GetComponent<LateUpdateFollow>() ??
-                               armBone.gameObject.AddComponent<LateUpdateFollow>();
-            updateFollow.Target = transform.Find("ArmTarget");
-            return armBone;
-        }
-
-        private void SetUpHandLid(Transform armBone)
-        {
-            var handLid = Instantiate(VrAssetLoader.HandLid).transform;
-            LayerHelper.SetLayer(handLid.Find("HandLidModel"), GameLayer.PlayerBody);
-            handLid.SetParent(armBone, false);
-            if (isLeft) handLid.localScale = new Vector3(1, 1, -1);
-        }
-
-        private void SetUpHandBone(Transform armBone)
-        {
-            var wristTargetName = $"{handName}WristTarget";
-            var wristTarget = armBone.Find(wristTargetName) ?? new GameObject(wristTargetName).transform;
-            wristTarget.SetParent(armBone);
-            var stabilizerAngleMultiplier = isLeft ? -1 : 1;
-            wristTarget.localPosition = new Vector3(-0.2497151f, 0f, 0f);
-            wristTarget.localEulerAngles = new Vector3(3.949f * stabilizerAngleMultiplier,
-                17.709f * stabilizerAngleMultiplier, 12.374f);
-            var handBone = armBone.transform.Find($"henryArm{handName}Hand");
-            var handBoneFollow = handBone.GetComponent<LateUpdateFollow>() ??
-                                 handBone.gameObject.AddComponent<LateUpdateFollow>();
-            handBoneFollow.Target = wristTarget;
+            return armBone.Find($"henryArm{handName}Hand");
         }
     }
 }

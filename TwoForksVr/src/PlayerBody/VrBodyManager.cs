@@ -63,7 +63,7 @@ namespace TwoForksVr.PlayerBody
             MakeMaterialTextureTransparent(backpackMaterial);
 
             var armsMaterial = materials[2];
-            MakeMaterialTextureTransparent(armsMaterial, VrAssetLoader.ArmsCutoutTexture);
+            MakeMaterialTextureTransparent(armsMaterial);
         }
 
         private static void MakeMaterialTextureTransparent(Material material, Texture texture = null)

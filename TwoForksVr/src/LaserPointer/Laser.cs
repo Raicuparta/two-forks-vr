@@ -68,6 +68,7 @@ namespace TwoForksVr.LaserPointer
         public void SetUp(Camera camera)
         {
             inputModule.EventCamera = camera;
+            target = null;
         }
 
         private void UpdateLaserParent()

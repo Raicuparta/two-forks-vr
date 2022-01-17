@@ -1,0 +1,256 @@
+fileFormatVersion: 2
+guid: c05c39494fc228e47b9e2c89b41b2518
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: body
+    100002: Camera001
+    100004: //RootNode
+    100006: henryArmLeft1
+    100008: henryArmLeft2
+    100010: henryArmLeftCollarbone
+    100012: henryArmLeftHand
+    100014: henryArmLeftIndex1
+    100016: henryArmLeftIndex2
+    100018: henryArmLeftIndex3
+    100020: henryArmLeftMiddle1
+    100022: henryArmLeftMiddle2
+    100024: henryArmLeftMiddle3
+    100026: henryArmLeftPinky1
+    100028: henryArmLeftPinky2
+    100030: henryArmLeftPinky3
+    100032: henryArmLeftRing1
+    100034: henryArmLeftRing2
+    100036: henryArmLeftRing3
+    100038: henryArmLeftThumb1
+    100040: henryArmLeftThumb2
+    100042: henryArmLeftThumb3
+    100044: henryArmRight1
+    100046: henryArmRight2
+    100048: henryArmRightCollarbone
+    100050: henryArmRightHand
+    100052: henryArmRightIndex1
+    100054: henryArmRightIndex2
+    100056: henryArmRightIndex3
+    100058: henryArmRightMiddle1
+    100060: henryArmRightMiddle2
+    100062: henryArmRightMiddle3
+    100064: henryArmRightPinky1
+    100066: henryArmRightPinky2
+    100068: henryArmRightPinky3
+    100070: henryArmRightRing1
+    100072: henryArmRightRing2
+    100074: henryArmRightRing3
+    100076: henryArmRightThumb1
+    100078: henryArmRightThumb2
+    100080: henryArmRightThumb3
+    100082: henryHandLeftAttachment
+    100084: henryHandRightAttachment
+    100086: henryHead
+    100088: henryHips
+    100090: henryLegLeft1
+    100092: henryLegLeft2
+    100094: henryLegLeftFoot
+    100096: 'henryLegLeftToe '
+    100098: henryLegRight1
+    100100: henryLegRight2
+    100102: henryLegRightFoot
+    100104: 'henryLegRightToe '
+    100106: henryNeck
+    100108: henryPelvis
+    100110: henryroot
+    100112: henrySpiderLeft1
+    100114: henrySpiderLeft2
+    100116: henrySpiderLeftIK
+    100118: henrySpiderRight1
+    100120: henrySpiderRight2
+    100122: henrySpiderRightIK
+    100124: henrySpineA
+    100126: henrySpineB
+    100128: henrySpineC
+    100130: henrySpineD
+    100132: HenryWeddingRing 1
+    100134: henry
+    100136: henryArmLeftIndex3_end
+    100138: henryArmLeftMiddle3_end
+    100140: henryArmLeftPinky3_end
+    100142: henryArmLeftRing3_end
+    100144: henryArmLeftThumb3_end
+    100146: henryArmRightIndex3_end
+    100148: henryArmRightMiddle3_end
+    100150: henryArmRightPinky3_end
+    100152: henryArmRightRing3_end
+    100154: henryArmRightThumb3_end
+    100156: henryLegLeftToe _end
+    100158: henryLegRightToe _end
+    100160: henryNeck_end
+    400000: body
+    400002: Camera001
+    400004: //RootNode
+    400006: henryArmLeft1
+    400008: henryArmLeft2
+    400010: henryArmLeftCollarbone
+    400012: henryArmLeftHand
+    400014: henryArmLeftIndex1
+    400016: henryArmLeftIndex2
+    400018: henryArmLeftIndex3
+    400020: henryArmLeftMiddle1
+    400022: henryArmLeftMiddle2
+    400024: henryArmLeftMiddle3
+    400026: henryArmLeftPinky1
+    400028: henryArmLeftPinky2
+    400030: henryArmLeftPinky3
+    400032: henryArmLeftRing1
+    400034: henryArmLeftRing2
+    400036: henryArmLeftRing3
+    400038: henryArmLeftThumb1
+    400040: henryArmLeftThumb2
+    400042: henryArmLeftThumb3
+    400044: henryArmRight1
+    400046: henryArmRight2
+    400048: henryArmRightCollarbone
+    400050: henryArmRightHand
+    400052: henryArmRightIndex1
+    400054: henryArmRightIndex2
+    400056: henryArmRightIndex3
+    400058: henryArmRightMiddle1
+    400060: henryArmRightMiddle2
+    400062: henryArmRightMiddle3
+    400064: henryArmRightPinky1
+    400066: henryArmRightPinky2
+    400068: henryArmRightPinky3
+    400070: henryArmRightRing1
+    400072: henryArmRightRing2
+    400074: henryArmRightRing3
+    400076: henryArmRightThumb1
+    400078: henryArmRightThumb2
+    400080: henryArmRightThumb3
+    400082: henryHandLeftAttachment
+    400084: henryHandRightAttachment
+    400086: henryHead
+    400088: henryHips
+    400090: henryLegLeft1
+    400092: henryLegLeft2
+    400094: henryLegLeftFoot
+    400096: 'henryLegLeftToe '
+    400098: henryLegRight1
+    400100: henryLegRight2
+    400102: henryLegRightFoot
+    400104: 'henryLegRightToe '
+    400106: henryNeck
+    400108: henryPelvis
+    400110: henryroot
+    400112: henrySpiderLeft1
+    400114: henrySpiderLeft2
+    400116: henrySpiderLeftIK
+    400118: henrySpiderRight1
+    400120: henrySpiderRight2
+    400122: henrySpiderRightIK
+    400124: henrySpineA
+    400126: henrySpineB
+    400128: henrySpineC
+    400130: henrySpineD
+    400132: HenryWeddingRing 1
+    400134: henry
+    400136: henryArmLeftIndex3_end
+    400138: henryArmLeftMiddle3_end
+    400140: henryArmLeftPinky3_end
+    400142: henryArmLeftRing3_end
+    400144: henryArmLeftThumb3_end
+    400146: henryArmRightIndex3_end
+    400148: henryArmRightMiddle3_end
+    400150: henryArmRightPinky3_end
+    400152: henryArmRightRing3_end
+    400154: henryArmRightThumb3_end
+    400156: henryLegLeftToe _end
+    400158: henryLegRightToe _end
+    400160: henryNeck_end
+    2100000: HenryBody
+    2100002: HenryBackpack
+    2100004: HenryArmsNew
+    2300000: HenryWeddingRing 1
+    3300000: HenryWeddingRing 1
+    4300000: body
+    4300002: HenryWeddingRing 1
+    9500000: //RootNode
+    13700000: body
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

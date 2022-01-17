@@ -85,7 +85,7 @@ namespace TwoForksVr.PlayerCamera
             cameraTransform.SetParent(cameraParent.transform);
             cameraTransform.localPosition = Vector3.zero;
             cameraTransform.localRotation = Quaternion.identity;
-            cameraParent.gameObject.AddComponent<LateUpdateFollow>().Target = stage.transform;
+            cameraParent.gameObject.AddComponent<FakeParenting>().Target = stage.transform;
             XRSettings.enabled = true;
         }
 

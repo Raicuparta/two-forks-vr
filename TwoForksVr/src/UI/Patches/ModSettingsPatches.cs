@@ -36,15 +36,6 @@ namespace TwoForksVr.UI.Patches
             if (selectOnDown) navigation.selectOnDown = selectOnDown;
             selectable.navigation = navigation;
         }
-
-        private static Selectable GetNavigationUp(Selectable selectable)
-        {
-            var navigationFixer = selectable.GetComponent<vgButtonNavigationFixer>();
-            if (navigationFixer) return navigationFixer.selectOnUp;
-
-            var navigation = selectable.navigation;
-            return navigation.mode == Navigation.Mode.Explicit ? navigation.selectOnUp : null;
-        }
         
         private static Selectable GetNavigationDown(Selectable selectable)
         {
