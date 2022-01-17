@@ -36,20 +36,28 @@ namespace TwoForksVr.UI
         }
 
         private Vector3 prevForward;
-        
+        private Quaternion targetRotation;
+        private Quaternion rotationVelocity;
+        private const float rotationSmoothTime = 0.3f;
+
         private void UpdateTransform()
         {
             if (!cameraTransform) return;
 
             var cameraForward = MathHelper.GetProjectedForward(cameraTransform);
             var unsignedAngleDelta = Vector3.Angle(prevForward, cameraForward);
-            var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up, unsignedAngleDelta);
 
-            if (unsignedAngleDelta > 30)
+            if (unsignedAngleDelta > 45)
             {
-                transform.Rotate(Vector3.up, angleDelta);
+                targetRotation = Quaternion.LookRotation(cameraForward);
                 prevForward = cameraForward;
             }
+
+            transform.rotation = MathHelper.SmoothDamp(
+                transform.rotation,
+                targetRotation,
+                ref rotationVelocity,
+                rotationSmoothTime);
 
             transform.position = cameraTransform.position;
         }
