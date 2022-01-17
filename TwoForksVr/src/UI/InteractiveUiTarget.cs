@@ -39,6 +39,7 @@ namespace TwoForksVr.UI
         private Quaternion targetRotation;
         private Quaternion rotationVelocity;
         private const float rotationSmoothTime = 0.3f;
+        private const float minAngleDelta = 45f;
 
         private void UpdateTransform()
         {
@@ -47,7 +48,7 @@ namespace TwoForksVr.UI
             var cameraForward = MathHelper.GetProjectedForward(cameraTransform);
             var unsignedAngleDelta = Vector3.Angle(prevForward, cameraForward);
 
-            if (unsignedAngleDelta > 45)
+            if (unsignedAngleDelta > minAngleDelta)
             {
                 targetRotation = Quaternion.LookRotation(cameraForward);
                 prevForward = cameraForward;
