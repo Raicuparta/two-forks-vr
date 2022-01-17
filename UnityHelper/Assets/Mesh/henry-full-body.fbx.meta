@@ -70,6 +70,20 @@ ModelImporter:
     100128: henrySpineC
     100130: henrySpineD
     100132: HenryWeddingRing 1
+    100134: henry
+    100136: henryArmLeftIndex3_end
+    100138: henryArmLeftMiddle3_end
+    100140: henryArmLeftPinky3_end
+    100142: henryArmLeftRing3_end
+    100144: henryArmLeftThumb3_end
+    100146: henryArmRightIndex3_end
+    100148: henryArmRightMiddle3_end
+    100150: henryArmRightPinky3_end
+    100152: henryArmRightRing3_end
+    100154: henryArmRightThumb3_end
+    100156: henryLegLeftToe _end
+    100158: henryLegRightToe _end
+    100160: henryNeck_end
     400000: body
     400002: Camera001
     400004: //RootNode
@@ -137,6 +151,20 @@ ModelImporter:
     400128: henrySpineC
     400130: henrySpineD
     400132: HenryWeddingRing 1
+    400134: henry
+    400136: henryArmLeftIndex3_end
+    400138: henryArmLeftMiddle3_end
+    400140: henryArmLeftPinky3_end
+    400142: henryArmLeftRing3_end
+    400144: henryArmLeftThumb3_end
+    400146: henryArmRightIndex3_end
+    400148: henryArmRightMiddle3_end
+    400150: henryArmRightPinky3_end
+    400152: henryArmRightRing3_end
+    400154: henryArmRightThumb3_end
+    400156: henryLegLeftToe _end
+    400158: henryLegRightToe _end
+    400160: henryNeck_end
     2100000: HenryBody
     2100002: HenryBackpack
     2100004: HenryArmsNew

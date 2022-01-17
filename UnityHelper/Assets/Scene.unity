@@ -200,6 +200,7 @@ Transform:
   m_LocalPosition: {x: 0.02430572, y: -0.022389367, z: -0.04229188}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 703300237}
   - {fileID: 1900725051}
   - {fileID: 1308142725}
   - {fileID: 2112486931}
@@ -207,6 +208,56 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &703300236 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100054, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+  m_PrefabInternal: {fileID: 1305282561}
+--- !u!4 &703300237 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 400054, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+  m_PrefabInternal: {fileID: 1305282561}
+--- !u!114 &703300238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 703300236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a5fb0ca93b55ef4b8d54b512b103341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poseAction:
+    actionPath: /actions/default/in/PoseLeftHand
+    needsReinit: 0
+  inputSource: 1
+  origin: {fileID: 0}
+  onTransformUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Valve.VR.SteamVR_Behaviour_PoseEvent, SteamVR, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onTransformChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Valve.VR.SteamVR_Behaviour_PoseEvent, SteamVR, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onConnectedChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Valve.VR.SteamVR_Behaviour_Pose_ConnectedChangedEvent, SteamVR, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onTrackingChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Valve.VR.SteamVR_Behaviour_Pose_TrackingChangedEvent, SteamVR, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onDeviceIndexChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Valve.VR.SteamVR_Behaviour_Pose_DeviceIndexChangedEvent, SteamVR,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  broadcastDeviceChanges: 1
 --- !u!1001 &764325919
 Prefab:
   m_ObjectHideFlags: 0
@@ -244,7 +295,16 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4155654246418734, guid: 9d9de1e523b951c419adb5b86814e122, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 137170671862817384, guid: 9d9de1e523b951c419adb5b86814e122,
+        type: 2}
+      propertyPath: m_SkinnedMotionVectors
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1327143125735612, guid: 9d9de1e523b951c419adb5b86814e122, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9d9de1e523b951c419adb5b86814e122, type: 2}
@@ -286,7 +346,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4620553036719716, guid: b686ea7667ad4434ca565764aec72b0e, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b686ea7667ad4434ca565764aec72b0e, type: 2}
@@ -411,6 +471,165 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6bd750566e648904ebddcf055f7b9bcf, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &1305282561
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 204260361}
+    m_Modifications:
+    - target: {fileID: 400054, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400054, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400054, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400054, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400054, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400054, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400054, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400054, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.45634803
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.4127756
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.77315474
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.15360509
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 72.68301
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 35.369003
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 48.876003
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0362
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.1617
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0495
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 9500000, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+  m_ParentPrefab: {fileID: 100100000, guid: 71e9253ce4e854848b11f256840224ef, type: 3}
+  m_IsPrefabParent: 0
 --- !u!1001 &1308142724
 Prefab:
   m_ObjectHideFlags: 0
@@ -448,7 +667,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4923085054130856, guid: 9840433de31b73c48b92b13e2d596f1b, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9840433de31b73c48b92b13e2d596f1b, type: 2}
@@ -545,7 +764,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 204260361}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1900725526
 GameObject:
@@ -612,6 +831,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1947770836 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1014199965185396, guid: 9d9de1e523b951c419adb5b86814e122,
+    type: 2}
+  m_PrefabInternal: {fileID: 764325919}
+--- !u!114 &1947770838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1947770836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a5fb0ca93b55ef4b8d54b512b103341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poseAction:
+    actionPath: /actions/default/in/PoseRightHand
+    needsReinit: 0
+  inputSource: 2
+  origin: {fileID: 204260361}
+  onTransformUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Valve.VR.SteamVR_Behaviour_PoseEvent, SteamVR, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onTransformChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Valve.VR.SteamVR_Behaviour_PoseEvent, SteamVR, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onConnectedChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Valve.VR.SteamVR_Behaviour_Pose_ConnectedChangedEvent, SteamVR, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onTrackingChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Valve.VR.SteamVR_Behaviour_Pose_TrackingChangedEvent, SteamVR, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onDeviceIndexChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Valve.VR.SteamVR_Behaviour_Pose_DeviceIndexChangedEvent, SteamVR,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  broadcastDeviceChanges: 1
 --- !u!4 &2112486931 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4155654246418734, guid: 9d9de1e523b951c419adb5b86814e122,
