@@ -16,6 +16,7 @@ namespace TwoForksVr.Assets
         public static GameObject VrSettingsMenuPrefab { get; private set; }
         public static GameObject PlayerPrefab { get; private set; }
         public static GameObject LeftHandPrefab { get; private set; }
+        public static GameObject RightHandPrefab { get; private set; }
 
         public static void LoadAssets()
         {
@@ -25,6 +26,7 @@ namespace TwoForksVr.Assets
             ShoeLid = bodyAsset.LoadAsset<GameObject>("ShoeLid");
             PlayerPrefab = bodyAsset.LoadAsset<GameObject>("Player Prefab");
             LeftHandPrefab = bodyAsset.LoadAsset<GameObject>("left-hand");
+            RightHandPrefab = bodyAsset.LoadAsset<GameObject>("right-hand");
             ArmsCutoutTexture = handAsset.LoadAsset<Texture2D>("arms-cutout");
             BodyCutoutTexture = bodyAsset.LoadAsset<Texture2D>("body-cutout");
             ToolPickerPrefab = LoadAssetPrefab("tool-picker", "ToolPicker");

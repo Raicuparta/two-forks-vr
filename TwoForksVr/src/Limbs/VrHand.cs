@@ -22,7 +22,7 @@ namespace TwoForksVr.Limbs
         {
             var handName = isLeft ? "Left" : "Right";
             // var transform = parent.Find($"{handName}Hand");
-            var transform = Instantiate(VrAssetLoader.LeftHandPrefab, parent, false).transform;
+            var transform = Instantiate(isLeft ? VrAssetLoader.LeftHandPrefab : VrAssetLoader.RightHandPrefab, parent, false).transform;
             transform.name = $"{handName}Hand";
             var instance = transform.gameObject.AddComponent<VrHand>();
             instance.handName = handName;
@@ -80,7 +80,7 @@ namespace TwoForksVr.Limbs
             }
             if (animatedArmBone)
             {
-                var clonedArmBone = transform.Find("henry/henryroot/henryPelvis/henryArmLeftHand");
+                var clonedArmBone = transform.Find($"henry/henryroot/henryPelvis/henryArm{handName}Hand");
                 if (!clonedArmBone)
                 {
                     Logs.LogError("found no cloned arm bone");

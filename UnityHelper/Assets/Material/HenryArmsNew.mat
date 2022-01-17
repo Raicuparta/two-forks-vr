@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: HenryArmsNew
   m_Shader: {fileID: 4800000, guid: c547061925b283443ae575b2e2573f29, type: 3}
-  m_ShaderKeywords: MARMO_BOX_PROJECTION_OFF
+  m_ShaderKeywords: MARMO_BOX_PROJECTION_OFF _NORMALMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
