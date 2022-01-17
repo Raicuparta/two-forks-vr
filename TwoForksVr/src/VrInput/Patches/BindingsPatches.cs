@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using HarmonyLib;
+using TMPro;
 using TwoForksVr.Helpers;
+using TwoForksVr.Stage;
 using UnityEngine;
+using UnityEngine.UI;
 using Valve.VR;
 
 namespace TwoForksVr.VrInput.Patches
@@ -161,5 +165,24 @@ namespace TwoForksVr.VrInput.Patches
         {
             return false;
         }
+
+        
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.UpdateButtonText))]
+        private static void PrintKey(string buttonDisplay)
+        {
+            var virtualKey = buttonDisplay.Trim('[', ']');
+            var keyBind = vgInputManager.Instance.virtualKeyKeyBindMap[virtualKey];
+            var inputActions = keyBind.commands.Select(command => booleanActionMap[command.command]);
+            VrStage.Instance.HighlightButton(inputActions.ToArray());
+        }
+        
+        // [HarmonyPostfix]
+        // [HarmonyPatch(typeof(TextMeshProUGUI), nameof(TextMeshProUGUI.text), MethodType.Setter)]
+        // private static void PrintKeyText(TextMeshProUGUI __instance)
+        // {
+        //     if (__instance != targetButtonPrompt) return;
+        //     Logs.LogInfo($"#### TextMeshProUGUI: {__instance.m_text}");
+        // }
     }
 }
