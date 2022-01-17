@@ -40,7 +40,7 @@ namespace Valve.VR.InteractionSystem
 		public bool debugHints = false;
 
 		private SteamVR_RenderModel renderModel;
-		private Player player;
+		private Transform player;
 
 		private List<MeshRenderer> renderers = new List<MeshRenderer>();
 		private List<MeshRenderer> flashingRenderers = new List<MeshRenderer>();
@@ -94,6 +94,7 @@ namespace Valve.VR.InteractionSystem
         void Awake()
 		{
 			renderModelLoadedAction = SteamVR_Events.RenderModelLoadedAction( OnRenderModelLoaded );
+			renderModel = GetComponent<SteamVR_RenderModel>();
 
 #if UNITY_URP
 			colorID = Shader.PropertyToID( "_BaseColor" );
@@ -106,7 +107,13 @@ namespace Valve.VR.InteractionSystem
 		//-------------------------------------------------
 		void Start()
 		{
-			player = Player.instance;
+			player = transform.parent;
+			Invoke("ShowHintsAll", 1);
+		}
+
+		private void ShowHintsAll()
+		{
+			ShowButtonHint(SteamVR_Input.actionsIn);
 		}
 
 
@@ -460,7 +467,7 @@ namespace Valve.VR.InteractionSystem
 
 
 		//-------------------------------------------------
-		private void ShowButtonHint( params ISteamVR_Action_In_Source[] actions )
+		public void ShowButtonHint( params ISteamVR_Action_In_Source[] actions )
 		{
 			renderModel.gameObject.SetActive( true );
 
@@ -637,7 +644,7 @@ namespace Valve.VR.InteractionSystem
 		//-------------------------------------------------
 		private void UpdateTextHint( ActionHintInfo hintInfo )
 		{
-			Transform playerTransform = player.hmdTransform;
+			Transform playerTransform = Camera.main.transform; // TODO dont use camera.main.
 			Vector3 vDir = playerTransform.position - hintInfo.canvasOffset.position;
 
 			Quaternion standardLookat = Quaternion.LookRotation( vDir, Vector3.up );

@@ -24,6 +24,7 @@ namespace TwoForksVr.Limbs
 
         public void SetUp(Transform playerRootBone, Material armsMaterial)
         {
+
             // Need to deactive and reactivate the object to make SteamVR_Behaviour_Pose work properly.
             gameObject.SetActive(false);
             if (armsMaterial)
@@ -38,12 +39,7 @@ namespace TwoForksVr.Limbs
 
         private void SetUpPose()
         {
-            if (gameObject.GetComponent<SteamVR_Behaviour_Pose>())
-            {
-                Logs.LogError($"Found existing SteamVR pose in {name}. Aborting.");
-                return;
-            }
-            var pose = gameObject.AddComponent<SteamVR_Behaviour_Pose>();
+            var pose = gameObject.GetComponent<SteamVR_Behaviour_Pose>();
             if (isLeft)
             {
                 pose.inputSource = SteamVR_Input_Sources.LeftHand;
