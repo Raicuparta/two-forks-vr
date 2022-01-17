@@ -1,6 +1,4 @@
-﻿using TwoForksVr.Assets;
-using TwoForksVr.Debugging;
-using TwoForksVr.LaserPointer;
+﻿using TwoForksVr.LaserPointer;
 using TwoForksVr.Stage;
 using TwoForksVr.Tools;
 using TwoForksVr.UI.Patches;
@@ -39,23 +37,26 @@ namespace TwoForksVr.Limbs
 
         public void SetUp(Transform playerTransform, Camera camera)
         {
-            var animatedHenry = playerTransform ? playerTransform.Find("henry") : null;
-            // if (animatedHenry)
-            // {
-            //     var clonedRenderer = cloneHenry.Find("body").GetComponent<SkinnedMeshRenderer>().materials[1];
-            //     var animatedArmsMaterial = animatedHenry.Find("body").GetComponent<SkinnedMeshRenderer>().materials[2];
-            //     clonedRenderer.shader = animatedArmsMaterial.shader;
-            // }
-            var animatedArmsMaterial = animatedHenry ? animatedHenry.Find("body").GetComponent<SkinnedMeshRenderer>().materials[2] : null;
-            var animatedRootBone = animatedHenry ? animatedHenry.Find("henryroot") : null;
-            rightHand.SetUp(animatedRootBone, animatedArmsMaterial);
-            leftHand.SetUp(animatedRootBone, animatedArmsMaterial);
+            var skeletonRoot = GetSkeletonRoot(playerTransform);
+            var armsMaterial = GetArmsMaterial(playerTransform);
+            rightHand.SetUp(skeletonRoot, armsMaterial);
+            leftHand.SetUp(skeletonRoot, armsMaterial);
             laser.SetUp(camera);
-            GeneralDebugger.PlayerAnimator = animatedHenry != null ? animatedHenry.GetComponent<Animator>() : null;
 
+            VrFoot.Create(skeletonRoot);
+            VrFoot.Create(skeletonRoot, true);
+        }
 
-            VrFoot.Create(animatedRootBone);
-            VrFoot.Create(animatedRootBone, true);
+        private static Material GetArmsMaterial(Transform playerTransform)
+        {
+            return !playerTransform
+                ? null
+                : playerTransform.Find("henry/body")?.GetComponent<SkinnedMeshRenderer>().materials[2];
+        }
+
+        private static Transform GetSkeletonRoot(Transform playerTransform)
+        {
+            return playerTransform ? playerTransform.Find("henry/henryroot") : null;
         }
     }
 }

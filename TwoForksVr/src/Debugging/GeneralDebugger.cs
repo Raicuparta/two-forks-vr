@@ -6,12 +6,9 @@ namespace TwoForksVr.Debugging
 {
     public class GeneralDebugger : MonoBehaviour
     {
-        public static Animator PlayerAnimator;
-
         private void Update()
         {
             UpdateTimeScale();
-            UpdateAnimator();
             UpdateInputsDebug();
             UpdateSaveActions();
         }
@@ -50,26 +47,6 @@ namespace TwoForksVr.Debugging
         {
             if (Input.GetKeyDown(KeyCode.Minus)) Time.timeScale = 0.1f;
             if (Input.GetKeyDown(KeyCode.Equals)) Time.timeScale = Time.timeScale > 1 ? 1 : 10;
-        }
-
-        private static void UpdateAnimator()
-        {
-            if (!PlayerAnimator || !Input.GetKeyDown(KeyCode.F11)) return;
-
-            Logs.LogInfo("---- Start animation log ----");
-            for (var layerIndex = 0; layerIndex < PlayerAnimator.layerCount; layerIndex++)
-            {
-                if (PlayerAnimator.GetCurrentAnimatorClipInfoCount(layerIndex) == 0) continue;
-                Logs.LogInfo($"Layer Index: {layerIndex.ToString()}");
-                Logs.LogInfo($"Layer Name: {PlayerAnimator.GetLayerName(layerIndex)}");
-                var animations = PlayerAnimator.GetCurrentAnimatorClipInfo(layerIndex);
-                var animationNames =
-                    // ReSharper disable once HeapView.ObjectAllocation
-                    string.Join(", ", animations.Select(animation => animation.clip.name).ToArray());
-                Logs.LogInfo($"Animations [{animationNames}]");
-            }
-
-            Logs.LogInfo("---- End animation log ----");
         }
     }
 }
