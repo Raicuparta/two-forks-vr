@@ -76,7 +76,7 @@ namespace TwoForksVr.UI
         private void UpdateTransform()
         {
             transform.position = targetTransform.position;
-            transform.rotation =  targetTransform.rotation;
+            transform.rotation = targetTransform.rotation;
         }
     }
 }

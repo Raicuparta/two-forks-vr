@@ -1,3 +1,4 @@
+using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
 using UnityEngine;
 
@@ -7,12 +8,9 @@ namespace TwoForksVr.UI
     // To be used as the position for UI elements that need to be visible or interacted with.
     public class InteractiveUiTarget : MonoBehaviour
     {
-        private const float maxSquareDistance = 3f;
-        private const float smoothTime = 0.3F;
         private const float offset = 3f;
         private Transform cameraTransform;
-        private Vector3? currentTarget;
-        private Vector3 velocity = Vector3.zero;
+        private Transform targetTransform;
 
         private void Update()
         {
@@ -23,43 +21,37 @@ namespace TwoForksVr.UI
         {
             var instance = new GameObject(nameof(InteractiveUiTarget)).AddComponent<InteractiveUiTarget>();
             instance.transform.SetParent(stage.transform, false);
-            InteractiveUi.SetTargetTransform(instance.transform);
+            instance.targetTransform = new GameObject("InteractiveUiTargetTransform").transform;
+            instance.targetTransform.SetParent(instance.transform, false);
+            instance.targetTransform.localPosition = Vector3.forward * offset;
+            InteractiveUi.SetTargetTransform(instance.targetTransform);
             return instance;
         }
 
         public void SetUp(Camera camera)
         {
-            cameraTransform = camera ? camera.transform : null;
+            if (!camera) return;
+            cameraTransform = camera.transform;
+            prevForward = MathHelper.GetProjectedForward(cameraTransform);
         }
 
-        private Vector3 GetTargetPosition()
-        {
-            if (!cameraTransform) return Vector3.zero;
-
-            var cameraPosition = cameraTransform.position;
-            var forward = Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up).normalized;
-            return cameraPosition + forward * offset;
-        }
-
+        private Vector3 prevForward;
+        
         private void UpdateTransform()
         {
             if (!cameraTransform) return;
-            var targetThisFrame = GetTargetPosition();
 
-            var squareDistance = Vector3.SqrMagnitude(targetThisFrame - transform.position);
+            var cameraForward = MathHelper.GetProjectedForward(cameraTransform);
+            var unsignedAngleDelta = Vector3.Angle(prevForward, cameraForward);
+            var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up, unsignedAngleDelta);
 
-            currentTarget = squareDistance > maxSquareDistance || currentTarget == null
-                ? targetThisFrame
-                : currentTarget;
+            if (unsignedAngleDelta > 30)
+            {
+                transform.Rotate(Vector3.up, angleDelta);
+                prevForward = cameraForward;
+            }
 
-            transform.position = Vector3.SmoothDamp(
-                transform.position,
-                currentTarget ?? targetThisFrame,
-                ref velocity,
-                smoothTime,
-                float.PositiveInfinity,
-                Time.unscaledDeltaTime);
-            transform.LookAt(2 * transform.position - cameraTransform.position);
+            transform.position = cameraTransform.position;
         }
     }
 }
