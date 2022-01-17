@@ -63,7 +63,7 @@ namespace TwoForksVr.PlayerBody
             MakeMaterialTextureTransparent(backpackMaterial);
 
             var armsMaterial = materials[2];
-            MakeMaterialTextureTransparent(armsMaterial); // TODO maybe this should happen after making the clones?
+            MakeMaterialTextureTransparent(armsMaterial);
         }
 
         private static void MakeMaterialTextureTransparent(Material material, Texture texture = null)
