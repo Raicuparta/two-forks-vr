@@ -83,7 +83,7 @@ namespace TwoForksVr.Stage
             var nextCamera = mainCamera ? mainCamera : FallbackCamera;
             cameraManager.SetUp(nextCamera, playerTransform);
             limbManager.SetUp(playerTransform, nextCamera);
-            interactiveUiTarget.SetUp(camera);
+            interactiveUiTarget.SetUp(nextCamera);
         }
 
         public void Recenter(bool recenterVertically = false)
