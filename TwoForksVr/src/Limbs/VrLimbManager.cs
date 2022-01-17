@@ -46,9 +46,10 @@ namespace TwoForksVr.Limbs
             //     var animatedArmsMaterial = animatedHenry.Find("body").GetComponent<SkinnedMeshRenderer>().materials[2];
             //     clonedRenderer.shader = animatedArmsMaterial.shader;
             // }
+            var animatedArmsMaterial = animatedHenry ? animatedHenry.Find("body").GetComponent<SkinnedMeshRenderer>().materials[2] : null;
             var animatedRootBone = animatedHenry ? animatedHenry.Find("henryroot") : null;
-            rightHand.SetUp(animatedRootBone);
-            leftHand.SetUp(animatedRootBone);
+            rightHand.SetUp(animatedRootBone, animatedArmsMaterial);
+            leftHand.SetUp(animatedRootBone, animatedArmsMaterial);
             laser.SetUp(camera);
             GeneralDebugger.PlayerAnimator = animatedHenry != null ? animatedHenry.GetComponent<Animator>() : null;
 

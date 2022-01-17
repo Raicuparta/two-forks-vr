@@ -32,8 +32,14 @@ namespace TwoForksVr.Limbs
             return instance;
         }
 
-        public void SetUp(Transform playerRootBone)
+        public void SetUp(Transform playerRootBone, Material armsMaterial)
         {
+            if (armsMaterial)
+            {
+                var material = GetComponentInChildren<SkinnedMeshRenderer>().material;
+                material.shader = armsMaterial.shader;
+                material.CopyPropertiesFromMaterial(armsMaterial);
+            }
             gameObject.SetActive(false);
             EnableAnimatedHand(playerRootBone);
             gameObject.SetActive(true);
