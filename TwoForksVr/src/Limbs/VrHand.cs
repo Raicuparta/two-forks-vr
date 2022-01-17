@@ -18,7 +18,7 @@ namespace TwoForksVr.Limbs
         }
         // private Transform rootBone;
 
-        public static VrHand Create(Transform parent, Transform cloneRootBone, bool isLeft = false)
+        public static VrHand Create(Transform parent, bool isLeft = false)
         {
             var handName = isLeft ? "Left" : "Right";
             // var transform = parent.Find($"{handName}Hand");

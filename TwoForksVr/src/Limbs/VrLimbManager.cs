@@ -16,22 +16,12 @@ namespace TwoForksVr.Limbs
 
         public static VrLimbManager Create(VrStage stage)
         {
-            var instance = Instantiate(VrAssetLoader.HandsPrefab, stage.transform, false).AddComponent<VrLimbManager>();
+            var instance = new GameObject().AddComponent<VrLimbManager>();
             var instanceTransform = instance.transform;
-
-            var vrBody = Instantiate(VrAssetLoader.PlayerPrefab, instanceTransform, false).transform;
-            var cloneHenry = vrBody.Find("PlayerModel/henry");
-            var cloneRootBone = cloneHenry.Find("henryroot");
+            instanceTransform.SetParent(stage.transform, false);
             
-            instance.rightHand = VrHand.Create(
-                instanceTransform,
-                cloneRootBone
-            );
-            instance.leftHand = VrHand.Create(
-                instanceTransform,
-                cloneRootBone,
-                true
-            );
+            instance.rightHand = VrHand.Create(instanceTransform);
+            instance.leftHand = VrHand.Create(instanceTransform, true);
             ToolPicker.Create(
                 instanceTransform,
                 instance.leftHand.transform,
