@@ -24,6 +24,8 @@ namespace TwoForksVr.Limbs
 
         public void SetUp(Transform playerRootBone, Material armsMaterial)
         {
+            // Need to deactive and reactivate the object to make SteamVR_Behaviour_Pose work properly.
+            gameObject.SetActive(false);
             if (armsMaterial)
             {
                 var material = GetComponentInChildren<SkinnedMeshRenderer>().material;
@@ -31,12 +33,16 @@ namespace TwoForksVr.Limbs
                 material.CopyPropertiesFromMaterial(armsMaterial);
             }
             EnableAnimatedHand(playerRootBone);
+            gameObject.SetActive(true);
         }
 
         private void SetUpPose()
         {
-            // Need to deactive and reactivate the object to make SteamVR_Behaviour_Pose work properly.
-            gameObject.SetActive(false);
+            if (gameObject.GetComponent<SteamVR_Behaviour_Pose>())
+            {
+                Logs.LogError($"Found existing SteamVR pose in {name}. Aborting.");
+                return;
+            }
             var pose = gameObject.AddComponent<SteamVR_Behaviour_Pose>();
             if (isLeft)
             {
@@ -48,7 +54,6 @@ namespace TwoForksVr.Limbs
                 pose.inputSource = SteamVR_Input_Sources.RightHand;
                 pose.poseAction = SteamVR_Actions.default_PoseRightHand;
             }
-            gameObject.SetActive(true);
         }
 
         private void FollowAllChildrenRecursive(Transform clone, Transform target)
