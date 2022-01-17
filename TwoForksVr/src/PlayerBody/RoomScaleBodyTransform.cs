@@ -38,8 +38,7 @@ namespace TwoForksVr.PlayerBody
 
         private Vector3 GetCameraForward()
         {
-            return cameraTransform.parent.InverseTransformDirection(
-                Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up));
+            return cameraTransform.parent.InverseTransformDirection(MathHelper.GetProjectedForward(cameraTransform));
         }
 
         private void UpdateRoomScalePosition()

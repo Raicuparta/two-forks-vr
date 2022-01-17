@@ -23,5 +23,13 @@ namespace TwoForksVr.UI.Patches
                 if (objectsToDisable.Contains(child.name))
                     child.gameObject.SetActive(false);
         }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgMainMenuController), nameof(vgMainMenuController.Start))]
+        private static void FixMainMenuPosition(vgMainMenuController __instance)
+        {
+            var mainMenuGroup = __instance.transform.Find("Main Menu Group");
+            mainMenuGroup.localPosition = new Vector3(0, mainMenuGroup.localPosition.y, 0);
+        }
     }
 }
