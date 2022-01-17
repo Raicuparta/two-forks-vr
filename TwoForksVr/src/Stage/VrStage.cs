@@ -80,8 +80,9 @@ namespace TwoForksVr.Stage
                 if (!introFix) introFix = IntroFix.Create();
             }
 
-            cameraManager.SetUp(mainCamera ? mainCamera : FallbackCamera, playerTransform);
-            limbManager.SetUp(playerTransform, camera);
+            var nextCamera = mainCamera ? mainCamera : FallbackCamera;
+            cameraManager.SetUp(nextCamera, playerTransform);
+            limbManager.SetUp(playerTransform, nextCamera);
             interactiveUiTarget.SetUp(camera);
         }
 
