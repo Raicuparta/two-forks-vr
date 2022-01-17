@@ -58,8 +58,10 @@ namespace TwoForksVr.Limbs
                 var targetChild = target.Find(cloneChild.name);
                 if (targetChild)
                 {
-                    var isCloneWeddingRing = cloneChild.name.Equals("HenryWeddingRing 1");
+                    // Wedding ring and attachment objects are special cases, the originals need to follow the copies.
+                    // The "hand attachment" transform is what's used for holding objects in the palyer's hand.
                     var isCloneAttachment = cloneChild.name.Equals($"henryHand{handName}Attachment");
+                    var isCloneWeddingRing = cloneChild.name.Equals("HenryWeddingRing 1");
                     if (isCloneWeddingRing || isCloneAttachment)
                     {
                         targetChild.gameObject.AddComponent<LateUpdateFollow>().Target = cloneChild;
