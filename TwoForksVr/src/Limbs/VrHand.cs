@@ -8,10 +8,8 @@ namespace TwoForksVr.Limbs
 {
     public class VrHand : MonoBehaviour
     {
-        private GameObject fallbackHandModel;
         private string handName;
         private bool isLeft;
-        private Transform cloneRootBone;
 
         private void Start()
         {
@@ -23,21 +21,21 @@ namespace TwoForksVr.Limbs
         public static VrHand Create(Transform parent, Transform cloneRootBone, bool isLeft = false)
         {
             var handName = isLeft ? "Left" : "Right";
-            var transform = parent.Find($"{handName}Hand");
+            // var transform = parent.Find($"{handName}Hand");
+            var transform = Instantiate(VrAssetLoader.LeftHandPrefab, parent, false).transform;
+            transform.name = $"{handName}Hand";
             var instance = transform.gameObject.AddComponent<VrHand>();
             instance.handName = handName;
             instance.isLeft = isLeft;
-            instance.fallbackHandModel = transform.Find("HandModel")?.gameObject;
             instance.SetUpPose();
-            instance.cloneRootBone = cloneRootBone;
+            // instance.cloneRootBone = cloneRootBone;
             return instance;
         }
 
         public void SetUp(Transform playerRootBone)
         {
             gameObject.SetActive(false);
-            SetFallbackHandActive(false);
-            EnableAnimatedHand(playerRootBone, cloneRootBone);
+            EnableAnimatedHand(playerRootBone);
             gameObject.SetActive(true);
         }
 
@@ -54,12 +52,6 @@ namespace TwoForksVr.Limbs
                 pose.inputSource = SteamVR_Input_Sources.RightHand;
                 pose.poseAction = SteamVR_Actions.default_PoseRightHand;
             }
-        }
-
-        private void SetFallbackHandActive(bool active)
-        {
-            if (!fallbackHandModel) return;
-            fallbackHandModel.SetActive(active);
         }
 
         private void FollowAllChildrenRecursive(Transform clone, Transform target)
@@ -79,20 +71,20 @@ namespace TwoForksVr.Limbs
             }
         }
 
-        private void EnableAnimatedHand(Transform animatedRootBone, Transform cloneRootBone)
+        private void EnableAnimatedHand(Transform animatedRootBone)
         {
             var animatedArmBone = SetUpArmBone(animatedRootBone);
             if (!animatedArmBone)
             {
                 Logs.LogWarning("found no animated arm bone");
             }
-            var clonedArmBone = SetUpArmBone(cloneRootBone);
-            if (!clonedArmBone)
-            {
-                Logs.LogWarning("found no clonedArmBone arm bone");
-            }
             if (animatedArmBone)
             {
+                var clonedArmBone = transform.Find("henry/henryroot/henryPelvis/henryArmLeftHand");
+                if (!clonedArmBone)
+                {
+                    Logs.LogError("found no cloned arm bone");
+                }
                 FollowAllChildrenRecursive(clonedArmBone, animatedArmBone);
             }
             

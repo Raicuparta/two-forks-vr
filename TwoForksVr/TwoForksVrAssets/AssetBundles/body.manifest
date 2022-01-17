@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 863461042
+CRC: 2486907506
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 2d843bc11a6277bb3849958f77f402ad
+    Hash: ad108e54db72efc22d99a93c1fd61ca0
   TypeTreeHash:
     serializedVersion: 2
     Hash: d09a510fb9f14b6f45a0ce3dd5e576be
@@ -35,4 +35,5 @@ Assets:
 - Assets/Prefabs/Player Prefab.prefab
 - Assets/Prefabs/ShoeLid.prefab
 - Assets/Textures/body-cutout.png
+- Assets/Prefabs/left-hand.prefab
 Dependencies: []

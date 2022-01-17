@@ -31,6 +31,11 @@ ModelImporter:
     100050: henryPelvis
     100052: henryroot
     100054: //RootNode
+    100056: henryArmLeftIndex3_end_end
+    100058: henryArmLeftMiddle3_end_end
+    100060: henryArmLeftPinky3_end_end
+    100062: henryArmLeftRing3_end_end
+    100064: henryArmLeftThumb3_end_end
     400000: body
     400002: Camera001
     400004: henry
@@ -59,6 +64,11 @@ ModelImporter:
     400050: henryPelvis
     400052: henryroot
     400054: //RootNode
+    400056: henryArmLeftIndex3_end_end
+    400058: henryArmLeftMiddle3_end_end
+    400060: henryArmLeftPinky3_end_end
+    400062: henryArmLeftRing3_end_end
+    400064: henryArmLeftThumb3_end_end
     2100000: HenryArmsNew
     4300000: body
     9500000: //RootNode
