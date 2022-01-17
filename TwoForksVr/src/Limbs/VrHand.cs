@@ -90,11 +90,7 @@ namespace TwoForksVr.Limbs
 
         private void EnableAnimatedHand(Transform animatedRootBone)
         {
-            var animatedArmBone = SetUpArmBone(animatedRootBone);
-            if (!animatedArmBone)
-            {
-                Logs.LogWarning("found no animated arm bone");
-            }
+            var animatedArmBone = GetArmBone(animatedRootBone);
             if (animatedArmBone)
             {
                 var clonedArmBone = transform.Find($"henry/henryroot/henryPelvis/henryArm{handName}Hand");
@@ -104,49 +100,16 @@ namespace TwoForksVr.Limbs
                 }
                 FollowAllChildrenRecursive(clonedArmBone, animatedArmBone);
             }
-            
-            // SetUpHandLid(armBone);
-            if (animatedArmBone)
-            {
-                SetUpHandBone(animatedArmBone);
-            }
         }
 
-        private Transform SetUpArmBone(Transform playerRootBone)
+        private Transform GetArmBone(Transform playerRootBone)
         {
             if (!playerRootBone) return null;
 
             var armBone =
                 playerRootBone.Find(
                     $"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2");
-            var updateFollow = armBone.GetComponent<LateUpdateFollow>() ??
-                               armBone.gameObject.AddComponent<LateUpdateFollow>();
-            updateFollow.Target = transform.Find("ArmTarget");
             return armBone.Find($"henryArm{handName}Hand");
-        }
-
-        private void SetUpHandLid(Transform armBone)
-        {
-            var handLid = Instantiate(VrAssetLoader.HandLid).transform;
-            LayerHelper.SetLayer(handLid.Find("HandLidModel"), GameLayer.PlayerBody);
-            handLid.SetParent(armBone, false);
-            if (isLeft) handLid.localScale = new Vector3(1, 1, -1);
-        }
-
-        private void SetUpHandBone(Transform armBoneChild)
-        {
-            var armBone = armBoneChild.parent; // TODO cleanup;
-            var wristTargetName = $"{handName}WristTarget";
-            var wristTarget = armBone.Find(wristTargetName) ?? new GameObject(wristTargetName).transform;
-            wristTarget.SetParent(armBone);
-            var stabilizerAngleMultiplier = isLeft ? -1 : 1;
-            wristTarget.localPosition = new Vector3(-0.2497151f, 0f, 0f);
-            wristTarget.localEulerAngles = new Vector3(3.949f * stabilizerAngleMultiplier,
-                17.709f * stabilizerAngleMultiplier, 12.374f);
-            var handBone = armBone.transform.Find($"henryArm{handName}Hand");
-            var handBoneFollow = handBone.GetComponent<LateUpdateFollow>() ??
-                                 handBone.gameObject.AddComponent<LateUpdateFollow>();
-            handBoneFollow.Target = wristTarget;
         }
     }
 }
