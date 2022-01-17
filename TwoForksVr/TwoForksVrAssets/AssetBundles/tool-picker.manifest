@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3457548197
+CRC: 6843940
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -26,4 +26,4 @@ ClassTypes:
 Assets:
 - Assets/Prefabs/ToolPicker.prefab
 Dependencies:
-- C:/Users/rai/Repos/two-forks-vr/UnityHelper/../TwoForksVr/TwoForksVrAssets/AssetBundles/hand
+- C:/Users/rai/Repos/two-forks-vr/UnityHelperOld/../TwoForksVr/TwoForksVrAssets/AssetBundles/hand
