@@ -58,16 +58,22 @@ namespace TwoForksVr.Limbs
         {
             foreach (Transform cloneChild in clone)
             {
-                var targetChild = target.Find(cloneChild.name);
+                var cloneChildName = cloneChild.name.Replace("ATTACH_", "");
+                var targetChild = target.Find(cloneChildName);
                 if (targetChild)
                 {
-                    if (cloneChild.name.EndsWith("Attachment"))
+                    var isCloneWeddingRing = cloneChild.name.Equals("HenryWeddingRing 1");
+                    var isCloneAttachment = cloneChild.name.Equals($"henryHand{handName}Attachment");
+                    if (isCloneWeddingRing || isCloneAttachment)
                     {
                         targetChild.gameObject.AddComponent<LateUpdateFollow>().Target = cloneChild;
                     }
-
-                    cloneChild.gameObject.AddComponent<FollowLocalTransform>().Target = targetChild;
-                        FollowAllChildrenRecursive(cloneChild, target.Find(cloneChild.name));
+                    
+                    if (!isCloneWeddingRing)
+                    {
+                        cloneChild.gameObject.AddComponent<FollowLocalTransform>().Target = targetChild;
+                        FollowAllChildrenRecursive(cloneChild, target.Find(cloneChildName));
+                    }
                 }
                 else
                 {
