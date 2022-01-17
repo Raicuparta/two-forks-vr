@@ -8,9 +8,14 @@ namespace TwoForksVr.UI
     // To be used as the position for UI elements that need to be visible or interacted with.
     public class InteractiveUiTarget : MonoBehaviour
     {
-        private const float offset = 3f;
+        private const float forwardOffset = 3f;
+        private const float rotationSmoothTime = 0.3f;
+        private const float minAngleDelta = 45f;
         private Transform cameraTransform;
         private Transform targetTransform;
+        private Vector3 previousForward;
+        private Quaternion targetRotation;
+        private Quaternion rotationVelocity;
 
         private void Update()
         {
@@ -23,7 +28,7 @@ namespace TwoForksVr.UI
             instance.transform.SetParent(stage.transform, false);
             instance.targetTransform = new GameObject("InteractiveUiTargetTransform").transform;
             instance.targetTransform.SetParent(instance.transform, false);
-            instance.targetTransform.localPosition = Vector3.forward * offset;
+            instance.targetTransform.localPosition = Vector3.forward * forwardOffset;
             InteractiveUi.SetTargetTransform(instance.targetTransform);
             return instance;
         }
@@ -32,26 +37,20 @@ namespace TwoForksVr.UI
         {
             if (!camera) return;
             cameraTransform = camera.transform;
-            prevForward = MathHelper.GetProjectedForward(cameraTransform);
+            previousForward = MathHelper.GetProjectedForward(cameraTransform);
         }
-
-        private Vector3 prevForward;
-        private Quaternion targetRotation;
-        private Quaternion rotationVelocity;
-        private const float rotationSmoothTime = 0.3f;
-        private const float minAngleDelta = 45f;
 
         private void UpdateTransform()
         {
             if (!cameraTransform) return;
 
             var cameraForward = MathHelper.GetProjectedForward(cameraTransform);
-            var unsignedAngleDelta = Vector3.Angle(prevForward, cameraForward);
+            var unsignedAngleDelta = Vector3.Angle(previousForward, cameraForward);
 
             if (unsignedAngleDelta > minAngleDelta)
             {
                 targetRotation = Quaternion.LookRotation(cameraForward);
-                prevForward = cameraForward;
+                previousForward = cameraForward;
             }
 
             transform.rotation = MathHelper.SmoothDamp(
