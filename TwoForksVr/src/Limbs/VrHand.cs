@@ -9,6 +9,7 @@ namespace TwoForksVr.Limbs
     {
         private string handName;
         private bool isLeft;
+        private VrButtonHighlight buttonHighlight;
 
         public static VrHand Create(Transform parent, bool isLeft = false)
         {
@@ -18,13 +19,13 @@ namespace TwoForksVr.Limbs
             var instance = transform.gameObject.AddComponent<VrHand>();
             instance.handName = handName;
             instance.isLeft = isLeft;
+            instance.buttonHighlight = transform.GetComponentInChildren<VrButtonHighlight>();
             instance.SetUpPose();
             return instance;
         }
 
         public void SetUp(Transform playerRootBone, Material armsMaterial)
         {
-
             // Need to deactive and reactivate the object to make SteamVR_Behaviour_Pose work properly.
             gameObject.SetActive(false);
             if (armsMaterial)
@@ -50,6 +51,13 @@ namespace TwoForksVr.Limbs
                 pose.inputSource = SteamVR_Input_Sources.RightHand;
                 pose.poseAction = SteamVR_Actions.default_PoseRightHand;
             }
+            Invoke(nameof(ShowHintTest), 1);
+        }
+
+        private void ShowHintTest()
+        {
+            if (!buttonHighlight) return;
+            buttonHighlight.ShowButtonHint(SteamVR_Actions.default_Interact);
         }
 
         private void FollowAllChildrenRecursive(Transform clone, Transform target)
