@@ -1,5 +1,4 @@
-﻿using System;
-using TwoForksVr.Assets;
+﻿using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
 using UnityEngine;
 using Valve.VR;
@@ -11,24 +10,15 @@ namespace TwoForksVr.Limbs
         private string handName;
         private bool isLeft;
 
-        private void Start()
-        {
-            // Reset the tracking. For some reason if I don't do this the hands will be frozen.
-            gameObject.SetActive(true);
-        }
-        // private Transform rootBone;
-
         public static VrHand Create(Transform parent, bool isLeft = false)
         {
             var handName = isLeft ? "Left" : "Right";
-            // var transform = parent.Find($"{handName}Hand");
             var transform = Instantiate(isLeft ? VrAssetLoader.LeftHandPrefab : VrAssetLoader.RightHandPrefab, parent, false).transform;
             transform.name = $"{handName}Hand";
             var instance = transform.gameObject.AddComponent<VrHand>();
             instance.handName = handName;
             instance.isLeft = isLeft;
             instance.SetUpPose();
-            // instance.cloneRootBone = cloneRootBone;
             return instance;
         }
 
@@ -40,13 +30,13 @@ namespace TwoForksVr.Limbs
                 material.shader = armsMaterial.shader;
                 material.CopyPropertiesFromMaterial(armsMaterial);
             }
-            gameObject.SetActive(false);
             EnableAnimatedHand(playerRootBone);
-            gameObject.SetActive(true);
         }
 
         private void SetUpPose()
         {
+            // Need to deactive and reactivate the object to make SteamVR_Behaviour_Pose work properly.
+            gameObject.SetActive(false);
             var pose = gameObject.AddComponent<SteamVR_Behaviour_Pose>();
             if (isLeft)
             {
@@ -58,6 +48,7 @@ namespace TwoForksVr.Limbs
                 pose.inputSource = SteamVR_Input_Sources.RightHand;
                 pose.poseAction = SteamVR_Actions.default_PoseRightHand;
             }
+            gameObject.SetActive(true);
         }
 
         private void FollowAllChildrenRecursive(Transform clone, Transform target)
