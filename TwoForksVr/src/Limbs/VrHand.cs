@@ -61,8 +61,13 @@ namespace TwoForksVr.Limbs
                 var targetChild = target.Find(cloneChild.name);
                 if (targetChild)
                 {
+                    if (cloneChild.name.EndsWith("Attachment"))
+                    {
+                        targetChild.gameObject.AddComponent<LateUpdateFollow>().Target = cloneChild;
+                    }
+
                     cloneChild.gameObject.AddComponent<FollowLocalTransform>().Target = targetChild;
-                    FollowAllChildrenRecursive(cloneChild, target.Find(cloneChild.name));
+                        FollowAllChildrenRecursive(cloneChild, target.Find(cloneChild.name));
                 }
                 else
                 {
