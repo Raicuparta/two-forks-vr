@@ -14,7 +14,7 @@ namespace TwoForksVr.PlayerBody
 
         private void Start()
         {
-            prevForward = MathHelper.GetProjectedForward(cameraTransform);
+            prevForward = GetCameraForward();
             prevCameraPosition = cameraTransform.position;
         }
 
@@ -34,6 +34,11 @@ namespace TwoForksVr.PlayerBody
             instance.cameraTransform = camera.transform;
             instance.characterController = characterController;
             instance.navigationController = characterController.GetComponentInChildren<vgPlayerNavigationController>();
+        }
+
+        private Vector3 GetCameraForward()
+        {
+            return cameraTransform.parent.InverseTransformDirection(MathHelper.GetProjectedForward(cameraTransform));
         }
 
         private void UpdateRoomScalePosition()
@@ -64,7 +69,7 @@ namespace TwoForksVr.PlayerBody
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
 
-            var cameraForward = MathHelper.GetProjectedForward(cameraTransform);
+            var cameraForward = GetCameraForward();
             var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
             prevForward = cameraForward;
             characterController.transform.Rotate(Vector3.up, angleDelta);

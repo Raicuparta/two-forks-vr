@@ -60,8 +60,7 @@ namespace TwoForksVr.Helpers
         
         public static Vector3 GetProjectedForward(Transform transform)
         {
-            return transform.parent.InverseTransformDirection(
-                Vector3.ProjectOnPlane(transform.forward, Vector3.up));
+            return Vector3.ProjectOnPlane(transform.forward, Vector3.up);
         }
         
         public static Quaternion SmoothDamp(Quaternion rot, Quaternion target, ref Quaternion deriv, float time)
