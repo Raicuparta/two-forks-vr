@@ -2,6 +2,7 @@
 using System.IO;
 using HarmonyLib;
 using TwoForksVr.Helpers;
+using UnityEngine;
 using Valve.VR;
 
 namespace TwoForksVr.VrInput.Patches
@@ -61,10 +62,10 @@ namespace TwoForksVr.VrInput.Patches
 
             foreach (var entry in vector2XActionMap)
                 entry.Value.onChange += (action, source, axis, delta) =>
-                    TriggerCommand(entry.Key, MathHelper.ConvertCircleVectorToSquare(axis).x);
+                    TriggerCommand(entry.Key, axis.x);
             foreach (var entry in vector2YActionMap)
                 entry.Value.onChange += (action, source, axis, delta) =>
-                    TriggerCommand(entry.Key, MathHelper.ConvertCircleVectorToSquare(axis).y);
+                    TriggerCommand(entry.Key, axis.y);
             foreach (var entry in booleanActionMap)
                 entry.Value.onChange += (action, source, state) =>
                 {
@@ -78,7 +79,7 @@ namespace TwoForksVr.VrInput.Patches
                     TriggerCommand(entry.Key, 1);
                 };
         }
-
+        
         private static void TriggerCommand(string command, float axisValue)
         {
             if (!vgInputManager.Instance || vgInputManager.Instance.commandCallbackMap == null) return;
@@ -140,6 +141,40 @@ namespace TwoForksVr.VrInput.Patches
         {
             __instance.minimumInputForJog = 0f;
             __instance.PCControlsActive = false;
+            return false;
+        }
+        
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.ForwardMovement))]
+        private static bool FixForwardMovement(vgPlayerController __instance, float axisValue)
+        {
+            __instance.forwardInput = ProcessAxisValue(axisValue);
+            Logs.LogInfo($"## Forward movement {__instance.forwardInput}");
+            return false;
+        }
+        
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.StrafeMovement))]
+        private static bool FixStrafeMovement(vgPlayerController __instance, float axisValue)
+        {
+            __instance.strafeInput = ProcessAxisValue(axisValue);
+            return false;
+        }
+
+        private const float outerDeadzone = 0.5f;
+        private const float innerDeadzone = 0.1f;
+        private static float ProcessAxisValue(float value)
+        {
+		    var valueSign = Mathf.Sign(value);
+		    var absoluteValue = Mathf.Abs(value);
+		    return valueSign * Mathf.InverseLerp(innerDeadzone, 1f - outerDeadzone, absoluteValue);
+        }
+
+        
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgKeyBind), nameof(vgKeyBind.TriggerCommand))]
+        private static bool SkipDefaultCommands()
+        {
             return false;
         }
     }
