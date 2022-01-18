@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using Valve.VR;
 using Valve.VR.InteractionSystem;
@@ -81,28 +80,10 @@ public class VrButtonHighlight : MonoBehaviour
             renderModel.SetInputSource(newInputSource);
     }
 
-    // Gets called when the hand has been initialized and a render model has been set
-    private void OnHandInitialized(int deviceIndex)
-    {
-        //Create a new render model for the controller hints
-        renderModel = new GameObject("SteamVR_RenderModel").AddComponent<SteamVR_RenderModel>();
-        renderModel.transform.parent = transform;
-        renderModel.transform.localPosition = Vector3.zero;
-        renderModel.transform.localRotation = Quaternion.identity;
-        renderModel.transform.localScale = Vector3.one;
-
-        renderModel.SetInputSource(inputSource);
-        renderModel.SetDeviceIndex(deviceIndex);
-
-        if (!Initialized)
-            //The controller hint render model needs to be active to get accurate transforms for all the individual components
-            renderModel.gameObject.SetActive(true);
-    }
-
-    private void OnRenderModelLoaded(SteamVR_RenderModel renderModel, bool succeess)
+    private void OnRenderModelLoaded(SteamVR_RenderModel loadedRenderModel, bool succeess)
     {
         //Only initialize when the render model for the controller hints has been loaded
-        if (renderModel != this.renderModel) return;
+        if (loadedRenderModel != renderModel) return;
 
         if (Initialized)
         {
@@ -111,14 +92,14 @@ public class VrButtonHighlight : MonoBehaviour
             flashingRenderers.Clear();
         }
 
-        renderModel.SetMeshRendererState(false);
+        loadedRenderModel.SetMeshRendererState(false);
 
-        StartCoroutine(DoInitialize(renderModel));
+        StartCoroutine(DoInitialize(loadedRenderModel));
     }
 
-    private IEnumerator DoInitialize(SteamVR_RenderModel renderModel)
+    private IEnumerator DoInitialize(SteamVR_RenderModel initRenderModel)
     {
-        while (renderModel.initializedAttachPoints == false)
+        while (initRenderModel.initializedAttachPoints == false)
             yield return null;
 
         textHintParent = new GameObject("Text Hints").transform;
@@ -132,9 +113,9 @@ public class VrButtonHighlight : MonoBehaviour
         var renderModels = OpenVR.RenderModels;
         if (renderModels != null)
         {
-            for (var childIndex = 0; childIndex < renderModel.transform.childCount; childIndex++)
+            for (var childIndex = 0; childIndex < initRenderModel.transform.childCount; childIndex++)
             {
-                var child = renderModel.transform.GetChild(childIndex);
+                var child = initRenderModel.transform.GetChild(childIndex);
 
                 if (!componentTransformMap.ContainsKey(child.name))
                 {
@@ -154,56 +135,25 @@ public class VrButtonHighlight : MonoBehaviour
         Initialized = true;
 
         //Set the controller hints render model to not active
-        renderModel.SetMeshRendererState(true);
-        renderModel.gameObject.SetActive(false);
+        initRenderModel.SetMeshRendererState(true);
+        initRenderModel.gameObject.SetActive(false);
     }
 
 
-    private void CreateAndAddButtonInfo(ISteamVR_Action_In action, SteamVR_Input_Sources inputSource)
+    private void CreateAndAddButtonInfo(ISteamVR_Action_In action, SteamVR_Input_Sources buttonInputSource)
     {
         Transform buttonTransform = null;
         var buttonRenderers = new List<MeshRenderer>();
-
-        var buttonDebug = new StringBuilder();
-        buttonDebug.Append("Looking for action: ");
-
-        buttonDebug.AppendLine(action.GetShortName());
-
-        buttonDebug.Append("Action localized origin: ");
-        buttonDebug.AppendLine(action.GetLocalizedOrigin(inputSource));
-
-        var actionComponentName = action.GetRenderModelComponentName(inputSource);
+        var actionComponentName = action.GetRenderModelComponentName(buttonInputSource);
 
         if (componentTransformMap.ContainsKey(actionComponentName))
         {
-            buttonDebug.AppendLine(string.Format("Found component: {0} for {1}", actionComponentName,
-                action.GetShortName()));
             var componentTransform = componentTransformMap[actionComponentName];
-
             buttonTransform = componentTransform;
-
-            buttonDebug.AppendLine(string.Format("Found componentTransform: {0}. buttonTransform: {1}",
-                componentTransform, buttonTransform));
-
             buttonRenderers.AddRange(componentTransform.GetComponentsInChildren<MeshRenderer>());
         }
-        else
-        {
-            buttonDebug.AppendLine(string.Format(
-                "Can't find component transform for action: {0}. Component name: \"{1}\"", action.GetShortName(),
-                actionComponentName));
-        }
 
-        buttonDebug.AppendLine(string.Format("Found {0} renderers for {1}", buttonRenderers.Count,
-            action.GetShortName()));
-
-        foreach (var renderer in buttonRenderers)
-        {
-            buttonDebug.Append("\t");
-            buttonDebug.AppendLine(renderer.name);
-        }
-
-        if (buttonTransform == null)
+        if (!buttonTransform)
         {
             Debug.Log("Couldn't find buttonTransform for " + action.GetShortName());
             return;
@@ -211,7 +161,7 @@ public class VrButtonHighlight : MonoBehaviour
 
         var hintInfo = new ActionHintInfo();
         actionHintInfos.Add(action, hintInfo);
-        hintInfo.renderers = buttonRenderers;
+        hintInfo.Renderers = buttonRenderers;
     }
 
     public void ShowButtonHint(params ISteamVR_Action_In_Source[] actions)
@@ -233,7 +183,7 @@ public class VrButtonHighlight : MonoBehaviour
             if (actionHintInfos.ContainsKey(t))
             {
                 var hintInfo = actionHintInfos[t];
-                foreach (var hitInfoRenderer in hintInfo.renderers)
+                foreach (var hitInfoRenderer in hintInfo.Renderers)
                     if (!flashingRenderers.Contains(hitInfoRenderer))
                         flashingRenderers.Add(hitInfoRenderer);
             }
@@ -255,14 +205,14 @@ public class VrButtonHighlight : MonoBehaviour
     public void HideButtonHint(params ISteamVR_Action_In_Source[] actions)
     {
         var baseColor = UsingMaterial.GetColor(colorID);
-        for (var i = 0; i < actions.Length; i++)
-            if (actionHintInfos.ContainsKey(actions[i]))
+        foreach (var action in actions)
+            if (actionHintInfos.ContainsKey(action))
             {
-                var hintInfo = actionHintInfos[actions[i]];
-                foreach (var renderer in hintInfo.renderers)
+                var hintInfo = actionHintInfos[action];
+                foreach (var hitInfoRenderer in hintInfo.Renderers)
                 {
-                    renderer.material.color = baseColor;
-                    flashingRenderers.Remove(renderer);
+                    hitInfoRenderer.material.color = baseColor;
+                    flashingRenderers.Remove(hitInfoRenderer);
                 }
             }
 
@@ -273,7 +223,7 @@ public class VrButtonHighlight : MonoBehaviour
     {
         if (!actionHintInfos.ContainsKey(action)) return false;
         var hintInfo = actionHintInfos[action];
-        foreach (var buttonRenderer in hintInfo.renderers)
+        foreach (var buttonRenderer in hintInfo.Renderers)
             if (flashingRenderers.Contains(buttonRenderer))
                 return true;
 
@@ -289,6 +239,6 @@ public class VrButtonHighlight : MonoBehaviour
     //Info for each of the buttons
     private class ActionHintInfo
     {
-        public List<MeshRenderer> renderers;
+        public List<MeshRenderer> Renderers;
     }
 }
