@@ -4,6 +4,7 @@ using System.Linq;
 using BepInEx;
 using HarmonyLib;
 using TMPro;
+using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
 using UnityEngine;
 using Valve.VR;
@@ -172,11 +173,23 @@ namespace TwoForksVr.VrInput.Patches
         {
             if (!buttonText.text.IsNullOrWhiteSpace()) return;
 
-            // todo handle missing stuff, keys not found, etc.
             var virtualKey = buttonDisplay.Trim('[', ']');
-            var keyBind = vgInputManager.Instance.virtualKeyKeyBindMap[virtualKey];
-            var inputActions = keyBind.commands.Select(command => booleanActionMap[command.command]);
-            VrStage.Instance.HighlightButton(inputActions.ToArray());
+            vgInputManager.Instance.virtualKeyKeyBindMap.TryGetValue(virtualKey, out var keyBind);
+
+            if (keyBind == null)
+            {
+                Logs.LogWarning($"Failed to find keyBind for buttonDisplay {buttonDisplay}");
+                return;
+            }
+            
+            foreach (var command in keyBind.commands)
+            {
+                booleanActionMap.TryGetValue(command.command, out var action);
+                if (action != null)
+                {
+                    VrStage.Instance.HighlightButton(action);
+                }
+            }
         }
         
         [HarmonyPrefix]
