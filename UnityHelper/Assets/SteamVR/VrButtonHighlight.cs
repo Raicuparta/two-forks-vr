@@ -15,44 +15,24 @@ using Valve.VR.InteractionSystem;
 public class VrButtonHighlight : MonoBehaviour
 {
     public Material controllerMaterial;
-    public Material urpControllerMaterial;
-
     public Color flashColor = new Color(1.0f, 0.557f, 0.0f);
-
-    public bool autoSetWithControllerRangeOfMotion = true;
-
-    [Header("Debug")] public bool debugHints;
-
-
     private readonly Dictionary<string, Transform> componentTransformMap = new Dictionary<string, Transform>();
     private readonly List<MeshRenderer> flashingRenderers = new List<MeshRenderer>();
-
     private readonly List<MeshRenderer> renderers = new List<MeshRenderer>();
-
     private Dictionary<ISteamVR_Action_In_Source, ActionHintInfo> actionHintInfos;
-    private Vector3 centerPosition = Vector3.zero;
-
     private int colorID;
-
-    protected SteamVR_Input_Sources inputSource;
+    private SteamVR_Input_Sources inputSource;
     private Transform player;
-
     private SteamVR_RenderModel renderModel;
-
     private SteamVR_Events.Action renderModelLoadedAction;
     private float startTime;
     private Transform textHintParent;
     private float tickCount;
-
     public Material usingMaterial
     {
         get
         {
-#if UNITY_URP
-				return urpControllerMaterial;
-#else
             return controllerMaterial;
-#endif
         }
     }
 
@@ -114,13 +94,6 @@ public class VrButtonHighlight : MonoBehaviour
     private void ShowHintsAll()
     {
         ShowButtonHint(SteamVR_Input.actionsIn);
-    }
-
-
-    //-------------------------------------------------
-    private void HintDebugLog(string msg)
-    {
-        if (debugHints) Debug.Log("<b>[SteamVR Interaction]</b> Hints: " + msg);
     }
 
 
@@ -195,31 +168,15 @@ public class VrButtonHighlight : MonoBehaviour
         var renderModels = OpenVR.RenderModels;
         if (renderModels != null)
         {
-            var renderModelDebug = "";
-
-            if (debugHints)
-                renderModelDebug = "Components for render model " + renderModel.index;
-
             for (var childIndex = 0; childIndex < renderModel.transform.childCount; childIndex++)
             {
                 var child = renderModel.transform.GetChild(childIndex);
 
-                if (componentTransformMap.ContainsKey(child.name))
-                {
-                    if (debugHints)
-                        renderModelDebug += "\n\t!    Child component already exists with name: " + child.name;
-                }
-                else
+                if (!componentTransformMap.ContainsKey(child.name))
                 {
                     componentTransformMap.Add(child.name, child);
                 }
-
-                if (debugHints)
-                    renderModelDebug += "\n\t" + child.name + ".";
             }
-
-            //Uncomment to show the button mask for each component of the render model
-            HintDebugLog(renderModelDebug);
         }
 
         actionHintInfos = new Dictionary<ISteamVR_Action_In_Source, ActionHintInfo>();
@@ -285,11 +242,9 @@ public class VrButtonHighlight : MonoBehaviour
             buttonDebug.AppendLine(renderer.name);
         }
 
-        HintDebugLog(buttonDebug.ToString());
-
         if (buttonTransform == null)
         {
-            HintDebugLog("Couldn't find buttonTransform for " + action.GetShortName());
+            Debug.Log("Couldn't find buttonTransform for " + action.GetShortName());
             return;
         }
 
@@ -321,12 +276,7 @@ public class VrButtonHighlight : MonoBehaviour
             renderers[i].material.mainTexture = mainTexture;
 
             // This is to poke unity into setting the correct render queue for the model
-
-#if UNITY_URP
-				renderers[i].material.renderQueue = usingMaterial.renderQueue;
-#else
             renderers[i].material.renderQueue = usingMaterial.shader.renderQueue;
-#endif
         }
 
         for (var i = 0; i < actions.Length; i++)
@@ -385,37 +335,11 @@ public class VrButtonHighlight : MonoBehaviour
         return false;
     }
 
-
-    //-------------------------------------------------
-    private IEnumerator TestButtonHints()
-    {
-        while (true)
-            for (var actionIndex = 0; actionIndex < SteamVR_Input.actionsNonPoseNonSkeletonIn.Length; actionIndex++)
-            {
-                var action = SteamVR_Input.actionsNonPoseNonSkeletonIn[actionIndex];
-                if (action.GetActive(inputSource))
-                {
-                    ShowButtonHint(action);
-                    yield return new WaitForSeconds(1.0f);
-                }
-
-                yield return null;
-            }
-    }
-
     //-------------------------------------------------
     private void Clear()
     {
         renderers.Clear();
         flashingRenderers.Clear();
-    }
-
-    private enum OffsetType
-    {
-        Up,
-        Right,
-        Forward,
-        Back
     }
 
     //Info for each of the buttons
