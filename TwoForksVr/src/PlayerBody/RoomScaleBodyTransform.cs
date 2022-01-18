@@ -50,10 +50,8 @@ namespace TwoForksVr.PlayerBody
 
             var worldPositionDelta = VrStage.Instance.transform.TransformVector(localPositionDelta);
 
-            if (worldPositionDelta.sqrMagnitude < 0.00001f) return;
-
             prevCameraPosition = cameraPosition;
-            
+
             if (worldPositionDelta.sqrMagnitude > 1f || !navigationController.onGround ||
                 !navigationController.enabled) return;
 
@@ -76,7 +74,7 @@ namespace TwoForksVr.PlayerBody
             prevForward = cameraForward;
             characterController.transform.Rotate(Vector3.up, angleDelta);
 
-            VrStage.Instance.RecenterRotation();
+            VrStage.Instance.Recenter();
         }
     }
 }
