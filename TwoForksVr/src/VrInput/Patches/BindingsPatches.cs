@@ -213,5 +213,16 @@ namespace TwoForksVr.VrInput.Patches
             VrStage.Instance.HighlightButton();
             return false;
         }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.UpdateEdgeHUD))]
+        private static void ClearEdgeText(vgHudManager __instance)
+        {
+            if (!__instance.edgeObject.activeSelf)
+            {
+                __instance.ClearButtonText(__instance.edgeButton, __instance.edgeButtonKeyBoundary);
+            }
+        }
+
     }
 }
