@@ -1,11 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using BepInEx;
 using HarmonyLib;
-using TMPro;
-using TwoForksVr.Helpers;
-using TwoForksVr.Stage;
 using UnityEngine;
 using Valve.VR;
 
@@ -15,15 +10,15 @@ namespace TwoForksVr.VrInput.Patches
     public static class BindingsPatches
     {
         private static SteamVR_Input_ActionSet_default actionSet;
-        private static Dictionary<string, SteamVR_Action_Boolean> booleanActionMap;
-        private static Dictionary<string, SteamVR_Action_Boolean> invertedBooleanActionMap;
-        private static Dictionary<string, SteamVR_Action_Vector2> vector2XActionMap;
-        private static Dictionary<string, SteamVR_Action_Vector2> vector2YActionMap;
+        public static Dictionary<string, SteamVR_Action_Boolean> BooleanActionMap { get; private set; }
+        public static Dictionary<string, SteamVR_Action_Boolean> InvertedBooleanActionMap { get; private set; }
+        public static Dictionary<string, SteamVR_Action_Vector2> Vector2XActionMap { get; private set; }
+        public static Dictionary<string, SteamVR_Action_Vector2> Vector2YActionMap { get; private set; }
 
         private static void Initialize()
         {
             actionSet = SteamVR_Actions._default;
-            booleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>
+            BooleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>
             {
                 {InputName.LocomotionAction, actionSet.Interact},
                 {InputName.UseCamera, actionSet.Interact},
@@ -46,17 +41,17 @@ namespace TwoForksVr.VrInput.Patches
                 {InputName.PreviousMenu, actionSet.PreviousPage},
                 {InputName.RadioUp, actionSet.Grip}
             };
-            invertedBooleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>
+            InvertedBooleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>
             {
                 {InputName.RadioDown, actionSet.Grip}
             };
-            vector2XActionMap = new Dictionary<string, SteamVR_Action_Vector2>
+            Vector2XActionMap = new Dictionary<string, SteamVR_Action_Vector2>
             {
                 {InputName.MoveStrafe, actionSet.Move},
                 {InputName.LookHorizontalStick, actionSet.Rotate},
                 {InputName.UIHorizontal, actionSet.Move}
             };
-            vector2YActionMap = new Dictionary<string, SteamVR_Action_Vector2>
+            Vector2YActionMap = new Dictionary<string, SteamVR_Action_Vector2>
             {
                 {InputName.MoveForward, actionSet.Move},
                 {InputName.LookVerticalStick, actionSet.Rotate},
@@ -64,19 +59,19 @@ namespace TwoForksVr.VrInput.Patches
                 {InputName.UIVertical, actionSet.Move}
             };
 
-            foreach (var entry in vector2XActionMap)
+            foreach (var entry in Vector2XActionMap)
                 entry.Value.onChange += (action, source, axis, delta) =>
                     TriggerCommand(entry.Key, axis.x);
-            foreach (var entry in vector2YActionMap)
+            foreach (var entry in Vector2YActionMap)
                 entry.Value.onChange += (action, source, axis, delta) =>
                     TriggerCommand(entry.Key, axis.y);
-            foreach (var entry in booleanActionMap)
+            foreach (var entry in BooleanActionMap)
                 entry.Value.onChange += (action, source, state) =>
                 {
                     if (!state) return;
                     TriggerCommand(entry.Key, 1);
                 };
-            foreach (var entry in invertedBooleanActionMap)
+            foreach (var entry in InvertedBooleanActionMap)
                 entry.Value.onChange += (action, source, state) =>
                 {
                     if (state) return;
@@ -178,65 +173,7 @@ namespace TwoForksVr.VrInput.Patches
         [HarmonyPatch(typeof(vgKeyBind), nameof(vgKeyBind.TriggerCommand))]
         private static bool IgnoreDefaultAxisInputs(string command)
         {
-            return !vector2XActionMap.ContainsKey(command) && !vector2YActionMap.ContainsKey(command);
+            return !Vector2XActionMap.ContainsKey(command) && !Vector2YActionMap.ContainsKey(command);
         }
-
-
-        // Todo this shouldnt be here I guess.
-        private static string currentButtonDisplay;
-        
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.UpdateButtonText))]
-        private static bool TriggerControllerButtonHighlight(string buttonDisplay, TextMeshProUGUI buttonText)
-        {
-            if (buttonDisplay == currentButtonDisplay) return false;
-            currentButtonDisplay = buttonDisplay;
-
-            var virtualKey = buttonDisplay.Trim('[', ']');
-            vgInputManager.Instance.virtualKeyKeyBindMap.TryGetValue(virtualKey, out var keyBind);
-
-            if (keyBind == null)
-            {
-                Logs.LogWarning($"Failed to find keyBind for buttonDisplay {buttonDisplay}");
-                return false;
-            }
-            
-            foreach (var command in keyBind.commands)
-            {
-                booleanActionMap.TryGetValue(command.command, out var action);
-                if (action != null)
-                {
-                    VrStage.Instance.HighlightButton(action);
-                    buttonText.text = action.GetLocalizedOriginPart(SteamVR_Input_Sources.Any, EVRInputStringBits.VRInputString_InputSource);
-                    buttonText.gameObject.SetActive(true);
-                    // Doing it only for the first command that works, not sure if that canb e a problem.
-                    break;
-                }
-            }
-
-            return false;
-        }
-        
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.ClearButtonText))]
-        private static bool StopControllerButtonHighlight(TextMeshProUGUI buttonText)
-        {
-            if (!buttonText.gameObject.activeSelf) return false;
-            buttonText.gameObject.SetActive(false);
-            currentButtonDisplay = "";
-            VrStage.Instance.HighlightButton();
-            return false;
-        }
-
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.UpdateEdgeHUD))]
-        private static void ClearEdgeText(vgHudManager __instance)
-        {
-            if (!__instance.edgeObject.activeSelf)
-            {
-                __instance.ClearButtonText(__instance.edgeButton, __instance.edgeButtonKeyBoundary);
-            }
-        }
-
     }
 }
