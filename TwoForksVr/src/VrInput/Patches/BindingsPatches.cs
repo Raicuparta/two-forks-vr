@@ -168,7 +168,7 @@ namespace TwoForksVr.VrInput.Patches
         
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.UpdateButtonText))]
-        private static void PrintKey(string buttonDisplay, TextMeshProUGUI buttonText)
+        private static void TriggerControllerButtonHighlight(string buttonDisplay, TextMeshProUGUI buttonText)
         {
             if (!buttonText.text.IsNullOrWhiteSpace()) return;
 
@@ -181,7 +181,7 @@ namespace TwoForksVr.VrInput.Patches
         
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.ClearButtonText))]
-        private static void StopHighlight(TextMeshProUGUI buttonText)
+        private static void StopControllerButtonHighlight(TextMeshProUGUI buttonText)
         {
             if (!buttonText.gameObject.activeSelf) return;
             VrStage.Instance.HighlightButton();
