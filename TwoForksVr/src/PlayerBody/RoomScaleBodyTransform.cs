@@ -21,7 +21,7 @@ namespace TwoForksVr.PlayerBody
         private void Update()
         {
             UpdateRoomScalePosition();
-            // UpdateRotation();
+            UpdateRotation();
         }
 
         public static void Create(CharacterController characterController, Camera camera)
@@ -76,7 +76,7 @@ namespace TwoForksVr.PlayerBody
             prevForward = cameraForward;
             characterController.transform.Rotate(Vector3.up, angleDelta);
 
-            VrStage.Instance.Recenter();
+            VrStage.Instance.RecenterRotation();
         }
     }
 }
