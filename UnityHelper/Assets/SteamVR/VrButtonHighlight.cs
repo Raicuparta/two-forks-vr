@@ -43,12 +43,7 @@ public class VrButtonHighlight : MonoBehaviour
     {
         renderModelLoadedAction = SteamVR_Events.RenderModelLoadedAction(OnRenderModelLoaded);
         renderModel = GetComponent<SteamVR_RenderModel>();
-
-#if UNITY_URP
-			colorID = Shader.PropertyToID( "_BaseColor" );
-#else
         colorID = Shader.PropertyToID("_Color");
-#endif
     }
 
     //-------------------------------------------------
@@ -250,17 +245,7 @@ public class VrButtonHighlight : MonoBehaviour
 
         var hintInfo = new ActionHintInfo();
         actionHintInfos.Add(action, hintInfo);
-
-        hintInfo.componentName = buttonTransform.name;
         hintInfo.renderers = buttonRenderers;
-
-        //Get the local transform for the button
-        for (var childIndex = 0; childIndex < buttonTransform.childCount; childIndex++)
-        {
-            var child = buttonTransform.GetChild(childIndex);
-            if (child.name == SteamVR_RenderModel.k_localTransformName)
-                hintInfo.localTransform = child;
-        }
     }
 
     //-------------------------------------------------
@@ -345,8 +330,6 @@ public class VrButtonHighlight : MonoBehaviour
     //Info for each of the buttons
     private class ActionHintInfo
     {
-        public string componentName;
-        public Transform localTransform;
         public List<MeshRenderer> renderers;
     }
 }
