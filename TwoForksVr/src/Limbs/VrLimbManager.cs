@@ -3,6 +3,7 @@ using TwoForksVr.Stage;
 using TwoForksVr.Tools;
 using TwoForksVr.UI.Patches;
 using UnityEngine;
+using Valve.VR;
 
 namespace TwoForksVr.Limbs
 {
@@ -45,6 +46,20 @@ namespace TwoForksVr.Limbs
 
             VrFoot.Create(skeletonRoot);
             VrFoot.Create(skeletonRoot, true);
+        }
+
+        public void HighlightButton(params ISteamVR_Action_In_Source[] actions)
+        {
+            if (actions.Length == 0)
+            {
+                leftHand.ButtonHighlight.HideAllButtonHints();
+                rightHand.ButtonHighlight.HideAllButtonHints();
+            }
+            else
+            {
+                leftHand.ButtonHighlight.ShowButtonHint(actions);
+                rightHand.ButtonHighlight.ShowButtonHint(actions);
+            }
         }
 
         private static Material GetArmsMaterial(Transform playerTransform)

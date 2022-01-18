@@ -7,6 +7,7 @@ namespace TwoForksVr.Limbs
 {
     public class VrHand : MonoBehaviour
     {
+        public VrButtonHighlight ButtonHighlight { get; private set; }
         private string handName;
         private bool isLeft;
 
@@ -18,6 +19,7 @@ namespace TwoForksVr.Limbs
             var instance = transform.gameObject.AddComponent<VrHand>();
             instance.handName = handName;
             instance.isLeft = isLeft;
+            instance.ButtonHighlight = transform.GetComponentInChildren<VrButtonHighlight>();
             instance.SetUpPose();
             return instance;
         }
@@ -38,12 +40,7 @@ namespace TwoForksVr.Limbs
 
         private void SetUpPose()
         {
-            if (gameObject.GetComponent<SteamVR_Behaviour_Pose>())
-            {
-                Logs.LogError($"Found existing SteamVR pose in {name}. Aborting.");
-                return;
-            }
-            var pose = gameObject.AddComponent<SteamVR_Behaviour_Pose>();
+            var pose = gameObject.GetComponent<SteamVR_Behaviour_Pose>();
             if (isLeft)
             {
                 pose.inputSource = SteamVR_Input_Sources.LeftHand;

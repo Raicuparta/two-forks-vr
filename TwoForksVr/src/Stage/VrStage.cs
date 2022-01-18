@@ -5,6 +5,7 @@ using TwoForksVr.Limbs;
 using TwoForksVr.PlayerCamera;
 using TwoForksVr.UI;
 using UnityEngine;
+using Valve.VR;
 
 namespace TwoForksVr.Stage
 {
@@ -89,6 +90,11 @@ namespace TwoForksVr.Stage
         public void Recenter(bool recenterVertically = false)
         {
             cameraManager.Recenter(recenterVertically);
+        }
+
+        public void HighlightButton(params ISteamVR_Action_In_Source[] actions)
+        {
+            limbManager.HighlightButton(actions);
         }
     }
 }
