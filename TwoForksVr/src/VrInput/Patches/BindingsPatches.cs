@@ -121,6 +121,21 @@ namespace TwoForksVr.VrInput.Patches
         }
 
         [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.UpdateActiveController))]
+        private static bool ForceXboxController(vgRewiredInput __instance)
+        {
+            __instance.activeController = vgControllerLayoutChoice.XBox;
+            __instance.mCurrentIconMap = __instance.IconMap_Xbox;
+            __instance.mCurrentIconMap.Init();
+
+            if (vgSettingsManager.Instance &&
+                vgSettingsManager.Instance.controller != (int) __instance.activeController)
+                vgSettingsManager.Instance.controller = (int) __instance.activeController;
+
+            return false;
+        }
+
+        [HarmonyPrefix]
         [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.CheckForPCControls))]
         private static bool ForceDisablePcControls(vgPlayerController __instance)
         {
@@ -134,6 +149,7 @@ namespace TwoForksVr.VrInput.Patches
         private static bool FixForwardMovement(vgPlayerController __instance, float axisValue)
         {
             __instance.forwardInput = ProcessAxisValue(axisValue);
+            Logs.LogInfo($"## Forward movement {__instance.forwardInput}");
             return false;
         }
         
