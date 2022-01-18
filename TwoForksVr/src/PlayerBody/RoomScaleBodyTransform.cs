@@ -21,7 +21,7 @@ namespace TwoForksVr.PlayerBody
         private void Update()
         {
             UpdateRoomScalePosition();
-            UpdateRotation();
+            // UpdateRotation();
         }
 
         public static void Create(CharacterController characterController, Camera camera)
@@ -50,8 +50,10 @@ namespace TwoForksVr.PlayerBody
 
             var worldPositionDelta = VrStage.Instance.transform.TransformVector(localPositionDelta);
 
-            prevCameraPosition = cameraPosition;
+            if (worldPositionDelta.sqrMagnitude < 0.00001f) return;
 
+            prevCameraPosition = cameraPosition;
+            
             if (worldPositionDelta.sqrMagnitude > 1f || !navigationController.onGround ||
                 !navigationController.enabled) return;
 
