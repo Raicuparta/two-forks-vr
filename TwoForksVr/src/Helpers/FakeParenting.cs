@@ -24,6 +24,11 @@ namespace TwoForksVr.Helpers
             UpdateTransform();
         }
 
+        private void LateUpdate()
+        {
+            UpdateTransform();
+        }
+
         private void UpdateTransform()
         {
             if (!Target) return;

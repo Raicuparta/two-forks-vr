@@ -84,7 +84,7 @@ namespace TwoForksVr.Limbs
 
         private void EnableAnimatedHand(Transform animatedRootBone)
         {
-            var animatedArmBone = GetArmBone(animatedRootBone);
+            var animatedArmBone = SetUpArmBone(animatedRootBone);
             if (!animatedArmBone) return;
 
             var clonedArmBone = transform.Find($"henry/henryroot/henryPelvis/henryArm{handName}Hand");
@@ -95,14 +95,21 @@ namespace TwoForksVr.Limbs
             FollowAllChildrenRecursive(clonedArmBone, animatedArmBone);
         }
 
-        private Transform GetArmBone(Transform playerRootBone)
+        private Transform SetUpArmBone(Transform playerRootBone)
         {
             if (!playerRootBone) return null;
 
             var armBone =
                 playerRootBone.Find(
-                    $"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2");
-            return armBone.Find($"henryArm{handName}Hand");
+                    $"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2/henryArm{handName}Hand");
+
+            // The original hands are hidden but I still make them follow the fake hands,
+            // just for any behaviours that rely on the real hand transform.
+            // I didn't bother making it follow the position and rotation precisely,
+            // since I only cared about fixing the map cloth movement.
+            armBone.gameObject.AddComponent<FakeParenting>().Target = transform;
+
+            return armBone;
         }
     }
 }
