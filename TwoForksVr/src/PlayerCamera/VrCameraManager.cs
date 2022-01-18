@@ -118,6 +118,12 @@ namespace TwoForksVr.PlayerCamera
             }
         }
 
+        public void RecenterRotation()
+        {
+            var angleOffset = playerTransform.eulerAngles.y - camera.transform.eulerAngles.y;
+            transform.Rotate(Vector3.up * angleOffset);
+        }
+        
         public void Recenter(bool recenterVertically = false)
         {
             if (!playerTransform || !camera) return;
@@ -127,8 +133,7 @@ namespace TwoForksVr.PlayerCamera
                 cameraOffset.y = 0;
             }
             transform.position -= cameraOffset;
-            var angleOffset = playerTransform.eulerAngles.y - camera.transform.eulerAngles.y;
-            transform.Rotate(Vector3.up * angleOffset);
+            RecenterRotation();
         }
     }
 }
