@@ -45,5 +45,13 @@ namespace TwoForksVr.Settings.Patches
         {
             return false;
         }
+        
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgSettingsMenuController), nameof(vgSettingsMenuController.Start))]
+        private static void RemoveControlsTab(vgSettingsMenuController __instance)
+        {
+            __instance.screens.RemoveAt(2);
+            Object.Destroy(__instance.selectionGroup.buttonElements[2].gameObject);
+        }
     }
 }
