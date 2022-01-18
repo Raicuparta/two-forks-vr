@@ -38,5 +38,12 @@ namespace TwoForksVr.Settings.Patches
             newResolution = new Resolution {width = 1920, height = 1080};
             newFullscreen = false;
         }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgResolutionListController), nameof(vgResolutionListController.BuildList))]
+        private static bool HideResolutionOptions()
+        {
+            return false;
+        }
     }
 }
