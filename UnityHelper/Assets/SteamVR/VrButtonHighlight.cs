@@ -1,17 +1,11 @@
-﻿//======= Copyright (c) Valve Corporation, All rights reserved. ===============
-//
-// Purpose: Displays text and button hints on the controllers
-//
-//=============================================================================
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using Valve.VR;
 using Valve.VR.InteractionSystem;
+// ReSharper disable MemberCanBePrivate.Global
 
-//-------------------------------------------------------------------------
 public class VrButtonHighlight : MonoBehaviour
 {
     public Material controllerMaterial;
@@ -28,7 +22,7 @@ public class VrButtonHighlight : MonoBehaviour
     private float startTime;
     private Transform textHintParent;
     private float tickCount;
-    public Material usingMaterial
+    public Material UsingMaterial
     {
         get
         {
@@ -36,9 +30,8 @@ public class VrButtonHighlight : MonoBehaviour
         }
     }
 
-    public bool initialized { get; private set; }
+    public bool Initialized { get; private set; }
 
-    //-------------------------------------------------
     private void Awake()
     {
         renderModelLoadedAction = SteamVR_Events.RenderModelLoadedAction(OnRenderModelLoaded);
@@ -46,57 +39,38 @@ public class VrButtonHighlight : MonoBehaviour
         colorID = Shader.PropertyToID("_Color");
     }
 
-    //-------------------------------------------------
     private void Update()
     {
-        if (renderModel != null && renderModel.gameObject.activeInHierarchy && flashingRenderers.Count > 0)
+        if (!renderModel || !renderModel.gameObject.activeInHierarchy || flashingRenderers.Count <= 0) return;
+        var baseColor = UsingMaterial.GetColor(colorID);
+
+        var flash = (Time.realtimeSinceStartup - startTime) * Mathf.PI * 2.0f;
+        flash = Mathf.Cos(flash);
+        flash = Util.RemapNumberClamped(flash, -1.0f, 1.0f, 0.0f, 1.0f);
+
+        var ticks = Time.realtimeSinceStartup - startTime;
+        if (ticks - tickCount > 1.0f)
         {
-            var baseColor = usingMaterial.GetColor(colorID);
+            tickCount += 1.0f;
+        }
 
-            var flash = (Time.realtimeSinceStartup - startTime) * Mathf.PI * 2.0f;
-            flash = Mathf.Cos(flash);
-            flash = Util.RemapNumberClamped(flash, -1.0f, 1.0f, 0.0f, 1.0f);
-
-            var ticks = Time.realtimeSinceStartup - startTime;
-            if (ticks - tickCount > 1.0f)
-            {
-                tickCount += 1.0f;
-            }
-
-            for (var i = 0; i < flashingRenderers.Count; i++)
-            {
-                Renderer r = flashingRenderers[i];
-                r.material.SetColor(colorID, Color.Lerp(baseColor, flashColor, flash));
-            }
+        foreach (var r in flashingRenderers)
+        {
+            r.material.SetColor(colorID, Color.Lerp(baseColor, flashColor, flash));
         }
     }
 
 
-    //-------------------------------------------------
     private void OnEnable()
     {
         renderModelLoadedAction.enabled = true;
     }
 
 
-    //-------------------------------------------------
     private void OnDisable()
     {
         renderModelLoadedAction.enabled = false;
         Clear();
-    }
-
-    private void ShowHintsAll()
-    {
-        ShowButtonHint(SteamVR_Input.actionsIn);
-    }
-
-
-    //-------------------------------------------------
-    private void OnParentHandInputFocusLost()
-    {
-        //Hide all the hints when the controller is no longer the primary attached object
-        HideAllButtonHints();
     }
 
 
@@ -107,9 +81,7 @@ public class VrButtonHighlight : MonoBehaviour
             renderModel.SetInputSource(newInputSource);
     }
 
-    //-------------------------------------------------
     // Gets called when the hand has been initialized and a render model has been set
-    //-------------------------------------------------
     private void OnHandInitialized(int deviceIndex)
     {
         //Create a new render model for the controller hints
@@ -122,29 +94,26 @@ public class VrButtonHighlight : MonoBehaviour
         renderModel.SetInputSource(inputSource);
         renderModel.SetDeviceIndex(deviceIndex);
 
-        if (!initialized)
+        if (!Initialized)
             //The controller hint render model needs to be active to get accurate transforms for all the individual components
             renderModel.gameObject.SetActive(true);
     }
 
-    //-------------------------------------------------
     private void OnRenderModelLoaded(SteamVR_RenderModel renderModel, bool succeess)
     {
         //Only initialize when the render model for the controller hints has been loaded
-        if (renderModel == this.renderModel)
+        if (renderModel != this.renderModel) return;
+
+        if (Initialized)
         {
-            //Debug.Log("<b>[SteamVR Interaction]</b> OnRenderModelLoaded: " + this.renderModel.renderModelName);
-            if (initialized)
-            {
-                Destroy(textHintParent.gameObject);
-                componentTransformMap.Clear();
-                flashingRenderers.Clear();
-            }
-
-            renderModel.SetMeshRendererState(false);
-
-            StartCoroutine(DoInitialize(renderModel));
+            Destroy(textHintParent.gameObject);
+            componentTransformMap.Clear();
+            flashingRenderers.Clear();
         }
+
+        renderModel.SetMeshRendererState(false);
+
+        StartCoroutine(DoInitialize(renderModel));
     }
 
     private IEnumerator DoInitialize(SteamVR_RenderModel renderModel)
@@ -176,15 +145,13 @@ public class VrButtonHighlight : MonoBehaviour
 
         actionHintInfos = new Dictionary<ISteamVR_Action_In_Source, ActionHintInfo>();
 
-        for (var actionIndex = 0; actionIndex < SteamVR_Input.actionsNonPoseNonSkeletonIn.Length; actionIndex++)
+        foreach (var action in SteamVR_Input.actionsNonPoseNonSkeletonIn)
         {
-            var action = SteamVR_Input.actionsNonPoseNonSkeletonIn[actionIndex];
-
             if (action.GetActive(inputSource))
                 CreateAndAddButtonInfo(action, inputSource);
         }
 
-        initialized = true;
+        Initialized = true;
 
         //Set the controller hints render model to not active
         renderModel.SetMeshRendererState(true);
@@ -192,7 +159,6 @@ public class VrButtonHighlight : MonoBehaviour
     }
 
 
-    //-------------------------------------------------
     private void CreateAndAddButtonInfo(ISteamVR_Action_In action, SteamVR_Input_Sources inputSource)
     {
         Transform buttonTransform = null;
@@ -248,29 +214,28 @@ public class VrButtonHighlight : MonoBehaviour
         hintInfo.renderers = buttonRenderers;
     }
 
-    //-------------------------------------------------
     public void ShowButtonHint(params ISteamVR_Action_In_Source[] actions)
     {
         renderModel.gameObject.SetActive(true);
 
         renderModel.GetComponentsInChildren(renderers);
-        for (var i = 0; i < renderers.Count; i++)
+        foreach (var childRenderer in renderers)
         {
-            var mainTexture = renderers[i].material.mainTexture;
-            renderers[i].sharedMaterial = usingMaterial;
-            renderers[i].material.mainTexture = mainTexture;
+            var mainTexture = childRenderer.material.mainTexture;
+            childRenderer.sharedMaterial = UsingMaterial;
+            childRenderer.material.mainTexture = mainTexture;
 
             // This is to poke unity into setting the correct render queue for the model
-            renderers[i].material.renderQueue = usingMaterial.shader.renderQueue;
+            childRenderer.material.renderQueue = UsingMaterial.shader.renderQueue;
         }
 
-        for (var i = 0; i < actions.Length; i++)
-            if (actionHintInfos.ContainsKey(actions[i]))
+        foreach (var t in actions)
+            if (actionHintInfos.ContainsKey(t))
             {
-                var hintInfo = actionHintInfos[actions[i]];
-                foreach (var renderer in hintInfo.renderers)
-                    if (!flashingRenderers.Contains(renderer))
-                        flashingRenderers.Add(renderer);
+                var hintInfo = actionHintInfos[t];
+                foreach (var hitInfoRenderer in hintInfo.renderers)
+                    if (!flashingRenderers.Contains(hitInfoRenderer))
+                        flashingRenderers.Add(hitInfoRenderer);
             }
 
         startTime = Time.realtimeSinceStartup;
@@ -278,7 +243,6 @@ public class VrButtonHighlight : MonoBehaviour
     }
 
 
-    //-------------------------------------------------
     public void HideAllButtonHints()
     {
         Clear();
@@ -288,10 +252,9 @@ public class VrButtonHighlight : MonoBehaviour
     }
 
 
-    //-------------------------------------------------
     public void HideButtonHint(params ISteamVR_Action_In_Source[] actions)
     {
-        var baseColor = usingMaterial.GetColor(colorID);
+        var baseColor = UsingMaterial.GetColor(colorID);
         for (var i = 0; i < actions.Length; i++)
             if (actionHintInfos.ContainsKey(actions[i]))
             {
@@ -306,21 +269,17 @@ public class VrButtonHighlight : MonoBehaviour
         if (flashingRenderers.Count == 0) renderModel.gameObject.SetActive(false);
     }
 
-    //-------------------------------------------------
-    private bool IsButtonHintActive(ISteamVR_Action_In_Source action)
+    public bool IsButtonHintActive(ISteamVR_Action_In_Source action)
     {
-        if (actionHintInfos.ContainsKey(action))
-        {
-            var hintInfo = actionHintInfos[action];
-            foreach (var buttonRenderer in hintInfo.renderers)
-                if (flashingRenderers.Contains(buttonRenderer))
-                    return true;
-        }
+        if (!actionHintInfos.ContainsKey(action)) return false;
+        var hintInfo = actionHintInfos[action];
+        foreach (var buttonRenderer in hintInfo.renderers)
+            if (flashingRenderers.Contains(buttonRenderer))
+                return true;
 
         return false;
     }
 
-    //-------------------------------------------------
     private void Clear()
     {
         renderers.Clear();
