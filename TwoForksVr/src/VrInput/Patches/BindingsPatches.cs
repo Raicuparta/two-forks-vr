@@ -174,15 +174,6 @@ namespace TwoForksVr.VrInput.Patches
 		    return valueSign * Mathf.InverseLerp(innerDeadzone, 1f - outerDeadzone, absoluteValue);
         }
 
-        
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgKeyBind), nameof(vgKeyBind.TriggerCommand))]
-        private static bool SkipDefaultCommands()
-        {
-            return false;
-        }
-
-
         // Todo this shouldnt be here I guess.
         private static string currentButtonDisplay;
         
