@@ -11,6 +11,7 @@ namespace TwoForksVr.PlayerBody
         private vgPlayerNavigationController navigationController;
         private Vector3 prevCameraPosition;
         private Vector3 prevForward;
+        private Transform henryTransform;
 
         private void Start()
         {
@@ -33,6 +34,7 @@ namespace TwoForksVr.PlayerBody
             var instance = characterController.gameObject.AddComponent<RoomScaleBodyTransform>();
             instance.cameraTransform = camera.transform;
             instance.characterController = characterController;
+            instance.henryTransform = characterController.transform.Find("henry");
             instance.navigationController = characterController.GetComponentInChildren<vgPlayerNavigationController>();
         }
 
@@ -74,9 +76,7 @@ namespace TwoForksVr.PlayerBody
             var cameraForward = GetCameraForward();
             var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
             prevForward = cameraForward;
-            characterController.transform.Rotate(Vector3.up, angleDelta);
-
-            VrStage.Instance.RecenterRotation();
+            henryTransform.Rotate(Vector3.up, angleDelta);
         }
     }
 }
