@@ -12,11 +12,24 @@ namespace TwoForksVr.VrInput.Patches
         // Todo this shouldnt be here I guess.
         private static string currentButtonDisplay;
         
+        private static void ResetPrompt()
+        {
+            currentButtonDisplay = "";
+            VrStage.Instance.HighlightButton();
+        }
+        
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.UpdateButtonText))]
-        private static bool TriggerControllerButtonHighlight(string buttonDisplay, TextMeshProUGUI buttonText)
+        private static bool TriggerControllerButtonHighlight(vgHudManager __instance, string buttonDisplay, TextMeshProUGUI buttonText)
         {
+            if (__instance.currentTarget && !__instance.currentTarget.ShouldDisplayDetail())
+            {
+                ResetPrompt();
+                return false;
+            }
+
             if (buttonDisplay == currentButtonDisplay) return false;
+            
             currentButtonDisplay = buttonDisplay;
 
             var virtualKey = buttonDisplay.Trim('[', ']');
@@ -50,8 +63,7 @@ namespace TwoForksVr.VrInput.Patches
         {
             if (!buttonText.gameObject.activeSelf) return false;
             buttonText.gameObject.SetActive(false);
-            currentButtonDisplay = "";
-            VrStage.Instance.HighlightButton();
+            ResetPrompt();
             return false;
         }
 
