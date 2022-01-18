@@ -153,7 +153,6 @@ namespace TwoForksVr.VrInput.Patches
         private static bool FixForwardMovement(vgPlayerController __instance, float axisValue)
         {
             __instance.forwardInput = ProcessAxisValue(axisValue);
-            Logs.LogInfo($"## Forward movement {__instance.forwardInput}");
             return false;
         }
         
@@ -173,6 +172,15 @@ namespace TwoForksVr.VrInput.Patches
 		    var absoluteValue = Mathf.Abs(value);
 		    return valueSign * Mathf.InverseLerp(innerDeadzone, 1f - outerDeadzone, absoluteValue);
         }
+
+        
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgKeyBind), nameof(vgKeyBind.TriggerCommand))]
+        private static bool IgnoreDefaultAxisInputs(string command)
+        {
+            return !vector2XActionMap.ContainsKey(command) && !vector2YActionMap.ContainsKey(command);
+        }
+
 
         // Todo this shouldnt be here I guess.
         private static string currentButtonDisplay;
