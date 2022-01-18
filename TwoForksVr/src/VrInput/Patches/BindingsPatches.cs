@@ -194,6 +194,8 @@ namespace TwoForksVr.VrInput.Patches
                     VrStage.Instance.HighlightButton(action);
                     buttonText.text = action.GetLocalizedOriginPart(SteamVR_Input_Sources.Any, EVRInputStringBits.VRInputString_InputSource);
                     buttonText.gameObject.SetActive(true);
+                    // Doing it only for the first command that works, not sure if that canb e a problem.
+                    break;
                 }
             }
 
