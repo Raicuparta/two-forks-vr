@@ -178,7 +178,6 @@ namespace TwoForksVr.VrInput.Patches
             currentButtonDisplay = buttonDisplay;
 
             var virtualKey = buttonDisplay.Trim('[', ']');
-            Logs.LogInfo($"## virtualKey ${virtualKey}");
             vgInputManager.Instance.virtualKeyKeyBindMap.TryGetValue(virtualKey, out var keyBind);
 
             if (keyBind == null)
@@ -189,7 +188,6 @@ namespace TwoForksVr.VrInput.Patches
             
             foreach (var command in keyBind.commands)
             {
-                Logs.LogInfo($"## command ${command.command}");
                 booleanActionMap.TryGetValue(command.command, out var action);
                 if (action != null)
                 {
@@ -209,7 +207,6 @@ namespace TwoForksVr.VrInput.Patches
             if (!buttonText.gameObject.activeSelf) return false;
             buttonText.gameObject.SetActive(false);
             currentButtonDisplay = "";
-            Logs.LogInfo("## StopControllerButtonHighlight");
             VrStage.Instance.HighlightButton();
             return false;
         }
