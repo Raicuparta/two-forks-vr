@@ -66,7 +66,7 @@ public class VrButtonHighlight : MonoBehaviour
     }
 
 
-    public virtual void SetInputSource(SteamVR_Input_Sources newInputSource)
+    public void SetInputSource(SteamVR_Input_Sources newInputSource)
     {
         inputSource = newInputSource;
         if (renderModel != null)
