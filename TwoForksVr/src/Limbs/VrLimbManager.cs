@@ -50,7 +50,16 @@ namespace TwoForksVr.Limbs
 
         public void HighlightButton(params ISteamVR_Action_In_Source[] actions)
         {
-            leftHand.ButtonHighlight.ShowButtonHint(actions);
+            if (actions.Length == 0)
+            {
+                leftHand.ButtonHighlight.HideAllButtonHints();
+                rightHand.ButtonHighlight.HideAllButtonHints();
+            }
+            else
+            {
+                leftHand.ButtonHighlight.ShowButtonHint(actions);
+                rightHand.ButtonHighlight.ShowButtonHint(actions);
+            }
         }
 
         private static Material GetArmsMaterial(Transform playerTransform)

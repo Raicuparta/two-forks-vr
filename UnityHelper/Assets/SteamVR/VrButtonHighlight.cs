@@ -347,7 +347,7 @@ public class VrButtonHighlight : MonoBehaviour
 
 
     //-------------------------------------------------
-    private void HideAllButtonHints()
+    public void HideAllButtonHints()
     {
         Clear();
 
@@ -357,7 +357,7 @@ public class VrButtonHighlight : MonoBehaviour
 
 
     //-------------------------------------------------
-    private void HideButtonHint(params ISteamVR_Action_In_Source[] actions)
+    public void HideButtonHint(params ISteamVR_Action_In_Source[] actions)
     {
         var baseColor = usingMaterial.GetColor(colorID);
         for (var i = 0; i < actions.Length; i++)
