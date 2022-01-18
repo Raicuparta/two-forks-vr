@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
 using Valve.VR.InteractionSystem;
+
 // ReSharper disable MemberCanBePrivate.Global
 
 public class VrButtonHighlight : MonoBehaviour
@@ -21,12 +22,10 @@ public class VrButtonHighlight : MonoBehaviour
     private float startTime;
     private Transform textHintParent;
     private float tickCount;
+
     public Material UsingMaterial
     {
-        get
-        {
-            return controllerMaterial;
-        }
+        get { return controllerMaterial; }
     }
 
     public bool Initialized { get; private set; }
@@ -48,15 +47,9 @@ public class VrButtonHighlight : MonoBehaviour
         flash = Util.RemapNumberClamped(flash, -1.0f, 1.0f, 0.0f, 1.0f);
 
         var ticks = Time.realtimeSinceStartup - startTime;
-        if (ticks - tickCount > 1.0f)
-        {
-            tickCount += 1.0f;
-        }
+        if (ticks - tickCount > 1.0f) tickCount += 1.0f;
 
-        foreach (var r in flashingRenderers)
-        {
-            r.material.SetColor(colorID, Color.Lerp(baseColor, flashColor, flash));
-        }
+        foreach (var r in flashingRenderers) r.material.SetColor(colorID, Color.Lerp(baseColor, flashColor, flash));
     }
 
 
@@ -112,25 +105,18 @@ public class VrButtonHighlight : MonoBehaviour
 
         var renderModels = OpenVR.RenderModels;
         if (renderModels != null)
-        {
             for (var childIndex = 0; childIndex < initRenderModel.transform.childCount; childIndex++)
             {
                 var child = initRenderModel.transform.GetChild(childIndex);
 
-                if (!componentTransformMap.ContainsKey(child.name))
-                {
-                    componentTransformMap.Add(child.name, child);
-                }
+                if (!componentTransformMap.ContainsKey(child.name)) componentTransformMap.Add(child.name, child);
             }
-        }
 
         actionHintInfos = new Dictionary<ISteamVR_Action_In_Source, ActionHintInfo>();
 
         foreach (var action in SteamVR_Input.actionsNonPoseNonSkeletonIn)
-        {
             if (action.GetActive(inputSource))
                 CreateAndAddButtonInfo(action, inputSource);
-        }
 
         Initialized = true;
 
