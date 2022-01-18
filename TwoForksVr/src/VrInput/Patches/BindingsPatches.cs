@@ -194,7 +194,7 @@ namespace TwoForksVr.VrInput.Patches
                 if (action != null)
                 {
                     VrStage.Instance.HighlightButton(action);
-                    buttonText.text = action.localizedOriginName;
+                    buttonText.text = action.GetLocalizedOriginPart(SteamVR_Input_Sources.Any, EVRInputStringBits.VRInputString_InputSource);
                     buttonText.gameObject.SetActive(true);
                 }
             }
