@@ -172,6 +172,7 @@ namespace TwoForksVr.VrInput.Patches
         {
             if (!buttonText.text.IsNullOrWhiteSpace()) return;
 
+            // todo handle missing stuff, keys not found, etc.
             var virtualKey = buttonDisplay.Trim('[', ']');
             var keyBind = vgInputManager.Instance.virtualKeyKeyBindMap[virtualKey];
             var inputActions = keyBind.commands.Select(command => booleanActionMap[command.command]);
