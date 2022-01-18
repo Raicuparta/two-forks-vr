@@ -166,30 +166,39 @@ namespace TwoForksVr.VrInput.Patches
             return false;
         }
 
+
+        // Todo this shouldnt be here I guess.
+        private static string currentButtonDisplay;
         
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.UpdateButtonText))]
-        private static void TriggerControllerButtonHighlight(string buttonDisplay, TextMeshProUGUI buttonText)
+        private static bool TriggerControllerButtonHighlight(string buttonDisplay, TextMeshProUGUI buttonText)
         {
-            if (!buttonText.text.IsNullOrWhiteSpace()) return;
+            if (buttonDisplay == currentButtonDisplay) return false;
+            currentButtonDisplay = buttonDisplay;
 
             var virtualKey = buttonDisplay.Trim('[', ']');
+            Logs.LogInfo($"## virtualKey ${virtualKey}");
             vgInputManager.Instance.virtualKeyKeyBindMap.TryGetValue(virtualKey, out var keyBind);
 
             if (keyBind == null)
             {
                 Logs.LogWarning($"Failed to find keyBind for buttonDisplay {buttonDisplay}");
-                return;
+                return false;
             }
             
             foreach (var command in keyBind.commands)
             {
+                Logs.LogInfo($"## command ${command.command}");
                 booleanActionMap.TryGetValue(command.command, out var action);
                 if (action != null)
                 {
                     VrStage.Instance.HighlightButton(action);
+                    buttonText.text = action.localizedOriginName;
                 }
             }
+
+            return false;
         }
         
         [HarmonyPrefix]
@@ -197,6 +206,8 @@ namespace TwoForksVr.VrInput.Patches
         private static void StopControllerButtonHighlight(TextMeshProUGUI buttonText)
         {
             if (!buttonText.gameObject.activeSelf) return;
+            currentButtonDisplay = "";
+            Logs.LogInfo("## StopControllerButtonHighlight");
             VrStage.Instance.HighlightButton();
         }
     }
