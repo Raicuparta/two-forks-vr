@@ -195,6 +195,7 @@ namespace TwoForksVr.VrInput.Patches
                 {
                     VrStage.Instance.HighlightButton(action);
                     buttonText.text = action.localizedOriginName;
+                    buttonText.gameObject.SetActive(true);
                 }
             }
 
@@ -203,12 +204,14 @@ namespace TwoForksVr.VrInput.Patches
         
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.ClearButtonText))]
-        private static void StopControllerButtonHighlight(TextMeshProUGUI buttonText)
+        private static bool StopControllerButtonHighlight(TextMeshProUGUI buttonText)
         {
-            if (!buttonText.gameObject.activeSelf) return;
+            if (!buttonText.gameObject.activeSelf) return false;
+            buttonText.gameObject.SetActive(false);
             currentButtonDisplay = "";
             Logs.LogInfo("## StopControllerButtonHighlight");
             VrStage.Instance.HighlightButton();
+            return false;
         }
     }
 }
