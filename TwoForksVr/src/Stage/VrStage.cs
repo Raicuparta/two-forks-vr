@@ -92,11 +92,6 @@ namespace TwoForksVr.Stage
             cameraManager.Recenter(recenterVertically);
         }
 
-        public void RecenterRotation()
-        {
-            cameraManager.RecenterRotation();
-        }
-
         public void HighlightButton(params ISteamVR_Action_In_Source[] actions)
         {
             limbManager.HighlightButton(actions);
