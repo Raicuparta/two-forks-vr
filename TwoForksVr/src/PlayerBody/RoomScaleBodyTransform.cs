@@ -6,6 +6,9 @@ namespace TwoForksVr.PlayerBody
 {
     public class RoomScaleBodyTransform : MonoBehaviour
     {
+        private const float minPositionOffset = 0.00001f;
+        private const float maxPositionOffset = 1f;
+
         private Transform cameraTransform;
         private CharacterController characterController;
         private vgPlayerNavigationController navigationController;
@@ -45,11 +48,11 @@ namespace TwoForksVr.PlayerBody
 
             var worldPositionDelta = VrStage.Instance.transform.TransformVector(localPositionDelta);
 
-            if (worldPositionDelta.sqrMagnitude < 0.00001f || !navigationController.onGround || !navigationController.enabled) return;
+            if (worldPositionDelta.sqrMagnitude < minPositionOffset || !navigationController.onGround || !navigationController.enabled) return;
 
             prevCameraPosition = cameraPosition;
             
-            if (worldPositionDelta.sqrMagnitude > 1f) return;
+            if (worldPositionDelta.sqrMagnitude > maxPositionOffset) return;
 
             var groundedPositionDelta = Vector3.ProjectOnPlane(worldPositionDelta, navigationController.groundNormal);
 
