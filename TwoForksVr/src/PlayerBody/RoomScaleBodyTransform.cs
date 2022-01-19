@@ -10,12 +10,10 @@ namespace TwoForksVr.PlayerBody
         private CharacterController characterController;
         private vgPlayerNavigationController navigationController;
         private Vector3 prevCameraPosition;
-        private Vector3 prevForward;
         private Transform henryTransform;
 
         private void Start()
         {
-            prevForward = GetCameraForward();
             prevCameraPosition = cameraTransform.position;
         }
 
@@ -36,11 +34,6 @@ namespace TwoForksVr.PlayerBody
             instance.characterController = characterController;
             instance.henryTransform = characterController.transform.Find("henry");
             instance.navigationController = characterController.GetComponentInChildren<vgPlayerNavigationController>();
-        }
-
-        private Vector3 GetCameraForward()
-        {
-            return cameraTransform.parent.InverseTransformDirection(MathHelper.GetProjectedForward(cameraTransform));
         }
 
         private void UpdateRoomScalePosition()
@@ -70,12 +63,14 @@ namespace TwoForksVr.PlayerBody
 
         private void UpdateRotation()
         {
-            if (!navigationController.onGround || !navigationController.enabled) return;
+            if (!navigationController.onGround || !navigationController.enabled)
+            {
+                henryTransform.localRotation = Quaternion.identity;
+                return;
+            };
 
-            var cameraForward = GetCameraForward();
-            var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
-            prevForward = cameraForward;
-            henryTransform.Rotate(Vector3.up, angleDelta);
+            var cameraForward = MathHelper.GetProjectedForward(cameraTransform);
+            henryTransform.rotation = Quaternion.LookRotation(cameraForward, Vector3.up);
         }
     }
 }
