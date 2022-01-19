@@ -45,11 +45,11 @@ namespace TwoForksVr.PlayerBody
 
             var worldPositionDelta = VrStage.Instance.transform.TransformVector(localPositionDelta);
 
-            if (worldPositionDelta.sqrMagnitude < 0.00001f || !navigationController.onGround) return;
+            if (worldPositionDelta.sqrMagnitude < 0.00001f || !navigationController.onGround || !navigationController.enabled) return;
 
             prevCameraPosition = cameraPosition;
             
-            if (worldPositionDelta.sqrMagnitude > 1f || !navigationController.enabled) return;
+            if (worldPositionDelta.sqrMagnitude > 1f) return;
 
             var groundedPositionDelta = Vector3.ProjectOnPlane(worldPositionDelta, navigationController.groundNormal);
 
