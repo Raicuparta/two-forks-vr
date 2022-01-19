@@ -15,6 +15,7 @@ namespace TwoForksVr.Limbs
         {
             var handName = isLeft ? "Left" : "Right";
             var transform = Instantiate(isLeft ? VrAssetLoader.LeftHandPrefab : VrAssetLoader.RightHandPrefab, parent, false).transform;
+            LayerHelper.SetLayerRecursive(transform.gameObject, GameLayer.UI);
             transform.name = $"{handName}Hand";
             var instance = transform.gameObject.AddComponent<VrHand>();
             instance.handName = handName;
