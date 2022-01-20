@@ -1,4 +1,3 @@
-using System;
 using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
 using UnityEngine;
@@ -37,12 +36,14 @@ namespace TwoForksVr.PlayerBody
             characterController.transform.Rotate(Vector3.up, SteamVR_Actions._default.Rotate.axis.x * rotationSpeed * Time.deltaTime);
         }
 
-        private void HandlePreCull(Camera cam)
+        private void HandlePreCull(Camera camera)
         {
+            if (camera.transform != cameraTransform) return;
+
             UpdateRotation();
             UpdateRoomScalePosition();
             Recenter();
-            FakeParenting.InvokeEvent();
+            FakeParenting.InvokeUpdate();
         }
 
         public static void Create(CharacterController characterController, Camera camera)

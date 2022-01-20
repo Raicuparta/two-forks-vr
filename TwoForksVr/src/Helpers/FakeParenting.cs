@@ -1,37 +1,32 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TwoForksVr.Helpers
 {
-    public delegate void MyEventHandler();
+    public delegate void UpdateEventHandler();
 
     // This component is useful when we need to simulate object parenting,
     // without actually changing the hierarchy.
+    // TODO: this is confusing, the update is being called from RoomScaleBodyTransform,
+    // to make sure it happens after body movement and rotation.
     public class FakeParenting : MonoBehaviour
     {
         public Transform Target;
         
-        public static event MyEventHandler MyEvent;
+        public static event UpdateEventHandler UpdateEvent;
 
         private void Awake()
         {
-            MyEvent += HandlePreCull;
+            UpdateEvent += UpdateTransform;
         }
 
         private void OnDestroy()
         {
-            MyEvent -= HandlePreCull;
+            UpdateEvent -= UpdateTransform;
         }
 
-        public static void InvokeEvent()
+        public static void InvokeUpdate()
         {
-            MyEvent?.Invoke();
-        }
-
-        private void HandlePreCull()
-        {
-            // TODO: ignore other cameras
-            UpdateTransform();
+            UpdateEvent?.Invoke();
         }
 
         private void UpdateTransform()
