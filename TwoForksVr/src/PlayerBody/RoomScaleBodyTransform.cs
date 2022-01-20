@@ -9,6 +9,7 @@ namespace TwoForksVr.PlayerBody
     {
         private const float minPositionOffset = 0.00001f;
         private const float maxPositionOffset = 1f;
+        private const float rotationSpeed = 150f; // TODO make this configurable.
 
         private Transform cameraTransform;
         private CharacterController characterController;
@@ -27,8 +28,6 @@ namespace TwoForksVr.PlayerBody
         {
             Camera.onPreCull -= HandlePreCull;
         }
-
-        public float rotationSpeed = 200f;
 
         private void Update()
         {
