@@ -13,8 +13,6 @@ namespace TwoForksVr.PlayerCamera.Patches
         [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.ApplyPostAnimationTransform))]
         [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdateFOV))]
         [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdateClipPlaneOffset))]
-        [HarmonyPatch(typeof(vgCameraTargetSource), nameof(vgCameraTargetSource.UpdateLookAt))]
-        [HarmonyPatch(typeof(vgCameraTargetSource), nameof(vgCameraTargetSource.UpdateAnimation))]
         private static bool DisableCameraModifications()
         {
             return false;
