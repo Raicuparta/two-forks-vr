@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using TwoForksVr.PlayerBody;
+using UnityEngine;
 
 namespace TwoForksVr.Helpers
 {
@@ -22,6 +24,12 @@ namespace TwoForksVr.Helpers
         private void OnDestroy()
         {
             UpdateEvent -= UpdateTransform;
+        }
+
+        private void LateUpdate()
+        {
+            if (RoomScaleBodyTransform.Instance) return;
+            UpdateTransform();
         }
 
         public static void InvokeUpdate()

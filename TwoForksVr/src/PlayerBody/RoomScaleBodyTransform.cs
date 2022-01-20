@@ -16,9 +16,11 @@ namespace TwoForksVr.PlayerBody
         private vgPlayerNavigationController navigationController;
         private Vector3 prevCameraPosition;
         private Vector3 prevForward;
+        public static RoomScaleBodyTransform Instance { get; private set; } // TODO remove after cleaning up FakeParenting.
 
         private void Start()
         {
+            Instance = this;
             prevForward = GetCameraForward();
             prevCameraPosition = cameraTransform.position;
             Camera.onPreCull += HandlePreCull;
@@ -26,6 +28,7 @@ namespace TwoForksVr.PlayerBody
 
         private void OnDestroy()
         {
+            Instance = null;
             Camera.onPreCull -= HandlePreCull;
         }
 
