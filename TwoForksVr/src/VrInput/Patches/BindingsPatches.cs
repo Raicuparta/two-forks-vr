@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using HarmonyLib;
+using TwoForksVr.Helpers;
 using UnityEngine;
 using Valve.VR;
 
@@ -9,14 +10,20 @@ namespace TwoForksVr.VrInput.Patches
     [HarmonyPatch]
     public static class BindingsPatches
     {
+        private static bool isInitialized;
         private static SteamVR_Input_ActionSet_default actionSet;
         public static Dictionary<string, SteamVR_Action_Boolean> BooleanActionMap { get; private set; }
         public static Dictionary<string, SteamVR_Action_Boolean> InvertedBooleanActionMap { get; private set; }
         public static Dictionary<string, SteamVR_Action_Vector2> Vector2XActionMap { get; private set; }
         public static Dictionary<string, SteamVR_Action_Vector2> Vector2YActionMap { get; private set; }
 
-        private static void Initialize()
+        public static void Initialize()
         {
+            if (isInitialized) return;
+            isInitialized = true;
+            
+            Logs.LogInfo("## Initializing Bindings Patches");
+            
             actionSet = SteamVR_Actions._default;
             BooleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>
             {
@@ -75,15 +82,15 @@ namespace TwoForksVr.VrInput.Patches
                 entry.Value.onChange += (action, source, state) =>
                 {
                     if (state) return;
-                    TriggerCommand(entry.Key, 1);
+                    TriggerCommand(entry.Key, 1, true);
                 };
         }
-        
-        private static void TriggerCommand(string command, float axisValue)
+
+        private static void TriggerCommand(string command, float axisValue, bool forceAllowed = false)
         {
             if (!vgInputManager.Instance || vgInputManager.Instance.commandCallbackMap == null) return;
 
-            if (!IsCommandAllowed(command)) return;
+            if (!forceAllowed && !IsCommandAllowed(command)) return;
 
             var commandCallbackMap = vgInputManager.Instance.commandCallbackMap;
             if (!vgInputManager.Instance.flushCommands &&
@@ -98,16 +105,6 @@ namespace TwoForksVr.VrInput.Patches
                     return true;
 
             return false;
-        }
-
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgAxisData), nameof(vgAxisData.Update))]
-        private static void ReadAxisValuesFromSteamVR(vgAxisData __instance)
-        {
-            if (!SteamVR_Input.initialized) return;
-
-            // TODO move this elsewhere.
-            if (actionSet == null) Initialize();
         }
 
         [HarmonyPrefix]
