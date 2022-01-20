@@ -30,6 +30,7 @@ namespace TwoForksVr.PlayerCamera.Patches
     [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdateCameraStack))]
 	private static bool UpdateCameraStack(vgCameraController __instance)
 	{
+		__instance.transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(__instance.transform.forward, Vector3.up), Vector3.up);
 		return false;
 		if (__instance.debugCameraModes)
 		{

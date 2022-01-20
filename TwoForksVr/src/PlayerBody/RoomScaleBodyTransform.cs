@@ -2,6 +2,7 @@ using System;
 using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
 using UnityEngine;
+using Valve.VR;
 
 namespace TwoForksVr.PlayerBody
 {
@@ -31,11 +32,19 @@ namespace TwoForksVr.PlayerBody
             Camera.onPreCull -= HandlePreCull;
         }
 
+        public float rotationSpeed = 200f;
+
+        private void Update()
+        {
+            if (!navigationController.onGround || !navigationController.enabled) return;
+            characterController.transform.Rotate(Vector3.up, SteamVR_Actions._default.Rotate.axis.x * rotationSpeed * Time.deltaTime);
+        }
+
         private void HandlePreCull(Camera cam)
         {
             UpdateRotation();
             UpdateRoomScalePosition();
-            VrStage.Instance.Recenter();
+            // VrStage.Instance.Recenter();
             FakeParenting.InvokeEvent();
         }
 
@@ -104,6 +113,7 @@ namespace TwoForksVr.PlayerBody
             prevForward = cameraForward;
             characterController.transform.Rotate(Vector3.up, angleDelta);
             
+            VrStage.Instance.Recenter();
             // VrStage.Instance.transform.RotateAround(characterController.transform.position, Vector3.up, -angleDelta);
         }
     }
