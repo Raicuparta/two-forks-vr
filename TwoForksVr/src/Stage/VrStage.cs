@@ -34,9 +34,9 @@ namespace TwoForksVr.Stage
                 "The VR Stage is being disabled. This should never happen. Check the call stack of this error to find the culprit.");
         }
 
-        public static VrStage Create(Transform parent)
+        public static void Create(Transform parent)
         {
-            if (Instance) return Instance;
+            if (Instance) return;
             var stageParent = new GameObject("VrStageParent")
             {
                 // Apparently Firewatch will destroy all DontDrestroyOnLoad objects between scenes,
@@ -63,7 +63,7 @@ namespace TwoForksVr.Stage
 
             Instance.gameObject.AddComponent<GeneralDebugger>();
             
-            return Instance;
+            return;
         }
 
         public void SetUp(Camera camera, Transform playerTransform)

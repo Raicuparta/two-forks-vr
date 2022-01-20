@@ -1,6 +1,7 @@
 using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
 using UnityEngine;
+using Valve.VR;
 
 namespace TwoForksVr.PlayerBody
 {
@@ -8,22 +9,40 @@ namespace TwoForksVr.PlayerBody
     {
         private const float minPositionOffset = 0.00001f;
         private const float maxPositionOffset = 1f;
+        private const float rotationSpeed = 150f; // TODO make this configurable.
 
         private Transform cameraTransform;
         private CharacterController characterController;
         private vgPlayerNavigationController navigationController;
         private Vector3 prevCameraPosition;
-        private Transform henryTransform;
+        private Vector3 prevForward;
 
         private void Start()
         {
+            prevForward = GetCameraForward();
             prevCameraPosition = cameraTransform.position;
+            Camera.onPreCull += HandlePreCull;
+        }
+
+        private void OnDestroy()
+        {
+            Camera.onPreCull -= HandlePreCull;
         }
 
         private void Update()
         {
-            UpdateRoomScalePosition();
+            if (!navigationController.onGround || !navigationController.enabled) return;
+            characterController.transform.Rotate(Vector3.up, SteamVR_Actions._default.Rotate.axis.x * rotationSpeed * Time.deltaTime);
+        }
+
+        private void HandlePreCull(Camera camera)
+        {
+            if (camera.transform != cameraTransform) return;
+
             UpdateRotation();
+            UpdateRoomScalePosition();
+            Recenter();
+            FakeParenting.InvokeUpdate();
         }
 
         public static void Create(CharacterController characterController, Camera camera)
@@ -35,7 +54,6 @@ namespace TwoForksVr.PlayerBody
             var instance = characterController.gameObject.AddComponent<RoomScaleBodyTransform>();
             instance.cameraTransform = camera.transform;
             instance.characterController = characterController;
-            instance.henryTransform = characterController.transform.Find("henry");
             instance.navigationController = characterController.GetComponentInChildren<vgPlayerNavigationController>();
         }
 
@@ -60,20 +78,26 @@ namespace TwoForksVr.PlayerBody
 
             // TODO This probably breaks stuff elsewhere.
             navigationController.positionLastFrame = transform.position;
-
-            VrStage.Instance.transform.position -= groundedPositionDelta;
         }
-
+        
+        private Vector3 GetCameraForward()
+        {
+            return cameraTransform.parent.InverseTransformDirection(MathHelper.GetProjectedForward(cameraTransform));
+        }
+        
         private void UpdateRotation()
         {
-            if (!navigationController.onGround || !navigationController.enabled)
-            {
-                henryTransform.localRotation = Quaternion.identity;
-                return;
-            };
+            if (!navigationController.onGround || !navigationController.enabled) return;
+            var cameraForward = GetCameraForward();
+            var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
+            prevForward = cameraForward;
+            characterController.transform.Rotate(Vector3.up, angleDelta);
+        }
 
-            var cameraForward = MathHelper.GetProjectedForward(cameraTransform);
-            henryTransform.rotation = Quaternion.LookRotation(cameraForward, Vector3.up);
+        private void Recenter()
+        {
+            if (!navigationController.onGround || !navigationController.enabled) return;
+            VrStage.Instance.Recenter();
         }
     }
 }
