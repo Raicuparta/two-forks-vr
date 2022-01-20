@@ -13,17 +13,11 @@ namespace TwoForksVr.PlayerCamera.Patches
         [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.ApplyPostAnimationTransform))]
         [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdateFOV))]
         [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdateClipPlaneOffset))]
+        [HarmonyPatch(typeof(vgCameraTargetSource), nameof(vgCameraTargetSource.UpdateLookAt))]
+        [HarmonyPatch(typeof(vgCameraTargetSource), nameof(vgCameraTargetSource.UpdateAnimation))]
         private static bool DisableCameraModifications()
         {
             return false;
-        }
-
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdateCameraStack))]
-	    private static bool UpdateCameraStack(vgCameraController __instance)
-	    {
-		    __instance.transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(__instance.transform.forward, Vector3.up), Vector3.up);
-		    return false;
         }
 
         [HarmonyPrefix]
@@ -33,15 +27,6 @@ namespace TwoForksVr.PlayerCamera.Patches
             // If I always disable this method, it will break the camera position.
             // Since it was only broken while paused, I'm disabling it only in that scenario.
             return Time.timeScale != 0;
-        }
-        
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdatePosition))]
-        private static bool DisableCameraRotation(vgCameraController __instance)
-        {
-            __instance.transform.position = __instance.eyeTransform.position;
-            
-            return false;
         }
     }
 }
