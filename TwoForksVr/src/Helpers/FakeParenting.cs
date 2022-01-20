@@ -3,29 +3,34 @@ using UnityEngine;
 
 namespace TwoForksVr.Helpers
 {
+    public delegate void MyEventHandler();
+
     // This component is useful when we need to simulate object parenting,
     // without actually changing the hierarchy.
     public class FakeParenting : MonoBehaviour
     {
         public Transform Target;
+        
+        public static event MyEventHandler MyEvent;
 
         private void Awake()
         {
-            Camera.onPreCull += HandlePreCull;
+            MyEvent += HandlePreCull;
         }
 
         private void OnDestroy()
         {
-            Camera.onPreCull -= HandlePreCull;
+            MyEvent -= HandlePreCull;
         }
 
-        private void HandlePreCull(Camera cam)
+        public static void InvokeEvent()
         {
-            UpdateTransform();
+            MyEvent?.Invoke();
         }
 
-        private void LateUpdate()
+        private void HandlePreCull()
         {
+            // TODO: ignore other cameras
             UpdateTransform();
         }
 
