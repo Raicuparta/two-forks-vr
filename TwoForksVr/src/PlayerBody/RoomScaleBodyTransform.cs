@@ -15,13 +15,10 @@ namespace TwoForksVr.PlayerBody
         private CharacterController characterController;
         private vgPlayerNavigationController navigationController;
         private Vector3 prevCameraPosition;
-        private Transform henryTransform;
-
-        public static RoomScaleBodyTransform Instance;
+        private Vector3 prevForward;
 
         private void Start()
         {
-            Instance = this;
             prevForward = GetCameraForward();
             prevCameraPosition = cameraTransform.position;
             Camera.onPreCull += HandlePreCull;
@@ -44,7 +41,7 @@ namespace TwoForksVr.PlayerBody
         {
             UpdateRotation();
             UpdateRoomScalePosition();
-            // VrStage.Instance.Recenter();
+            Recenter();
             FakeParenting.InvokeEvent();
         }
 
@@ -57,11 +54,10 @@ namespace TwoForksVr.PlayerBody
             var instance = characterController.gameObject.AddComponent<RoomScaleBodyTransform>();
             instance.cameraTransform = camera.transform;
             instance.characterController = characterController;
-            instance.henryTransform = characterController.transform.Find("henry");
             instance.navigationController = characterController.GetComponentInChildren<vgPlayerNavigationController>();
         }
 
-        public void UpdateRoomScalePosition()
+        private void UpdateRoomScalePosition()
         {
             var cameraPosition = cameraTransform.localPosition;
 
@@ -82,39 +78,26 @@ namespace TwoForksVr.PlayerBody
 
             // TODO This probably breaks stuff elsewhere.
             navigationController.positionLastFrame = transform.position;
-
-            VrStage.Instance.transform.position -= groundedPositionDelta;
         }
-
-        // private void UpdateRotation()
-        // {
-        //     if (!navigationController.onGround || !navigationController.enabled)
-        //     {
-        //         henryTransform.localRotation = Quaternion.identity;
-        //         return;
-        //     };
-        //
-        //     var cameraForward = MathHelper.GetProjectedForward(cameraTransform);
-        //     henryTransform.rotation = Quaternion.LookRotation(cameraForward, Vector3.up);
-        // }
         
         private Vector3 GetCameraForward()
         {
             return cameraTransform.parent.InverseTransformDirection(MathHelper.GetProjectedForward(cameraTransform));
         }
-
-        private Vector3 prevForward;
         
-        public void UpdateRotation()
+        private void UpdateRotation()
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
             var cameraForward = GetCameraForward();
             var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
             prevForward = cameraForward;
             characterController.transform.Rotate(Vector3.up, angleDelta);
-            
+        }
+
+        private void Recenter()
+        {
+            if (!navigationController.onGround || !navigationController.enabled) return;
             VrStage.Instance.Recenter();
-            // VrStage.Instance.transform.RotateAround(characterController.transform.position, Vector3.up, -angleDelta);
         }
     }
 }
