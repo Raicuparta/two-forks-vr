@@ -35,6 +35,7 @@ namespace TwoForksVr.PlayerBody
         {
             UpdateRotation();
             UpdateRoomScalePosition();
+            VrStage.Instance.Recenter();
             FakeParenting.InvokeEvent();
         }
 
@@ -102,7 +103,6 @@ namespace TwoForksVr.PlayerBody
             var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
             prevForward = cameraForward;
             characterController.transform.Rotate(Vector3.up, angleDelta);
-            VrStage.Instance.Recenter();
             
             // VrStage.Instance.transform.RotateAround(characterController.transform.position, Vector3.up, -angleDelta);
         }

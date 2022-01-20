@@ -30,6 +30,7 @@ namespace TwoForksVr.PlayerCamera.Patches
     [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdateCameraStack))]
 	private static bool UpdateCameraStack(vgCameraController __instance)
 	{
+		return false;
 		if (__instance.debugCameraModes)
 		{
 			if (__instance.debugText == null)
@@ -189,6 +190,9 @@ namespace TwoForksVr.PlayerCamera.Patches
 		else
 		{
 			__instance.transform.rotation *= rhs2;
+			__instance.transform.rotation =
+				Quaternion.LookRotation(Vector3.ProjectOnPlane(__instance.transform.forward, Vector3.up), Vector3.up);
+			// __instance.transform.up = Vector3.up;
 		}
 		float num = __instance.transform.rotation.eulerAngles.x;
 		num = vgMath.WrapAngle(num);
