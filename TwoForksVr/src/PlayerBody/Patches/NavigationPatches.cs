@@ -1,4 +1,7 @@
-﻿using HarmonyLib;
+﻿using System;
+using System.Reflection;
+using HarmonyLib;
+using TwoForksVr.Helpers;
 using UnityEngine;
 
 namespace TwoForksVr.PlayerBody.Patches
@@ -28,6 +31,17 @@ namespace TwoForksVr.PlayerBody.Patches
             __instance.playerRotationSpringConstant = 0;
             __instance.playerRotationDamping = 0;
             __instance.largestAllowedYawDelta = 0;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgPlayerMover), nameof(vgPlayerMover.StartMoveTo))]
+        public static void MovePlayerInstantly(vgPlayerMover __instance, GameObject player)
+        {
+            if (player == null || player.tag != "Player") return;
+            
+            var goalLocation = __instance.GetGoalLocation();
+			goalLocation.y = player.transform.position.y;
+            player.GetComponent<CharacterController>().Move(goalLocation - player.transform.position);
         }
     }
 }
