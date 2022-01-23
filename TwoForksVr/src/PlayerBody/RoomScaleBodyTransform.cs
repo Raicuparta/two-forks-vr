@@ -38,9 +38,6 @@ namespace TwoForksVr.PlayerBody
         private void Update()
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
-
-            
-                // UpdateSnapTurning();
             
             if (VrSettings.SnapTurning.Value)
             {
@@ -55,7 +52,7 @@ namespace TwoForksVr.PlayerBody
         private void SnapTurn(float angle)
         {
             characterController.transform.Rotate(Vector3.up, angle);
-            Invoke(nameof(EndSnap), 0.1f);
+            Invoke(nameof(EndSnap), FadeOverlay.Duration);
         }
 
         private void SnapTurnLeft()
@@ -78,12 +75,12 @@ namespace TwoForksVr.PlayerBody
             if (SteamVR_Actions.default_SnapTurnLeft.stateDown)
             {
                 FadeOverlay.Instance.FadeToBlack();
-                Invoke(nameof(SnapTurnLeft), 0.1f);
+                Invoke(nameof(SnapTurnLeft), FadeOverlay.Duration);
             }
             if (SteamVR_Actions.default_SnapTurnRight.stateDown)
             {
                 FadeOverlay.Instance.FadeToBlack();
-                Invoke(nameof(SnapTurnRight), 0.1f);
+                Invoke(nameof(SnapTurnRight), FadeOverlay.Duration);
             }
         }
 

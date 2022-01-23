@@ -27,18 +27,6 @@ namespace TwoForksVr.Stage
         private void Update()
         {
             if (!FallbackCamera.enabled && !(mainCamera && mainCamera.enabled)) SetUp(null, null);
-
-            if (SteamVR_Actions._default.Grip.state)
-            {
-            if (SteamVR_Actions.default_SnapTurnLeft.stateDown)
-            {
-                fadeOverlay.FadeToBlack();
-            }
-            if (SteamVR_Actions.default_SnapTurnRight.stateDown)
-            {
-                fadeOverlay.FadeToClear();
-            }
-            }
         }
 
         private void OnDisable()

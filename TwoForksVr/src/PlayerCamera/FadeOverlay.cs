@@ -1,4 +1,3 @@
-using System;
 using TwoForksVr.Stage;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,8 +11,7 @@ namespace TwoForksVr.PlayerCamera
         private Image image;
         private float targetAlpha;
         private float alphaLerpT;
-        private const float alphaLerpSpeed = 3f;
-        private const float duration = 0.1f;
+        public const float Duration = 0.1f;
 
         public static FadeOverlay Create(VrStage vrStage)
         {
@@ -50,7 +48,7 @@ namespace TwoForksVr.PlayerCamera
         {
             if (Mathf.Abs(targetAlpha - image.color.a) < 0.01f) return;
             alphaLerpT += Time.unscaledDeltaTime;
-            image.color = new Color(0, 0, 0, Mathf.Lerp(image.color.a, targetAlpha, alphaLerpT/duration));
+            image.color = new Color(0, 0, 0, Mathf.Lerp(image.color.a, targetAlpha, alphaLerpT/Duration));
         }
 
         public void FadeToBlack()

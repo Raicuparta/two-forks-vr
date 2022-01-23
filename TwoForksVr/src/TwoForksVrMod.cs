@@ -1,12 +1,9 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using BepInEx;
 using HarmonyLib;
 using TwoForksVr.Assets;
 using TwoForksVr.Settings;
 using TwoForksVr.VrInput.Patches;
-using UnityEngine;
-using Valve.VR;
 
 namespace TwoForksVr
 {
