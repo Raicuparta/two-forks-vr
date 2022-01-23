@@ -27,7 +27,7 @@ namespace TwoForksVr.Limbs
             if (isLeft)
             {
                 var teleportArc = instance.gameObject.AddComponent<TeleportArc>();
-                teleportArc.traceLayerMask = LayerHelper.GetMask(GameLayer.Terrain);
+                teleportArc.traceLayerMask = LayerHelper.GetMask(GameLayer.Terrain, GameLayer.Default);
                 TeleportArc.hitMarker = instance.transform.Find("teleport-hit-marker");
             }
             

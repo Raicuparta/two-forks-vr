@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 33665087587658718}
   - component: {fileID: 135579509228283174}
   - component: {fileID: 23386961589762860}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: teleport-hit-marker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
