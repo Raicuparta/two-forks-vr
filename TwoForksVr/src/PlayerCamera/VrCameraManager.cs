@@ -25,10 +25,7 @@ namespace TwoForksVr.PlayerCamera
 
         private void Update()
         {
-            if (SteamVR_Actions.default_Recenter.stateDown)
-            {
-                RecenterPosition(true);
-            }
+            if (SteamVR_Actions.default_Recenter.stateDown) Recenter(true);
             UpdateCulling();
         }
 
@@ -69,7 +66,7 @@ namespace TwoForksVr.PlayerCamera
 
         private void RecenterIncludingVertical()
         {
-            RecenterPosition(true);
+            Recenter(true);
         }
 
         private void SetUpCamera()
@@ -120,8 +117,8 @@ namespace TwoForksVr.PlayerCamera
                 return Vector3.zero;
             }
         }
-
-        public void RecenterPosition(bool recenterVertically = false)
+        
+        public void Recenter(bool recenterVertically = false)
         {
             if (!playerTransform || !camera) return;
             var cameraOffset = GetCameraOffset();
@@ -130,10 +127,6 @@ namespace TwoForksVr.PlayerCamera
                 cameraOffset.y = 0;
             }
             transform.position -= cameraOffset;
-        }
-        
-        public void RecenterRotation()
-        {
             var angleOffset = playerTransform.eulerAngles.y - camera.transform.eulerAngles.y;
             transform.RotateAround(playerTransform.position, Vector3.up, angleOffset);
         }

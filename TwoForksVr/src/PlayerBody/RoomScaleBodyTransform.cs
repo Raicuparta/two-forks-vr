@@ -2,7 +2,6 @@ using TwoForksVr.Helpers;
 using TwoForksVr.PlayerCamera;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
-using TwoForksVr.UI;
 using UnityEngine;
 using Valve.VR;
 
@@ -38,7 +37,7 @@ namespace TwoForksVr.PlayerBody
 
         private void Update()
         {
-            if (!navigationController.onGround || !navigationController.enabled || TeleportArc.IsTeleporting()) return;
+            if (!navigationController.onGround || !navigationController.enabled) return;
             
             if (VrSettings.SnapTurning.Value)
             {
@@ -97,11 +96,8 @@ namespace TwoForksVr.PlayerBody
             if (camera.transform != cameraTransform) return;
 
             UpdateRotation();
-            if (!TeleportArc.IsTeleporting())
-            {
-                UpdateRoomScalePosition();
-                Recenter();
-            }
+            UpdateRoomScalePosition();
+            Recenter();
             FakeParenting.InvokeUpdate();
         }
 
@@ -148,27 +144,16 @@ namespace TwoForksVr.PlayerBody
         private void UpdateRotation()
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
-            if (TeleportArc.hitMarker.gameObject.activeInHierarchy)
-            {
-                var targetPoint = TeleportArc.hitMarker.position;
-                targetPoint.y = characterController.transform.position.y;
-                characterController.transform.LookAt(targetPoint, Vector3.up);
-            }
-            else
-            {
-                var cameraForward = GetCameraForward();
-                var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
-                prevForward = cameraForward;
-                characterController.transform.Rotate(Vector3.up, angleDelta);
-            }
+            var cameraForward = GetCameraForward();
+            var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
+            prevForward = cameraForward;
+            characterController.transform.Rotate(Vector3.up, angleDelta);
         }
 
         private void Recenter()
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
-            if (TeleportArc.IsTeleporting()) return;
-            VrStage.Instance.RecenterRotation();
-            VrStage.Instance.RecenterPosition();
+            VrStage.Instance.Recenter();
         }
     }
 }

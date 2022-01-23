@@ -14,7 +14,7 @@ namespace TwoForksVr.PlayerCamera.Patches
         private static void RecenterCamera()
         {
             if (isDone) return;
-            VrStage.Instance.RecenterPosition(true);
+            VrStage.Instance.Recenter(true);
             isDone = true;
         }
 

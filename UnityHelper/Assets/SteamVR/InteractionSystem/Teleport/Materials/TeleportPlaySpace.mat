@@ -10,96 +10,191 @@ Material:
   m_Shader: {fileID: 4800000, guid: 787d7485aa6482341a9f55fa37fb84f1, type: 3}
   m_ShaderKeywords: S_SPECULAR_NONE S_UNLIT _ALPHABLEND_ON
   m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
   stringTagMap:
     RenderType: Transparent
-  disabledShaderPasses: []
   m_SavedProperties:
-    serializedVersion: 3
+    serializedVersion: 2
     m_TexEnvs:
-    - _BumpMap:
+    - first:
+        name: _BumpMap
+      second:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _DetailAlbedoMap:
+    - first:
+        name: _DetailAlbedoMap
+      second:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _DetailMask:
+    - first:
+        name: _DetailMask
+      second:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _DetailNormalMap:
+    - first:
+        name: _DetailNormalMap
+      second:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _EmissionMap:
+    - first:
+        name: _EmissionMap
+      second:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _MainTex:
+    - first:
+        name: _MainTex
+      second:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
+    - first:
+        name: _MetallicGlossMap
+      second:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
+    - first:
+        name: _OcclusionMap
+      second:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _ParallaxMap:
+    - first:
+        name: _ParallaxMap
+      second:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SpecGlossMap:
+    - first:
+        name: _SpecGlossMap
+      second:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - g_tOverrideLightmap:
+    - first:
+        name: g_tOverrideLightmap
+      second:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BumpScale: 1
-    - _Cutoff: 0.5
-    - _Darken: 0.734
-    - _DetailNormalMapScale: 1
-    - _DstBlend: 10
-    - _FogMultiplier: 1
-    - _Glossiness: 0.5
-    - _InvFade: 1
-    - _Metallic: 0
-    - _Mode: 2
-    - _OcclusionStrength: 1
-    - _OcclusionStrengthDirectDiffuse: 1
-    - _OcclusionStrengthDirectSpecular: 1
-    - _OcclusionStrengthIndirectDiffuse: 1
-    - _OcclusionStrengthIndirectSpecular: 1
-    - _Parallax: 0.02
-    - _SeeThru: 0.25
-    - _SpecularMode: 1
-    - _SrcBlend: 5
-    - _UVSec: 0
-    - _ZWrite: 0
-    - g_bReceiveShadows: 1
-    - g_bUnlit: 1
-    - g_bWorldAlignedTexture: 0
-    - g_flCubeMapScalar: 1
-    - g_flReflectanceBias: 0
-    - g_flReflectanceMax: 1
-    - g_flReflectanceMin: 0
-    - g_flReflectanceScale: 1
+    - first:
+        name: _BumpScale
+      second: 1
+    - first:
+        name: _Cutoff
+      second: 0.5
+    - first:
+        name: _Darken
+      second: 0.734
+    - first:
+        name: _DetailNormalMapScale
+      second: 1
+    - first:
+        name: _DstBlend
+      second: 10
+    - first:
+        name: _FogMultiplier
+      second: 1
+    - first:
+        name: _Glossiness
+      second: 0.5
+    - first:
+        name: _InvFade
+      second: 1
+    - first:
+        name: _Metallic
+      second: 0
+    - first:
+        name: _Mode
+      second: 2
+    - first:
+        name: _OcclusionStrength
+      second: 1
+    - first:
+        name: _OcclusionStrengthDirectDiffuse
+      second: 1
+    - first:
+        name: _OcclusionStrengthDirectSpecular
+      second: 1
+    - first:
+        name: _OcclusionStrengthIndirectDiffuse
+      second: 1
+    - first:
+        name: _OcclusionStrengthIndirectSpecular
+      second: 1
+    - first:
+        name: _Parallax
+      second: 0.02
+    - first:
+        name: _SeeThru
+      second: 0.25
+    - first:
+        name: _SpecularMode
+      second: 1
+    - first:
+        name: _SrcBlend
+      second: 5
+    - first:
+        name: _UVSec
+      second: 0
+    - first:
+        name: _ZWrite
+      second: 0
+    - first:
+        name: g_bReceiveShadows
+      second: 1
+    - first:
+        name: g_bUnlit
+      second: 1
+    - first:
+        name: g_bWorldAlignedTexture
+      second: 0
+    - first:
+        name: g_flCubeMapScalar
+      second: 1
+    - first:
+        name: g_flReflectanceBias
+      second: 0
+    - first:
+        name: g_flReflectanceMax
+      second: 1
+    - first:
+        name: g_flReflectanceMin
+      second: 0
+    - first:
+        name: g_flReflectanceScale
+      second: 1
     m_Colors:
-    - _Color: {r: 0.45280647, g: 0.9191189, b: 0.45602244, a: 0.5}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _TintColor: {r: 0.61764705, g: 0.49737498, b: 0.18166089, a: 1}
-    - g_vWorldAlignedNormalTangentU: {r: -1, g: 0, b: 0, a: 0}
-    - g_vWorldAlignedNormalTangentV: {r: 0, g: 0, b: 1, a: 0}
-    - g_vWorldAlignedTextureNormal: {r: 0, g: 1, b: 0, a: 0}
-    - g_vWorldAlignedTexturePosition: {r: 0, g: 0, b: 0, a: 0}
-    - g_vWorldAlignedTextureSize: {r: 1, g: 1, b: 1, a: 0}
+    - first:
+        name: _Color
+      second: {r: 0.45280647, g: 0.9191189, b: 0.45602244, a: 0.5}
+    - first:
+        name: _EmissionColor
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _SpecColor
+      second: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - first:
+        name: _TintColor
+      second: {r: 0.295302, g: 0.534, b: 0.29694816, a: 1}
+    - first:
+        name: g_vWorldAlignedNormalTangentU
+      second: {r: -1, g: 0, b: 0, a: 0}
+    - first:
+        name: g_vWorldAlignedNormalTangentV
+      second: {r: 0, g: 0, b: 1, a: 0}
+    - first:
+        name: g_vWorldAlignedTextureNormal
+      second: {r: 0, g: 1, b: 0, a: 0}
+    - first:
+        name: g_vWorldAlignedTexturePosition
+      second: {r: 0, g: 0, b: 0, a: 0}
+    - first:
+        name: g_vWorldAlignedTextureSize
+      second: {r: 1, g: 1, b: 1, a: 0}
