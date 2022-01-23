@@ -67,19 +67,19 @@ namespace TwoForksVr.PlayerBody
 
         private void EndSnap()
         {
-            FadeOverlay.Instance.FadeToClear();
+            VrStage.Instance.FadeToClear();
         }
         
         private void UpdateSnapTurning()
         {
             if (SteamVR_Actions.default_SnapTurnLeft.stateDown)
             {
-                FadeOverlay.Instance.FadeToBlack();
+                VrStage.Instance.FadeToBlack();
                 Invoke(nameof(SnapTurnLeft), FadeOverlay.Duration);
             }
             if (SteamVR_Actions.default_SnapTurnRight.stateDown)
             {
-                FadeOverlay.Instance.FadeToBlack();
+                VrStage.Instance.FadeToBlack();
                 Invoke(nameof(SnapTurnRight), FadeOverlay.Duration);
             }
         }

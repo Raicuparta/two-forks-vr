@@ -6,7 +6,6 @@ namespace TwoForksVr.PlayerCamera
 {
     public class FadeOverlay: MonoBehaviour
     {
-        public static FadeOverlay Instance; // TODO no singleton.
         private Canvas canvas;
         private Image image;
         private float targetAlpha;
@@ -17,18 +16,18 @@ namespace TwoForksVr.PlayerCamera
         {
             var gameObject = new GameObject("FadeOverlay");
             gameObject.transform.SetParent(vrStage.transform, false);
-            Instance = gameObject.AddComponent<FadeOverlay>();
+            var fadeOverlay = gameObject.AddComponent<FadeOverlay>();
             
-            Instance.canvas = gameObject.AddComponent<Canvas>();
-            Instance.canvas.enabled = false;
-            Instance.canvas.renderMode = RenderMode.ScreenSpaceCamera;
-            Instance.canvas.planeDistance = 1f;
-            Instance.canvas.sortingOrder = 1000;
+            fadeOverlay.canvas = gameObject.AddComponent<Canvas>();
+            fadeOverlay.canvas.enabled = false;
+            fadeOverlay.canvas.renderMode = RenderMode.ScreenSpaceCamera;
+            fadeOverlay.canvas.planeDistance = 1f;
+            fadeOverlay.canvas.sortingOrder = 1000;
             
-            Instance.image = gameObject.AddComponent<Image>();
-            Instance.image.color = new Color(0, 0, 0, 0);
+            fadeOverlay.image = gameObject.AddComponent<Image>();
+            fadeOverlay.image.color = new Color(0, 0, 0, 0);
 
-            return Instance;
+            return fadeOverlay;
         }
 
         public void SetUp(Camera camera)

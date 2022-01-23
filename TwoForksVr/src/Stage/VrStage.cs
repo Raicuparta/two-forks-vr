@@ -97,5 +97,17 @@ namespace TwoForksVr.Stage
         {
             limbManager.HighlightButton(actions);
         }
+
+        public void FadeToBlack()
+        {
+            if (!fadeOverlay) return;
+            fadeOverlay.FadeToBlack();
+        }
+
+        public void FadeToClear()
+        {
+            if (!fadeOverlay) return;
+            fadeOverlay.FadeToClear();
+        }
     }
 }
