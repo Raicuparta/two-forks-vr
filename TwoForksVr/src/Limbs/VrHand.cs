@@ -1,5 +1,6 @@
 ﻿using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
+using TwoForksVr.UI;
 using UnityEngine;
 using Valve.VR;
 
@@ -22,6 +23,14 @@ namespace TwoForksVr.Limbs
             instance.isLeft = isLeft;
             instance.ButtonHighlight = transform.GetComponentInChildren<VrButtonHighlight>();
             instance.SetUpPose();
+
+            if (isLeft)
+            {
+                var teleportArc = instance.gameObject.AddComponent<TeleportArc>();
+                teleportArc.traceLayerMask = LayerHelper.GetMask(GameLayer.Terrain);
+                teleportArc.hitMarker = instance.transform.Find("teleport-hit-marker");
+            }
+            
             return instance;
         }
 
