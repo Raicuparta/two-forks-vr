@@ -40,21 +40,22 @@ namespace TwoForksVr.PlayerCamera.Patches
         {
             var hasReachedTeleportMarked = Vector3.SqrMagnitude(TeleportArc.hitMarker.position - __instance.playerController.transform.position) < 0.03f;
 
-            if (hasReachedTeleportMarked && SteamVR_Actions.default_Teleport.state)
+            if (hasReachedTeleportMarked && TeleportArc.IsTeleporting())
             {
                 VrStage.Instance.FadeToClear();
             }
             
-            return !SteamVR_Actions.default_Teleport.state || hasReachedTeleportMarked;
+            return !TeleportArc.IsTeleporting() || hasReachedTeleportMarked;
         }
         
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdateCameraStack))]
         private static bool PreventRotationWhileTeleporting(vgCameraController __instance)
         {
+            // TODO clean up, dont repeat.
             var hasReachedTeleportMarked = Vector3.SqrMagnitude(TeleportArc.hitMarker.position - __instance.playerController.transform.position) < 0.01f;
             
-            return !SteamVR_Actions.default_Teleport.state || hasReachedTeleportMarked;
+            return !TeleportArc.IsTeleporting() || hasReachedTeleportMarked;
         }
     }
 }

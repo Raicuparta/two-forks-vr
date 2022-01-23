@@ -2,6 +2,8 @@
 using System.IO;
 using HarmonyLib;
 using TwoForksVr.Helpers;
+using TwoForksVr.Settings;
+using TwoForksVr.UI;
 using UnityEngine;
 using Valve.VR;
 
@@ -144,7 +146,13 @@ namespace TwoForksVr.VrInput.Patches
         [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.ForwardMovement))]
         private static bool FixForwardMovement(vgPlayerController __instance, float axisValue)
         {
-            __instance.forwardInput = ProcessAxisValue(axisValue);
+            var processedInput = ProcessAxisValue(axisValue);
+            if (VrSettings.Teleport.Value)
+            {
+                // Prevent walking backwards if teleport mode is on.
+                processedInput = Mathf.Max(0, processedInput);
+            }
+            __instance.forwardInput = processedInput;
             return false;
         }
         
@@ -152,6 +160,8 @@ namespace TwoForksVr.VrInput.Patches
         [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.StrafeMovement))]
         private static bool FixStrafeMovement(vgPlayerController __instance, float axisValue)
         {
+            if (VrSettings.Teleport.Value) return false;
+
             __instance.strafeInput = ProcessAxisValue(axisValue);
             return false;
         }

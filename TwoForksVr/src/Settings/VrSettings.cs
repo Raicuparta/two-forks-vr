@@ -9,6 +9,7 @@ namespace TwoForksVr.Settings
         public static ConfigEntry<bool> SnapTurning;
         public static ConfigEntry<bool> ShowFeet;
         public static ConfigEntry<bool> ShowBody;
+        public static ConfigEntry<bool> Teleport;
 
         public static void SetUp(ConfigFile config)
         {
@@ -21,6 +22,8 @@ namespace TwoForksVr.Settings
                 "Show player body");
             ShowFeet = config.Bind("Config", "ShowFeet", true,
                 "Show player feet");
+            Teleport = config.Bind("Config", "Teleport", true,
+                "Fixed camera (teleport)");
         }
     }
 }

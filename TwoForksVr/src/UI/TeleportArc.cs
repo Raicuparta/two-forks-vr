@@ -1,3 +1,4 @@
+using TwoForksVr.Settings;
 using UnityEngine;
 using Valve.VR;
 using Valve.VR.InteractionSystem;
@@ -34,6 +35,8 @@ namespace TwoForksVr.UI
         private bool arcInvalid = false;
         private float scale = 1;
 
+        public static vgPlayerNavigationController navigationController;
+
 
         //-------------------------------------------------
         void Start()
@@ -44,11 +47,15 @@ namespace TwoForksVr.UI
             material = hitMarker.GetComponent<Renderer>().material;
         }
 
+        public static bool IsTeleporting()
+        {
+            return VrSettings.Teleport.Value && SteamVR_Actions.default_Teleport.state && navigationController && navigationController.enabled;
+        }
 
         //-------------------------------------------------
         void Update()
         {
-            if (!SteamVR_Actions.default_Teleport.state)
+            if (!IsTeleporting())
             {
                 hitMarker.gameObject.SetActive(false);
                 Hide();
