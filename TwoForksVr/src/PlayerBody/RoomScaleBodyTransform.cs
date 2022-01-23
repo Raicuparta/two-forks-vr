@@ -39,7 +39,7 @@ namespace TwoForksVr.PlayerBody
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
             
-            if (VrSettings.SnapTurning.Value)
+            if (VrSettings.SnapTurning.Value && !SteamVR_Actions.default_Grip.state)
             {
                 UpdateSnapTurning();
             }
