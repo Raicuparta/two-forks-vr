@@ -50,12 +50,14 @@ namespace TwoForksVr.PlayerCamera
 
         public void FadeToBlack()
         {
+            image.color = new Color(0, 0, 0, 0);
             alphaLerpT = 0;
             targetAlpha = 1;
         }
 
         public void FadeToClear()
         {
+            image.color = new Color(0, 0, 0, 1);
             alphaLerpT = 0;
             targetAlpha = 0;
         }
