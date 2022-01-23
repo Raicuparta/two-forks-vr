@@ -96,7 +96,9 @@ namespace TwoForksVr.PlayerBody
             if (camera.transform != cameraTransform) return;
 
             UpdateRotation();
-            UpdateRoomScalePosition();
+
+            if (SteamVR_Actions.default_Grip.state) return;
+;            UpdateRoomScalePosition();
             Recenter();
             FakeParenting.InvokeUpdate();
         }
