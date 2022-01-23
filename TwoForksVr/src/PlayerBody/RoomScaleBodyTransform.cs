@@ -153,8 +153,8 @@ namespace TwoForksVr.PlayerBody
         private void Recenter()
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
-            VrStage.Instance.RecenterRotation();
             if (SteamVR_Actions.default_Grip.state) return;
+            VrStage.Instance.RecenterRotation();
             VrStage.Instance.RecenterPosition();
         }
     }
