@@ -1,3 +1,4 @@
+using System;
 using TwoForksVr.Stage;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,10 +7,14 @@ namespace TwoForksVr.PlayerCamera
 {
     public class FadeOverlay: MonoBehaviour
     {
+        public static FadeOverlay Instance; // TODO no singleton.
         private Canvas canvas;
         private Image image;
-        public static FadeOverlay Instance; // TODO no singleton.
-        
+        private float targetAlpha;
+        private float alphaLerpT;
+        private const float alphaLerpSpeed = 3f;
+        private const float duration = 0.1f;
+
         public static FadeOverlay Create(VrStage vrStage)
         {
             var gameObject = new GameObject("FadeOverlay");
@@ -23,7 +28,7 @@ namespace TwoForksVr.PlayerCamera
             Instance.canvas.sortingOrder = 1000;
             
             Instance.image = gameObject.AddComponent<Image>();
-            Instance.image.color = Color.clear;
+            Instance.image.color = new Color(0, 0, 0, 0);
 
             return Instance;
         }
@@ -41,14 +46,23 @@ namespace TwoForksVr.PlayerCamera
             }
         }
 
+        private void Update()
+        {
+            if (Mathf.Abs(targetAlpha - image.color.a) < 0.01f) return;
+            alphaLerpT += Time.unscaledDeltaTime;
+            image.color = new Color(0, 0, 0, Mathf.Lerp(image.color.a, targetAlpha, alphaLerpT/duration));
+        }
+
         public void FadeToBlack()
         {
-            image.color = Color.black;
+            alphaLerpT = 0;
+            targetAlpha = 1;
         }
 
         public void FadeToClear()
         {
-            image.color = Color.clear;
+            alphaLerpT = 0;
+            targetAlpha = 0;
         }
     }
 }
