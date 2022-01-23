@@ -7,7 +7,8 @@ namespace TwoForksVr.Settings
         public static ConfigFile Config;
         // public static ConfigEntry<bool> HandOrientedMovement;
         public static ConfigEntry<bool> SnapTurning;
-        public static ConfigEntry<bool> HideFeet;
+        public static ConfigEntry<bool> ShowFeet;
+        public static ConfigEntry<bool> ShowBody;
 
         public static void SetUp(ConfigFile config)
         {
@@ -16,8 +17,10 @@ namespace TwoForksVr.Settings
             //     "Hand oriented movement");
             SnapTurning = config.Bind("Config", "SnapTurning", false,
                 "Snap turning");
-            HideFeet = config.Bind("Config", "HideFeet", false,
-                "Hide player feet");
+            ShowBody = config.Bind("Config", "ShowBody", false,
+                "Show player body");
+            ShowFeet = config.Bind("Config", "ShowFeet", true,
+                "Show player feet");
         }
     }
 }
