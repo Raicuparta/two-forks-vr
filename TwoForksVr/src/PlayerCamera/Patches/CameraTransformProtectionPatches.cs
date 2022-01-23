@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using UnityEngine;
 using Valve.VR;
@@ -39,12 +40,12 @@ namespace TwoForksVr.PlayerCamera.Patches
             var isTooFar =
                 Vector3.Distance(__instance.transform.position, __instance.playerGameObject.transform.position) > 8f;
 
-            if (isTooFar && SteamVR_Actions.default_Grip.state)
+            if (isTooFar && SteamVR_Actions.default_Teleport.state)
             {
                 VrStage.Instance.FadeToClear();
             }
             
-            return !SteamVR_Actions.default_Grip.state || isTooFar;
+            return !SteamVR_Actions.default_Teleport.state || isTooFar;
         }
         
         [HarmonyPrefix]
@@ -54,7 +55,7 @@ namespace TwoForksVr.PlayerCamera.Patches
             var isTooFar =
                 Vector3.Distance(__instance.transform.position, __instance.playerGameObject.transform.position) > 8f;
 
-            return !SteamVR_Actions.default_Grip.state || isTooFar;
+            return !SteamVR_Actions.default_Teleport.state || isTooFar;
         }
     }
 }

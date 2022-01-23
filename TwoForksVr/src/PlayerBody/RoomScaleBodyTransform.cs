@@ -39,7 +39,7 @@ namespace TwoForksVr.PlayerBody
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
             
-            if (VrSettings.SnapTurning.Value && !SteamVR_Actions.default_Grip.state)
+            if (VrSettings.SnapTurning.Value && !SteamVR_Actions.default_Teleport.state)
             {
                 UpdateSnapTurning();
             }
@@ -95,7 +95,7 @@ namespace TwoForksVr.PlayerBody
         {
             if (camera.transform != cameraTransform) return;
 
-            if (!SteamVR_Actions.default_Grip.state)
+            if (!SteamVR_Actions.default_Teleport.state)
             {
                 UpdateRotation();
                 UpdateRoomScalePosition();
@@ -156,7 +156,7 @@ namespace TwoForksVr.PlayerBody
         private void Recenter()
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
-            if (SteamVR_Actions.default_Grip.state) return;
+            if (SteamVR_Actions.default_Teleport.state) return;
             VrStage.Instance.RecenterRotation();
             VrStage.Instance.RecenterPosition();
         }
