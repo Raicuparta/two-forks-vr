@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
+using TwoForksVr.UI;
 using UnityEngine;
 using Valve.VR;
 
@@ -32,30 +33,28 @@ namespace TwoForksVr.PlayerCamera.Patches
             // Since it was only broken while paused, I'm disabling it only in that scenario.
             return Time.timeScale != 0;
         }
-        
+
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdatePosition))]
         private static bool TeleportPosition(vgCameraController __instance)
         {
-            var isTooFar =
-                Vector3.Distance(__instance.transform.position, __instance.playerGameObject.transform.position) > 8f;
+            var hasReachedTeleportMarked = Vector3.SqrMagnitude(TeleportArc.hitMarker.position - __instance.playerController.transform.position) < 0.03f;
 
-            if (isTooFar && SteamVR_Actions.default_Teleport.state)
+            if (hasReachedTeleportMarked && SteamVR_Actions.default_Teleport.state)
             {
                 VrStage.Instance.FadeToClear();
             }
             
-            return !SteamVR_Actions.default_Teleport.state || isTooFar;
+            return !SteamVR_Actions.default_Teleport.state || hasReachedTeleportMarked;
         }
         
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdateCameraStack))]
         private static bool PreventRotationWhileTeleporting(vgCameraController __instance)
         {
-            var isTooFar =
-                Vector3.Distance(__instance.transform.position, __instance.playerGameObject.transform.position) > 8f;
-
-            return !SteamVR_Actions.default_Teleport.state || isTooFar;
+            var hasReachedTeleportMarked = Vector3.SqrMagnitude(TeleportArc.hitMarker.position - __instance.playerController.transform.position) < 0.01f;
+            
+            return !SteamVR_Actions.default_Teleport.state || hasReachedTeleportMarked;
         }
     }
 }

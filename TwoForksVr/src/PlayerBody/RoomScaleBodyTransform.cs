@@ -38,9 +38,9 @@ namespace TwoForksVr.PlayerBody
 
         private void Update()
         {
-            if (!navigationController.onGround || !navigationController.enabled) return;
+            if (!navigationController.onGround || !navigationController.enabled || SteamVR_Actions.default_Teleport.state) return;
             
-            if (VrSettings.SnapTurning.Value && !SteamVR_Actions.default_Teleport.state)
+            if (VrSettings.SnapTurning.Value)
             {
                 UpdateSnapTurning();
             }
@@ -142,22 +142,25 @@ namespace TwoForksVr.PlayerBody
         
         private Vector3 GetCameraForward()
         {
-            if (TeleportArc.hitMarker.gameObject.activeInHierarchy)
-            {
-                var playerToTeleportHitMarker = TeleportArc.hitMarker.position - characterController.transform.position;
-                playerToTeleportHitMarker.y = 0;
-                return playerToTeleportHitMarker.normalized;
-            }
             return cameraTransform.parent.InverseTransformDirection(MathHelper.GetProjectedForward(cameraTransform));
         }
         
         private void UpdateRotation()
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
-            var cameraForward = GetCameraForward();
-            var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
-            prevForward = cameraForward;
-            characterController.transform.Rotate(Vector3.up, angleDelta);
+            if (TeleportArc.hitMarker.gameObject.activeInHierarchy)
+            {
+                var targetPoint = TeleportArc.hitMarker.position;
+                targetPoint.y = characterController.transform.position.y;
+                characterController.transform.LookAt(targetPoint, Vector3.up);
+            }
+            else
+            {
+                var cameraForward = GetCameraForward();
+                var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
+                prevForward = cameraForward;
+                characterController.transform.Rotate(Vector3.up, angleDelta);
+            }
         }
 
         private void Recenter()
