@@ -47,6 +47,15 @@ namespace TwoForksVr.UI
             material = hitMarker.GetComponent<Renderer>().material;
         }
 
+        public static bool IsNextToTeleportMarker(Transform transform, float minSquareDistance = 0.3f)
+        {
+            if (!hitMarker.gameObject.activeInHierarchy) return false;
+            var targetPoint = hitMarker.position;
+            targetPoint.y = transform.position.y;
+            var squareDistance = Vector3.SqrMagnitude(targetPoint - transform.position);
+            return squareDistance < minSquareDistance;
+        }
+        
         public static bool IsTeleporting()
         {
             return VrSettings.Teleport.Value && SteamVR_Actions.default_Teleport.state && navigationController && navigationController.enabled;

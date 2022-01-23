@@ -38,7 +38,7 @@ namespace TwoForksVr.PlayerCamera.Patches
         [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdatePosition))]
         private static bool TeleportPosition(vgCameraController __instance)
         {
-            var hasReachedTeleportMarked = Vector3.SqrMagnitude(TeleportArc.hitMarker.position - __instance.playerController.transform.position) < 0.03f;
+            var hasReachedTeleportMarked = TeleportArc.IsNextToTeleportMarker(__instance.playerController.transform);
 
             if (hasReachedTeleportMarked && TeleportArc.IsTeleporting())
             {
@@ -52,10 +52,7 @@ namespace TwoForksVr.PlayerCamera.Patches
         [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdateCameraStack))]
         private static bool PreventRotationWhileTeleporting(vgCameraController __instance)
         {
-            // TODO clean up, dont repeat.
-            var hasReachedTeleportMarked = Vector3.SqrMagnitude(TeleportArc.hitMarker.position - __instance.playerController.transform.position) < 0.01f;
-            
-            return !TeleportArc.IsTeleporting() || hasReachedTeleportMarked;
+            return !TeleportArc.IsTeleporting() || TeleportArc.IsNextToTeleportMarker(__instance.playerController.transform);
         }
     }
 }
