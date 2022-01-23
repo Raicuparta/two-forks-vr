@@ -46,5 +46,15 @@ namespace TwoForksVr.PlayerCamera.Patches
             
             return !SteamVR_Actions.default_Grip.state || isTooFar;
         }
+        
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdateCameraStack))]
+        private static bool PreventRotationWhileTeleporting(vgCameraController __instance)
+        {
+            var isTooFar =
+                Vector3.Distance(__instance.transform.position, __instance.playerGameObject.transform.position) > 8f;
+
+            return !SteamVR_Actions.default_Grip.state || isTooFar;
+        }
     }
 }

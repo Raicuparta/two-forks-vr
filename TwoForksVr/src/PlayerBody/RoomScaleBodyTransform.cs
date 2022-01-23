@@ -96,9 +96,7 @@ namespace TwoForksVr.PlayerBody
             if (camera.transform != cameraTransform) return;
 
             UpdateRotation();
-
-            if (SteamVR_Actions.default_Grip.state) return;
-;            UpdateRoomScalePosition();
+            UpdateRoomScalePosition();
             Recenter();
             FakeParenting.InvokeUpdate();
         }
@@ -155,7 +153,9 @@ namespace TwoForksVr.PlayerBody
         private void Recenter()
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
-            VrStage.Instance.Recenter();
+            VrStage.Instance.RecenterRotation();
+            if (SteamVR_Actions.default_Grip.state) return;
+            VrStage.Instance.RecenterPosition();
         }
     }
 }
