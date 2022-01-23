@@ -148,7 +148,7 @@ namespace TwoForksVr.VrInput.Patches
         {
             if (VrSettings.Teleport.Value && __instance.navController.enabled)
             {
-                // Prevent walking backwards if teleport mode is on.
+                // Use fixed-speed, forward-only movement when teleporting.
                 __instance.forwardInput = Mathf.Max(0, TeleportArc.IsTeleporting() ? 1 : 0);
                 return false;
             }
