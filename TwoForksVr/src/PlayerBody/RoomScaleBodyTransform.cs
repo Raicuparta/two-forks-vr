@@ -1,4 +1,5 @@
 using TwoForksVr.Helpers;
+using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using UnityEngine;
 using Valve.VR;
@@ -9,7 +10,8 @@ namespace TwoForksVr.PlayerBody
     {
         private const float minPositionOffset = 0.00001f;
         private const float maxPositionOffset = 1f;
-        private const float rotationSpeed = 150f; // TODO make this configurable.
+        private const float smoothRotationSpeed = 150f; // TODO make this configurable.
+        private const float snapRotationAngle = 45f; // TODO make this configurable.
 
         private Transform cameraTransform;
         private CharacterController characterController;
@@ -35,7 +37,37 @@ namespace TwoForksVr.PlayerBody
         private void Update()
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
-            characterController.transform.Rotate(Vector3.up, SteamVR_Actions._default.Rotate.axis.x * rotationSpeed * Time.deltaTime);
+
+            
+                // UpdateSnapTurning();
+            
+            if (VrSettings.SnapTurning.Value)
+            {
+                UpdateSnapTurning();
+            }
+            else
+            {
+                UpdateSmoothTurning();
+            }
+        }
+
+        private void UpdateSnapTurning()
+        {
+            if (SteamVR_Actions.default_SnapTurnLeft.stateDown)
+            {
+                characterController.transform.Rotate(Vector3.up, -snapRotationAngle);
+            }
+            if (SteamVR_Actions.default_SnapTurnRight.stateDown)
+            {
+                characterController.transform.Rotate(Vector3.up, snapRotationAngle);
+            }
+        }
+
+        private void UpdateSmoothTurning()
+        {
+            characterController.transform.Rotate(
+                Vector3.up,
+                SteamVR_Actions._default.Rotate.axis.x * smoothRotationSpeed * Time.deltaTime);
         }
 
         private void HandlePreCull(Camera camera)

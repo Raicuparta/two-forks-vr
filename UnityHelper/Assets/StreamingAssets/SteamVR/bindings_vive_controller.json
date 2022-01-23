@@ -142,6 +142,21 @@
                },
                "mode" : "button",
                "path" : "/user/hand/right/input/grip"
+            },
+            {
+               "inputs" : {
+                  "east" : {
+                     "output" : "/actions/default/in/snapturnright"
+                  },
+                  "west" : {
+                     "output" : "/actions/default/in/snapturnleft"
+                  }
+               },
+               "mode" : "dpad",
+               "parameters" : {
+                  "sub_mode" : "click"
+               },
+               "path" : "/user/hand/right/input/trackpad"
             }
          ]
       }
