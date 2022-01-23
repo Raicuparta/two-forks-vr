@@ -146,13 +146,13 @@ namespace TwoForksVr.VrInput.Patches
         [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.ForwardMovement))]
         private static bool FixForwardMovement(vgPlayerController __instance, float axisValue)
         {
-            var processedInput = ProcessAxisValue(axisValue);
             if (VrSettings.Teleport.Value)
             {
                 // Prevent walking backwards if teleport mode is on.
-                processedInput = Mathf.Max(0, processedInput);
+                __instance.forwardInput = Mathf.Max(0, TeleportArc.IsTeleporting() ? 1 : 0);
+                return false;
             }
-            __instance.forwardInput = processedInput;
+            __instance.forwardInput = ProcessAxisValue(axisValue);
             return false;
         }
         
