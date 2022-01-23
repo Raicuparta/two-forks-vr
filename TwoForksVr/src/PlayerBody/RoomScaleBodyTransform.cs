@@ -2,6 +2,7 @@ using TwoForksVr.Helpers;
 using TwoForksVr.PlayerCamera;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
+using TwoForksVr.UI;
 using UnityEngine;
 using Valve.VR;
 
@@ -95,9 +96,9 @@ namespace TwoForksVr.PlayerBody
         {
             if (camera.transform != cameraTransform) return;
 
+            UpdateRotation();
             if (!SteamVR_Actions.default_Teleport.state)
             {
-                UpdateRotation();
                 UpdateRoomScalePosition();
                 Recenter();
             }
@@ -141,6 +142,12 @@ namespace TwoForksVr.PlayerBody
         
         private Vector3 GetCameraForward()
         {
+            if (TeleportArc.hitMarker.gameObject.activeInHierarchy)
+            {
+                var playerToTeleportHitMarker = TeleportArc.hitMarker.position - characterController.transform.position;
+                playerToTeleportHitMarker.y = 0;
+                return playerToTeleportHitMarker.normalized;
+            }
             return cameraTransform.parent.InverseTransformDirection(MathHelper.GetProjectedForward(cameraTransform));
         }
         

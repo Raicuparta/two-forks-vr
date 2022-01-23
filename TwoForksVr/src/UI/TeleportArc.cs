@@ -1,4 +1,5 @@
 using UnityEngine;
+using Valve.VR;
 using Valve.VR.InteractionSystem;
 
 namespace TwoForksVr.UI
@@ -16,7 +17,7 @@ namespace TwoForksVr.UI
 
         private Material material;
 
-        public Transform hitMarker;
+        public static Transform hitMarker; // TODO not static
 
         public LayerMask traceLayerMask = 0;
 
@@ -47,6 +48,14 @@ namespace TwoForksVr.UI
         //-------------------------------------------------
         void Update()
         {
+            if (!SteamVR_Actions.default_Teleport.state)
+            {
+                hitMarker.gameObject.SetActive(false);
+                Hide();
+                return;
+            }
+
+            Show();
             if (thickness != prevThickness || segmentCount != prevSegmentCount)
             {
                 CreateLineRendererObjects();
