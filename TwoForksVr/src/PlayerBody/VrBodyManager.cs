@@ -50,20 +50,20 @@ namespace TwoForksVr.PlayerBody
         // or by using transparent textures to leave parts visible (hands and feet).
         private void HideBodyParts()
         {
-            // var renderer = transform.GetComponent<SkinnedMeshRenderer>();
-            // renderer.shadowCastingMode = ShadowCastingMode.TwoSided;
-            //
-            // var materials = renderer.materials;
-            //
+            var renderer = transform.GetComponent<SkinnedMeshRenderer>();
+            renderer.shadowCastingMode = ShadowCastingMode.TwoSided;
+            
+            var materials = renderer.materials;
+            
             // bodyMaterial = materials[0];
             // bodyTexture = bodyMaterial.mainTexture;
             // SetUpBodyVisibility();
             //
             // var backpackMaterial = materials[1];
             // MakeMaterialTextureTransparent(backpackMaterial);
-            //
-            // var armsMaterial = materials[2];
-            // MakeMaterialTextureTransparent(armsMaterial);
+            
+            var armsMaterial = materials[2];
+            MakeMaterialTextureTransparent(armsMaterial);
         }
 
         private static void MakeMaterialTextureTransparent(Material material, Texture texture = null)
