@@ -12,12 +12,6 @@ namespace TwoForksVr.UI
         [Tooltip("The amount of time in seconds to predict the motion of the projectile.")]
         public float arcDuration = 3.0f;
 
-        [Tooltip("The amount of time in seconds between each segment of the projectile.")]
-        public float segmentBreak = 0.025f;
-
-        [Tooltip("The speed at which the line segments of the arc move.")]
-        public float arcSpeed = 0.2f;
-
         public float arcVelocity = 3f;
 
         public Material material;
@@ -154,14 +148,7 @@ namespace TwoForksVr.UI
         {
             var timeStep = arcDuration / segmentCount;
 
-            var currentTimeOffset = (Time.time - arcTimeOffset) * arcSpeed;
-
-            //Reset the arc time offset when it has gone beyond a segment length
-            if (currentTimeOffset > (timeStep + segmentBreak))
-            {
-                arcTimeOffset = Time.time;
-                currentTimeOffset = 0.0f;
-            }
+            var currentTimeOffset = 0f;
 
             var segmentStartTime = currentTimeOffset;
 
@@ -180,17 +167,6 @@ namespace TwoForksVr.UI
             {
                 //Draw the first segment outside the loop if needed
                 var loopStartSegment = 0;
-                if (segmentStartTime > segmentBreak)
-                {
-                    var firstSegmentEndTime = currentTimeOffset - segmentBreak;
-                    if (arcHitTime < firstSegmentEndTime)
-                    {
-                        firstSegmentEndTime = arcHitTime;
-                    }
-                    DrawArcSegment(0, 0.0f, firstSegmentEndTime);
-
-                    loopStartSegment = 1;
-                }
 
                 var stopArc = false;
                 var currentSegment = 0;
@@ -214,7 +190,7 @@ namespace TwoForksVr.UI
 
                         DrawArcSegment(currentSegment, segmentStartTime, segmentEndTime);
 
-                        segmentStartTime += timeStep + segmentBreak;
+                        segmentStartTime += timeStep;
 
                         //If the previous end time or the next start time is beyond the duration then stop the arc
                         if (stopArc || segmentStartTime >= arcDuration || segmentStartTime >= arcHitTime)
