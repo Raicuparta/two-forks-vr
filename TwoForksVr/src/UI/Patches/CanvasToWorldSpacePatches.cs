@@ -17,7 +17,7 @@ namespace TwoForksVr.UI.Patches
 
         private static readonly string[] canvasesToIgnore =
         {
-            "ExplorerCanvas" // UnityExplorer.
+            "ExplorerCanvas", // UnityExplorer.
         };
 
         [HarmonyPrefix]

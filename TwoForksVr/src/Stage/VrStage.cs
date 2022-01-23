@@ -19,6 +19,7 @@ namespace TwoForksVr.Stage
         private IntroFix introFix;
         private Camera mainCamera;
         private InteractiveUiTarget interactiveUiTarget;
+        private FadeOverlay fadeOverlay;
 
         // No idea why, but if I don't make this static, it gets lost
         public static Camera FallbackCamera { get; private set; }
@@ -54,6 +55,7 @@ namespace TwoForksVr.Stage
             Instance.limbManager = VrLimbManager.Create(Instance);
             Instance.follow = stageParent.AddComponent<FakeParenting>();
             Instance.interactiveUiTarget = InteractiveUiTarget.Create(Instance);
+            Instance.fadeOverlay = FadeOverlay.Create(Instance);
 
             FallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
             FallbackCamera.enabled = false;
@@ -62,8 +64,6 @@ namespace TwoForksVr.Stage
             FallbackCamera.transform.SetParent(Instance.transform, false);
 
             Instance.gameObject.AddComponent<GeneralDebugger>();
-            
-            return;
         }
 
         public void SetUp(Camera camera, Transform playerTransform)
@@ -85,6 +85,7 @@ namespace TwoForksVr.Stage
             cameraManager.SetUp(nextCamera, playerTransform);
             limbManager.SetUp(playerTransform, nextCamera);
             interactiveUiTarget.SetUp(nextCamera);
+            fadeOverlay.SetUp(nextCamera);
         }
 
         public void Recenter(bool recenterVertically = false)
@@ -95,6 +96,18 @@ namespace TwoForksVr.Stage
         public void HighlightButton(params ISteamVR_Action_In_Source[] actions)
         {
             limbManager.HighlightButton(actions);
+        }
+
+        public void FadeToBlack()
+        {
+            if (!fadeOverlay) return;
+            fadeOverlay.FadeToBlack();
+        }
+
+        public void FadeToClear()
+        {
+            if (!fadeOverlay) return;
+            fadeOverlay.FadeToClear();
         }
     }
 }

@@ -72,6 +72,14 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/SnapTurnRight",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/SnapTurnLeft",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     }
@@ -159,7 +167,9 @@
       "/actions/default/in/UIUp": "UI Up",
       "/actions/default/in/UIDown": "UI Down",
       "/actions/default/in/Recenter": "Recenter",
-      "/actions/default/in/Grip": "Grip"
+      "/actions/default/in/Grip": "Grip",
+      "/actions/default/in/SnapTurnRight": "Snap Turn Right",
+      "/actions/default/in/SnapTurnLeft": "Snap Turn Left"
     }
   ]
 }

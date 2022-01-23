@@ -1,4 +1,6 @@
 using TwoForksVr.Helpers;
+using TwoForksVr.PlayerCamera;
+using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using UnityEngine;
 using Valve.VR;
@@ -9,7 +11,8 @@ namespace TwoForksVr.PlayerBody
     {
         private const float minPositionOffset = 0.00001f;
         private const float maxPositionOffset = 1f;
-        private const float rotationSpeed = 150f; // TODO make this configurable.
+        private const float smoothRotationSpeed = 150f; // TODO make this configurable.
+        private const float snapRotationAngle = 60f; // TODO make this configurable.
 
         private Transform cameraTransform;
         private CharacterController characterController;
@@ -35,7 +38,57 @@ namespace TwoForksVr.PlayerBody
         private void Update()
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
-            characterController.transform.Rotate(Vector3.up, SteamVR_Actions._default.Rotate.axis.x * rotationSpeed * Time.deltaTime);
+            
+            if (VrSettings.SnapTurning.Value)
+            {
+                UpdateSnapTurning();
+            }
+            else
+            {
+                UpdateSmoothTurning();
+            }
+        }
+
+        private void SnapTurn(float angle)
+        {
+            characterController.transform.Rotate(Vector3.up, angle);
+            Invoke(nameof(EndSnap), FadeOverlay.Duration);
+        }
+
+        private void SnapTurnLeft()
+        {
+            SnapTurn(-snapRotationAngle);
+        }
+
+        private void SnapTurnRight()
+        {
+            SnapTurn(snapRotationAngle);
+        }
+
+        private void EndSnap()
+        {
+            VrStage.Instance.FadeToClear();
+        }
+        
+        private void UpdateSnapTurning()
+        {
+            if (SteamVR_Actions.default_SnapTurnLeft.stateDown)
+            {
+                VrStage.Instance.FadeToBlack();
+                Invoke(nameof(SnapTurnLeft), FadeOverlay.Duration);
+            }
+            if (SteamVR_Actions.default_SnapTurnRight.stateDown)
+            {
+                VrStage.Instance.FadeToBlack();
+                Invoke(nameof(SnapTurnRight), FadeOverlay.Duration);
+            }
+        }
+
+        private void UpdateSmoothTurning()
+        {
+            characterController.transform.Rotate(
+                Vector3.up,
+                SteamVR_Actions._default.Rotate.axis.x * smoothRotationSpeed * Time.deltaTime);
         }
 
         private void HandlePreCull(Camera camera)
