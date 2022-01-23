@@ -31,7 +31,7 @@ namespace TwoForksVr.Limbs
         
         private void Awake()
         {
-            VrSettings.ShowFeet.SettingChanged += HandleShowFeetChanged;
+            VrSettings.HideFeet.SettingChanged += HandleHideFeetChanged;
         }
 
         private void Start()
@@ -41,17 +41,17 @@ namespace TwoForksVr.Limbs
 
         private void OnDestroy()
         {
-            VrSettings.ShowFeet.SettingChanged -= HandleShowFeetChanged;
+            VrSettings.HideFeet.SettingChanged -= HandleHideFeetChanged;
         }
 
-        private void HandleShowFeetChanged(object sender, EventArgs e)
+        private void HandleHideFeetChanged(object sender, EventArgs e)
         {
             SetUpVisibility();
         }
 
         private void SetUpVisibility()
         {
-            gameObject.SetActive(VrSettings.ShowFeet.Value);
+            gameObject.SetActive(!VrSettings.HideFeet.Value);
         }
     }
 }

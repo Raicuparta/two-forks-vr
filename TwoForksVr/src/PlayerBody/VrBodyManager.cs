@@ -15,8 +15,7 @@ namespace TwoForksVr.PlayerBody
 
         private void Awake()
         {
-            VrSettings.ShowFeet.SettingChanged += HandleSettingsChanged;
-            VrSettings.ShowBody.SettingChanged += HandleSettingsChanged;
+            VrSettings.HideFeet.SettingChanged += HandleHideFeetChanged;
         }
 
         private void Start()
@@ -26,8 +25,7 @@ namespace TwoForksVr.PlayerBody
 
         private void OnDestroy()
         {
-            VrSettings.ShowFeet.SettingChanged -= HandleSettingsChanged;
-            VrSettings.ShowBody.SettingChanged -= HandleSettingsChanged;
+            VrSettings.HideFeet.SettingChanged -= HandleHideFeetChanged;
         }
 
         public static void Create(vgPlayerController playerController)
@@ -54,16 +52,16 @@ namespace TwoForksVr.PlayerBody
         {
             var renderer = transform.GetComponent<SkinnedMeshRenderer>();
             renderer.shadowCastingMode = ShadowCastingMode.TwoSided;
-            
+
             var materials = renderer.materials;
-            
+
             bodyMaterial = materials[0];
             bodyTexture = bodyMaterial.mainTexture;
             SetUpBodyVisibility();
-            
+
             var backpackMaterial = materials[1];
             MakeMaterialTextureTransparent(backpackMaterial);
-            
+
             var armsMaterial = materials[2];
             MakeMaterialTextureTransparent(armsMaterial);
         }
@@ -83,22 +81,15 @@ namespace TwoForksVr.PlayerBody
             }
         }
         
-        private void HandleSettingsChanged(object sender, EventArgs e)
+        private void HandleHideFeetChanged(object sender, EventArgs e)
         {
             SetUpBodyVisibility();
-        }
-
-        private Texture2D GetBodyTexture()
-        {
-            if (VrSettings.ShowBody.Value) return (Texture2D) bodyTexture;
-            if (VrSettings.ShowFeet.Value) return VrAssetLoader.BodyCutoutTexture;
-            return null;
         }
 
         private void SetUpBodyVisibility()
         {
             if (!bodyMaterial) return;
-            MakeMaterialTextureTransparent(bodyMaterial, GetBodyTexture());
+            MakeMaterialTextureTransparent(bodyMaterial, VrSettings.HideFeet.Value ? null : VrAssetLoader.BodyCutoutTexture);
         }
     }
 }

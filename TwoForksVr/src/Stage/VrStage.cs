@@ -88,14 +88,9 @@ namespace TwoForksVr.Stage
             fadeOverlay.SetUp(nextCamera);
         }
 
-        public void RecenterPosition(bool recenterVertically = false)
+        public void Recenter(bool recenterVertically = false)
         {
-            cameraManager.RecenterPosition(recenterVertically);
-        }
-        
-        public void RecenterRotation()
-        {
-            cameraManager.RecenterRotation();
+            cameraManager.Recenter(recenterVertically);
         }
 
         public void HighlightButton(params ISteamVR_Action_In_Source[] actions)
