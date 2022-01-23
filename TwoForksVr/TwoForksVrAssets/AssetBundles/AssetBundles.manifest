@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 56231715
+CRC: 1730680102
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -10,4 +10,7 @@ AssetBundleManifest:
       Dependencies: {}
     Info_2:
       Name: settings-menu
+      Dependencies: {}
+    Info_3:
+      Name: camera
       Dependencies: {}

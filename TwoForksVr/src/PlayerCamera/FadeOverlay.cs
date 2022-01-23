@@ -1,3 +1,4 @@
+using TwoForksVr.Assets;
 using TwoForksVr.Stage;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,17 +15,14 @@ namespace TwoForksVr.PlayerCamera
 
         public static FadeOverlay Create(VrStage vrStage)
         {
-            var gameObject = new GameObject("FadeOverlay");
-            gameObject.transform.SetParent(vrStage.transform, false);
+            var gameObject = Instantiate(VrAssetLoader.FadeOverlayPrefab, vrStage.transform, false);
             var fadeOverlay = gameObject.AddComponent<FadeOverlay>();
             
-            fadeOverlay.canvas = gameObject.AddComponent<Canvas>();
+            fadeOverlay.canvas = gameObject.GetComponent<Canvas>();
             fadeOverlay.canvas.enabled = false;
             fadeOverlay.canvas.renderMode = RenderMode.ScreenSpaceCamera;
-            fadeOverlay.canvas.planeDistance = 1f;
-            fadeOverlay.canvas.sortingOrder = 1000;
-            
-            fadeOverlay.image = gameObject.AddComponent<Image>();
+
+            fadeOverlay.image = gameObject.GetComponentInChildren<Image>();
             fadeOverlay.image.color = new Color(0, 0, 0, 0);
 
             return fadeOverlay;

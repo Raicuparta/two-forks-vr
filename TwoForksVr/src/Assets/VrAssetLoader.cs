@@ -13,6 +13,7 @@ namespace TwoForksVr.Assets
         public static GameObject VrSettingsMenuPrefab { get; private set; }
         public static GameObject LeftHandPrefab { get; private set; }
         public static GameObject RightHandPrefab { get; private set; }
+        public static GameObject FadeOverlayPrefab { get; private set; }
 
         public static void LoadAssets()
         {
@@ -23,6 +24,7 @@ namespace TwoForksVr.Assets
             BodyCutoutTexture = bodyAsset.LoadAsset<Texture2D>("body-cutout");
             ToolPickerPrefab = LoadAssetPrefab("tool-picker", "ToolPicker");
             VrSettingsMenuPrefab = LoadAssetPrefab("settings-menu", "VrSettingsMenu");
+            FadeOverlayPrefab = LoadAssetPrefab("camera", "FadeOverlay");
         }
 
         private static AssetBundle LoadBundle(string assetName)

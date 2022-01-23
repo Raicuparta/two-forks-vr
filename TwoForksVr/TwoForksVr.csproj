@@ -114,5 +114,13 @@
       <Content Include="TwoForksVrAssets\AssetBundles\tool-picker.manifest">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <None Remove="TwoForksVrAssets\AssetBundles\camera.manifest" />
+      <Content Include="TwoForksVrAssets\AssetBundles\camera.manifest">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="TwoForksVrAssets\AssetBundles\camera" />
+      <Content Include="TwoForksVrAssets\AssetBundles\camera">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
   </ItemGroup>
 </Project>
