@@ -23,11 +23,9 @@ namespace TwoForksVr
 
         protected virtual void OnDestroy()
         {
-            Logs.LogInfo($"########## destroying {GetType().Name} {name}");
             typeInstanceMap.TryGetValue(GetType(), out var instance);
             if (instance == null)
             {
-                Logs.LogError($"########## UNABLE TO DESTROY {GetType().Name} {name}");
                 return;
             }
 
@@ -46,11 +44,6 @@ namespace TwoForksVr
 
         private void InvokeVeryLateUpdateIfEnabled()
         {
-            if (!this)
-            {
-                Logs.LogError($"###### trying to update deleted object");
-                return;
-            }
             if (!enabled) return;
             VeryLateUpdate();
         }
