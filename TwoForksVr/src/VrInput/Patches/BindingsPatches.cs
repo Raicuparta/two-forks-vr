@@ -3,8 +3,6 @@ using System.IO;
 using HarmonyLib;
 using TwoForksVr.Helpers;
 using TwoForksVr.Settings;
-using TwoForksVr.TeleportLocomotion;
-using TwoForksVr.UI;
 using UnityEngine;
 using Valve.VR;
 
@@ -147,12 +145,6 @@ namespace TwoForksVr.VrInput.Patches
         [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.ForwardMovement))]
         private static bool FixForwardMovement(vgPlayerController __instance, float axisValue)
         {
-            if (VrSettings.Teleport.Value && __instance.navController.enabled)
-            {
-                // Use fixed-speed, forward-only movement when teleporting.
-                __instance.forwardInput = Mathf.Max(0, TeleportController.IsTeleporting() ? 1 : 0);
-                return false;
-            }
             __instance.forwardInput = ProcessAxisValue(axisValue);
             return false;
         }

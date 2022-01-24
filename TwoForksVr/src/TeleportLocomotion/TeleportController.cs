@@ -1,9 +1,8 @@
-using System;
 using TwoForksVr.Assets;
-using TwoForksVr.Helpers;
 using TwoForksVr.Limbs;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
+using TwoForksVr.TeleportLocomotion.Patches;
 using UnityEngine;
 using Valve.VR;
 
@@ -15,15 +14,16 @@ namespace TwoForksVr.TeleportLocomotion
 
         private TeleportArc teleportArc;
         private VrLimbManager limbManager;
-        private static Transform teleportTarget; // todo no static, no public
-        private static vgPlayerNavigationController navigationController; // todo no static
+        private Transform teleportTarget;
+        private vgPlayerNavigationController navigationController;
 
         public static TeleportController Create(VrStage stage, VrLimbManager limbManager)
         {
             var instance = stage.gameObject.AddComponent<TeleportController>();
             instance.limbManager = limbManager;
-            teleportTarget = Instantiate(VrAssetLoader.TeleportTargetPrefab, instance.transform, false).transform;
-            instance.teleportArc = TeleportArc.Create(instance, teleportTarget.GetComponentInChildren<Renderer>().material);
+            instance.teleportTarget = Instantiate(VrAssetLoader.TeleportTargetPrefab, instance.transform, false).transform;
+            instance.teleportArc = TeleportArc.Create(instance, instance.teleportTarget.GetComponentInChildren<Renderer>().material);
+            TeleportLocomotionPatches.Teleport = instance;
             return instance;
         }
 
@@ -35,16 +35,16 @@ namespace TwoForksVr.TeleportLocomotion
             }
         }
 
-        public static bool IsNextToTeleportMarker(Transform transform, float minSquareDistance = 0.3f)
+        public bool IsNextToTeleportMarker(Transform objectTransform, float minSquareDistance = 0.3f)
         {
             if (!teleportTarget.gameObject.activeInHierarchy) return false;
             var targetPoint = teleportTarget.position;
-            targetPoint.y = transform.position.y;
-            var squareDistance = Vector3.SqrMagnitude(targetPoint - transform.position);
+            targetPoint.y = objectTransform.position.y;
+            var squareDistance = Vector3.SqrMagnitude(targetPoint - objectTransform.position);
             return squareDistance < minSquareDistance;
         }
         
-        public static bool IsTeleporting()
+        public bool IsTeleporting()
         {
             return VrSettings.Teleport.Value && SteamVR_Actions.default_Teleport.state && navigationController && navigationController.enabled;
         }
@@ -53,12 +53,10 @@ namespace TwoForksVr.TeleportLocomotion
         {
             if (teleportInput.GetStateDown(SteamVR_Input_Sources.LeftHand))
             {
-                Logs.LogInfo("########### setting left hand teleport");
                 SetHand(limbManager.LeftHand);
             }
             if (teleportInput.GetStateDown(SteamVR_Input_Sources.RightHand))
             {
-                Logs.LogInfo("########### setting right hand teleport");
                 SetHand(limbManager.RightHand);
             }
             UpdateArc();

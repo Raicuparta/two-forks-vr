@@ -1,42 +1,51 @@
 using HarmonyLib;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
-using TwoForksVr.UI;
+using UnityEngine;
 
 namespace TwoForksVr.TeleportLocomotion.Patches
 {
     [HarmonyPatch]
     public static class TeleportLocomotionPatches
     {
-                [HarmonyPrefix]
+        public static TeleportController Teleport;
+        
+        [HarmonyPrefix]
         [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdatePosition))]
+        [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdateCameraStack))]
         private static bool TeleportPosition(vgCameraController __instance)
         {
             if (VrSettings.FixedCameraDuringAnimations.Value && !__instance.playerController.navController.enabled)
             {
                 return false;
             }
-            
-            var hasReachedTeleportMarked = TeleportController.IsNextToTeleportMarker(__instance.playerController.transform);
 
-            if (hasReachedTeleportMarked && TeleportController.IsTeleporting())
+            if (!Teleport) return true;
+
+            return !Teleport.IsTeleporting() || Teleport.IsNextToTeleportMarker(__instance.playerController.transform);
+        }
+        
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdatePosition))]
+        private static void TriggerTeleportBlinkAnimation(vgCameraController __instance)
+        {
+            if (!Teleport) return;
+            
+            var hasReachedTeleportMarked = Teleport.IsNextToTeleportMarker(__instance.playerController.transform);
+
+            if (hasReachedTeleportMarked && Teleport.IsTeleporting())
             {
                 VrStage.Instance.FadeToClear();
             }
-            
-            return !TeleportController.IsTeleporting() || hasReachedTeleportMarked;
         }
         
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdateCameraStack))]
-        private static bool PreventRotationWhileTeleporting(vgCameraController __instance)
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.ForwardMovement))]
+        private static void OverrideForwardMovementWithTeleport(vgPlayerController __instance, float axisValue)
         {
-            if (!__instance.playerController.navController.enabled)
-            {
-                return false;
-            }
+            if (!VrSettings.Teleport.Value || !__instance.navController.enabled) return;
 
-            return !TeleportController.IsTeleporting() || TeleportController.IsNextToTeleportMarker(__instance.playerController.transform);
+            __instance.forwardInput = Mathf.Max(0, Teleport.IsTeleporting() ? 1 : 0);
         }
     }
 }
