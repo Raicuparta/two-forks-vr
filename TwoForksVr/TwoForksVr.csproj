@@ -82,44 +82,22 @@
     <Content Include="TwoForksVrAssets\AssetBundles\body">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TwoForksVrAssets\AssetBundles\hand">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TwoForksVrAssets\AssetBundles\hands">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TwoForksVrAssets\AssetBundles\tool-picker">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-      <Content Include="TwoForksVrAssets\AssetBundles\settings-menu">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
       <None Remove="TwoForksVrAssets\AssetBundles\body.manifest" />
       <Content Include="TwoForksVrAssets\AssetBundles\body.manifest">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <None Remove="TwoForksVrAssets\AssetBundles\hand.manifest" />
-      <Content Include="TwoForksVrAssets\AssetBundles\hand.manifest">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
       <None Remove="TwoForksVrAssets\AssetBundles\hands.manifest" />
-      <Content Include="TwoForksVrAssets\AssetBundles\hands.manifest">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
       <None Remove="TwoForksVrAssets\AssetBundles\settings-menu.manifest" />
-      <Content Include="TwoForksVrAssets\AssetBundles\settings-menu.manifest">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
       <None Remove="TwoForksVrAssets\AssetBundles\tool-picker.manifest" />
-      <Content Include="TwoForksVrAssets\AssetBundles\tool-picker.manifest">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
       <None Remove="TwoForksVrAssets\AssetBundles\camera.manifest" />
-      <Content Include="TwoForksVrAssets\AssetBundles\camera.manifest">
+      <None Remove="TwoForksVrAssets\AssetBundles\camera" />
+      <None Remove="TwoForksVrAssets\AssetBundles\ui" />
+      <Content Include="TwoForksVrAssets\AssetBundles\ui">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="TwoForksVrAssets\AssetBundles\camera" />
-      <Content Include="TwoForksVrAssets\AssetBundles\camera">
+      <None Remove="TwoForksVrAssets\AssetBundles\ui.manifest" />
+      <Content Include="TwoForksVrAssets\AssetBundles\ui.manifest">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
   </ItemGroup>

@@ -39,7 +39,7 @@ namespace TwoForksVr.PlayerBody
 
         private void Update()
         {
-            if (!navigationController.onGround || !navigationController.enabled || TeleportArc.IsTeleporting()) return;
+            if (!navigationController.onGround || !navigationController.enabled || TeleportController.IsTeleporting()) return;
             
             if (VrSettings.SnapTurning.Value)
             {
@@ -98,7 +98,7 @@ namespace TwoForksVr.PlayerBody
             if (camera.transform != cameraTransform) return;
 
             UpdateRotation();
-            if (!TeleportArc.IsTeleporting())
+            if (!TeleportController.IsTeleporting())
             {
                 UpdateRoomScalePosition();
                 Recenter();
@@ -149,9 +149,9 @@ namespace TwoForksVr.PlayerBody
         private void UpdateRotation()
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
-            if (TeleportArc.hitMarker.gameObject.activeInHierarchy)
+            if (TeleportController.teleportTarget.gameObject.activeInHierarchy)
             {
-                var targetPoint = TeleportArc.hitMarker.position;
+                var targetPoint = TeleportController.teleportTarget.position;
                 targetPoint.y = characterController.transform.position.y;
                 characterController.transform.LookAt(targetPoint, Vector3.up);
             }
@@ -167,7 +167,7 @@ namespace TwoForksVr.PlayerBody
         private void Recenter()
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
-            if (TeleportArc.IsTeleporting()) return;
+            if (TeleportController.IsTeleporting()) return;
             VrStage.Instance.RecenterRotation();
             VrStage.Instance.RecenterPosition();
         }

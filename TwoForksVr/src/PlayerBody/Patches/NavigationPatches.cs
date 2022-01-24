@@ -21,7 +21,6 @@ namespace TwoForksVr.PlayerBody.Patches
             dummyCamera.transform.SetParent(__instance.transform.Find("henry"), false);
             dummyCamera.enabled = false;
             __instance.playerCamera = dummyCamera;
-            TeleportArc.navigationController = __instance;
         }
 
         [HarmonyPostfix]

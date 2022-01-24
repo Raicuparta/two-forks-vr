@@ -1,3 +1,6 @@
+using System;
+using TwoForksVr.Assets;
+using TwoForksVr.Helpers;
 using TwoForksVr.Settings;
 using UnityEngine;
 using Valve.VR;
@@ -7,19 +10,17 @@ namespace TwoForksVr.TeleportLocomotion
 {
     public class TeleportArc : MonoBehaviour
     {
+        private const float arcVelocity = 10f;
+        private readonly LayerMask traceLayerMask = LayerHelper.GetMask(GameLayer.Default, GameLayer.Terrain);
+
         public int segmentCount = 60;
         public float thickness = 0.01f;
 
         [Tooltip("The amount of time in seconds to predict the motion of the projectile.")]
         public float arcDuration = 3.0f;
 
-        public float arcVelocity = 10f;
-
         private Material material;
-
-        public static Transform hitMarker; // TODO not static
-
-        public LayerMask traceLayerMask = 0;
+        
 
         //Private data
         private LineRenderer[] lineRenderers;
@@ -33,64 +34,31 @@ namespace TwoForksVr.TeleportLocomotion
         private Transform arcObjectsTransfrom;
         private bool arcInvalid = false;
         private float scale = 1;
+        
+        public static TeleportArc Create(TeleportController teleportController, Material material)
+        {
+            var instance = new GameObject("VrTeleportArc").AddComponent<TeleportArc>();
+            instance.transform.SetParent(teleportController.transform.parent);
+            instance.material = material;
 
-        public static vgPlayerNavigationController navigationController;
-
+            return instance;
+        }
 
         void Start()
         {
             arcTimeOffset = Time.time;
             Show();
-            hitMarker.SetParent(transform.parent);
-            material = hitMarker.GetComponent<Renderer>().material;
-        }
-
-        public static bool IsNextToTeleportMarker(Transform transform, float minSquareDistance = 0.3f)
-        {
-            if (!hitMarker.gameObject.activeInHierarchy) return false;
-            var targetPoint = hitMarker.position;
-            targetPoint.y = transform.position.y;
-            var squareDistance = Vector3.SqrMagnitude(targetPoint - transform.position);
-            return squareDistance < minSquareDistance;
-        }
-        
-        public static bool IsTeleporting()
-        {
-            return VrSettings.Teleport.Value && SteamVR_Actions.default_Teleport.state && navigationController && navigationController.enabled;
         }
 
         void Update()
         {
-            if (!IsTeleporting())
-            {
-                hitMarker.gameObject.SetActive(false);
-                Hide();
-                return;
-            }
-
-            Show();
             if (thickness != prevThickness || segmentCount != prevSegmentCount)
             {
                 CreateLineRendererObjects();
                 prevThickness = thickness;
                 prevSegmentCount = segmentCount;
             }
-            
-            RaycastHit hitInfo;
-            SetArcData(transform.position, transform.forward * arcVelocity, true, false);
-            var hit = DrawArc(out hitInfo);
-            if (hit)
-            {
-                hitMarker.gameObject.SetActive(true);
-                hitMarker.position = hitInfo.point;
-            }
-            else
-            {
-                hitMarker.gameObject.SetActive(false);
-            }
         }
-
-
 
         private void CreateLineRendererObjects()
         {
@@ -125,20 +93,6 @@ namespace TwoForksVr.TeleportLocomotion
         }
 
 
-        public void SetArcData(Vector3 position, Vector3 velocity, bool gravity, bool pointerAtBadAngle)
-        {
-            startPos = position;
-            projectileVelocity = velocity;
-            useGravity = gravity;
-
-            if (arcInvalid && !pointerAtBadAngle)
-            {
-                arcTimeOffset = Time.time;
-            }
-            arcInvalid = pointerAtBadAngle;
-        }
-
-
         public void Show()
         {
             showArc = true;
@@ -158,11 +112,14 @@ namespace TwoForksVr.TeleportLocomotion
             }
             showArc = false;
         }
-
-
+        
         // Draws each segment of the arc individually
         public bool DrawArc(out RaycastHit hitInfo)
         {
+            startPos = transform.position;
+            projectileVelocity = transform.forward * arcVelocity;
+            useGravity = true;
+
             var timeStep = arcDuration / segmentCount;
 
             var currentTimeOffset = 0f;
@@ -228,24 +185,12 @@ namespace TwoForksVr.TeleportLocomotion
             return arcHitTime != float.MaxValue;
         }
 
-
         private void DrawArcSegment(int index, float startTime, float endTime)
         {
             lineRenderers[index].enabled = true;
             lineRenderers[index].SetPosition(0, GetArcPositionAtTime(startTime));
             lineRenderers[index].SetPosition(1, GetArcPositionAtTime(endTime));
         }
-
-
-        public void SetColor(Color color)
-        {
-            for (var i = 0; i < segmentCount; ++i)
-            {
-                lineRenderers[i].startColor = color;
-				lineRenderers[i].endColor = color;
-            }
-        }
-
 
         private float FindProjectileCollision(out RaycastHit hitInfo)
         {
@@ -279,7 +224,7 @@ namespace TwoForksVr.TeleportLocomotion
         }
 
 
-        public Vector3 GetArcPositionAtTime(float time)
+        private Vector3 GetArcPositionAtTime(float time)
         {
             var gravity = useGravity ? Physics.gravity : Vector3.zero;
 
@@ -290,12 +235,10 @@ namespace TwoForksVr.TeleportLocomotion
 
         private void HideLineSegments(int startSegment, int endSegment)
         {
-            if (lineRenderers != null)
+            if (lineRenderers == null) return;
+            for (var i = startSegment; i < endSegment; ++i)
             {
-                for (var i = startSegment; i < endSegment; ++i)
-                {
-                    lineRenderers[i].enabled = false;
-                }
+                lineRenderers[i].enabled = false;
             }
         }
     }

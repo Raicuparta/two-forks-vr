@@ -17,14 +17,14 @@ namespace TwoForksVr.TeleportLocomotion.Patches
                 return false;
             }
             
-            var hasReachedTeleportMarked = TeleportArc.IsNextToTeleportMarker(__instance.playerController.transform);
+            var hasReachedTeleportMarked = TeleportController.IsNextToTeleportMarker(__instance.playerController.transform);
 
-            if (hasReachedTeleportMarked && TeleportArc.IsTeleporting())
+            if (hasReachedTeleportMarked && TeleportController.IsTeleporting())
             {
                 VrStage.Instance.FadeToClear();
             }
             
-            return !TeleportArc.IsTeleporting() || hasReachedTeleportMarked;
+            return !TeleportController.IsTeleporting() || hasReachedTeleportMarked;
         }
         
         [HarmonyPrefix]
@@ -36,7 +36,7 @@ namespace TwoForksVr.TeleportLocomotion.Patches
                 return false;
             }
 
-            return !TeleportArc.IsTeleporting() || TeleportArc.IsNextToTeleportMarker(__instance.playerController.transform);
+            return !TeleportController.IsTeleporting() || TeleportController.IsNextToTeleportMarker(__instance.playerController.transform);
         }
     }
 }

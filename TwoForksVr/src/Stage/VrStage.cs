@@ -3,6 +3,7 @@ using TwoForksVr.Debugging;
 using TwoForksVr.Helpers;
 using TwoForksVr.Limbs;
 using TwoForksVr.PlayerCamera;
+using TwoForksVr.TeleportLocomotion;
 using TwoForksVr.UI;
 using UnityEngine;
 using Valve.VR;
@@ -20,6 +21,7 @@ namespace TwoForksVr.Stage
         private Camera mainCamera;
         private InteractiveUiTarget interactiveUiTarget;
         private FadeOverlay fadeOverlay;
+        private TeleportController teleportController;
 
         // No idea why, but if I don't make this static, it gets lost
         public static Camera FallbackCamera { get; private set; }
@@ -56,6 +58,7 @@ namespace TwoForksVr.Stage
             Instance.follow = stageParent.AddComponent<FakeParenting>();
             Instance.interactiveUiTarget = InteractiveUiTarget.Create(Instance);
             Instance.fadeOverlay = FadeOverlay.Create(Instance);
+            Instance.teleportController = TeleportController.Create(Instance, Instance.limbManager);
 
             FallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
             FallbackCamera.enabled = false;
@@ -85,6 +88,7 @@ namespace TwoForksVr.Stage
             cameraManager.SetUp(nextCamera, playerTransform);
             limbManager.SetUp(playerTransform, nextCamera);
             interactiveUiTarget.SetUp(nextCamera);
+            teleportController.SetUp(playerTransform);
             fadeOverlay.SetUp(nextCamera);
         }
 

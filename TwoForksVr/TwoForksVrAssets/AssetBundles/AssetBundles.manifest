@@ -1,16 +1,10 @@
 ManifestFileVersion: 0
-CRC: 1240565124
+CRC: 999675550
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: tool-picker
-      Dependencies: {}
-    Info_1:
       Name: body
       Dependencies: {}
-    Info_2:
-      Name: settings-menu
-      Dependencies: {}
-    Info_3:
-      Name: camera
+    Info_1:
+      Name: ui
       Dependencies: {}
