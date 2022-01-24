@@ -3,6 +3,7 @@ using System.IO;
 using HarmonyLib;
 using TwoForksVr.Helpers;
 using TwoForksVr.Settings;
+using TwoForksVr.TeleportLocomotion;
 using TwoForksVr.UI;
 using UnityEngine;
 using Valve.VR;

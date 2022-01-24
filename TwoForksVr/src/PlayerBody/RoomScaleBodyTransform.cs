@@ -2,6 +2,7 @@ using TwoForksVr.Helpers;
 using TwoForksVr.PlayerCamera;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
+using TwoForksVr.TeleportLocomotion;
 using TwoForksVr.UI;
 using UnityEngine;
 using Valve.VR;

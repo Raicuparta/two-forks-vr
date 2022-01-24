@@ -3,9 +3,8 @@ using UnityEngine;
 using Valve.VR;
 using Valve.VR.InteractionSystem;
 
-namespace TwoForksVr.UI
+namespace TwoForksVr.TeleportLocomotion
 {
-    //-------------------------------------------------------------------------
     public class TeleportArc : MonoBehaviour
     {
         public int segmentCount = 60;
@@ -38,7 +37,6 @@ namespace TwoForksVr.UI
         public static vgPlayerNavigationController navigationController;
 
 
-        //-------------------------------------------------
         void Start()
         {
             arcTimeOffset = Time.time;
@@ -61,7 +59,6 @@ namespace TwoForksVr.UI
             return VrSettings.Teleport.Value && SteamVR_Actions.default_Teleport.state && navigationController && navigationController.enabled;
         }
 
-        //-------------------------------------------------
         void Update()
         {
             if (!IsTeleporting())
@@ -95,7 +92,6 @@ namespace TwoForksVr.UI
 
 
 
-        //-------------------------------------------------
         private void CreateLineRendererObjects()
         {
             //Destroy any existing line renderer objects
@@ -129,7 +125,6 @@ namespace TwoForksVr.UI
         }
 
 
-        //-------------------------------------------------
         public void SetArcData(Vector3 position, Vector3 velocity, bool gravity, bool pointerAtBadAngle)
         {
             startPos = position;
@@ -144,7 +139,6 @@ namespace TwoForksVr.UI
         }
 
 
-        //-------------------------------------------------
         public void Show()
         {
             showArc = true;
@@ -155,7 +149,6 @@ namespace TwoForksVr.UI
         }
 
 
-        //-------------------------------------------------
         public void Hide()
         {
             //Hide the line segments if they were previously being shown
@@ -167,9 +160,7 @@ namespace TwoForksVr.UI
         }
 
 
-        //-------------------------------------------------
         // Draws each segment of the arc individually
-        //-------------------------------------------------
         public bool DrawArc(out RaycastHit hitInfo)
         {
             var timeStep = arcDuration / segmentCount;
@@ -238,7 +229,6 @@ namespace TwoForksVr.UI
         }
 
 
-        //-------------------------------------------------
         private void DrawArcSegment(int index, float startTime, float endTime)
         {
             lineRenderers[index].enabled = true;
@@ -247,7 +237,6 @@ namespace TwoForksVr.UI
         }
 
 
-        //-------------------------------------------------
         public void SetColor(Color color)
         {
             for (var i = 0; i < segmentCount; ++i)
@@ -258,7 +247,6 @@ namespace TwoForksVr.UI
         }
 
 
-        //-------------------------------------------------
         private float FindProjectileCollision(out RaycastHit hitInfo)
         {
             var timeStep = arcDuration / segmentCount;
@@ -291,7 +279,6 @@ namespace TwoForksVr.UI
         }
 
 
-        //-------------------------------------------------
         public Vector3 GetArcPositionAtTime(float time)
         {
             var gravity = useGravity ? Physics.gravity : Vector3.zero;
@@ -301,7 +288,6 @@ namespace TwoForksVr.UI
         }
 
 
-        //-------------------------------------------------
         private void HideLineSegments(int startSegment, int endSegment)
         {
             if (lineRenderers != null)
