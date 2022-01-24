@@ -36,7 +36,7 @@ namespace TwoForksVr
             if (preCullCamera != camera) return;
 
             TwoForksVrBehavior.InvokeVeryLateUpdate<RoomScaleBodyTransform>();
-            FakeParenting.InvokeUpdate();
+            TwoForksVrBehavior.InvokeVeryLateUpdate<FakeParenting>();
         }
     }
 }

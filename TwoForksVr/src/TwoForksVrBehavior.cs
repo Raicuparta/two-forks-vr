@@ -1,40 +1,56 @@
 using System;
 using System.Collections.Generic;
+using TwoForksVr.Helpers;
 using UnityEngine;
 
 namespace TwoForksVr
 {
     public abstract class TwoForksVrBehavior: MonoBehaviour
     {
-        private static readonly Dictionary<Type, Action> updateActions = new Dictionary<Type, Action>();
+        private static readonly Dictionary<Type, List<TwoForksVrBehavior>> typeInstanceMap = new Dictionary<Type, List<TwoForksVrBehavior>>();
 
         protected virtual void Awake()
         {
-            if (updateActions.ContainsKey(GetType()))
+            if (typeInstanceMap.ContainsKey(GetType()))
             {
-                updateActions[GetType()] += InvokeVeryLateUpdateIfEnabled;
+                typeInstanceMap[GetType()].Add(this);
             }
             else
             {
-                updateActions[GetType()] = InvokeVeryLateUpdateIfEnabled;
+                typeInstanceMap[GetType()] = new List<TwoForksVrBehavior>() {this};
             }
         }
 
         protected virtual void OnDestroy()
         {
-            updateActions.TryGetValue(GetType(), out var instance);
-            if (instance == null) return;
-            instance -= InvokeVeryLateUpdateIfEnabled;
+            Logs.LogInfo($"########## destroying {GetType().Name} {name}");
+            typeInstanceMap.TryGetValue(GetType(), out var instance);
+            if (instance == null)
+            {
+                Logs.LogError($"########## UNABLE TO DESTROY {GetType().Name} {name}");
+                return;
+            }
+
+            instance.Remove(this);
         }
 
         public static void InvokeVeryLateUpdate<TBehavior>() where TBehavior : TwoForksVrBehavior
         {
-            updateActions.TryGetValue(typeof(TBehavior), out var updateAction);
-            updateAction?.Invoke();
+            typeInstanceMap.TryGetValue(typeof(TBehavior), out var instances);
+            if (instances == null) return;
+            foreach (var instance in instances)
+            {
+                instance.InvokeVeryLateUpdateIfEnabled();
+            }
         }
 
         private void InvokeVeryLateUpdateIfEnabled()
         {
+            if (!this)
+            {
+                Logs.LogError($"###### trying to update deleted object");
+                return;
+            }
             if (!enabled) return;
             VeryLateUpdate();
         }
