@@ -8,7 +8,7 @@ using Valve.VR;
 
 namespace TwoForksVr.PlayerBody
 {
-    public class RoomScaleBodyTransform : MonoBehaviour
+    public class RoomScaleBodyTransform : TwoForksVrBehavior
     {
         private const float minPositionOffset = 0.00001f;
         private const float maxPositionOffset = 1f;
@@ -20,7 +20,19 @@ namespace TwoForksVr.PlayerBody
         private vgPlayerNavigationController navigationController;
         private Vector3 prevCameraPosition;
         private Vector3 prevForward;
-        public static RoomScaleBodyTransform Instance { get; private set; } // TODO remove after cleaning up FakeParenting.
+        
+        public static void Create(CharacterController characterController, Camera camera)
+        {
+            var playerTransform = characterController.transform;
+            var existingRoomScalePosition = playerTransform.gameObject.GetComponent<RoomScaleBodyTransform>();
+            if (existingRoomScalePosition) return;
+
+            var instance = characterController.gameObject.AddComponent<RoomScaleBodyTransform>();
+            VeryLateUpdateManager.SetRoomScaleBodyTransform(instance);
+            instance.cameraTransform = camera.transform;
+            instance.characterController = characterController;
+            instance.navigationController = characterController.GetComponentInChildren<vgPlayerNavigationController>();
+        }
 
         private void Awake()
         {
@@ -30,16 +42,12 @@ namespace TwoForksVr.PlayerBody
 
         private void Start()
         {
-            Instance = this;
             prevForward = GetCameraForward();
             prevCameraPosition = cameraTransform.position;
-            Camera.onPreCull += HandlePreCull;
         }
 
         private void OnDestroy()
         {
-            Instance = null;
-            Camera.onPreCull -= HandlePreCull;
             SteamVR_Actions.default_Teleport.onStateDown -= OnTeleportInput;
             SteamVR_Actions.default_Teleport.onStateUp -= OnTeleportInput;
 
@@ -57,6 +65,13 @@ namespace TwoForksVr.PlayerBody
             {
                 UpdateSmoothTurning();
             }
+        }
+
+        public override void VeryLateUpdate()
+        {
+            UpdateRotation();
+            UpdateRoomScalePosition();
+            Recenter();
         }
         
         private void OnTeleportInput(SteamVR_Action_Boolean fromaction, SteamVR_Input_Sources fromsource)
@@ -104,28 +119,6 @@ namespace TwoForksVr.PlayerBody
             characterController.transform.Rotate(
                 Vector3.up,
                 SteamVR_Actions._default.Rotate.axis.x * smoothRotationSpeed * Time.deltaTime);
-        }
-
-        private void HandlePreCull(Camera camera)
-        {
-            if (camera.transform != cameraTransform || !enabled) return;
-
-            UpdateRotation();
-            UpdateRoomScalePosition();
-            Recenter();
-            FakeParenting.InvokeUpdate();
-        }
-
-        public static void Create(CharacterController characterController, Camera camera)
-        {
-            var playerTransform = characterController.transform;
-            var existingRoomScalePosition = playerTransform.gameObject.GetComponent<RoomScaleBodyTransform>();
-            if (existingRoomScalePosition) return;
-
-            var instance = characterController.gameObject.AddComponent<RoomScaleBodyTransform>();
-            instance.cameraTransform = camera.transform;
-            instance.characterController = characterController;
-            instance.navigationController = characterController.GetComponentInChildren<vgPlayerNavigationController>();
         }
 
         private void UpdateRoomScalePosition()

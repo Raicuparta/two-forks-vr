@@ -1,6 +1,4 @@
-﻿using System;
-using TwoForksVr.PlayerBody;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TwoForksVr.Helpers
 {
@@ -8,8 +6,6 @@ namespace TwoForksVr.Helpers
 
     // This component is useful when we need to simulate object parenting,
     // without actually changing the hierarchy.
-    // TODO: this is confusing, the update is being called from RoomScaleBodyTransform,
-    // to make sure it happens after body movement and rotation.
     public class FakeParenting : MonoBehaviour
     {
         public Transform Target;
@@ -24,12 +20,6 @@ namespace TwoForksVr.Helpers
         private void OnDestroy()
         {
             UpdateEvent -= UpdateTransform;
-        }
-
-        private void LateUpdate()
-        {
-            if (RoomScaleBodyTransform.Instance) return;
-            UpdateTransform();
         }
 
         public static void InvokeUpdate()

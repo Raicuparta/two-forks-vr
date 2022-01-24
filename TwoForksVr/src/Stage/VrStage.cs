@@ -22,6 +22,7 @@ namespace TwoForksVr.Stage
         private InteractiveUiTarget interactiveUiTarget;
         private FadeOverlay fadeOverlay;
         private TeleportController teleportController;
+        private VeryLateUpdateManager veryLateUpdateManager;
 
         // No idea why, but if I don't make this static, it gets lost
         public static Camera FallbackCamera { get; private set; }
@@ -59,6 +60,7 @@ namespace TwoForksVr.Stage
             Instance.interactiveUiTarget = InteractiveUiTarget.Create(Instance);
             Instance.fadeOverlay = FadeOverlay.Create(Instance);
             Instance.teleportController = TeleportController.Create(Instance, Instance.limbManager);
+            Instance.veryLateUpdateManager = VeryLateUpdateManager.Create(Instance);
 
             FallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
             FallbackCamera.enabled = false;
@@ -90,6 +92,7 @@ namespace TwoForksVr.Stage
             interactiveUiTarget.SetUp(nextCamera);
             teleportController.SetUp(playerTransform);
             fadeOverlay.SetUp(nextCamera);
+            veryLateUpdateManager.SetUp(nextCamera);
         }
 
         public void RecenterPosition(bool recenterVertically = false)
