@@ -8,7 +8,7 @@ namespace TwoForksVr.Helpers
     {
         public Transform Target;
 
-        public override void VeryLateUpdate()
+        protected override void VeryLateUpdate()
         {
             if (!Target) return;
             transform.position = Target.position;

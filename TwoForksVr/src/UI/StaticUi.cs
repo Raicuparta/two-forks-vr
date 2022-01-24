@@ -2,12 +2,12 @@
 
 namespace TwoForksVr.UI
 {
-    public class StaticUi : MonoBehaviour
+    public class StaticUi : TwoForksVrBehavior
     {
         private const float offset = 0.8f;
         private static Transform cameraTransform;
 
-        private void LateUpdate()
+        protected override void VeryLateUpdate()
         {
             if (!cameraTransform) return;
             var targetPosition = cameraTransform.position;

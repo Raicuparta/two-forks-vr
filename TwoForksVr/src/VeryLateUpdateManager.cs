@@ -1,6 +1,7 @@
 using TwoForksVr.Helpers;
 using TwoForksVr.PlayerBody;
 using TwoForksVr.Stage;
+using TwoForksVr.UI;
 using UnityEngine;
 
 namespace TwoForksVr
@@ -37,6 +38,7 @@ namespace TwoForksVr
 
             TwoForksVrBehavior.InvokeVeryLateUpdate<RoomScaleBodyTransform>();
             TwoForksVrBehavior.InvokeVeryLateUpdate<FakeParenting>();
+            TwoForksVrBehavior.InvokeVeryLateUpdate<StaticUi>();
         }
     }
 }

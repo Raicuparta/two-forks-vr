@@ -68,7 +68,7 @@ namespace TwoForksVr.PlayerBody
             }
         }
 
-        public override void VeryLateUpdate()
+        protected override void VeryLateUpdate()
         {
             UpdateRotation();
             UpdateRoomScalePosition();

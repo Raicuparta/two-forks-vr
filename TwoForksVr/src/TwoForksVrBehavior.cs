@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TwoForksVr.Helpers;
 using UnityEngine;
 
 namespace TwoForksVr
@@ -24,12 +23,8 @@ namespace TwoForksVr
         protected virtual void OnDestroy()
         {
             typeInstanceMap.TryGetValue(GetType(), out var instance);
-            if (instance == null)
-            {
-                return;
-            }
 
-            instance.Remove(this);
+            instance?.Remove(this);
         }
 
         public static void InvokeVeryLateUpdate<TBehavior>() where TBehavior : TwoForksVrBehavior
@@ -48,6 +43,6 @@ namespace TwoForksVr
             VeryLateUpdate();
         }
 
-        public abstract void VeryLateUpdate();
+        protected abstract void VeryLateUpdate();
     }
 }
