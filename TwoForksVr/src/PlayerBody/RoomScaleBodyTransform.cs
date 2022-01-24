@@ -28,14 +28,14 @@ namespace TwoForksVr.PlayerBody
             if (existingRoomScalePosition) return;
 
             var instance = characterController.gameObject.AddComponent<RoomScaleBodyTransform>();
-            VeryLateUpdateManager.SetRoomScaleBodyTransform(instance);
             instance.cameraTransform = camera.transform;
             instance.characterController = characterController;
             instance.navigationController = characterController.GetComponentInChildren<vgPlayerNavigationController>();
         }
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             SteamVR_Actions.default_Teleport.onStateDown += OnTeleportInput;
             SteamVR_Actions.default_Teleport.onStateUp += OnTeleportInput;
         }
@@ -46,8 +46,9 @@ namespace TwoForksVr.PlayerBody
             prevCameraPosition = cameraTransform.position;
         }
 
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
             SteamVR_Actions.default_Teleport.onStateDown -= OnTeleportInput;
             SteamVR_Actions.default_Teleport.onStateUp -= OnTeleportInput;
 

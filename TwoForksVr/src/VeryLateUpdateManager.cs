@@ -10,7 +10,6 @@ namespace TwoForksVr
     public class VeryLateUpdateManager: MonoBehaviour
     {
         private Camera camera;
-        private static RoomScaleBodyTransform roomScaleBodyTransform;
 
         public static VeryLateUpdateManager Create(VrStage stage)
         {
@@ -32,22 +31,11 @@ namespace TwoForksVr
             Camera.onPreCull -= HandlePreCull;
         }
 
-        public static void SetRoomScaleBodyTransform(RoomScaleBodyTransform newRoomScaleBodyTransform)
-        {
-            roomScaleBodyTransform = newRoomScaleBodyTransform;
-        }
-
-        private static void InvokeVeryLateUpdate(TwoForksVrBehavior behavior)
-        {
-            if (!behavior || !behavior.enabled) return;
-            behavior.VeryLateUpdate();
-        }
-
         private void HandlePreCull(Camera preCullCamera)
         {
             if (preCullCamera != camera) return;
 
-            InvokeVeryLateUpdate(roomScaleBodyTransform);
+            TwoForksVrBehavior.InvokeVeryLateUpdate<RoomScaleBodyTransform>();
             FakeParenting.InvokeUpdate();
         }
     }
