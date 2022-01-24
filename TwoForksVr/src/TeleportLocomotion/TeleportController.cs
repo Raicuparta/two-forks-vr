@@ -15,7 +15,7 @@ namespace TwoForksVr.TeleportLocomotion
 
         private TeleportArc teleportArc;
         private VrLimbManager limbManager;
-        public static Transform teleportTarget; // todo no static, no public
+        private static Transform teleportTarget; // todo no static, no public
         private static vgPlayerNavigationController navigationController; // todo no static
 
         public static TeleportController Create(VrStage stage, VrLimbManager limbManager)
@@ -62,6 +62,15 @@ namespace TwoForksVr.TeleportLocomotion
                 SetHand(limbManager.RightHand);
             }
             UpdateArc();
+            UpdatePlayerRotation();
+        }
+
+        private void UpdatePlayerRotation()
+        {
+            if (!IsTeleporting()) return;
+            var targetPoint = teleportTarget.position;
+            targetPoint.y = navigationController.transform.position.y;
+            navigationController.transform.LookAt(targetPoint, Vector3.up);
         }
         
         private void UpdateArc()

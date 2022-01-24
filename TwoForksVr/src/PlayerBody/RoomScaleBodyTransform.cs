@@ -1,9 +1,8 @@
+using System;
 using TwoForksVr.Helpers;
 using TwoForksVr.PlayerCamera;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
-using TwoForksVr.TeleportLocomotion;
-using TwoForksVr.UI;
 using UnityEngine;
 using Valve.VR;
 
@@ -23,6 +22,12 @@ namespace TwoForksVr.PlayerBody
         private Vector3 prevForward;
         public static RoomScaleBodyTransform Instance { get; private set; } // TODO remove after cleaning up FakeParenting.
 
+        private void Awake()
+        {
+            SteamVR_Actions.default_Teleport.onStateDown += OnTeleportInput;
+            SteamVR_Actions.default_Teleport.onStateUp += OnTeleportInput;
+        }
+
         private void Start()
         {
             Instance = this;
@@ -35,11 +40,14 @@ namespace TwoForksVr.PlayerBody
         {
             Instance = null;
             Camera.onPreCull -= HandlePreCull;
+            SteamVR_Actions.default_Teleport.onStateDown -= OnTeleportInput;
+            SteamVR_Actions.default_Teleport.onStateUp -= OnTeleportInput;
+
         }
 
         private void Update()
         {
-            if (!navigationController.onGround || !navigationController.enabled || TeleportController.IsTeleporting()) return;
+            if (!navigationController.onGround || !navigationController.enabled) return;
             
             if (VrSettings.SnapTurning.Value)
             {
@@ -50,7 +58,12 @@ namespace TwoForksVr.PlayerBody
                 UpdateSmoothTurning();
             }
         }
-
+        
+        private void OnTeleportInput(SteamVR_Action_Boolean fromaction, SteamVR_Input_Sources fromsource)
+        {
+            enabled = !fromaction.state;
+        }
+        
         private void SnapTurn(float angle)
         {
             characterController.transform.Rotate(Vector3.up, angle);
@@ -95,14 +108,11 @@ namespace TwoForksVr.PlayerBody
 
         private void HandlePreCull(Camera camera)
         {
-            if (camera.transform != cameraTransform) return;
+            if (camera.transform != cameraTransform || !enabled) return;
 
             UpdateRotation();
-            if (!TeleportController.IsTeleporting())
-            {
-                UpdateRoomScalePosition();
-                Recenter();
-            }
+            UpdateRoomScalePosition();
+            Recenter();
             FakeParenting.InvokeUpdate();
         }
 
@@ -149,25 +159,16 @@ namespace TwoForksVr.PlayerBody
         private void UpdateRotation()
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
-            if (TeleportController.teleportTarget.gameObject.activeInHierarchy)
-            {
-                var targetPoint = TeleportController.teleportTarget.position;
-                targetPoint.y = characterController.transform.position.y;
-                characterController.transform.LookAt(targetPoint, Vector3.up);
-            }
-            else
-            {
-                var cameraForward = GetCameraForward();
-                var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
-                prevForward = cameraForward;
-                characterController.transform.Rotate(Vector3.up, angleDelta);
-            }
+
+            var cameraForward = GetCameraForward();
+            var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
+            prevForward = cameraForward;
+            characterController.transform.Rotate(Vector3.up, angleDelta);
         }
 
         private void Recenter()
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
-            if (TeleportController.IsTeleporting()) return;
             VrStage.Instance.RecenterRotation();
             VrStage.Instance.RecenterPosition();
         }
