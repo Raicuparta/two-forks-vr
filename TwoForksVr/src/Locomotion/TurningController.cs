@@ -12,11 +12,13 @@ namespace TwoForksVr.Locomotion
         private const float snapRotationAngle = 60f; // TODO make this configurable.
         private vgPlayerNavigationController navigationController;
         private TeleportController teleportController;
+        private VrStage stage;
 
         public static TurningController Create(VrStage stage, TeleportController teleportController)
         {
             var instance =  stage.gameObject.AddComponent<TurningController>();
             instance.teleportController = teleportController;
+            instance.stage = stage;
             return instance;
         }
 
@@ -43,12 +45,12 @@ namespace TwoForksVr.Locomotion
         {
             if (SteamVR_Actions.default_SnapTurnLeft.stateDown)
             {
-                VrStage.Instance.FadeToBlack();
+                stage.FadeToBlack();
                 Invoke(nameof(SnapTurnLeft), FadeOverlay.Duration);
             }
             if (SteamVR_Actions.default_SnapTurnRight.stateDown)
             {
-                VrStage.Instance.FadeToBlack();
+                stage.FadeToBlack();
                 Invoke(nameof(SnapTurnRight), FadeOverlay.Duration);
             }
         }
@@ -78,7 +80,7 @@ namespace TwoForksVr.Locomotion
 
         private void EndSnap()
         {
-            VrStage.Instance.FadeToClear();
+            stage.FadeToClear();
         }
     }
 }

@@ -3,7 +3,7 @@
 namespace TwoForksVr.PlayerBody.Patches
 {
     [HarmonyPatch]
-    public static class BodyPatches
+    public class BodyPatches: TwoForksVrPatch
     {
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.SetBackpackVisibility))]

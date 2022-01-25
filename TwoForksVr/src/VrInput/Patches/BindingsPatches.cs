@@ -9,7 +9,7 @@ using Valve.VR;
 namespace TwoForksVr.VrInput.Patches
 {
     [HarmonyPatch]
-    public static class BindingsPatches
+    public class BindingsPatches: TwoForksVrPatch
     {
         private static bool isInitialized;
         private static SteamVR_Input_ActionSet_default actionSet;

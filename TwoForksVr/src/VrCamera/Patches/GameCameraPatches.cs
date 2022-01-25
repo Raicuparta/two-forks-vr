@@ -5,7 +5,7 @@ using UnityEngine;
 namespace TwoForksVr.VrCamera.Patches
 {
     [HarmonyPatch]
-    public class GameCameraPatches
+    public class GameCameraPatches: TwoForksVrPatch
     {
         private static bool isDone;
 
@@ -14,7 +14,7 @@ namespace TwoForksVr.VrCamera.Patches
         private static void RecenterCamera()
         {
             if (isDone) return;
-            VrStage.Instance.RecenterPosition(true);
+            StageInstance.RecenterPosition(true);
             isDone = true;
         }
 

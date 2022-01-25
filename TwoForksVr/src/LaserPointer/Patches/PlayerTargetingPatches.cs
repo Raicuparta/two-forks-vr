@@ -4,7 +4,7 @@ using UnityEngine;
 namespace TwoForksVr.LaserPointer.Patches
 {
     [HarmonyPatch]
-    public static class PlayerTargetingPatches
+    public class PlayerTargetingPatches: TwoForksVrPatch
     {
         public static Transform LaserTransform;
 

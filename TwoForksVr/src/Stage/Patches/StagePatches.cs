@@ -5,7 +5,7 @@ using UnityEngine;
 namespace TwoForksVr.Stage.Patches
 {
     [HarmonyPatch]
-    public static class StagePatches
+    public class StagePatches: TwoForksVrPatch
     {
         private static vgReset resetObject;
         private static Transform originalParent;
@@ -25,15 +25,15 @@ namespace TwoForksVr.Stage.Patches
         [HarmonyPatch(typeof(vgDestroyAllGameObjects), "OnEnter")]
         private static void PreventStageDestructionStart(object __instance)
         {
-            originalParent = VrStage.Instance.transform.parent.parent;
-            VrStage.Instance.transform.parent.SetParent(resetObject.transform);
+            originalParent = StageInstance.transform.parent.parent;
+            StageInstance.transform.parent.SetParent(resetObject.transform);
         }
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(vgDestroyAllGameObjects), "OnEnter")]
         private static void PreventStageDestructionEnd()
         {
-            VrStage.Instance.transform.parent.SetParent(originalParent);
+            StageInstance.transform.parent.SetParent(originalParent);
         }
 
         [HarmonyPostfix]
@@ -44,7 +44,7 @@ namespace TwoForksVr.Stage.Patches
             // TODO check if I can make this happen later.
             var camera = __instance.cameraController.GetComponentInChildren<Camera>();
 
-            VrStage.Instance.SetUp(camera, __instance);
+            StageInstance.SetUp(camera, __instance);
         }
     }
 }

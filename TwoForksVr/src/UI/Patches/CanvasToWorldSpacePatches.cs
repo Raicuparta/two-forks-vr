@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace TwoForksVr.UI.Patches
 {
     [HarmonyPatch]
-    public static class CanvasToWorldSpacePatches
+    public class CanvasToWorldSpacePatches: TwoForksVrPatch
     {
         private static readonly string[] canvasesToDisable =
         {

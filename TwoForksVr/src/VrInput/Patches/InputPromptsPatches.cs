@@ -7,7 +7,7 @@ using Valve.VR;
 namespace TwoForksVr.VrInput.Patches
 {
     [HarmonyPatch]
-    public static class InputPromptsPatches
+    public class InputPromptsPatches: TwoForksVrPatch
     {
         // Todo this shouldnt be here I guess.
         private static string currentButtonDisplay;
@@ -15,7 +15,7 @@ namespace TwoForksVr.VrInput.Patches
         private static void ResetPrompt()
         {
             currentButtonDisplay = "";
-            VrStage.Instance.HighlightButton();
+            StageInstance.HighlightButton();
         }
         
         [HarmonyPrefix]
@@ -46,7 +46,7 @@ namespace TwoForksVr.VrInput.Patches
                 BindingsPatches.BooleanActionMap.TryGetValue(command.command, out var action);
                 if (action != null)
                 {
-                    VrStage.Instance.HighlightButton(action);
+                    StageInstance.HighlightButton(action);
                     buttonText.text = action.GetLocalizedOriginPart(SteamVR_Input_Sources.Any, EVRInputStringBits.VRInputString_InputSource);
                     buttonText.gameObject.SetActive(true);
                     // Doing it only for the first command that works, not sure if that canb e a problem.

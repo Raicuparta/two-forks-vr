@@ -9,7 +9,7 @@ using UnityEngine.UI;
 namespace TwoForksVr.UI.Patches
 {
     [HarmonyPatch]
-    public static class ModSettingsPatches
+    public class ModSettingsPatches: TwoForksVrPatch
     {
         private static void SetNavigation(Selectable selectable, Selectable selectOnUp = null, Selectable selectOnDown = null)
         {
@@ -50,7 +50,7 @@ namespace TwoForksVr.UI.Patches
         {
             var vrSettingsButton = CreateButton(buttonAbove, parent, "VR Settings");
             
-            var vrSettingsMenu = VrSettingsMenu.Create(VrStage.Instance); // TODO don't pass singleton
+            var vrSettingsMenu = VrSettingsMenu.Create(StageInstance); // TODO don't pass singleton
             vrSettingsMenu.gameObject.SetActive(false);
             RemoveAllClickListeners(vrSettingsButton);
             vrSettingsButton.onClick.AddListener(() =>

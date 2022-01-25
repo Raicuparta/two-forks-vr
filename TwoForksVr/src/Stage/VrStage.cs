@@ -13,7 +13,7 @@ namespace TwoForksVr.Stage
 {
     public class VrStage : MonoBehaviour
     {
-        public static VrStage Instance;
+        private static VrStage instance;
 
         private VRCameraManager cameraManager;
         private FakeParenting follow;
@@ -44,7 +44,7 @@ namespace TwoForksVr.Stage
 
         public static void Create(Transform parent)
         {
-            if (Instance) return;
+            if (instance) return;
             var stageParent = new GameObject("VrStageParent")
             {
                 // Apparently Firewatch will destroy all DontDrestroyOnLoad objects between scenes,
@@ -56,26 +56,28 @@ namespace TwoForksVr.Stage
             stageParent.AddComponent<vgOnlyLoadOnce>().dontDestroyOnLoad = true;
 
             DontDestroyOnLoad(stageParent);
-            Instance = new GameObject("VrStage").AddComponent<VrStage>();
-            Instance.transform.SetParent(stageParent.transform, false);
-            Instance.cameraManager = VRCameraManager.Create(Instance);
-            Instance.limbManager = VrLimbManager.Create(Instance);
-            Instance.follow = stageParent.AddComponent<FakeParenting>();
-            Instance.interactiveUiTarget = InteractiveUiTarget.Create(Instance);
-            Instance.fadeOverlay = FadeOverlay.Create(Instance);
-            Instance.teleportController = TeleportController.Create(Instance, Instance.limbManager);
-            Instance.veryLateUpdateManager = VeryLateUpdateManager.Create(Instance);
-            Instance.turningController = TurningController.Create(Instance, Instance.teleportController);
-            Instance.roomScaleBodyTransform = RoomScaleBodyTransform.Create(Instance, Instance.teleportController);
-            Instance.bodyRendererManager = BodyRendererManager.Create(Instance);
+            instance = new GameObject("VrStage").AddComponent<VrStage>();
+            instance.transform.SetParent(stageParent.transform, false);
+            instance.cameraManager = VRCameraManager.Create(instance);
+            instance.limbManager = VrLimbManager.Create(instance);
+            instance.follow = stageParent.AddComponent<FakeParenting>();
+            instance.interactiveUiTarget = InteractiveUiTarget.Create(instance);
+            instance.fadeOverlay = FadeOverlay.Create(instance);
+            instance.teleportController = TeleportController.Create(instance, instance.limbManager);
+            instance.veryLateUpdateManager = VeryLateUpdateManager.Create(instance);
+            instance.turningController = TurningController.Create(instance, instance.teleportController);
+            instance.roomScaleBodyTransform = RoomScaleBodyTransform.Create(instance, instance.teleportController);
+            instance.bodyRendererManager = BodyRendererManager.Create(instance);
 
             FallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
             FallbackCamera.enabled = false;
             FallbackCamera.clearFlags = CameraClearFlags.Color;
             FallbackCamera.backgroundColor = Color.black;
-            FallbackCamera.transform.SetParent(Instance.transform, false);
+            FallbackCamera.transform.SetParent(instance.transform, false);
 
-            Instance.gameObject.AddComponent<GeneralDebugger>();
+            instance.gameObject.AddComponent<GeneralDebugger>();
+            
+            TwoForksVrPatch.SetStage(instance);
         }
 
         public void SetUp(Camera camera, vgPlayerController playerController)

@@ -16,11 +16,13 @@ namespace TwoForksVr.PlayerBody
         private TeleportController teleportController;
         private Vector3 prevCameraPosition;
         private Vector3 prevForward;
+        private VrStage stage;
 
         public static RoomScaleBodyTransform Create(VrStage stage, TeleportController teleportController)
         {
             var instance = stage.gameObject.AddComponent<RoomScaleBodyTransform>();
             instance.teleportController = teleportController;
+            instance.stage = stage;
             return instance;
         }
 
@@ -50,8 +52,8 @@ namespace TwoForksVr.PlayerBody
         private void Recenter()
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
-            VrStage.Instance.RecenterRotation();
-            VrStage.Instance.RecenterPosition();
+            stage.RecenterRotation();
+            stage.RecenterPosition();
         }
 
         private void UpdateRoomScalePosition()
@@ -61,7 +63,7 @@ namespace TwoForksVr.PlayerBody
             var localPositionDelta = cameraPosition - prevCameraPosition;
             localPositionDelta.y = 0;
 
-            var worldPositionDelta = VrStage.Instance.transform.TransformVector(localPositionDelta);
+            var worldPositionDelta = stage.transform.TransformVector(localPositionDelta);
 
             if (worldPositionDelta.sqrMagnitude < minPositionOffset || !navigationController.onGround ||
                 !navigationController.enabled) return;

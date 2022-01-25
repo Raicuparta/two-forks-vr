@@ -8,7 +8,7 @@ using UnityEngine;
 namespace TwoForksVr.PlayerBody.Patches
 {
     [HarmonyPatch]
-    public static class NavigationPatches
+    public class NavigationPatches: TwoForksVrPatch
     {
         [HarmonyPostfix]
         [HarmonyPatch(typeof(vgPlayerNavigationController), nameof(vgPlayerNavigationController.Start))]

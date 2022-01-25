@@ -4,7 +4,7 @@ using UnityEngine;
 namespace TwoForksVr.UI.Patches
 {
     [HarmonyPatch]
-    public static class UIPatches
+    public class UIPatches: TwoForksVrPatch
     {
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.ShowAbilityIcon))]

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace TwoForksVr.UI.Patches
 {
     [HarmonyPatch]
-    public static class InventoryPatches
+    public class InventoryPatches: TwoForksVrPatch
     {
         public static Transform RightHand;
 

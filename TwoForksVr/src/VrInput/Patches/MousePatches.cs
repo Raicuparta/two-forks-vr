@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 namespace TwoForksVr.VrInput.Patches
 {
     [HarmonyPatch]
-    public static class MousePatches
+    public class MousePatches: TwoForksVrPatch
     {
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgCursorManager), nameof(vgCursorManager.Awake))]

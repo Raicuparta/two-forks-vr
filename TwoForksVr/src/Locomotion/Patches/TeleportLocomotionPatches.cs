@@ -6,7 +6,7 @@ using UnityEngine;
 namespace TwoForksVr.Locomotion.Patches
 {
     [HarmonyPatch]
-    public static class TeleportLocomotionPatches
+    public class TeleportLocomotionPatches: TwoForksVrPatch
     {
         public static TeleportController Teleport;
         
@@ -35,7 +35,7 @@ namespace TwoForksVr.Locomotion.Patches
 
             if (hasReachedTeleportMarked && Teleport.IsTeleporting())
             {
-                VrStage.Instance.FadeToClear();
+                StageInstance.FadeToClear();
             }
         }
         
