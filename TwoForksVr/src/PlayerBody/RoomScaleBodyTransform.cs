@@ -58,6 +58,7 @@ namespace TwoForksVr.PlayerBody
         
         private void OnTeleportInput(SteamVR_Action_Boolean fromaction, SteamVR_Input_Sources fromsource)
         {
+            // TODO this probably doesn't make sense, what if teleport option is turned off?
             enabled = !fromaction.state;
         }
 
