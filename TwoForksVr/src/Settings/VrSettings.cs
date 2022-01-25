@@ -4,12 +4,12 @@ namespace TwoForksVr.Settings
 {
     public static class VrSettings
     {
-        public static ConfigFile Config;
-        public static ConfigEntry<bool> SnapTurning;
-        public static ConfigEntry<bool> ShowFeet;
-        public static ConfigEntry<bool> ShowBody;
-        public static ConfigEntry<bool> Teleport;
-        public static ConfigEntry<bool> FixedCameraDuringAnimations;
+        public static ConfigFile Config { get; private set; }
+        public static ConfigEntry<bool> SnapTurning { get; private set; }
+        public static ConfigEntry<bool> ShowFeet { get; private set; }
+        public static ConfigEntry<bool> ShowBody { get; private set; }
+        public static ConfigEntry<bool> Teleport { get; private set; }
+        public static ConfigEntry<bool> FixedCameraDuringAnimations { get; private set; }
 
         public static void SetUp(ConfigFile config)
         {

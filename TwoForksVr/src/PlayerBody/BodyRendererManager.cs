@@ -32,14 +32,12 @@ namespace TwoForksVr.PlayerBody
 
         private void Awake()
         {
-            VrSettings.ShowFeet.SettingChanged += HandleSettingsChanged;
-            VrSettings.ShowBody.SettingChanged += HandleSettingsChanged;
+            VrSettings.Config.SettingChanged += HandleSettingsChanged;
         }
 
         private void OnDestroy()
         {
-            VrSettings.ShowFeet.SettingChanged -= HandleSettingsChanged;
-            VrSettings.ShowBody.SettingChanged -= HandleSettingsChanged;
+            VrSettings.Config.SettingChanged -= HandleSettingsChanged;
         }
 
         // Hides body parts by either making them completely invisible,
