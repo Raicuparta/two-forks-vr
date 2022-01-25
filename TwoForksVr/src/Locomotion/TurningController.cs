@@ -57,7 +57,7 @@ namespace TwoForksVr.Locomotion
         {
             navigationController.transform.Rotate(
                 Vector3.up,
-                SteamVR_Actions._default.Rotate.axis.x * smoothRotationSpeed * Time.deltaTime);
+                SteamVR_Actions._default.Rotate.axis.x * smoothRotationSpeed * Time.unscaledDeltaTime);
         }
 
         private void SnapTurnLeft()
