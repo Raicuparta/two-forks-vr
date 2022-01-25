@@ -2,7 +2,6 @@
 using System.Reflection;
 using HarmonyLib;
 using TwoForksVr.Helpers;
-using TwoForksVr.TeleportLocomotion;
 using TwoForksVr.UI;
 using UnityEngine;
 

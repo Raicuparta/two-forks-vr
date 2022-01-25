@@ -2,8 +2,8 @@
 using TwoForksVr.Debugging;
 using TwoForksVr.Helpers;
 using TwoForksVr.Limbs;
+using TwoForksVr.Locomotion;
 using TwoForksVr.PlayerCamera;
-using TwoForksVr.TeleportLocomotion;
 using TwoForksVr.UI;
 using UnityEngine;
 using Valve.VR;

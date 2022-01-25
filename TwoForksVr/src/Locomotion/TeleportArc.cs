@@ -1,12 +1,8 @@
-using System;
-using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
-using TwoForksVr.Settings;
 using UnityEngine;
-using Valve.VR;
 using Valve.VR.InteractionSystem;
 
-namespace TwoForksVr.TeleportLocomotion
+namespace TwoForksVr.Locomotion
 {
     public class TeleportArc : MonoBehaviour
     {

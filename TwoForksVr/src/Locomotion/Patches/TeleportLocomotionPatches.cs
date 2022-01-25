@@ -3,7 +3,7 @@ using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using UnityEngine;
 
-namespace TwoForksVr.TeleportLocomotion.Patches
+namespace TwoForksVr.Locomotion.Patches
 {
     [HarmonyPatch]
     public static class TeleportLocomotionPatches

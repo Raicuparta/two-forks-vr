@@ -1,12 +1,12 @@
 using TwoForksVr.Assets;
 using TwoForksVr.Limbs;
+using TwoForksVr.Locomotion.Patches;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
-using TwoForksVr.TeleportLocomotion.Patches;
 using UnityEngine;
 using Valve.VR;
 
-namespace TwoForksVr.TeleportLocomotion
+namespace TwoForksVr.Locomotion
 {
     public class TeleportController: MonoBehaviour
     {
@@ -29,10 +29,7 @@ namespace TwoForksVr.TeleportLocomotion
 
         public void SetUp(Transform playerTransform)
         {
-            if (playerTransform)
-            {
-                navigationController = playerTransform.GetComponent<vgPlayerNavigationController>();
-            }
+            navigationController = playerTransform ? playerTransform.GetComponent<vgPlayerNavigationController>() : null;
         }
 
         public bool IsNextToTeleportMarker(Transform objectTransform, float minSquareDistance = 0.3f)
@@ -65,7 +62,7 @@ namespace TwoForksVr.TeleportLocomotion
 
         private void UpdatePlayerRotation()
         {
-            if (!IsTeleporting()) return;
+            if (!IsTeleporting() || !navigationController) return;
             var targetPoint = teleportTarget.position;
             targetPoint.y = navigationController.transform.position.y;
             navigationController.transform.LookAt(targetPoint, Vector3.up);

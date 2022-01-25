@@ -1,6 +1,5 @@
 ﻿using TwoForksVr.LaserPointer;
 using TwoForksVr.Stage;
-using TwoForksVr.TeleportLocomotion;
 using TwoForksVr.Tools;
 using TwoForksVr.UI.Patches;
 using UnityEngine;
