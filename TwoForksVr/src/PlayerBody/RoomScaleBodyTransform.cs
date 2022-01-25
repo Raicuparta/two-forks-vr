@@ -78,7 +78,7 @@ namespace TwoForksVr.PlayerBody
 
             // There's a chance this might break some other movement-related stuff,
             // like resetting animations.
-            navigationController.positionLastFrame = transform.position;
+            navigationController.positionLastFrame = characterController.transform.position;
         }
 
         private Vector3 GetCameraForward()
