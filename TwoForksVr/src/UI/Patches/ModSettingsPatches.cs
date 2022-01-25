@@ -1,6 +1,5 @@
 using HarmonyLib;
 using TMPro;
-using TwoForksVr.Settings;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -51,7 +50,7 @@ namespace TwoForksVr.UI.Patches
         private static Button CreateVrSettingsButton(Button buttonAbove, Transform parent)
         {
             var vrSettingsButton = CreateButton(buttonAbove, parent, "VR Settings");
-            
+
             RemoveAllClickListeners(vrSettingsButton);
             vrSettingsButton.onClick.AddListener(StageInstance.OpenVrSettings);
 

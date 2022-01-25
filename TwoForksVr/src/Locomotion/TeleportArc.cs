@@ -15,8 +15,10 @@ namespace TwoForksVr.Locomotion
         [Tooltip("The amount of time in seconds to predict the motion of the projectile.")]
         public float arcDuration = 3.0f;
 
-        private readonly LayerMask traceLayerMask = LayerHelper.GetMask(GameLayer.Default, GameLayer.Terrain);
         private readonly bool arcInvalid = false;
+        private readonly float scale = 1;
+
+        private readonly LayerMask traceLayerMask = LayerHelper.GetMask(GameLayer.Default, GameLayer.Terrain);
         private Transform arcObjectsTransfrom;
         private float arcTimeOffset;
 
@@ -28,7 +30,6 @@ namespace TwoForksVr.Locomotion
         private int prevSegmentCount;
         private float prevThickness;
         private Vector3 projectileVelocity;
-        private readonly float scale = 1;
         private bool showArc = true;
         private Vector3 startPos;
         private bool useGravity = true;

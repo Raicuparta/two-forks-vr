@@ -38,7 +38,7 @@ namespace TwoForksVr.Settings
             }
 
             instance.Close();
-            
+
             return instance;
         }
 
