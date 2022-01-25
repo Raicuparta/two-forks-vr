@@ -1,4 +1,5 @@
 using TwoForksVr.Assets;
+using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,7 @@ namespace TwoForksVr.VrCamera
         {
             var gameObject = Instantiate(VrAssetLoader.FadeOverlayPrefab, vrStage.transform, false);
             var fadeOverlay = gameObject.AddComponent<FadeOverlay>();
+            LayerHelper.SetLayer(fadeOverlay, GameLayer.Default);
 
             fadeOverlay.canvas = gameObject.GetComponent<Canvas>();
             fadeOverlay.canvas.enabled = false;
