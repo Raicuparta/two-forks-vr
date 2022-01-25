@@ -4,7 +4,7 @@ using TwoForksVr.Helpers;
 using TwoForksVr.Limbs;
 using TwoForksVr.Locomotion;
 using TwoForksVr.PlayerBody;
-using TwoForksVr.PlayerCamera;
+using TwoForksVr.VrCamera;
 using TwoForksVr.UI;
 using UnityEngine;
 using Valve.VR;

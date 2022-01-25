@@ -3,7 +3,7 @@ using TwoForksVr.Stage;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace TwoForksVr.PlayerCamera
+namespace TwoForksVr.VrCamera
 {
     public class FadeOverlay: MonoBehaviour
     {

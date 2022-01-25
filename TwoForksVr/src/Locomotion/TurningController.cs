@@ -1,4 +1,4 @@
-using TwoForksVr.PlayerCamera;
+using TwoForksVr.VrCamera;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using UnityEngine;

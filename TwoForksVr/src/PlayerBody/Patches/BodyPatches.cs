@@ -1,7 +1,4 @@
 ﻿using HarmonyLib;
-using TwoForksVr.Locomotion;
-using TwoForksVr.Stage;
-using UnityEngine;
 
 namespace TwoForksVr.PlayerBody.Patches
 {

@@ -3,7 +3,7 @@ using HarmonyLib;
 using TwoForksVr.Stage;
 using UnityEngine;
 
-namespace TwoForksVr.PlayerCamera.Patches
+namespace TwoForksVr.VrCamera.Patches
 {
     [HarmonyPatch]
     public class MenuCameraPatches

@@ -7,7 +7,7 @@ using UnityEngine.XR;
 using UnityStandardAssets.ImageEffects;
 using Valve.VR;
 
-namespace TwoForksVr.PlayerCamera
+namespace TwoForksVr.VrCamera
 {
     public class VRCameraManager : MonoBehaviour
     {
