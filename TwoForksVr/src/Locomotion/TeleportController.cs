@@ -1,6 +1,5 @@
 using TwoForksVr.Assets;
 using TwoForksVr.Limbs;
-using TwoForksVr.Locomotion.Patches;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using UnityEngine;
@@ -10,10 +9,10 @@ namespace TwoForksVr.Locomotion
 {
     public class TeleportController : MonoBehaviour
     {
+        private const float triggerTeleportSquareDistance = 0.3f;
         private static readonly SteamVR_Action_Boolean teleportInput = SteamVR_Actions.default_Teleport;
         private VrLimbManager limbManager;
         private vgPlayerNavigationController navigationController;
-
         private TeleportArc teleportArc;
         private Transform teleportTarget;
 
@@ -25,7 +24,6 @@ namespace TwoForksVr.Locomotion
                 Instantiate(VrAssetLoader.TeleportTargetPrefab, instance.transform, false).transform;
             instance.teleportArc = TeleportArc.Create(instance,
                 instance.teleportTarget.GetComponentInChildren<Renderer>().material);
-            TeleportLocomotionPatches.Teleport = instance;
             return instance;
         }
 
@@ -43,18 +41,26 @@ namespace TwoForksVr.Locomotion
             UpdatePlayerRotation();
         }
 
-        public bool IsNextToTeleportMarker(Transform objectTransform, float minSquareDistance = 0.3f)
+        private void LateUpdate()
+        {
+            if (!navigationController || !VrSettings.Teleport.Value || !navigationController.enabled) return;
+
+            navigationController.playerController.forwardInput = IsTeleporting() ? 1 : 0;
+        }
+
+        public bool IsNextToTeleportMarker(Transform objectTransform)
         {
             if (!teleportTarget.gameObject.activeInHierarchy) return false;
             var targetPoint = teleportTarget.position;
             targetPoint.y = objectTransform.position.y;
             var squareDistance = Vector3.SqrMagnitude(targetPoint - objectTransform.position);
-            return squareDistance < minSquareDistance;
+            return squareDistance < triggerTeleportSquareDistance;
         }
 
         public bool IsTeleporting()
         {
-            return VrSettings.Teleport.Value && SteamVR_Actions.default_Teleport.state && navigationController &&
+            return VrSettings.Teleport.Value &&
+                   teleportInput.GetState(SteamVR_Input_Sources.Any) && navigationController &&
                    navigationController.enabled;
         }
 

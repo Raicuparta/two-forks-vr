@@ -143,5 +143,15 @@ namespace TwoForksVr.Stage
             if (!vrSettingsMenu) return;
             vrSettingsMenu.Open();
         }
+
+        public bool IsTeleporting()
+        {
+            return teleportController && teleportController.IsTeleporting();
+        }
+
+        public bool IsNextToTeleportMarker(Transform playerControllerTransform)
+        {
+            return teleportController.IsNextToTeleportMarker(playerControllerTransform);
+        }
     }
 }

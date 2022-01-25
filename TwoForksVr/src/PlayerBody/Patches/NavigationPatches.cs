@@ -8,7 +8,7 @@ namespace TwoForksVr.PlayerBody.Patches
     {
         [HarmonyPostfix]
         [HarmonyPatch(typeof(vgPlayerNavigationController), nameof(vgPlayerNavigationController.Start))]
-        public static void CreateBodyManager(vgPlayerNavigationController __instance)
+        private static void CreateBodyManager(vgPlayerNavigationController __instance)
         {
             // Usually NavigationController uses player camera forward as a basis for movement direction.
             // This dummy camera is used instead, so that movement direction can be independent of the camera rotation.
@@ -20,7 +20,7 @@ namespace TwoForksVr.PlayerBody.Patches
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(vgPlayerNavigationController), nameof(vgPlayerNavigationController.Start))]
-        public static void MakeRotationInstant(vgPlayerNavigationController __instance)
+        private static void MakeRotationInstant(vgPlayerNavigationController __instance)
         {
             // Player rotation has some acceleration which does't feel nice in VR.
             // Plus it affects some of the hacks I'm doing to rotate the player based on headset rotation.
@@ -32,7 +32,7 @@ namespace TwoForksVr.PlayerBody.Patches
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(vgPlayerMover), nameof(vgPlayerMover.StartMoveTo))]
-        public static void MovePlayerInstantly(vgPlayerMover __instance, GameObject player)
+        private static void MovePlayerInstantly(vgPlayerMover __instance, GameObject player)
         {
             if (player == null || player.tag != "Player") return;
 
