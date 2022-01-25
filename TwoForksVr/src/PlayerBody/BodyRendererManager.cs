@@ -20,7 +20,6 @@ namespace TwoForksVr.PlayerBody
         private Shader cutoutShader;
         private bool isShowingFullBody;
         private vgPlayerNavigationController navigationController;
-        private Shader originalBodyShader;
         private SkinnedMeshRenderer renderer;
         private TeleportController teleportController;
 
@@ -82,7 +81,6 @@ namespace TwoForksVr.PlayerBody
 
             bodyMaterial = materials[0];
             bodyTexture = bodyMaterial.mainTexture;
-            originalBodyShader = bodyMaterial.shader;
 
             backpackMaterial = materials[1];
             backpackTexture = backpackMaterial.mainTexture;
@@ -93,7 +91,7 @@ namespace TwoForksVr.PlayerBody
             SetVisibilityAcordingToState();
         }
 
-        private void MakeMaterialTextureTransparent(Material material, Shader shader, Texture texture = null)
+        private void MakeMaterialTextureTransparent(Material material, Texture texture = null)
         {
             material.shader = cutoutShader;
             material.SetTexture(ShaderProperty.MainTexture, texture);
@@ -123,9 +121,9 @@ namespace TwoForksVr.PlayerBody
 
         private void SetVisibilityAcordingToState()
         {
-            MakeMaterialTextureTransparent(bodyMaterial, cutoutShader, GetBodyTexture());
-            MakeMaterialTextureTransparent(armsMaterial, cutoutShader, GetArmsTexture());
-            MakeMaterialTextureTransparent(backpackMaterial, cutoutShader, GetBackpackTexture());
+            MakeMaterialTextureTransparent(bodyMaterial, GetBodyTexture());
+            MakeMaterialTextureTransparent(armsMaterial, GetArmsTexture());
+            MakeMaterialTextureTransparent(backpackMaterial, GetBackpackTexture());
         }
     }
 }
