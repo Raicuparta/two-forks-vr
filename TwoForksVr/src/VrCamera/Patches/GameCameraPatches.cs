@@ -1,11 +1,10 @@
 ﻿using HarmonyLib;
-using TwoForksVr.Stage;
 using UnityEngine;
 
 namespace TwoForksVr.VrCamera.Patches
 {
     [HarmonyPatch]
-    public class GameCameraPatches: TwoForksVrPatch
+    public class GameCameraPatches : TwoForksVrPatch
     {
         private static bool isDone;
 

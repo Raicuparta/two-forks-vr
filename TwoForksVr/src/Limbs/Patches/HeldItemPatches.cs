@@ -5,7 +5,7 @@ using UnityEngine;
 namespace TwoForksVr.Limbs.Patches
 {
     [HarmonyPatch]
-    public class HeldItemPatches: TwoForksVrPatch
+    public class HeldItemPatches : TwoForksVrPatch
     {
         private static readonly string[] attachmentNameBlocklist =
         {

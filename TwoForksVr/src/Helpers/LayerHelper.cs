@@ -52,14 +52,11 @@ namespace TwoForksVr.Helpers
         {
             gameObject.layer = (int) layer;
         }
-        
+
         public static void SetLayerRecursive(GameObject gameObject, GameLayer layer)
         {
             SetLayer(gameObject, layer);
-            foreach (Transform child in gameObject.transform)
-            {
-                SetLayerRecursive(child.gameObject, layer);
-            }
+            foreach (Transform child in gameObject.transform) SetLayerRecursive(child.gameObject, layer);
         }
     }
 }

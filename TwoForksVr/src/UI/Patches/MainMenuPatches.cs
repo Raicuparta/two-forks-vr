@@ -5,7 +5,7 @@ using UnityEngine;
 namespace TwoForksVr.UI.Patches
 {
     [HarmonyPatch]
-    public class MainMenuPatches: TwoForksVrPatch
+    public class MainMenuPatches : TwoForksVrPatch
     {
         // These are all overlays that only made sense in pancake mode.
         private static readonly string[] objectsToDisable =

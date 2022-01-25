@@ -1,12 +1,11 @@
 ﻿using System;
 using HarmonyLib;
-using TwoForksVr.Stage;
 using UnityEngine;
 
 namespace TwoForksVr.VrCamera.Patches
 {
     [HarmonyPatch]
-    public class MenuCameraPatches: TwoForksVrPatch
+    public class MenuCameraPatches : TwoForksVrPatch
     {
         // Not sure how to get the PlayMaker reference to work in this project, so have to use reflection instead. 
         private static readonly Type playMakerFsmType = Type.GetType("PlayMakerFSM, PlayMaker");

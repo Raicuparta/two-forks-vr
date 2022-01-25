@@ -8,7 +8,7 @@ namespace TwoForksVr
 {
     // This manager handles some methods that need to run as late as possible, after every other update.
     // They often need to run in a specific order, which is also defined here.
-    public class VeryLateUpdateManager: MonoBehaviour
+    public class VeryLateUpdateManager : MonoBehaviour
     {
         private Camera camera;
 

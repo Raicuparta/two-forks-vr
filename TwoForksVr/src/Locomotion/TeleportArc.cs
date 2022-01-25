@@ -1,5 +1,6 @@
 using TwoForksVr.Helpers;
 using UnityEngine;
+using UnityEngine.Rendering;
 using Valve.VR.InteractionSystem;
 
 namespace TwoForksVr.Locomotion
@@ -7,7 +8,6 @@ namespace TwoForksVr.Locomotion
     public class TeleportArc : MonoBehaviour
     {
         private const float arcVelocity = 10f;
-        private readonly LayerMask traceLayerMask = LayerHelper.GetMask(GameLayer.Default, GameLayer.Terrain);
 
         public int segmentCount = 60;
         public float thickness = 0.01f;
@@ -15,22 +15,24 @@ namespace TwoForksVr.Locomotion
         [Tooltip("The amount of time in seconds to predict the motion of the projectile.")]
         public float arcDuration = 3.0f;
 
-        private Material material;
-        
+        private readonly LayerMask traceLayerMask = LayerHelper.GetMask(GameLayer.Default, GameLayer.Terrain);
+        private readonly bool arcInvalid = false;
+        private Transform arcObjectsTransfrom;
+        private float arcTimeOffset;
+
 
         //Private data
         private LineRenderer[] lineRenderers;
-        private float arcTimeOffset = 0.0f;
-        private float prevThickness = 0.0f;
-        private int prevSegmentCount = 0;
+
+        private Material material;
+        private int prevSegmentCount;
+        private float prevThickness;
+        private Vector3 projectileVelocity;
+        private readonly float scale = 1;
         private bool showArc = true;
         private Vector3 startPos;
-        private Vector3 projectileVelocity;
         private bool useGravity = true;
-        private Transform arcObjectsTransfrom;
-        private bool arcInvalid = false;
-        private float scale = 1;
-        
+
         public static TeleportArc Create(TeleportController teleportController, Material material)
         {
             var instance = new GameObject("VrTeleportArc").AddComponent<TeleportArc>();
@@ -40,13 +42,13 @@ namespace TwoForksVr.Locomotion
             return instance;
         }
 
-        void Start()
+        private void Start()
         {
             arcTimeOffset = Time.time;
             Show();
         }
 
-        void Update()
+        private void Update()
         {
             if (thickness != prevThickness || segmentCount != prevSegmentCount)
             {
@@ -59,14 +61,11 @@ namespace TwoForksVr.Locomotion
         private void CreateLineRendererObjects()
         {
             //Destroy any existing line renderer objects
-            if (arcObjectsTransfrom != null)
-            {
-                Destroy(arcObjectsTransfrom.gameObject);
-            }
+            if (arcObjectsTransfrom != null) Destroy(arcObjectsTransfrom.gameObject);
 
             var arcObjectsParent = new GameObject("ArcObjects");
             arcObjectsTransfrom = arcObjectsParent.transform;
-            arcObjectsTransfrom.SetParent(this.transform);
+            arcObjectsTransfrom.SetParent(transform);
 
             //Create new line renderer objects
             lineRenderers = new LineRenderer[segmentCount];
@@ -78,12 +77,12 @@ namespace TwoForksVr.Locomotion
                 lineRenderers[i] = newObject.AddComponent<LineRenderer>();
 
                 lineRenderers[i].receiveShadows = false;
-                lineRenderers[i].reflectionProbeUsage = UnityEngine.Rendering.ReflectionProbeUsage.Off;
-                lineRenderers[i].lightProbeUsage = UnityEngine.Rendering.LightProbeUsage.Off;
-                lineRenderers[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                lineRenderers[i].reflectionProbeUsage = ReflectionProbeUsage.Off;
+                lineRenderers[i].lightProbeUsage = LightProbeUsage.Off;
+                lineRenderers[i].shadowCastingMode = ShadowCastingMode.Off;
                 lineRenderers[i].material = material;
                 lineRenderers[i].startWidth = thickness * scale;
-				lineRenderers[i].endWidth = thickness * scale;
+                lineRenderers[i].endWidth = thickness * scale;
                 lineRenderers[i].enabled = false;
             }
         }
@@ -92,23 +91,17 @@ namespace TwoForksVr.Locomotion
         public void Show()
         {
             showArc = true;
-            if (lineRenderers == null)
-            {
-                CreateLineRendererObjects();
-            }
+            if (lineRenderers == null) CreateLineRendererObjects();
         }
 
 
         public void Hide()
         {
             //Hide the line segments if they were previously being shown
-            if (showArc)
-            {
-                HideLineSegments(0, segmentCount);
-            }
+            if (showArc) HideLineSegments(0, segmentCount);
             showArc = false;
         }
-        
+
         // Draws each segment of the arc individually
         public bool DrawArc(out RaycastHit hitInfo)
         {
@@ -141,7 +134,6 @@ namespace TwoForksVr.Locomotion
                 var stopArc = false;
                 var currentSegment = 0;
                 if (segmentStartTime < arcHitTime)
-                {
                     for (currentSegment = loopStartSegment; currentSegment < segmentCount; ++currentSegment)
                     {
                         //Clamp the segment end time to the arc duration
@@ -163,16 +155,10 @@ namespace TwoForksVr.Locomotion
                         segmentStartTime += timeStep;
 
                         //If the previous end time or the next start time is beyond the duration then stop the arc
-                        if (stopArc || segmentStartTime >= arcDuration || segmentStartTime >= arcHitTime)
-                        {
-                            break;
-                        }
+                        if (stopArc || segmentStartTime >= arcDuration || segmentStartTime >= arcHitTime) break;
                     }
-                }
                 else
-                {
                     currentSegment--;
-                }
 
                 //Hide the rest of the line segments
                 HideLineSegments(currentSegment + 1, segmentCount);
@@ -202,15 +188,13 @@ namespace TwoForksVr.Locomotion
                 var segmentEndPos = GetArcPositionAtTime(segmentEndTime);
 
                 if (Physics.Linecast(segmentStartPos, segmentEndPos, out hitInfo, traceLayerMask))
-                {
                     if (hitInfo.collider.GetComponent<IgnoreTeleportTrace>() == null)
                     {
                         Util.DrawCross(hitInfo.point, Color.red, 0.5f);
                         var segmentDistance = Vector3.Distance(segmentStartPos, segmentEndPos);
-                        var hitTime = segmentStartTime + (timeStep * (hitInfo.distance / segmentDistance));
+                        var hitTime = segmentStartTime + timeStep * (hitInfo.distance / segmentDistance);
                         return hitTime;
                     }
-                }
 
                 segmentStartTime = segmentEndTime;
                 segmentStartPos = segmentEndPos;
@@ -224,7 +208,7 @@ namespace TwoForksVr.Locomotion
         {
             var gravity = useGravity ? Physics.gravity : Vector3.zero;
 
-            var arcPos = startPos + ((projectileVelocity * time) + (0.5f * time * time) * gravity) * scale;
+            var arcPos = startPos + (projectileVelocity * time + 0.5f * time * time * gravity) * scale;
             return arcPos;
         }
 
@@ -232,10 +216,7 @@ namespace TwoForksVr.Locomotion
         private void HideLineSegments(int startSegment, int endSegment)
         {
             if (lineRenderers == null) return;
-            for (var i = startSegment; i < endSegment; ++i)
-            {
-                lineRenderers[i].enabled = false;
-            }
+            for (var i = startSegment; i < endSegment; ++i) lineRenderers[i].enabled = false;
         }
     }
 }

@@ -15,6 +15,23 @@ namespace TwoForksVr.LaserPointer
         private Transform rightHand;
         private Vector3? target;
 
+        public static Laser Create(Transform leftHand, Transform rightHand)
+        {
+            var instance = new GameObject("VrHandLaser").AddComponent<Laser>();
+            var instanceTransform = instance.transform;
+            instanceTransform.SetParent(rightHand, false);
+            instanceTransform.localEulerAngles = new Vector3(39.132f, 356.9302f, 0.3666f);
+            instance.rightHand = rightHand;
+            instance.leftHand = leftHand;
+            return instance;
+        }
+
+        public void SetUp(Camera camera)
+        {
+            inputModule.EventCamera = camera;
+            target = null;
+        }
+
         private void Start()
         {
             laserTransform = transform;
@@ -52,23 +69,6 @@ namespace TwoForksVr.LaserPointer
                 target != null
                     ? transform.InverseTransformPoint((Vector3) target)
                     : Vector3.forward * laserLength);
-        }
-
-        public static Laser Create(Transform leftHand, Transform rightHand)
-        {
-            var instance = new GameObject("VrHandLaser").AddComponent<Laser>();
-            var instanceTransform = instance.transform;
-            instanceTransform.SetParent(rightHand, false);
-            instanceTransform.localEulerAngles = new Vector3(39.132f, 356.9302f, 0.3666f);
-            instance.rightHand = rightHand;
-            instance.leftHand = leftHand;
-            return instance;
-        }
-
-        public void SetUp(Camera camera)
-        {
-            inputModule.EventCamera = camera;
-            target = null;
         }
 
         private void UpdateLaserParent()

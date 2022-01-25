@@ -8,11 +8,27 @@ using UnityEngine.Rendering;
 
 namespace TwoForksVr.PlayerBody
 {
-    public class BodyRendererManager: MonoBehaviour
+    public class BodyRendererManager : MonoBehaviour
     {
         private Material bodyMaterial;
         private Texture bodyTexture;
         private SkinnedMeshRenderer renderer;
+
+        public static BodyRendererManager Create(VrStage stage)
+        {
+            var instance = stage.gameObject.AddComponent<BodyRendererManager>();
+            return instance;
+        }
+
+        public void SetUp(vgPlayerController playerController)
+        {
+            if (!playerController) return;
+            var playerBody = playerController.transform.Find("henry/body").gameObject;
+            renderer = playerBody.GetComponent<SkinnedMeshRenderer>();
+            LayerHelper.SetLayer(playerBody, GameLayer.PlayerBody);
+
+            HideBodyParts();
+        }
 
         private void Awake()
         {
@@ -26,37 +42,21 @@ namespace TwoForksVr.PlayerBody
             VrSettings.ShowBody.SettingChanged -= HandleSettingsChanged;
         }
 
-        public static BodyRendererManager Create(VrStage stage)
-        {
-            var instance = stage.gameObject.AddComponent<BodyRendererManager>();
-            return instance;
-        }
-        
-        public void SetUp(vgPlayerController playerController)
-        {
-            if (!playerController) return;
-            var playerBody = playerController.transform.Find("henry/body").gameObject;
-            renderer = playerBody.GetComponent<SkinnedMeshRenderer>();
-            LayerHelper.SetLayer(playerBody, GameLayer.PlayerBody);
-            
-            HideBodyParts();
-        }
-
         // Hides body parts by either making them completely invisible,
         // or by using transparent textures to leave parts visible (hands and feet).
         private void HideBodyParts()
         {
             renderer.shadowCastingMode = ShadowCastingMode.TwoSided;
-            
+
             var materials = renderer.materials;
-            
+
             bodyMaterial = materials[0];
             bodyTexture = bodyMaterial.mainTexture;
             SetUpBodyVisibility();
-            
+
             var backpackMaterial = materials[1];
             MakeMaterialTextureTransparent(backpackMaterial);
-            
+
             var armsMaterial = materials[2];
             MakeMaterialTextureTransparent(armsMaterial);
         }
@@ -68,7 +68,7 @@ namespace TwoForksVr.PlayerBody
             material.SetTexture(ShaderProperty.MainTexture, texture);
             material.SetColor(ShaderProperty.Color, texture ? Color.white : Color.clear);
         }
-        
+
         private void HandleSettingsChanged(object sender, EventArgs e)
         {
             SetUpBodyVisibility();

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using TwoForksVr.Helpers;
+﻿using TwoForksVr.Helpers;
 using UnityEngine;
 
 namespace TwoForksVr.Debugging

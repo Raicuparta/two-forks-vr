@@ -45,7 +45,7 @@ namespace TwoForksVr.Settings.Patches
         {
             return false;
         }
-        
+
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgSettingsMenuController), nameof(vgSettingsMenuController.Start))]
         private static void RemoveControlsTab(vgSettingsMenuController __instance)

@@ -28,7 +28,7 @@ namespace TwoForksVr.Limbs
             shoeLid.SetParent(shoeBone, false);
             if (isLeft) shoeLid.localScale = new Vector3(1, 1, -1);
         }
-        
+
         private void Awake()
         {
             VrSettings.ShowFeet.SettingChanged += HandleShowFeetChanged;

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace TwoForksVr.Stage.Patches
 {
     [HarmonyPatch]
-    public class StagePatches: TwoForksVrPatch
+    public class StagePatches : TwoForksVrPatch
     {
         private static vgReset resetObject;
         private static Transform originalParent;

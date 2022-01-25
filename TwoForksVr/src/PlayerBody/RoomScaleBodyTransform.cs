@@ -13,10 +13,10 @@ namespace TwoForksVr.PlayerBody
         private Transform cameraTransform;
         private CharacterController characterController;
         private vgPlayerNavigationController navigationController;
-        private TeleportController teleportController;
         private Vector3 prevCameraPosition;
         private Vector3 prevForward;
         private VrStage stage;
+        private TeleportController teleportController;
 
         public static RoomScaleBodyTransform Create(VrStage stage, TeleportController teleportController)
         {
@@ -46,7 +46,7 @@ namespace TwoForksVr.PlayerBody
 
         private bool ShouldSkipUpdate()
         {
-            return !characterController || (teleportController && teleportController.IsTeleporting());
+            return !characterController || teleportController && teleportController.IsTeleporting();
         }
 
         private void Recenter()

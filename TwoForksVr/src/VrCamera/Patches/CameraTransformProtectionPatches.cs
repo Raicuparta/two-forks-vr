@@ -1,9 +1,5 @@
 ﻿using HarmonyLib;
-using TwoForksVr.Settings;
-using TwoForksVr.Stage;
-using TwoForksVr.UI;
 using UnityEngine;
-using Valve.VR;
 
 // Even though Unity prevents moving / rotating a VR camera directly, the transform values still change until the next update.
 // We need to disable any code that tries to move the camera directly, so that the transform values remain "clean".

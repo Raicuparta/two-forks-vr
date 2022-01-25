@@ -18,20 +18,6 @@ namespace TwoForksVr.Tools
         private List<ToolPickerItem> tools;
         private Transform toolsContainer;
 
-        private void Start()
-        {
-            CloseToolPicker();
-        }
-
-        private void Update()
-        {
-            if (input.GetState(SteamVR_Input_Sources.RightHand)) UpdateSelectedTool(rightHand);
-            if (input.GetState(SteamVR_Input_Sources.LeftHand)) UpdateSelectedTool(leftHand);
-            if (input.GetStateDown(SteamVR_Input_Sources.RightHand)) OpenToolPicker(rightHand);
-            if (input.GetStateDown(SteamVR_Input_Sources.LeftHand)) OpenToolPicker(leftHand);
-            if (input.stateUp) CloseToolPicker();
-        }
-
         public static void Create(Transform parent, Transform leftHand, Transform rightHand)
         {
             var instance = Instantiate(VrAssetLoader.ToolPickerPrefab).AddComponent<ToolPicker>();
@@ -46,6 +32,20 @@ namespace TwoForksVr.Tools
                     instance.toolsContainer,
                     index
                 ));
+        }
+
+        private void Start()
+        {
+            CloseToolPicker();
+        }
+
+        private void Update()
+        {
+            if (input.GetState(SteamVR_Input_Sources.RightHand)) UpdateSelectedTool(rightHand);
+            if (input.GetState(SteamVR_Input_Sources.LeftHand)) UpdateSelectedTool(leftHand);
+            if (input.GetStateDown(SteamVR_Input_Sources.RightHand)) OpenToolPicker(rightHand);
+            if (input.GetStateDown(SteamVR_Input_Sources.LeftHand)) OpenToolPicker(leftHand);
+            if (input.stateUp) CloseToolPicker();
         }
 
         private void SelectCurrentlyHoveredTool()

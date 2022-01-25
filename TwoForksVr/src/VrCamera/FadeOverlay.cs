@@ -5,19 +5,19 @@ using UnityEngine.UI;
 
 namespace TwoForksVr.VrCamera
 {
-    public class FadeOverlay: MonoBehaviour
+    public class FadeOverlay : MonoBehaviour
     {
+        public const float Duration = 0.1f;
+        private float alphaLerpT;
         private Canvas canvas;
         private Image image;
         private float targetAlpha;
-        private float alphaLerpT;
-        public const float Duration = 0.1f;
 
         public static FadeOverlay Create(VrStage vrStage)
         {
             var gameObject = Instantiate(VrAssetLoader.FadeOverlayPrefab, vrStage.transform, false);
             var fadeOverlay = gameObject.AddComponent<FadeOverlay>();
-            
+
             fadeOverlay.canvas = gameObject.GetComponent<Canvas>();
             fadeOverlay.canvas.enabled = false;
             fadeOverlay.canvas.renderMode = RenderMode.ScreenSpaceCamera;
@@ -45,7 +45,7 @@ namespace TwoForksVr.VrCamera
         {
             if (Mathf.Abs(targetAlpha - image.color.a) < 0.01f) return;
             alphaLerpT += Time.unscaledDeltaTime;
-            image.color = new Color(0, 0, 0, Mathf.Lerp(image.color.a, targetAlpha, alphaLerpT/Duration));
+            image.color = new Color(0, 0, 0, Mathf.Lerp(image.color.a, targetAlpha, alphaLerpT / Duration));
         }
 
         public void FadeToBlack()

@@ -4,20 +4,17 @@ using UnityEngine;
 
 namespace TwoForksVr
 {
-    public abstract class TwoForksVrBehavior: MonoBehaviour
+    public abstract class TwoForksVrBehavior : MonoBehaviour
     {
-        private static readonly Dictionary<Type, List<TwoForksVrBehavior>> typeInstanceMap = new Dictionary<Type, List<TwoForksVrBehavior>>();
+        private static readonly Dictionary<Type, List<TwoForksVrBehavior>> typeInstanceMap =
+            new Dictionary<Type, List<TwoForksVrBehavior>>();
 
         protected virtual void Awake()
         {
             if (typeInstanceMap.ContainsKey(GetType()))
-            {
                 typeInstanceMap[GetType()].Add(this);
-            }
             else
-            {
-                typeInstanceMap[GetType()] = new List<TwoForksVrBehavior>() {this};
-            }
+                typeInstanceMap[GetType()] = new List<TwoForksVrBehavior> {this};
         }
 
         protected virtual void OnDestroy()
@@ -27,14 +24,13 @@ namespace TwoForksVr
             instance?.Remove(this);
         }
 
+        protected abstract void VeryLateUpdate();
+
         public static void InvokeVeryLateUpdate<TBehavior>() where TBehavior : TwoForksVrBehavior
         {
             typeInstanceMap.TryGetValue(typeof(TBehavior), out var instances);
             if (instances == null) return;
-            foreach (var instance in instances)
-            {
-                instance.InvokeVeryLateUpdateIfEnabled();
-            }
+            foreach (var instance in instances) instance.InvokeVeryLateUpdateIfEnabled();
         }
 
         private void InvokeVeryLateUpdateIfEnabled()
@@ -42,7 +38,5 @@ namespace TwoForksVr
             if (!enabled) return;
             VeryLateUpdate();
         }
-
-        protected abstract void VeryLateUpdate();
     }
 }

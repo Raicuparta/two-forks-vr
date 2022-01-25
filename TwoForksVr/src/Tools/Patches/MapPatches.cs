@@ -3,7 +3,7 @@
 namespace TwoForksVr.Tools.Patches
 {
     [HarmonyPatch]
-    public class MapPatches: TwoForksVrPatch
+    public class MapPatches : TwoForksVrPatch
     {
         [HarmonyPostfix]
         [HarmonyPatch(typeof(AmplifyMotionObjectBase), nameof(AmplifyMotionObjectBase.Start))]

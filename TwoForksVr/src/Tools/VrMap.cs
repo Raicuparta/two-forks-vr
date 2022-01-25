@@ -6,17 +6,6 @@ namespace TwoForksVr.Tools
     {
         private const float mapScale = 2f;
 
-        private void Start()
-        {
-            AdjustPosition();
-            ResetCloth();
-        }
-
-        private void LateUpdate()
-        {
-            ForceHighResolutionMap();
-        }
-
         public static VrMap Create(Transform mapInHand, string handName)
         {
             if (!mapInHand || mapInHand.GetComponent<VrMap>()) return null;
@@ -26,6 +15,17 @@ namespace TwoForksVr.Tools
             mapInHand.parent.parent.localScale = Vector3.one * mapScale;
 
             return mapInHand.gameObject.AddComponent<VrMap>();
+        }
+
+        private void Start()
+        {
+            AdjustPosition();
+            ResetCloth();
+        }
+
+        private void LateUpdate()
+        {
+            ForceHighResolutionMap();
         }
 
         // Map doesn't quite fit the hand after scaling, need to move it a bit.

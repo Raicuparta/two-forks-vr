@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace TwoForksVr.UI.Patches
 {
     [HarmonyPatch]
-    public class CanvasToWorldSpacePatches: TwoForksVrPatch
+    public class CanvasToWorldSpacePatches : TwoForksVrPatch
     {
         private static readonly string[] canvasesToDisable =
         {
@@ -17,7 +17,7 @@ namespace TwoForksVr.UI.Patches
 
         private static readonly string[] canvasesToIgnore =
         {
-            "ExplorerCanvas", // UnityExplorer.
+            "ExplorerCanvas" // UnityExplorer.
         };
 
         [HarmonyPrefix]
