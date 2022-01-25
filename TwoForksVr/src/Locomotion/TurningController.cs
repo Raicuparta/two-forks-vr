@@ -1,22 +1,22 @@
-using TwoForksVr.VrCamera;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
+using TwoForksVr.VrCamera;
 using UnityEngine;
 using Valve.VR;
 
 namespace TwoForksVr.Locomotion
 {
-    public class TurningController: MonoBehaviour
+    public class TurningController : MonoBehaviour
     {
         private const float smoothRotationSpeed = 150f; // TODO make this configurable.
         private const float snapRotationAngle = 60f; // TODO make this configurable.
         private vgPlayerNavigationController navigationController;
-        private TeleportController teleportController;
         private VrStage stage;
+        private TeleportController teleportController;
 
         public static TurningController Create(VrStage stage, TeleportController teleportController)
         {
-            var instance =  stage.gameObject.AddComponent<TurningController>();
+            var instance = stage.gameObject.AddComponent<TurningController>();
             instance.teleportController = teleportController;
             instance.stage = stage;
             return instance;
@@ -24,23 +24,20 @@ namespace TwoForksVr.Locomotion
 
         public void SetUp(vgPlayerController playerController)
         {
-            navigationController = playerController ? playerController.GetComponent<vgPlayerNavigationController>() : null;
+            navigationController =
+                playerController ? playerController.GetComponent<vgPlayerNavigationController>() : null;
         }
 
         private void Update()
         {
             if (!navigationController || !navigationController.enabled || teleportController.IsTeleporting()) return;
-            
+
             if (VrSettings.SnapTurning.Value)
-            {
                 UpdateSnapTurning();
-            }
             else
-            {
                 UpdateSmoothTurning();
-            }
         }
-        
+
         private void UpdateSnapTurning()
         {
             if (SteamVR_Actions.default_SnapTurnLeft.stateDown)
@@ -48,6 +45,7 @@ namespace TwoForksVr.Locomotion
                 stage.FadeToBlack();
                 Invoke(nameof(SnapTurnLeft), FadeOverlay.Duration);
             }
+
             if (SteamVR_Actions.default_SnapTurnRight.stateDown)
             {
                 stage.FadeToBlack();
@@ -71,7 +69,7 @@ namespace TwoForksVr.Locomotion
         {
             SnapTurn(snapRotationAngle);
         }
-        
+
         private void SnapTurn(float angle)
         {
             navigationController.transform.Rotate(Vector3.up, angle);

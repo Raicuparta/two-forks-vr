@@ -51,11 +51,9 @@ namespace TwoForksVr.UI.Patches
         private static Button CreateVrSettingsButton(Button buttonAbove, Transform parent)
         {
             var vrSettingsButton = CreateButton(buttonAbove, parent, "VR Settings");
-
-            var vrSettingsMenu = VrSettingsMenu.Create(StageInstance); // TODO don't pass singleton
-            vrSettingsMenu.gameObject.SetActive(false);
+            
             RemoveAllClickListeners(vrSettingsButton);
-            vrSettingsButton.onClick.AddListener(() => { vrSettingsMenu.gameObject.SetActive(true); });
+            vrSettingsButton.onClick.AddListener(StageInstance.OpenVrSettings);
 
             return vrSettingsButton;
         }

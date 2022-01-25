@@ -18,7 +18,7 @@ namespace TwoForksVr.Limbs
             var instance = new GameObject("VrLimbManager").AddComponent<VrLimbManager>();
             var instanceTransform = instance.transform;
             instanceTransform.SetParent(stage.transform, false);
-            
+
             instance.RightHand = VrHand.Create(instanceTransform);
             instance.LeftHand = VrHand.Create(instanceTransform, true);
             ToolPicker.Create(

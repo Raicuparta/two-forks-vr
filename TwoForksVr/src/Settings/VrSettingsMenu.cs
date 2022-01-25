@@ -19,7 +19,7 @@ namespace TwoForksVr.Settings
             canvas.sortingOrder = 100;
 
             var exitButton = instance.transform.Find("ExitButton").GetComponent<Button>();
-            exitButton.onClick.AddListener(() => { instance.gameObject.SetActive(false); });
+            exitButton.onClick.AddListener(instance.Close);
 
             var layoutGroup = instance.transform.Find("LayoutGroup");
 
@@ -37,7 +37,19 @@ namespace TwoForksVr.Settings
                 toggleInput.onValueChanged.AddListener(isOn => { configEntry.Value.BoxedValue = isOn; });
             }
 
+            instance.Close();
+            
             return instance;
+        }
+
+        public void Open()
+        {
+            gameObject.SetActive(true);
+        }
+
+        private void Close()
+        {
+            gameObject.SetActive(false);
         }
     }
 }
