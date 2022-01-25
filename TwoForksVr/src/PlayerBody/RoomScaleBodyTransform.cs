@@ -15,7 +15,7 @@ namespace TwoForksVr.PlayerBody
         private vgPlayerNavigationController navigationController;
         private Vector3 prevCameraPosition;
         private Vector3 prevForward;
-        
+
         public static void Create(vgPlayerController playerController)
         {
             var playerTransform = playerController.transform;
@@ -46,7 +46,6 @@ namespace TwoForksVr.PlayerBody
             base.OnDestroy();
             SteamVR_Actions.default_Teleport.onStateDown -= OnTeleportInput;
             SteamVR_Actions.default_Teleport.onStateUp -= OnTeleportInput;
-
         }
 
         protected override void VeryLateUpdate()
@@ -55,7 +54,14 @@ namespace TwoForksVr.PlayerBody
             UpdateRoomScalePosition();
             Recenter();
         }
-        
+
+        private void Recenter()
+        {
+            if (!navigationController.onGround || !navigationController.enabled) return;
+            VrStage.Instance.RecenterRotation();
+            VrStage.Instance.RecenterPosition();
+        }
+
         private void OnTeleportInput(SteamVR_Action_Boolean fromaction, SteamVR_Input_Sources fromsource)
         {
             // TODO this probably doesn't make sense, what if teleport option is turned off?
@@ -71,10 +77,11 @@ namespace TwoForksVr.PlayerBody
 
             var worldPositionDelta = VrStage.Instance.transform.TransformVector(localPositionDelta);
 
-            if (worldPositionDelta.sqrMagnitude < minPositionOffset || !navigationController.onGround || !navigationController.enabled) return;
+            if (worldPositionDelta.sqrMagnitude < minPositionOffset || !navigationController.onGround ||
+                !navigationController.enabled) return;
 
             prevCameraPosition = cameraPosition;
-            
+
             if (worldPositionDelta.sqrMagnitude > maxPositionOffset) return;
 
             var groundedPositionDelta = Vector3.ProjectOnPlane(worldPositionDelta, navigationController.groundNormal);
@@ -84,12 +91,12 @@ namespace TwoForksVr.PlayerBody
             // TODO This probably breaks stuff elsewhere.
             navigationController.positionLastFrame = transform.position;
         }
-        
+
         private Vector3 GetCameraForward()
         {
             return cameraTransform.parent.InverseTransformDirection(MathHelper.GetProjectedForward(cameraTransform));
         }
-        
+
         private void UpdateRotation()
         {
             if (!navigationController.onGround || !navigationController.enabled) return;
@@ -98,13 +105,6 @@ namespace TwoForksVr.PlayerBody
             var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
             prevForward = cameraForward;
             characterController.transform.Rotate(Vector3.up, angleDelta);
-        }
-
-        private void Recenter()
-        {
-            if (!navigationController.onGround || !navigationController.enabled) return;
-            VrStage.Instance.RecenterRotation();
-            VrStage.Instance.RecenterPosition();
         }
     }
 }

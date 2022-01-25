@@ -35,7 +35,7 @@ namespace TwoForksVr.Stage.Patches
         {
             VrStage.Instance.transform.parent.SetParent(originalParent);
         }
-        
+
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.Awake))]
         public static void CreateBodyManager(vgPlayerController __instance)
