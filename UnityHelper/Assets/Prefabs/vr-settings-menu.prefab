@@ -803,7 +803,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Toggle
+  m_Text: The text in this toggle is indeed very large, isn't that interesting?
 --- !u!114 &114529653534177316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1638,7 +1638,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 20}
+  m_SizeDelta: {x: 431.53, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224727497717423336
 RectTransform:

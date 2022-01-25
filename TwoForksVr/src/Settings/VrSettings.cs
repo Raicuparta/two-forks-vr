@@ -16,14 +16,14 @@ namespace TwoForksVr.Settings
             Config = config;
             SnapTurning = config.Bind("Config", "SnapTurning", false,
                 "Snap turning");
+            Teleport = config.Bind("Config", "Teleport", false,
+                "Fixed camera whie moving (\"teleport\" locomotion)");
+            FixedCameraDuringAnimations = config.Bind("Config", "FixedCameraDuringAnimations", false,
+                "Fixed camera during player animations");
             ShowBody = config.Bind("Config", "ShowBody", false,
                 "Show player body");
             ShowFeet = config.Bind("Config", "ShowFeet", true,
                 "Show player feet");
-            Teleport = config.Bind("Config", "Teleport", false,
-                "Fixed camera (teleport)");
-            FixedCameraDuringAnimations = config.Bind("Config", "FixedCameraDuringAnimations", false,
-                "Fixed camera during player animations");
         }
     }
 }
