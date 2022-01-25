@@ -8,20 +8,16 @@ using UnityEngine.Rendering;
 
 namespace TwoForksVr.PlayerBody
 {
-    public class VrBodyManager : MonoBehaviour
+    public class VrBodyManager: MonoBehaviour
     {
         private Material bodyMaterial;
         private Texture bodyTexture;
+        private SkinnedMeshRenderer renderer;
 
         private void Awake()
         {
             VrSettings.ShowFeet.SettingChanged += HandleSettingsChanged;
             VrSettings.ShowBody.SettingChanged += HandleSettingsChanged;
-        }
-
-        private void Start()
-        {
-            HideBodyParts();
         }
 
         private void OnDestroy()
@@ -30,22 +26,26 @@ namespace TwoForksVr.PlayerBody
             VrSettings.ShowBody.SettingChanged -= HandleSettingsChanged;
         }
 
-        public static void Create(vgPlayerController playerController)
+        public static VrBodyManager Create(VrStage stage)
         {
-            var playerTransform = playerController.transform;
-            var playerBody = playerTransform.Find("henry/body").gameObject;
+            var instance = stage.gameObject.AddComponent<VrBodyManager>();
+            return instance;
+        }
+        
+        public void SetUp(vgPlayerController playerController)
+        {
+            if (!playerController) return;
+            var playerBody = playerController.transform.Find("henry/body").gameObject;
+            renderer = playerBody.GetComponent<SkinnedMeshRenderer>();
             LayerHelper.SetLayer(playerBody, GameLayer.PlayerBody);
-            var existingBodyManager = playerBody.GetComponent<VrBodyManager>();
-            if (existingBodyManager) return;
-
-            playerBody.AddComponent<VrBodyManager>();
+            
+            HideBodyParts();
         }
 
         // Hides body parts by either making them completely invisible,
         // or by using transparent textures to leave parts visible (hands and feet).
         private void HideBodyParts()
         {
-            var renderer = transform.GetComponent<SkinnedMeshRenderer>();
             renderer.shadowCastingMode = ShadowCastingMode.TwoSided;
             
             var materials = renderer.materials;
@@ -66,14 +66,7 @@ namespace TwoForksVr.PlayerBody
             var cutoutShader = Shader.Find("Marmoset/Transparent/Cutout/Bumped Specular IBL");
             material.shader = cutoutShader;
             material.SetTexture(ShaderProperty.MainTexture, texture);
-            if (!texture)
-            {
-                material.SetColor(ShaderProperty.Color, Color.clear);
-            }
-            else
-            {
-                material.SetColor(ShaderProperty.Color, Color.white);
-            }
+            material.SetColor(ShaderProperty.Color, texture ? Color.white : Color.clear);
         }
         
         private void HandleSettingsChanged(object sender, EventArgs e)
@@ -84,8 +77,7 @@ namespace TwoForksVr.PlayerBody
         private Texture2D GetBodyTexture()
         {
             if (VrSettings.ShowBody.Value) return (Texture2D) bodyTexture;
-            if (VrSettings.ShowFeet.Value) return VrAssetLoader.BodyCutoutTexture;
-            return null;
+            return VrSettings.ShowFeet.Value ? VrAssetLoader.BodyCutoutTexture : null;
         }
 
         private void SetUpBodyVisibility()
