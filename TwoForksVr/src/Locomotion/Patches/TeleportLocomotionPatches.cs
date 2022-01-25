@@ -23,17 +23,6 @@ namespace TwoForksVr.Locomotion.Patches
         }
 
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.UpdatePosition))]
-        private static void TriggerTeleportBlinkAnimation(vgCameraController __instance)
-        {
-            if (!Teleport) return;
-
-            var hasReachedTeleportMarked = Teleport.IsNextToTeleportMarker(__instance.playerController.transform);
-
-            if (hasReachedTeleportMarked && Teleport.IsTeleporting()) StageInstance.FadeToClear();
-        }
-
-        [HarmonyPostfix]
         [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.ForwardMovement))]
         private static void OverrideForwardMovementWithTeleport(vgPlayerController __instance, float axisValue)
         {
