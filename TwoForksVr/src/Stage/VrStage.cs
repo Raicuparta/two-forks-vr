@@ -62,7 +62,7 @@ namespace TwoForksVr.Stage
             Instance.fadeOverlay = FadeOverlay.Create(Instance);
             Instance.teleportController = TeleportController.Create(Instance, Instance.limbManager);
             Instance.veryLateUpdateManager = VeryLateUpdateManager.Create(Instance);
-            Instance.turningController = TurningController.Create(Instance);
+            Instance.turningController = TurningController.Create(Instance, Instance.teleportController);
 
             FallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
             FallbackCamera.enabled = false;

@@ -11,10 +11,13 @@ namespace TwoForksVr.Locomotion
         private const float smoothRotationSpeed = 150f; // TODO make this configurable.
         private const float snapRotationAngle = 60f; // TODO make this configurable.
         private vgPlayerNavigationController navigationController;
+        private TeleportController teleportController;
 
-        public static TurningController Create(VrStage stage)
+        public static TurningController Create(VrStage stage, TeleportController teleportController)
         {
-            return stage.gameObject.AddComponent<TurningController>();
+            var instance =  stage.gameObject.AddComponent<TurningController>();
+            instance.teleportController = teleportController;
+            return instance;
         }
 
         public void SetUp(vgPlayerController playerController)
@@ -24,7 +27,7 @@ namespace TwoForksVr.Locomotion
 
         private void Update()
         {
-            if (!navigationController || !navigationController.enabled) return;
+            if (!navigationController || !navigationController.enabled || teleportController.IsTeleporting()) return;
             
             if (VrSettings.SnapTurning.Value)
             {
