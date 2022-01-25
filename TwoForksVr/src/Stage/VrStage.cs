@@ -58,7 +58,7 @@ namespace TwoForksVr.Stage
             instance.veryLateUpdateManager = VeryLateUpdateManager.Create(instance);
             instance.turningController = TurningController.Create(instance, instance.teleportController);
             instance.roomScaleBodyTransform = RoomScaleBodyTransform.Create(instance, instance.teleportController);
-            instance.bodyRendererManager = BodyRendererManager.Create(instance);
+            instance.bodyRendererManager = BodyRendererManager.Create(instance, instance.teleportController);
             instance.vrSettingsMenu = VrSettingsMenu.Create(instance);
 
             FallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
