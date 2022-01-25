@@ -1,5 +1,7 @@
 ﻿using HarmonyLib;
 using TwoForksVr.Locomotion;
+using TwoForksVr.Stage;
+using UnityEngine;
 
 namespace TwoForksVr.PlayerBody.Patches
 {
@@ -18,7 +20,6 @@ namespace TwoForksVr.PlayerBody.Patches
         public static void CreateRoomScaleBodyTransform(vgPlayerController __instance)
         {
             RoomScaleBodyTransform.Create(__instance);
-            TurningController.Create(__instance);
         }
 
         [HarmonyPrefix]

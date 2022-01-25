@@ -23,6 +23,7 @@ namespace TwoForksVr.Stage
         private FadeOverlay fadeOverlay;
         private TeleportController teleportController;
         private VeryLateUpdateManager veryLateUpdateManager;
+        private TurningController turningController;
 
         // No idea why, but if I don't make this static, it gets lost
         public static Camera FallbackCamera { get; private set; }
@@ -61,6 +62,7 @@ namespace TwoForksVr.Stage
             Instance.fadeOverlay = FadeOverlay.Create(Instance);
             Instance.teleportController = TeleportController.Create(Instance, Instance.limbManager);
             Instance.veryLateUpdateManager = VeryLateUpdateManager.Create(Instance);
+            Instance.turningController = TurningController.Create(Instance);
 
             FallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
             FallbackCamera.enabled = false;
@@ -71,7 +73,7 @@ namespace TwoForksVr.Stage
             Instance.gameObject.AddComponent<GeneralDebugger>();
         }
 
-        public void SetUp(Camera camera, Transform playerTransform)
+        public void SetUp(Camera camera, vgPlayerController playerController)
         {
             mainCamera = camera;
             if (mainCamera)
@@ -86,13 +88,15 @@ namespace TwoForksVr.Stage
                 if (!introFix) introFix = IntroFix.Create();
             }
 
+            var playerTransform = playerController ? playerController.transform : null;
             var nextCamera = mainCamera ? mainCamera : FallbackCamera;
             cameraManager.SetUp(nextCamera, playerTransform);
             limbManager.SetUp(playerTransform, nextCamera);
             interactiveUiTarget.SetUp(nextCamera);
-            teleportController.SetUp(playerTransform);
+            teleportController.SetUp(playerController);
             fadeOverlay.SetUp(nextCamera);
             veryLateUpdateManager.SetUp(nextCamera);
+            turningController.SetUp(playerController);
         }
 
         public void RecenterPosition(bool recenterVertically = false)

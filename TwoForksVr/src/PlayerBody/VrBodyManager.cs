@@ -38,13 +38,6 @@ namespace TwoForksVr.PlayerBody
             var existingBodyManager = playerBody.GetComponent<VrBodyManager>();
             if (existingBodyManager) return;
 
-            var camera = playerController.cameraController.GetComponentInChildren<Camera>();
-
-            VrStage.Instance.SetUp(
-                camera,
-                playerTransform
-            );
-
             playerBody.AddComponent<VrBodyManager>();
         }
 

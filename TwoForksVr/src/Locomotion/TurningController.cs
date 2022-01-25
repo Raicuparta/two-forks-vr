@@ -12,15 +12,19 @@ namespace TwoForksVr.Locomotion
         private const float snapRotationAngle = 60f; // TODO make this configurable.
         private vgPlayerNavigationController navigationController;
 
-        public static void Create(vgPlayerController playerController)
+        public static TurningController Create(VrStage stage)
         {
-            var instance = playerController.gameObject.AddComponent<TurningController>();
-            instance.navigationController = playerController.navController;
+            return stage.gameObject.AddComponent<TurningController>();
+        }
+
+        public void SetUp(vgPlayerController playerController)
+        {
+            navigationController = playerController ? playerController.GetComponent<vgPlayerNavigationController>() : null;
         }
 
         private void Update()
         {
-            if (!navigationController.onGround || !navigationController.enabled) return;
+            if (!navigationController || !navigationController.enabled) return;
             
             if (VrSettings.SnapTurning.Value)
             {

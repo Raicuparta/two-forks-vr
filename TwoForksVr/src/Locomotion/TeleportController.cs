@@ -27,9 +27,9 @@ namespace TwoForksVr.Locomotion
             return instance;
         }
 
-        public void SetUp(Transform playerTransform)
+        public void SetUp(vgPlayerController playerController)
         {
-            navigationController = playerTransform ? playerTransform.GetComponent<vgPlayerNavigationController>() : null;
+            navigationController = playerController ? playerController.GetComponent<vgPlayerNavigationController>() : null;
         }
 
         public bool IsNextToTeleportMarker(Transform objectTransform, float minSquareDistance = 0.3f)
