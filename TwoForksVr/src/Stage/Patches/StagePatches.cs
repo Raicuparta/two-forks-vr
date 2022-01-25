@@ -12,7 +12,6 @@ namespace TwoForksVr.Stage.Patches
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgReset), nameof(vgReset.Awake))]
-        // TODO: this doesnt matter anymore because the parent is changed on Create anyway. Move Create elsewhere.
         private static void CreateStage(vgReset __instance)
         {
             resetObject = __instance;
