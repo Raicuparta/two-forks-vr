@@ -14,17 +14,21 @@ namespace TwoForksVr.Assets
         public static GameObject LeftHandPrefab { get; private set; }
         public static GameObject RightHandPrefab { get; private set; }
         public static GameObject FadeOverlayPrefab { get; private set; }
+        public static GameObject TeleportTargetPrefab { get; private set; }
 
         public static void LoadAssets()
         {
-            var bodyAsset = LoadBundle("body");
-            ShoeLid = bodyAsset.LoadAsset<GameObject>("ShoeLid");
-            LeftHandPrefab = bodyAsset.LoadAsset<GameObject>("left-hand");
-            RightHandPrefab = bodyAsset.LoadAsset<GameObject>("right-hand");
-            BodyCutoutTexture = bodyAsset.LoadAsset<Texture2D>("body-cutout");
-            ToolPickerPrefab = LoadAssetPrefab("tool-picker", "ToolPicker");
-            VrSettingsMenuPrefab = LoadAssetPrefab("settings-menu", "VrSettingsMenu");
-            FadeOverlayPrefab = LoadAssetPrefab("camera", "FadeOverlay");
+            var bodyBundle = LoadBundle("body");
+            ShoeLid = bodyBundle.LoadAsset<GameObject>("shoe-lid");
+            LeftHandPrefab = bodyBundle.LoadAsset<GameObject>("left-hand");
+            RightHandPrefab = bodyBundle.LoadAsset<GameObject>("right-hand");
+            BodyCutoutTexture = bodyBundle.LoadAsset<Texture2D>("body-cutout");
+
+            var uiBundle = LoadBundle("ui");
+            ToolPickerPrefab = uiBundle.LoadAsset<GameObject>("tool-picker");
+            VrSettingsMenuPrefab = uiBundle.LoadAsset<GameObject>("vr-settings-menu");
+            FadeOverlayPrefab = uiBundle.LoadAsset<GameObject>("fade-overlay");
+            TeleportTargetPrefab = uiBundle.LoadAsset<GameObject>("teleport-target");
         }
 
         private static AssetBundle LoadBundle(string assetName)
@@ -33,11 +37,6 @@ namespace TwoForksVr.Assets
             if (bundle != null) return bundle;
             Logs.LogError($"Failed to load AssetBundle {assetName}");
             return null;
-        }
-
-        private static GameObject LoadAssetPrefab(string assetName, string objectName)
-        {
-            return LoadBundle(assetName).LoadAsset<GameObject>(objectName);
         }
     }
 }

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Reflection;
-using HarmonyLib;
-using TwoForksVr.Helpers;
+﻿using HarmonyLib;
 using UnityEngine;
 
 namespace TwoForksVr.PlayerBody.Patches
 {
     [HarmonyPatch]
-    public static class NavigationPatches
+    public class NavigationPatches : TwoForksVrPatch
     {
         [HarmonyPostfix]
         [HarmonyPatch(typeof(vgPlayerNavigationController), nameof(vgPlayerNavigationController.Start))]
@@ -38,9 +35,9 @@ namespace TwoForksVr.PlayerBody.Patches
         public static void MovePlayerInstantly(vgPlayerMover __instance, GameObject player)
         {
             if (player == null || player.tag != "Player") return;
-            
+
             var goalLocation = __instance.GetGoalLocation();
-			goalLocation.y = player.transform.position.y;
+            goalLocation.y = player.transform.position.y;
             player.GetComponent<CharacterController>().Move(goalLocation - player.transform.position);
         }
     }

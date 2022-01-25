@@ -5,14 +5,13 @@ using UnityEngine;
 namespace TwoForksVr.Stage.Patches
 {
     [HarmonyPatch]
-    public static class StagePatches
+    public class StagePatches : TwoForksVrPatch
     {
         private static vgReset resetObject;
         private static Transform originalParent;
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgReset), nameof(vgReset.Awake))]
-        // TODO: this doesnt matter anymore because the parent is changed on Create anyway. Move Create elsewhere.
         private static void CreateStage(vgReset __instance)
         {
             resetObject = __instance;
@@ -25,15 +24,25 @@ namespace TwoForksVr.Stage.Patches
         [HarmonyPatch(typeof(vgDestroyAllGameObjects), "OnEnter")]
         private static void PreventStageDestructionStart(object __instance)
         {
-            originalParent = VrStage.Instance.transform.parent.parent;
-            VrStage.Instance.transform.parent.SetParent(resetObject.transform);
+            originalParent = StageInstance.transform.parent.parent;
+            StageInstance.transform.parent.SetParent(resetObject.transform);
         }
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(vgDestroyAllGameObjects), "OnEnter")]
         private static void PreventStageDestructionEnd()
         {
-            VrStage.Instance.transform.parent.SetParent(originalParent);
+            StageInstance.transform.parent.SetParent(originalParent);
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.Start))]
+        public static void SetUpStagePlayer(vgPlayerController __instance)
+        {
+            // Getting camera manually because cameraController.camera isn't set up yet.
+            var camera = __instance.cameraController.GetComponentInChildren<Camera>();
+
+            StageInstance.SetUp(camera, __instance);
         }
     }
 }

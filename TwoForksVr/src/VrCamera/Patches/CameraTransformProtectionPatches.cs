@@ -4,7 +4,7 @@ using UnityEngine;
 // Even though Unity prevents moving / rotating a VR camera directly, the transform values still change until the next update.
 // We need to disable any code that tries to move the camera directly, so that the transform values remain "clean".
 // These patches try to disable any game code that would otherwise mess with the camera's transform values.
-namespace TwoForksVr.PlayerCamera.Patches
+namespace TwoForksVr.VrCamera.Patches
 {
     [HarmonyPatch]
     public class CameraTransformProtectionPatches

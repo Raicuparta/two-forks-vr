@@ -7,14 +7,15 @@ namespace TwoForksVr.Limbs
 {
     public class VrHand : MonoBehaviour
     {
-        public VrButtonHighlight ButtonHighlight { get; private set; }
         private string handName;
         private bool isLeft;
+        public VrButtonHighlight ButtonHighlight { get; private set; }
 
         public static VrHand Create(Transform parent, bool isLeft = false)
         {
             var handName = isLeft ? "Left" : "Right";
-            var transform = Instantiate(isLeft ? VrAssetLoader.LeftHandPrefab : VrAssetLoader.RightHandPrefab, parent, false).transform;
+            var transform = Instantiate(isLeft ? VrAssetLoader.LeftHandPrefab : VrAssetLoader.RightHandPrefab, parent,
+                false).transform;
             LayerHelper.SetLayerRecursive(transform.gameObject, GameLayer.UI);
             transform.name = $"{handName}Hand";
             var instance = transform.gameObject.AddComponent<VrHand>();
@@ -22,6 +23,7 @@ namespace TwoForksVr.Limbs
             instance.isLeft = isLeft;
             instance.ButtonHighlight = transform.GetComponentInChildren<VrButtonHighlight>();
             instance.SetUpPose();
+
             return instance;
         }
 
@@ -35,6 +37,7 @@ namespace TwoForksVr.Limbs
                 material.shader = armsMaterial.shader;
                 material.CopyPropertiesFromMaterial(armsMaterial);
             }
+
             EnableAnimatedHand(playerRootBone);
             gameObject.SetActive(true);
         }
@@ -66,10 +69,8 @@ namespace TwoForksVr.Limbs
                     var isCloneAttachment = cloneChild.name.Equals($"henryHand{handName}Attachment");
                     var isCloneWeddingRing = cloneChild.name.Equals("HenryWeddingRing 1");
                     if (isCloneWeddingRing || isCloneAttachment)
-                    {
                         targetChild.gameObject.AddComponent<FakeParenting>().Target = cloneChild;
-                    }
-                    
+
                     if (!isCloneWeddingRing)
                     {
                         cloneChild.gameObject.AddComponent<FollowLocalTransform>().Target = targetChild;
@@ -89,10 +90,7 @@ namespace TwoForksVr.Limbs
             if (!animatedArmBone) return;
 
             var clonedArmBone = transform.Find($"henry/henryroot/henryPelvis/henryArm{handName}Hand");
-            if (!clonedArmBone)
-            {
-                Logs.LogError("found no cloned arm bone");
-            }
+            if (!clonedArmBone) Logs.LogError("found no cloned arm bone");
             FollowAllChildrenRecursive(clonedArmBone, animatedArmBone);
         }
 

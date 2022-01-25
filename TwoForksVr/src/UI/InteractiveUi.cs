@@ -1,15 +1,14 @@
 using HarmonyLib;
-using TwoForksVr.Debugging;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace TwoForksVr.UI
 {
-    public class InteractiveUi: MonoBehaviour
+    public class InteractiveUi : MonoBehaviour
     {
-        private BoxCollider collider;
-        private vgUIInputModule[] inputModules = {};
         private static Transform targetTransform;
+        private BoxCollider collider;
+        private vgUIInputModule[] inputModules = { };
 
         private void Start()
         {
@@ -20,16 +19,11 @@ namespace TwoForksVr.UI
         private void Update()
         {
             UpdateTransform();
-            
+
             var active = IsAnyInputModuleActive();
             if (active && !collider.enabled)
-            {
                 collider.enabled = true;
-            }
-            else if (!active && collider.enabled)
-            {
-                collider.enabled = false;
-            }
+            else if (!active && collider.enabled) collider.enabled = false;
         }
 
         public static void SetTargetTransform(Transform transform)
@@ -41,12 +35,8 @@ namespace TwoForksVr.UI
         {
             if (inputModules.Length == 0) return false;
             foreach (var inputModule in inputModules)
-            {
                 if (inputModule && inputModule.gameObject.activeInHierarchy && inputModule.enabled)
-                {
                     return true;
-                }
-            }
 
             return false;
         }
@@ -60,7 +50,7 @@ namespace TwoForksVr.UI
                 inputModules = inputModules.AddRangeToArray(modules);
             }
         }
-        
+
         private void SetUpCollider()
         {
             collider = gameObject.GetComponent<BoxCollider>();
@@ -72,7 +62,7 @@ namespace TwoForksVr.UI
             collider.size = new Vector3(rectSize.x, rectSize.y, 0.1f);
             gameObject.layer = LayerMask.NameToLayer("UI");
         }
-        
+
         private void UpdateTransform()
         {
             transform.position = targetTransform.position;

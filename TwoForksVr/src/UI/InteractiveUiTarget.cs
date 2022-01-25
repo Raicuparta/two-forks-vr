@@ -12,15 +12,10 @@ namespace TwoForksVr.UI
         private const float rotationSmoothTime = 0.3f;
         private const float minAngleDelta = 45f;
         private Transform cameraTransform;
-        private Transform targetTransform;
         private Vector3 previousForward;
-        private Quaternion targetRotation;
         private Quaternion rotationVelocity;
-
-        private void Update()
-        {
-            UpdateTransform();
-        }
+        private Quaternion targetRotation;
+        private Transform targetTransform;
 
         public static InteractiveUiTarget Create(VrStage stage)
         {
@@ -38,6 +33,11 @@ namespace TwoForksVr.UI
             if (!camera) return;
             cameraTransform = camera.transform;
             previousForward = MathHelper.GetProjectedForward(cameraTransform);
+        }
+
+        private void Update()
+        {
+            UpdateTransform();
         }
 
         private void UpdateTransform()

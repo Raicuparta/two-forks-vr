@@ -1,5 +1,4 @@
-﻿using System;
-using TwoForksVr.Helpers;
+﻿using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
 using TwoForksVr.UI;
 using UnityEngine;
@@ -7,43 +6,16 @@ using UnityEngine.XR;
 using UnityStandardAssets.ImageEffects;
 using Valve.VR;
 
-namespace TwoForksVr.PlayerCamera
+namespace TwoForksVr.VrCamera
 {
     public class VRCameraManager : MonoBehaviour
     {
         private Camera camera;
         private vgCameraController cameraController;
         private int cameraCullingMask;
-        private VrStage stage;
-        private Transform playerTransform;
         private int pauseCameraCullingMask;
-
-        private void Start()
-        {
-            pauseCameraCullingMask = LayerHelper.GetMask(GameLayer.UI, GameLayer.MenuBackground, GameLayer.PlayerBody);
-        }
-
-        private void Update()
-        {
-            if (SteamVR_Actions.default_Recenter.stateDown) Recenter(true);
-            UpdateCulling();
-        }
-
-        private void UpdateCulling()
-        {
-            if (!vgPauseManager.Instance) return;
-
-            if (cameraCullingMask == 0 && vgPauseManager.Instance.isPaused)
-            {
-                cameraCullingMask = camera.cullingMask;
-                camera.cullingMask = pauseCameraCullingMask;
-            }
-            else if (cameraCullingMask != 0 && !vgPauseManager.Instance.isPaused)
-            {
-                camera.cullingMask = cameraCullingMask;
-                cameraCullingMask = 0;
-            }
-        }
+        private Transform playerTransform;
+        private VrStage stage;
 
         public static VRCameraManager Create(VrStage stage)
         {
@@ -64,9 +36,36 @@ namespace TwoForksVr.PlayerCamera
             Invoke(nameof(RecenterIncludingVertical), 1);
         }
 
+        private void Start()
+        {
+            pauseCameraCullingMask = LayerHelper.GetMask(GameLayer.UI, GameLayer.MenuBackground, GameLayer.PlayerBody);
+        }
+
+        private void Update()
+        {
+            if (SteamVR_Actions.default_Recenter.stateDown) RecenterPosition(true);
+            UpdateCulling();
+        }
+
+        private void UpdateCulling()
+        {
+            if (!vgPauseManager.Instance) return;
+
+            if (cameraCullingMask == 0 && vgPauseManager.Instance.isPaused)
+            {
+                cameraCullingMask = camera.cullingMask;
+                camera.cullingMask = pauseCameraCullingMask;
+            }
+            else if (cameraCullingMask != 0 && !vgPauseManager.Instance.isPaused)
+            {
+                camera.cullingMask = cameraCullingMask;
+                cameraCullingMask = 0;
+            }
+        }
+
         private void RecenterIncludingVertical()
         {
-            Recenter(true);
+            RecenterPosition(true);
         }
 
         private void SetUpCamera()
@@ -79,7 +78,7 @@ namespace TwoForksVr.PlayerCamera
             // If the camera starts with an offset position, the tracking will always be incorrect.
             // So I disable VR, reset the camera position, and then enable VR again.
             XRSettings.enabled = false;
-            
+
             var cameraParent = new GameObject("VrCameraParent").transform;
             cameraParent.SetParent(cameraTransform.parent, false);
             cameraTransform.SetParent(cameraParent.transform);
@@ -117,16 +116,17 @@ namespace TwoForksVr.PlayerCamera
                 return Vector3.zero;
             }
         }
-        
-        public void Recenter(bool recenterVertically = false)
+
+        public void RecenterPosition(bool recenterVertically = false)
         {
             if (!playerTransform || !camera) return;
             var cameraOffset = GetCameraOffset();
-            if (!recenterVertically)
-            {
-                cameraOffset.y = 0;
-            }
+            if (!recenterVertically) cameraOffset.y = 0;
             transform.position -= cameraOffset;
+        }
+
+        public void RecenterRotation()
+        {
             var angleOffset = playerTransform.eulerAngles.y - camera.transform.eulerAngles.y;
             transform.RotateAround(playerTransform.position, Vector3.up, angleOffset);
         }

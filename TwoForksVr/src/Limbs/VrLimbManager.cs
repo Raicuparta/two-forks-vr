@@ -10,28 +10,28 @@ namespace TwoForksVr.Limbs
     public class VrLimbManager : MonoBehaviour
     {
         private Laser laser;
-        private VrHand leftHand;
-        private VrHand rightHand;
+        public VrHand LeftHand { get; private set; }
+        public VrHand RightHand { get; private set; }
 
         public static VrLimbManager Create(VrStage stage)
         {
             var instance = new GameObject("VrLimbManager").AddComponent<VrLimbManager>();
             var instanceTransform = instance.transform;
             instanceTransform.SetParent(stage.transform, false);
-            
-            instance.rightHand = VrHand.Create(instanceTransform);
-            instance.leftHand = VrHand.Create(instanceTransform, true);
+
+            instance.RightHand = VrHand.Create(instanceTransform);
+            instance.LeftHand = VrHand.Create(instanceTransform, true);
             ToolPicker.Create(
                 instanceTransform,
-                instance.leftHand.transform,
-                instance.rightHand.transform
+                instance.LeftHand.transform,
+                instance.RightHand.transform
             );
             instance.laser = Laser.Create(
-                instance.leftHand.transform,
-                instance.rightHand.transform
+                instance.LeftHand.transform,
+                instance.RightHand.transform
             );
 
-            InventoryPatches.RightHand = instance.rightHand.transform;
+            InventoryPatches.RightHand = instance.RightHand.transform;
 
             return instance;
         }
@@ -40,8 +40,8 @@ namespace TwoForksVr.Limbs
         {
             var skeletonRoot = GetSkeletonRoot(playerTransform);
             var armsMaterial = GetArmsMaterial(playerTransform);
-            rightHand.SetUp(skeletonRoot, armsMaterial);
-            leftHand.SetUp(skeletonRoot, armsMaterial);
+            RightHand.SetUp(skeletonRoot, armsMaterial);
+            LeftHand.SetUp(skeletonRoot, armsMaterial);
             laser.SetUp(camera);
 
             VrFoot.Create(skeletonRoot);
@@ -52,13 +52,13 @@ namespace TwoForksVr.Limbs
         {
             if (actions.Length == 0)
             {
-                leftHand.ButtonHighlight.HideAllButtonHints();
-                rightHand.ButtonHighlight.HideAllButtonHints();
+                LeftHand.ButtonHighlight.HideAllButtonHints();
+                RightHand.ButtonHighlight.HideAllButtonHints();
             }
             else
             {
-                leftHand.ButtonHighlight.ShowButtonHint(actions);
-                rightHand.ButtonHighlight.ShowButtonHint(actions);
+                LeftHand.ButtonHighlight.ShowButtonHint(actions);
+                RightHand.ButtonHighlight.ShowButtonHint(actions);
             }
         }
 

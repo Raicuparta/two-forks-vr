@@ -14,7 +14,7 @@ namespace TwoForksVr.Helpers
             var sign = Mathf.Sign(axis.x * crossX + axis.y * crossY + axis.z * crossZ);
             return unsignedAngle * sign;
         }
-        
+
         public static float SignedAngle(Vector3 from, Vector3 to, Vector3 axis)
         {
             var unsignedAngle = Vector3.Angle(from, to);
@@ -57,12 +57,12 @@ namespace TwoForksVr.Helpers
 
             return new Vector2(vectorX, vectorY);
         }
-        
+
         public static Vector3 GetProjectedForward(Transform transform)
         {
             return Vector3.ProjectOnPlane(transform.forward, Vector3.up);
         }
-        
+
         public static Quaternion SmoothDamp(Quaternion rot, Quaternion target, ref Quaternion deriv, float time)
         {
             // account for double-cover
@@ -87,7 +87,7 @@ namespace TwoForksVr.Helpers
             deriv.w = (result.w - rot.w) * dtInv;
             return new Quaternion(result.x, result.y, result.z, result.w);
         }
-        
+
         public static float SmoothDamp(
             float current,
             float target,

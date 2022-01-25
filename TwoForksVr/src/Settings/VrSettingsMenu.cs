@@ -6,11 +6,12 @@ using UnityEngine.UI;
 
 namespace TwoForksVr.Settings
 {
-    public class VrSettingsMenu: MonoBehaviour
+    public class VrSettingsMenu : MonoBehaviour
     {
         public static VrSettingsMenu Create(VrStage stage)
         {
-            var instance = Instantiate(VrAssetLoader.VrSettingsMenuPrefab, stage.transform, false).AddComponent<VrSettingsMenu>();
+            var instance = Instantiate(VrAssetLoader.VrSettingsMenuPrefab, stage.transform, false)
+                .AddComponent<VrSettingsMenu>();
             instance.gameObject.AddComponent<InteractiveUi>();
 
             var canvas = instance.GetComponent<Canvas>();
@@ -18,16 +19,13 @@ namespace TwoForksVr.Settings
             canvas.sortingOrder = 100;
 
             var exitButton = instance.transform.Find("ExitButton").GetComponent<Button>();
-            exitButton.onClick.AddListener(() =>
-            {
-                instance.gameObject.SetActive(false);
-            });
+            exitButton.onClick.AddListener(instance.Close);
 
             var layoutGroup = instance.transform.Find("LayoutGroup");
 
             var toggleObject = layoutGroup.GetComponentInChildren<Toggle>(true).gameObject;
             toggleObject.SetActive(false);
-                
+
             foreach (var configEntry in VrSettings.Config)
             {
                 var toggleInstance = Instantiate(toggleObject, layoutGroup, false);
@@ -35,14 +33,23 @@ namespace TwoForksVr.Settings
                 toggleInstance.GetComponentInChildren<Text>().text = configEntry.Value.Description.Description;
                 var toggleInput = toggleInstance.GetComponentInChildren<Toggle>();
                 toggleInput.isOn = (bool) configEntry.Value.BoxedValue;
-                
-                toggleInput.onValueChanged.AddListener((isOn) =>
-                {
-                    configEntry.Value.BoxedValue = isOn;
-                });
+
+                toggleInput.onValueChanged.AddListener(isOn => { configEntry.Value.BoxedValue = isOn; });
             }
 
+            instance.Close();
+
             return instance;
+        }
+
+        public void Open()
+        {
+            gameObject.SetActive(true);
+        }
+
+        private void Close()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

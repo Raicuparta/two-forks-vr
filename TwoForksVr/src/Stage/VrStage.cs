@@ -2,8 +2,11 @@
 using TwoForksVr.Debugging;
 using TwoForksVr.Helpers;
 using TwoForksVr.Limbs;
-using TwoForksVr.PlayerCamera;
+using TwoForksVr.Locomotion;
+using TwoForksVr.PlayerBody;
+using TwoForksVr.Settings;
 using TwoForksVr.UI;
+using TwoForksVr.VrCamera;
 using UnityEngine;
 using Valve.VR;
 
@@ -11,33 +14,28 @@ namespace TwoForksVr.Stage
 {
     public class VrStage : MonoBehaviour
     {
-        public static VrStage Instance;
+        private static VrStage instance;
+        private BodyRendererManager bodyRendererManager;
 
         private VRCameraManager cameraManager;
-        private FakeParenting follow;
-        private VrLimbManager limbManager;
-        private IntroFix introFix;
-        private Camera mainCamera;
-        private InteractiveUiTarget interactiveUiTarget;
         private FadeOverlay fadeOverlay;
+        private FakeParenting follow;
+        private InteractiveUiTarget interactiveUiTarget;
+        private IntroFix introFix;
+        private VrLimbManager limbManager;
+        private Camera mainCamera;
+        private RoomScaleBodyTransform roomScaleBodyTransform;
+        private TeleportController teleportController;
+        private TurningController turningController;
+        private VeryLateUpdateManager veryLateUpdateManager;
+        private VrSettingsMenu vrSettingsMenu;
 
         // No idea why, but if I don't make this static, it gets lost
         public static Camera FallbackCamera { get; private set; }
 
-        private void Update()
-        {
-            if (!FallbackCamera.enabled && !(mainCamera && mainCamera.enabled)) SetUp(null, null);
-        }
-
-        private void OnDisable()
-        {
-            throw new Exception(
-                "The VR Stage is being disabled. This should never happen. Check the call stack of this error to find the culprit.");
-        }
-
         public static void Create(Transform parent)
         {
-            if (Instance) return;
+            if (instance) return;
             var stageParent = new GameObject("VrStageParent")
             {
                 // Apparently Firewatch will destroy all DontDrestroyOnLoad objects between scenes,
@@ -49,24 +47,32 @@ namespace TwoForksVr.Stage
             stageParent.AddComponent<vgOnlyLoadOnce>().dontDestroyOnLoad = true;
 
             DontDestroyOnLoad(stageParent);
-            Instance = new GameObject("VrStage").AddComponent<VrStage>();
-            Instance.transform.SetParent(stageParent.transform, false);
-            Instance.cameraManager = VRCameraManager.Create(Instance);
-            Instance.limbManager = VrLimbManager.Create(Instance);
-            Instance.follow = stageParent.AddComponent<FakeParenting>();
-            Instance.interactiveUiTarget = InteractiveUiTarget.Create(Instance);
-            Instance.fadeOverlay = FadeOverlay.Create(Instance);
+            instance = new GameObject("VrStage").AddComponent<VrStage>();
+            instance.transform.SetParent(stageParent.transform, false);
+            instance.cameraManager = VRCameraManager.Create(instance);
+            instance.limbManager = VrLimbManager.Create(instance);
+            instance.follow = stageParent.AddComponent<FakeParenting>();
+            instance.interactiveUiTarget = InteractiveUiTarget.Create(instance);
+            instance.fadeOverlay = FadeOverlay.Create(instance);
+            instance.teleportController = TeleportController.Create(instance, instance.limbManager);
+            instance.veryLateUpdateManager = VeryLateUpdateManager.Create(instance);
+            instance.turningController = TurningController.Create(instance, instance.teleportController);
+            instance.roomScaleBodyTransform = RoomScaleBodyTransform.Create(instance, instance.teleportController);
+            instance.bodyRendererManager = BodyRendererManager.Create(instance, instance.teleportController);
+            instance.vrSettingsMenu = VrSettingsMenu.Create(instance);
 
             FallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
             FallbackCamera.enabled = false;
             FallbackCamera.clearFlags = CameraClearFlags.Color;
             FallbackCamera.backgroundColor = Color.black;
-            FallbackCamera.transform.SetParent(Instance.transform, false);
+            FallbackCamera.transform.SetParent(instance.transform, false);
 
-            Instance.gameObject.AddComponent<GeneralDebugger>();
+            instance.gameObject.AddComponent<GeneralDebugger>();
+
+            TwoForksVrPatch.SetStage(instance);
         }
 
-        public void SetUp(Camera camera, Transform playerTransform)
+        public void SetUp(Camera camera, vgPlayerController playerController)
         {
             mainCamera = camera;
             if (mainCamera)
@@ -81,16 +87,38 @@ namespace TwoForksVr.Stage
                 if (!introFix) introFix = IntroFix.Create();
             }
 
+            var playerTransform = playerController ? playerController.transform : null;
             var nextCamera = mainCamera ? mainCamera : FallbackCamera;
             cameraManager.SetUp(nextCamera, playerTransform);
             limbManager.SetUp(playerTransform, nextCamera);
             interactiveUiTarget.SetUp(nextCamera);
+            teleportController.SetUp(playerController);
             fadeOverlay.SetUp(nextCamera);
+            veryLateUpdateManager.SetUp(nextCamera);
+            turningController.SetUp(playerController);
+            roomScaleBodyTransform.SetUp(playerController);
+            bodyRendererManager.SetUp(playerController);
         }
 
-        public void Recenter(bool recenterVertically = false)
+        private void Update()
         {
-            cameraManager.Recenter(recenterVertically);
+            if (!FallbackCamera.enabled && !(mainCamera && mainCamera.enabled)) SetUp(null, null);
+        }
+
+        private void OnDisable()
+        {
+            throw new Exception(
+                "The VR Stage is being disabled. This should never happen. Check the call stack of this error to find the culprit.");
+        }
+
+        public void RecenterPosition(bool recenterVertically = false)
+        {
+            cameraManager.RecenterPosition(recenterVertically);
+        }
+
+        public void RecenterRotation()
+        {
+            cameraManager.RecenterRotation();
         }
 
         public void HighlightButton(params ISteamVR_Action_In_Source[] actions)
@@ -108,6 +136,12 @@ namespace TwoForksVr.Stage
         {
             if (!fadeOverlay) return;
             fadeOverlay.FadeToClear();
+        }
+
+        public void OpenVrSettings()
+        {
+            if (!vrSettingsMenu) return;
+            vrSettingsMenu.Open();
         }
     }
 }

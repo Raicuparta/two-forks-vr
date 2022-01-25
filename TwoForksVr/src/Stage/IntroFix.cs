@@ -6,6 +6,11 @@ namespace TwoForksVr.Stage
     {
         private GameObject introManager;
 
+        public static IntroFix Create()
+        {
+            return new GameObject("VrIntroFix").AddComponent<IntroFix>();
+        }
+
         private void Awake()
         {
             introManager = GameObject.Find("IntroManager");
@@ -18,11 +23,6 @@ namespace TwoForksVr.Stage
         private void Start()
         {
             if (introManager) introManager.SetActive(true);
-        }
-
-        public static IntroFix Create()
-        {
-            return new GameObject("VrIntroFix").AddComponent<IntroFix>();
         }
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace TwoForksVr.Helpers
 {
-    public class FollowLocalTransform: MonoBehaviour
+    public class FollowLocalTransform : MonoBehaviour
     {
         public Transform Target;
 
@@ -13,6 +13,7 @@ namespace TwoForksVr.Helpers
                 Destroy(this);
                 return;
             }
+
             transform.localRotation = Target.localRotation;
             transform.localRotation = Target.localRotation;
             transform.localScale = Target.localScale;

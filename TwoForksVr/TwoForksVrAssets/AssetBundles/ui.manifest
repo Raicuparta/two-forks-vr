@@ -1,19 +1,27 @@
 ManifestFileVersion: 0
-CRC: 260680146
+CRC: 265121858
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 8c3819c271df14d17fc457e5d27b0e21
+    Hash: e642d3803734a36f9aa3c1f5d5c8731e
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 7b8100f79211a370b5409ff70f659eed
+    Hash: 7edda1232d5d745c6b247a587f063afe
 HashAppended: 0
 ClassTypes:
 - Class: 1
   Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
 - Class: 21
   Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
 - Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
   Script: {instanceID: 0}
 - Class: 48
   Script: {instanceID: 0}
@@ -45,6 +53,8 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 128
   Script: {instanceID: 0}
+- Class: 212
+  Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
 - Class: 222
@@ -54,5 +64,8 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Prefabs/VrSettingsMenu.prefab
+- Assets/Prefabs/vr-settings-menu.prefab
+- Assets/Prefabs/tool-picker.prefab
+- Assets/Prefabs/teleport-target.prefab
+- Assets/Prefabs/fade-overlay.prefab
 Dependencies: []

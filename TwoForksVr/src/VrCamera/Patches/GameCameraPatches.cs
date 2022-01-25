@@ -1,11 +1,10 @@
 ﻿using HarmonyLib;
-using TwoForksVr.Stage;
 using UnityEngine;
 
-namespace TwoForksVr.PlayerCamera.Patches
+namespace TwoForksVr.VrCamera.Patches
 {
     [HarmonyPatch]
-    public class GameCameraPatches
+    public class GameCameraPatches : TwoForksVrPatch
     {
         private static bool isDone;
 
@@ -14,7 +13,7 @@ namespace TwoForksVr.PlayerCamera.Patches
         private static void RecenterCamera()
         {
             if (isDone) return;
-            VrStage.Instance.Recenter(true);
+            StageInstance.RecenterPosition(true);
             isDone = true;
         }
 
