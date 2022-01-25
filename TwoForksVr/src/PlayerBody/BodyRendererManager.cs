@@ -8,7 +8,7 @@ using UnityEngine.Rendering;
 
 namespace TwoForksVr.PlayerBody
 {
-    public class VrBodyManager: MonoBehaviour
+    public class BodyRendererManager: MonoBehaviour
     {
         private Material bodyMaterial;
         private Texture bodyTexture;
@@ -26,9 +26,9 @@ namespace TwoForksVr.PlayerBody
             VrSettings.ShowBody.SettingChanged -= HandleSettingsChanged;
         }
 
-        public static VrBodyManager Create(VrStage stage)
+        public static BodyRendererManager Create(VrStage stage)
         {
-            var instance = stage.gameObject.AddComponent<VrBodyManager>();
+            var instance = stage.gameObject.AddComponent<BodyRendererManager>();
             return instance;
         }
         
