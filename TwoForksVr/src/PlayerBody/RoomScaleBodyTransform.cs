@@ -76,7 +76,8 @@ namespace TwoForksVr.PlayerBody
 
             characterController.Move(groundedPositionDelta);
 
-            // TODO This probably breaks stuff elsewhere.
+            // There's a chance this might break some other movement-related stuff,
+            // like resetting animations.
             navigationController.positionLastFrame = transform.position;
         }
 

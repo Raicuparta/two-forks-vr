@@ -21,7 +21,6 @@ namespace TwoForksVr.Tools
             instance.transform.localPosition =
                 new Vector3(Mathf.Cos(angle) * circleRadius, Mathf.Sin(angle) * circleRadius, 0);
 
-            // TODO separate into individual classes for each item?
             instance.toolPickerAction = ToolPickerAction.GetToolPickerAction(instance.itemType);
 
             instance.SetUpIcon();

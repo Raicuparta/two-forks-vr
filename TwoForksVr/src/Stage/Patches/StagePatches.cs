@@ -40,7 +40,6 @@ namespace TwoForksVr.Stage.Patches
         public static void SetUpStagePlayer(vgPlayerController __instance)
         {
             // Getting camera manually because cameraController.camera isn't set up yet.
-            // TODO check if I can make this happen later.
             var camera = __instance.cameraController.GetComponentInChildren<Camera>();
 
             StageInstance.SetUp(camera, __instance);
