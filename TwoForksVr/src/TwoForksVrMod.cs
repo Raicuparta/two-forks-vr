@@ -7,7 +7,7 @@ using TwoForksVr.VrInput.Patches;
 
 namespace TwoForksVr
 {
-    [BepInPlugin("raicuparta.twoforksvr", "Two Forks VR", "0.0.11")]
+    [BepInPlugin("raicuparta.twoforksvr", "Two Forks VR", "0.0.12")]
     public class TwoForksVrMod : BaseUnityPlugin
     {
         private void Awake()
