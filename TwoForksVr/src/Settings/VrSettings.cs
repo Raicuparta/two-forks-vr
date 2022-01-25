@@ -19,7 +19,7 @@ namespace TwoForksVr.Settings
             Teleport = config.Bind("Config", "Teleport", false,
                 "Fixed camera whie moving (\"teleport\" locomotion)");
             FixedCameraDuringAnimations = config.Bind("Config", "FixedCameraDuringAnimations", false,
-                "Fixed camera during player animations");
+                "Fixed camera during animations (experimental)");
             ShowBody = config.Bind("Config", "ShowBody", false,
                 "Show player body");
             ShowFeet = config.Bind("Config", "ShowFeet", true,
