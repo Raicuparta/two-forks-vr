@@ -7,7 +7,7 @@ namespace TwoForksVr.PlayerBody
 {
     public class RoomScaleBodyTransform : TwoForksVrBehavior
     {
-        private const float minPositionOffset = 0.00001f;
+        private const float minPositionOffset = 0;
         private const float maxPositionOffset = 1f;
 
         private Transform cameraTransform;
@@ -15,6 +15,7 @@ namespace TwoForksVr.PlayerBody
         private vgPlayerNavigationController navigationController;
         private Vector3 prevCameraPosition;
         private Vector3 prevForward;
+        private bool previousNavigationControlerEnabled;
         private VrStage stage;
         private TeleportController teleportController;
 
@@ -36,24 +37,28 @@ namespace TwoForksVr.PlayerBody
             prevForward = GetCameraForward();
         }
 
+        private void Update()
+        {
+            if (!navigationController) return;
+
+            if (navigationController.enabled != previousNavigationControlerEnabled)
+            {
+                previousNavigationControlerEnabled = navigationController.enabled;
+                stage.RecenterPosition(true);
+                stage.RecenterRotation();
+            }
+        }
+
         protected override void VeryLateUpdate()
         {
             if (ShouldSkipUpdate()) return;
             UpdateRotation();
             UpdateRoomScalePosition();
-            Recenter();
         }
 
         private bool ShouldSkipUpdate()
         {
             return !characterController || teleportController && teleportController.IsTeleporting();
-        }
-
-        private void Recenter()
-        {
-            if (!navigationController.onGround || !navigationController.enabled) return;
-            stage.RecenterRotation();
-            stage.RecenterPosition();
         }
 
         private void UpdateRoomScalePosition()
@@ -79,6 +84,8 @@ namespace TwoForksVr.PlayerBody
             // There's a chance this might break some other movement-related stuff,
             // like resetting animations.
             navigationController.positionLastFrame = characterController.transform.position;
+
+            stage.RecenterPosition();
         }
 
         private Vector3 GetCameraForward()
@@ -94,6 +101,8 @@ namespace TwoForksVr.PlayerBody
             var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
             prevForward = cameraForward;
             characterController.transform.Rotate(Vector3.up, angleDelta);
+
+            stage.RecenterRotation();
         }
     }
 }
