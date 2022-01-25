@@ -36,9 +36,9 @@ namespace TwoForksVr.Stage.Patches
             VrStage.Instance.transform.parent.SetParent(originalParent);
         }
 
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.Awake))]
-        public static void CreateBodyManager(vgPlayerController __instance)
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.Start))]
+        public static void SetUpStagePlayer(vgPlayerController __instance)
         {
             // Getting camera manually because cameraController.camera isn't set up yet.
             // TODO check if I can make this happen later.

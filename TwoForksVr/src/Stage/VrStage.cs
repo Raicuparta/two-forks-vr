@@ -3,6 +3,7 @@ using TwoForksVr.Debugging;
 using TwoForksVr.Helpers;
 using TwoForksVr.Limbs;
 using TwoForksVr.Locomotion;
+using TwoForksVr.PlayerBody;
 using TwoForksVr.PlayerCamera;
 using TwoForksVr.UI;
 using UnityEngine;
@@ -24,6 +25,7 @@ namespace TwoForksVr.Stage
         private TeleportController teleportController;
         private VeryLateUpdateManager veryLateUpdateManager;
         private TurningController turningController;
+        private RoomScaleBodyTransform roomScaleBodyTransform;
 
         // No idea why, but if I don't make this static, it gets lost
         public static Camera FallbackCamera { get; private set; }
@@ -63,6 +65,7 @@ namespace TwoForksVr.Stage
             Instance.teleportController = TeleportController.Create(Instance, Instance.limbManager);
             Instance.veryLateUpdateManager = VeryLateUpdateManager.Create(Instance);
             Instance.turningController = TurningController.Create(Instance, Instance.teleportController);
+            Instance.roomScaleBodyTransform = RoomScaleBodyTransform.Create(Instance, Instance.teleportController);
 
             FallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
             FallbackCamera.enabled = false;
@@ -97,6 +100,7 @@ namespace TwoForksVr.Stage
             fadeOverlay.SetUp(nextCamera);
             veryLateUpdateManager.SetUp(nextCamera);
             turningController.SetUp(playerController);
+            roomScaleBodyTransform.SetUp(playerController);
         }
 
         public void RecenterPosition(bool recenterVertically = false)

@@ -1,7 +1,7 @@
 using TwoForksVr.Helpers;
+using TwoForksVr.Locomotion;
 using TwoForksVr.Stage;
 using UnityEngine;
-using Valve.VR;
 
 namespace TwoForksVr.PlayerBody
 {
@@ -13,46 +13,38 @@ namespace TwoForksVr.PlayerBody
         private Transform cameraTransform;
         private CharacterController characterController;
         private vgPlayerNavigationController navigationController;
+        private TeleportController teleportController;
         private Vector3 prevCameraPosition;
         private Vector3 prevForward;
 
-        public static void Create(vgPlayerController playerController)
+        public static RoomScaleBodyTransform Create(VrStage stage, TeleportController teleportController)
         {
-            var playerTransform = playerController.transform;
-            var existingRoomScalePosition = playerTransform.gameObject.GetComponent<RoomScaleBodyTransform>();
-            if (existingRoomScalePosition) return;
-
-            var instance = playerController.gameObject.AddComponent<RoomScaleBodyTransform>();
-            instance.cameraTransform = playerController.playerCamera.transform;
-            instance.characterController = playerController.characterController;
-            instance.navigationController = playerController.navController;
+            var instance = stage.gameObject.AddComponent<RoomScaleBodyTransform>();
+            instance.teleportController = teleportController;
+            return instance;
         }
 
-        protected override void Awake()
+        public void SetUp(vgPlayerController playerController)
         {
-            base.Awake();
-            SteamVR_Actions.default_Teleport.onStateDown += OnTeleportInput;
-            SteamVR_Actions.default_Teleport.onStateUp += OnTeleportInput;
-        }
-
-        private void Start()
-        {
-            prevForward = GetCameraForward();
+            if (!playerController) return;
+            cameraTransform = playerController.playerCamera.transform;
+            characterController = playerController.characterController;
+            navigationController = playerController.navController;
             prevCameraPosition = cameraTransform.position;
-        }
-
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-            SteamVR_Actions.default_Teleport.onStateDown -= OnTeleportInput;
-            SteamVR_Actions.default_Teleport.onStateUp -= OnTeleportInput;
+            prevForward = GetCameraForward();
         }
 
         protected override void VeryLateUpdate()
         {
+            if (ShouldSkipUpdate()) return;
             UpdateRotation();
             UpdateRoomScalePosition();
             Recenter();
+        }
+
+        private bool ShouldSkipUpdate()
+        {
+            return !characterController || (teleportController && teleportController.IsTeleporting());
         }
 
         private void Recenter()
@@ -60,12 +52,6 @@ namespace TwoForksVr.PlayerBody
             if (!navigationController.onGround || !navigationController.enabled) return;
             VrStage.Instance.RecenterRotation();
             VrStage.Instance.RecenterPosition();
-        }
-
-        private void OnTeleportInput(SteamVR_Action_Boolean fromaction, SteamVR_Input_Sources fromsource)
-        {
-            // TODO this probably doesn't make sense, what if teleport option is turned off?
-            enabled = !fromaction.state;
         }
 
         private void UpdateRoomScalePosition()
