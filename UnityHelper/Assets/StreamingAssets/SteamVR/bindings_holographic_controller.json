@@ -182,6 +182,9 @@
                   "east" : {
                      "output" : "/actions/default/in/snapturnright"
                   },
+                  "north" : {
+                     "output" : "/actions/default/in/teleport"
+                  },
                   "west" : {
                      "output" : "/actions/default/in/snapturnleft"
                   }
