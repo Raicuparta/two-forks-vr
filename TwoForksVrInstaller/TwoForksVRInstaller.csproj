@@ -20,9 +20,9 @@
         <Reference Include="AssetsTools.NET">
             <HintPath>lib\AssetsTools.NET.dll</HintPath>
         </Reference>
-        <Reference Include="System.Data.DataSetExtensions"/>
-        <Reference Include="Microsoft.CSharp"/>
-        <Reference Include="System.Net.Http"/>
+        <Reference Include="System.Data.DataSetExtensions" />
+        <Reference Include="Microsoft.CSharp" />
+        <Reference Include="System.Net.Http" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="ModFiles/**">
