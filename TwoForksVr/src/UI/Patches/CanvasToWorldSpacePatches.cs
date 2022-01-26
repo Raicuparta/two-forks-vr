@@ -92,7 +92,9 @@ namespace TwoForksVr.UI.Patches
             }
             else
             {
+                canvas.renderMode = RenderMode.WorldSpace;
                 canvas.gameObject.AddComponent<StaticUi>();
+                canvas.transform.localScale = Vector3.one * 0.0005f;
             }
         }
     }
