@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net48</TargetFramework>
+        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <OutputPath>bin\$(Configuration)\</OutputPath>
+        <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <PostBuildEvent>
+            xcopy /Y /S "$(SolutionDir)TwoForksVr\bin\x64\Release\**" "$(SolutionDir)TwoForksVrInstaller\bin\Release\ModFiles\BepInEx\plugins\"
+        </PostBuildEvent>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <DebugType>full</DebugType>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <DebugType>none</DebugType>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="AssetsTools.NET">
+            <HintPath>lib\AssetsTools.NET.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="ModFiles/**">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="classdata.tpk" />
+        <Content Include="classdata.tpk">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\TwoForksVr\TwoForksVr.csproj">
+            <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+        </ProjectReference>
+    </ItemGroup>
+</Project>

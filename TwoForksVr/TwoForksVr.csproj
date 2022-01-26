@@ -1,104 +1,42 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <ProjectGuid>{4FAEDEC8-3D86-4350-B42D-DAD4414E69D1}</ProjectGuid>
-    <TargetFramework>net35</TargetFramework>
-    <OutputPath>C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\plugins</OutputPath>
-    <AssemblyTitle>TwoForksVr</AssemblyTitle>
-    <Product>TwoForksVr</Product>
-    <Copyright>Copyright ©  2020</Copyright>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <Configurations>Release;Debug</Configurations>
-    <Platforms>x64</Platforms>
-    <PreBuildEvent>
-      "$(MSBuildBinPath)\MSBuild.exe" "$(SolutionDir)\UnityHelper\SteamVR.csproj" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_40;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64"
-      "$(MSBuildBinPath)\MSBuild.exe" "$(SolutionDir)\UnityHelper\SteamVR_Actions.csproj" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_40;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64"
-    </PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
-    <DebugType>portable</DebugType>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="BepInEx.Core" Version="5.4.16" />
-    <PackageReference Include="FirewatchGameLibs" Version="1.1.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="SteamVR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\UnityHelper\obj\Release\SteamVR.dll</HintPath>
-    </Reference>
-    <Reference Include="SteamVR_Actions, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\UnityHelper\obj\Release\SteamVR_Actions.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="TwoForksVrAssets\Bindings\actions.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="TwoForksVrAssets\Bindings\bindings_holographic_controller.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="TwoForksVrAssets\Bindings\bindings_knuckles.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="TwoForksVrAssets\Bindings\bindings_logitech_stylus.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="TwoForksVrAssets\Bindings\bindings_oculus_touch.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="TwoForksVrAssets\Bindings\bindings_vive_controller.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="TwoForksVrAssets\Bindings\bindings_vive_cosmos_controller.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="TwoForksVrAssets\Bindings\binding_holographic_hmd.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="TwoForksVrAssets\Bindings\binding_index_hmd.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="TwoForksVrAssets\Bindings\binding_rift.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="TwoForksVrAssets\Bindings\binding_vive.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="TwoForksVrAssets\Bindings\binding_vive_cosmos.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="TwoForksVrAssets\Bindings\binding_vive_pro.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="TwoForksVrAssets\Bindings\binding_vive_tracker_camera.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="TwoForksVrAssets\AssetBundles\body">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-      <None Remove="TwoForksVrAssets\AssetBundles\body.manifest" />
-      <Content Include="TwoForksVrAssets\AssetBundles\body.manifest">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <None Remove="TwoForksVrAssets\AssetBundles\hand.manifest" />
-      <None Remove="TwoForksVrAssets\AssetBundles\hands.manifest" />
-      <None Remove="TwoForksVrAssets\AssetBundles\settings-menu.manifest" />
-      <None Remove="TwoForksVrAssets\AssetBundles\tool-picker.manifest" />
-      <None Remove="TwoForksVrAssets\AssetBundles\camera.manifest" />
-      <None Remove="TwoForksVrAssets\AssetBundles\camera" />
-      <None Remove="TwoForksVrAssets\AssetBundles\ui" />
-      <Content Include="TwoForksVrAssets\AssetBundles\ui">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <None Remove="TwoForksVrAssets\AssetBundles\ui.manifest" />
-      <Content Include="TwoForksVrAssets\AssetBundles\ui.manifest">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-  </ItemGroup>
+    <PropertyGroup>
+        <ProjectGuid>{4FAEDEC8-3D86-4350-B42D-DAD4414E69D1}</ProjectGuid>
+        <TargetFramework>net35</TargetFramework>
+        <AssemblyTitle>TwoForksVr</AssemblyTitle>
+        <Product>TwoForksVr</Product>
+        <Copyright>Copyright © 2020</Copyright>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <Configurations>Release;Debug</Configurations>
+        <Platforms>x64</Platforms>
+        <PreBuildEvent>
+            "$(MSBuildBinPath)\MSBuild.exe" "$(SolutionDir)\UnityHelper\SteamVR.csproj" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_40;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64"
+            "$(MSBuildBinPath)\MSBuild.exe" "$(SolutionDir)\UnityHelper\SteamVR_Actions.csproj" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_40;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64"
+        </PreBuildEvent>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+        <DebugType>full</DebugType>
+        <OutputPath>C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\plugins</OutputPath>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+        <DebugType>none</DebugType>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="BepInEx.Core" Version="5.4.16" />
+        <PackageReference Include="FirewatchGameLibs" Version="1.1.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="SteamVR">
+            <HintPath>..\UnityHelper\obj\Release\SteamVR.dll</HintPath>
+        </Reference>
+        <Reference Include="SteamVR_Actions">
+            <HintPath>..\UnityHelper\obj\Release\SteamVR_Actions.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="TwoForksVrAssets\**">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 </Project>
