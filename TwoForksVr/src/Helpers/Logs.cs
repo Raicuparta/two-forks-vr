@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace TwoForksVr.Helpers
+﻿namespace TwoForksVr.Helpers
 {
     public static class Logs
     {
