@@ -2,22 +2,30 @@
 
 namespace TwoForksVr.UI
 {
-    public class StaticUi : TwoForksVrBehavior
+    public class StaticUi : MonoBehaviour
     {
-        private const float offset = 0.8f;
-        private static Transform cameraTransform;
+        private static Camera camera;
+        private Canvas parentCanvas;
 
-        protected override void VeryLateUpdate()
+        private void Awake()
         {
-            if (!cameraTransform) return;
-            var targetPosition = cameraTransform.position;
-            transform.position = targetPosition + cameraTransform.forward * offset;
-            transform.LookAt(2 * transform.position - targetPosition);
+            parentCanvas = transform.parent.GetComponent<Canvas>();
+            if (parentCanvas) return;
+            parentCanvas = transform.parent.gameObject.AddComponent<Canvas>();
+            parentCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+            parentCanvas.planeDistance = 1;
+            transform.localScale = Vector3.one * 0.5f;
         }
 
-        public static void SetTargetCamera(Camera camera)
+        private void Update()
         {
-            cameraTransform = camera ? camera.transform : null;
+            transform.localPosition = Vector3.zero;
+            if (parentCanvas) parentCanvas.worldCamera = camera;
+        }
+
+        public static void SetTargetCamera(Camera targetCamera)
+        {
+            camera = targetCamera;
         }
     }
 }

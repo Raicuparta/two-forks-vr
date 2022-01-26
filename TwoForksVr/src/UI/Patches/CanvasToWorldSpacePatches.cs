@@ -80,21 +80,19 @@ namespace TwoForksVr.UI.Patches
 
             if (canvas.renderMode != RenderMode.ScreenSpaceOverlay) return;
 
-            canvas.worldCamera = camera;
-            canvas.renderMode = RenderMode.WorldSpace;
             LayerHelper.SetLayer(canvas, GameLayer.UI);
 
             // Canvases with graphic raycasters are the ones that receive click events.
             // Those need to be handled differently, with colliders for the laser ray.
             if (canvas.GetComponent<GraphicRaycaster>())
             {
+                canvas.renderMode = RenderMode.WorldSpace;
                 canvas.gameObject.AddComponent<InteractiveUi>();
                 canvas.transform.localScale = Vector3.one * 0.002f;
             }
             else
             {
                 canvas.gameObject.AddComponent<StaticUi>();
-                canvas.transform.localScale = Vector3.one * 0.0005f;
             }
         }
     }

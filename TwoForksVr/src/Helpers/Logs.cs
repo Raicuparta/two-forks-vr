@@ -1,4 +1,6 @@
-﻿namespace TwoForksVr.Helpers
+﻿using UnityEngine;
+
+namespace TwoForksVr.Helpers
 {
     public static class Logs
     {
