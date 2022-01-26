@@ -1,0 +1,175 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: AvatarMask
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: body
+    m_Weight: 1
+  - m_Path: henry
+    m_Weight: 1
+  - m_Path: henry/henryroot
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henryHips
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henryHips/henryLegLeft1
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henryHips/henryLegLeft1/henryLegLeft2
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henryHips/henryLegLeft1/henryLegLeft2/henryLegLeftFoot
+    m_Weight: 1
+  - m_Path: 'henry/henryroot/henryPelvis/henryHips/henryLegLeft1/henryLegLeft2/henryLegLeftFoot/henryLegLeftToe '
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henryHips/henryLegLeft1/henryLegLeft2/henryLegLeftFoot/henryLegLeftToe
+      /henryLegLeftToe _end
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henryHips/henryLegRight1
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henryHips/henryLegRight1/henryLegRight2
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henryHips/henryLegRight1/henryLegRight2/henryLegRightFoot
+    m_Weight: 1
+  - m_Path: 'henry/henryroot/henryPelvis/henryHips/henryLegRight1/henryLegRight2/henryLegRightFoot/henryLegRightToe '
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henryHips/henryLegRight1/henryLegRight2/henryLegRightFoot/henryLegRightToe
+      /henryLegRightToe _end
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henryNeck
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henryNeck/henryHead
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henryNeck/henryHead/Camera001
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henryNeck/henryNeck_end
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftIndex1
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftIndex1/henryArmLeftIndex2
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftIndex1/henryArmLeftIndex2/henryArmLeftIndex3
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftIndex1/henryArmLeftIndex2/henryArmLeftIndex3/henryArmLeftIndex3_end
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftMiddle1
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftMiddle1/henryArmLeftMiddle2
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftMiddle1/henryArmLeftMiddle2/henryArmLeftMiddle3
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftMiddle1/henryArmLeftMiddle2/henryArmLeftMiddle3/henryArmLeftMiddle3_end
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftPinky1
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftPinky1/henryArmLeftPinky2
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftPinky1/henryArmLeftPinky2/henryArmLeftPinky3
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftPinky1/henryArmLeftPinky2/henryArmLeftPinky3/henryArmLeftPinky3_end
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftRing1
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftRing1/henryArmLeftRing2
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftRing1/henryArmLeftRing2/henryArmLeftRing3
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftRing1/henryArmLeftRing2/henryArmLeftRing3/henryArmLeftRing3_end
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftRing1/HenryWeddingRing
+      1
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftThumb1
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftThumb1/henryArmLeftThumb2
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftThumb1/henryArmLeftThumb2/henryArmLeftThumb3
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryArmLeftThumb1/henryArmLeftThumb2/henryArmLeftThumb3/henryArmLeftThumb3_end
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderLeft1/henrySpiderLeft2/henrySpiderLeftIK/henryArmLeftCollarbone/henryArmLeft1/henryArmLeft2/henryArmLeftHand/henryHandLeftAttachment
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightIndex1
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightIndex1/henryArmRightIndex2
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightIndex1/henryArmRightIndex2/henryArmRightIndex3
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightIndex1/henryArmRightIndex2/henryArmRightIndex3/henryArmRightIndex3_end
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightMiddle1
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightMiddle1/henryArmRightMiddle2
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightMiddle1/henryArmRightMiddle2/henryArmRightMiddle3
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightMiddle1/henryArmRightMiddle2/henryArmRightMiddle3/henryArmRightMiddle3_end
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightPinky1
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightPinky1/henryArmRightPinky2
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightPinky1/henryArmRightPinky2/henryArmRightPinky3
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightPinky1/henryArmRightPinky2/henryArmRightPinky3/henryArmRightPinky3_end
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightRing1
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightRing1/henryArmRightRing2
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightRing1/henryArmRightRing2/henryArmRightRing3
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightRing1/henryArmRightRing2/henryArmRightRing3/henryArmRightRing3_end
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightThumb1
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightThumb1/henryArmRightThumb2
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightThumb1/henryArmRightThumb2/henryArmRightThumb3
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryArmRightThumb1/henryArmRightThumb2/henryArmRightThumb3/henryArmRightThumb3_end
+    m_Weight: 1
+  - m_Path: henry/henryroot/henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpiderRight1/henrySpiderRight2/henrySpiderRightIK/henryArmRightCollarbone/henryArmRight1/henryArmRight2/henryArmRightHand/henryHandRightAttachment
+    m_Weight: 1
