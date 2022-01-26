@@ -20,13 +20,14 @@
         <Reference Include="AssetsTools.NET">
             <HintPath>lib\AssetsTools.NET.dll</HintPath>
         </Reference>
-        <Reference Include="System.Data.DataSetExtensions" />
-        <Reference Include="Microsoft.CSharp" />
-        <Reference Include="System.Net.Http" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="ModFiles/**">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="classdata.tpk" />
+        <Content Include="classdata.tpk">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
     <ItemGroup>
