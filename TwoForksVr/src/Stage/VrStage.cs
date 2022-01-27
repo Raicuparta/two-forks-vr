@@ -90,7 +90,7 @@ namespace TwoForksVr.Stage
                 fallbackCamera.enabled = false;
                 fallbackCamera.tag = GameTag.Untagged;
             }
-            else if (!Camera.main)
+            else
             {
                 fallbackCamera.enabled = true;
                 fallbackCamera.tag = GameTag.MainCamera;
