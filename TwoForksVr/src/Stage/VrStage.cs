@@ -25,6 +25,7 @@ namespace TwoForksVr.Stage
 
         private VRCameraManager cameraManager;
         private FadeOverlay fadeOverlay;
+        private Camera fallbackCamera;
         private FakeParenting follow;
         private InteractiveUiTarget interactiveUiTarget;
         private IntroFix introFix;
@@ -36,9 +37,6 @@ namespace TwoForksVr.Stage
         private TurningController turningController;
         private VeryLateUpdateManager veryLateUpdateManager;
         private VrSettingsMenu vrSettingsMenu;
-
-        // No idea why, but if I don't make this static, it gets lost
-        public static Camera FallbackCamera { get; private set; }
 
         public static void Create(Transform parent)
         {
@@ -70,11 +68,11 @@ namespace TwoForksVr.Stage
             instance.vrSettingsMenu = VrSettingsMenu.Create(instance);
             instance.bindingsManager = BindingsManager.Create(instance);
 
-            FallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
-            FallbackCamera.enabled = false;
-            FallbackCamera.clearFlags = CameraClearFlags.Color;
-            FallbackCamera.backgroundColor = Color.black;
-            FallbackCamera.transform.SetParent(instance.transform, false);
+            instance.fallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
+            instance.fallbackCamera.enabled = false;
+            instance.fallbackCamera.clearFlags = CameraClearFlags.Color;
+            instance.fallbackCamera.backgroundColor = Color.black;
+            instance.fallbackCamera.transform.SetParent(instance.transform, false);
 
             instance.gameObject.AddComponent<GeneralDebugger>();
 
@@ -89,18 +87,18 @@ namespace TwoForksVr.Stage
             if (mainCamera)
             {
                 follow.Target = mainCamera.transform.parent;
-                FallbackCamera.enabled = false;
-                FallbackCamera.tag = GameTag.Untagged;
+                fallbackCamera.enabled = false;
+                fallbackCamera.tag = GameTag.Untagged;
             }
             else if (!Camera.main)
             {
-                FallbackCamera.enabled = true;
-                FallbackCamera.tag = GameTag.MainCamera;
+                fallbackCamera.enabled = true;
+                fallbackCamera.tag = GameTag.MainCamera;
                 if (!introFix) introFix = IntroFix.Create();
             }
 
             var playerTransform = playerController ? playerController.transform : null;
-            var nextCamera = mainCamera ? mainCamera : FallbackCamera;
+            var nextCamera = mainCamera ? mainCamera : fallbackCamera;
             cameraManager.SetUp(nextCamera, playerTransform);
             limbManager.SetUp(playerTransform, nextCamera);
             interactiveUiTarget.SetUp(nextCamera);
@@ -115,7 +113,7 @@ namespace TwoForksVr.Stage
 
         private void Update()
         {
-            if (!FallbackCamera.enabled && !(mainCamera && mainCamera.enabled)) SetUp(null, null);
+            if (!fallbackCamera.enabled && !(mainCamera && mainCamera.enabled)) SetUp(null, null);
         }
 
         private void OnDisable()
