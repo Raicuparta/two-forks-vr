@@ -12,11 +12,11 @@ namespace TwoForksVr.Settings
         {
             var instance = Instantiate(VrAssetLoader.VrSettingsMenuPrefab, stage.transform, false)
                 .AddComponent<VrSettingsMenu>();
-            instance.gameObject.AddComponent<InteractiveUi>();
 
             var canvas = instance.GetComponent<Canvas>();
             // High sorting order so it has priority over other menus underneath.
             canvas.sortingOrder = 100;
+            AttachedUi.Create<InteractiveUi>(canvas, stage.GetInteractiveUiTarget());
 
             var exitButton = instance.transform.Find("ExitButton").GetComponent<Button>();
             exitButton.onClick.AddListener(instance.Close);

@@ -25,6 +25,7 @@ namespace TwoForksVr.Stage
         private VrLimbManager limbManager;
         private Camera mainCamera;
         private RoomScaleBodyTransform roomScaleBodyTransform;
+        private StaticUiTarget staticUiTarget;
         private TeleportController teleportController;
         private TurningController turningController;
         private VeryLateUpdateManager veryLateUpdateManager;
@@ -53,6 +54,7 @@ namespace TwoForksVr.Stage
             instance.limbManager = VrLimbManager.Create(instance);
             instance.follow = stageParent.AddComponent<FakeParenting>();
             instance.interactiveUiTarget = InteractiveUiTarget.Create(instance);
+            instance.staticUiTarget = StaticUiTarget.Create(instance);
             instance.fadeOverlay = FadeOverlay.Create(instance);
             instance.teleportController = TeleportController.Create(instance, instance.limbManager);
             instance.veryLateUpdateManager = VeryLateUpdateManager.Create(instance);
@@ -92,6 +94,7 @@ namespace TwoForksVr.Stage
             cameraManager.SetUp(nextCamera, playerTransform);
             limbManager.SetUp(playerTransform, nextCamera);
             interactiveUiTarget.SetUp(nextCamera);
+            staticUiTarget.SetUp(nextCamera);
             teleportController.SetUp(playerController);
             fadeOverlay.SetUp(nextCamera);
             veryLateUpdateManager.SetUp(nextCamera);
@@ -152,6 +155,16 @@ namespace TwoForksVr.Stage
         public bool IsNextToTeleportMarker(Transform playerControllerTransform)
         {
             return teleportController.IsNextToTeleportMarker(playerControllerTransform);
+        }
+
+        public Transform GetInteractiveUiTarget()
+        {
+            return interactiveUiTarget ? interactiveUiTarget.TargetTransform : null;
+        }
+
+        public Transform GetStaticUiTarget()
+        {
+            return staticUiTarget ? staticUiTarget.TargetTransform : null;
         }
     }
 }
