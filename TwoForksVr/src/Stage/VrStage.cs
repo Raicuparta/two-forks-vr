@@ -89,11 +89,12 @@ namespace TwoForksVr.Stage
             else
             {
                 FallbackCamera.enabled = true;
+                FallbackCamera.tag = GameTag.MainCamera;
                 if (!introFix) introFix = IntroFix.Create();
             }
 
             var playerTransform = playerController ? playerController.transform : null;
-            var nextCamera = mainCamera ? mainCamera : FallbackCamera;
+            var nextCamera = GetActiveCamera();
             cameraManager.SetUp(nextCamera, playerTransform);
             limbManager.SetUp(playerTransform, nextCamera);
             interactiveUiTarget.SetUp(nextCamera);
@@ -115,6 +116,11 @@ namespace TwoForksVr.Stage
         {
             throw new Exception(
                 "The VR Stage is being disabled. This should never happen. Check the call stack of this error to find the culprit.");
+        }
+
+        public Camera GetActiveCamera()
+        {
+            return mainCamera ? mainCamera : FallbackCamera;
         }
 
         public void RecenterPosition(bool recenterVertically = false)

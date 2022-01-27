@@ -39,5 +39,13 @@ namespace TwoForksVr.VrCamera.Patches
             minVerticalAngle = 0;
             maxVerticalAngle = 0;
         }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgUtils), nameof(vgUtils.GetGameCamera))]
+        private static bool PreventCameraVerticalRotation(ref Camera __result)
+        {
+            __result = StageInstance.GetActiveCamera();
+            return false;
+        }
     }
 }
