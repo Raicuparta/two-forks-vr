@@ -69,6 +69,7 @@ namespace TwoForksVr.VrCamera
         private void SetUpCamera()
         {
             camera.nearClipPlane = 0.03f;
+            camera.farClipPlane = 3000f;
             var cameraTransform = camera.transform;
 
             if (cameraTransform.parent && cameraTransform.parent.name == "VrCameraParent") return;
