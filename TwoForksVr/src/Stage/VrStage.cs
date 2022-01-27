@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using TwoForksVr.Debugging;
 using TwoForksVr.Helpers;
 using TwoForksVr.Limbs;
@@ -9,6 +10,7 @@ using TwoForksVr.UI;
 using TwoForksVr.VrCamera;
 using TwoForksVr.VrInput;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Valve.VR;
 
 namespace TwoForksVr.Stage
@@ -16,6 +18,8 @@ namespace TwoForksVr.Stage
     public class VrStage : MonoBehaviour
     {
         private static VrStage instance;
+
+        private static readonly string[] skipScenes = {"Main", "PreLoad"};
         private BindingsManager bindingsManager;
         private BodyRendererManager bodyRendererManager;
 
@@ -79,22 +83,33 @@ namespace TwoForksVr.Stage
 
         public void SetUp(Camera camera, vgPlayerController playerController)
         {
+            Logs.LogInfo($"## ste up stave in scene {SceneManager.GetActiveScene().name}");
+
+            if (skipScenes.Contains(SceneManager.GetActiveScene().name))
+            {
+                Logs.LogInfo($"## EARLY RETURN {SceneManager.GetActiveScene().name}");
+                return;
+            }
+
             mainCamera = camera;
             if (mainCamera)
             {
+                // mainCamera.gameObject.SetActive(false);
                 follow.Target = mainCamera.transform.parent;
                 FallbackCamera.enabled = false;
                 FallbackCamera.tag = GameTag.Untagged;
+                // mainCamera.gameObject.SetActive(true);
             }
-            else
+            else if (!Camera.main)
             {
+                Logs.LogInfo("## FallbackCamera enable");
                 FallbackCamera.enabled = true;
                 FallbackCamera.tag = GameTag.MainCamera;
                 if (!introFix) introFix = IntroFix.Create();
             }
 
             var playerTransform = playerController ? playerController.transform : null;
-            var nextCamera = GetActiveCamera();
+            var nextCamera = mainCamera ? mainCamera : FallbackCamera;
             cameraManager.SetUp(nextCamera, playerTransform);
             limbManager.SetUp(playerTransform, nextCamera);
             interactiveUiTarget.SetUp(nextCamera);
@@ -120,7 +135,7 @@ namespace TwoForksVr.Stage
 
         public Camera GetActiveCamera()
         {
-            return mainCamera ? mainCamera : FallbackCamera;
+            return mainCamera;
         }
 
         public void RecenterPosition(bool recenterVertically = false)

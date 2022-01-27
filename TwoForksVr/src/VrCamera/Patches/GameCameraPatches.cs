@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using TwoForksVr.Helpers;
 using UnityEngine;
 
 namespace TwoForksVr.VrCamera.Patches
@@ -42,9 +43,16 @@ namespace TwoForksVr.VrCamera.Patches
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgUtils), nameof(vgUtils.GetGameCamera))]
-        private static bool PreventCameraVerticalRotation(ref Camera __result)
+        private static bool ReplaceGetCameraResult(ref Camera __result)
         {
-            __result = StageInstance.GetActiveCamera();
+            var camera = StageInstance.GetActiveCamera();
+            if (!camera)
+            {
+                Logs.LogWarning("## ReplaceGetCameraResult broke!");
+                return true;
+            }
+
+            __result = camera;
             return false;
         }
     }
