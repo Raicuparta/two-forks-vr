@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using TwoForksVr.Helpers;
 using UnityEngine;
 
 namespace TwoForksVr.VrCamera.Patches
@@ -46,11 +45,7 @@ namespace TwoForksVr.VrCamera.Patches
         private static bool ReplaceGetCameraResult(ref Camera __result)
         {
             var camera = StageInstance.GetActiveCamera();
-            if (!camera)
-            {
-                Logs.LogWarning("## ReplaceGetCameraResult broke!");
-                return true;
-            }
+            if (!camera) return true;
 
             __result = camera;
             return false;
