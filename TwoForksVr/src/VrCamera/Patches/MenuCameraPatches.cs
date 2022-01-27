@@ -22,6 +22,7 @@ namespace TwoForksVr.VrCamera.Patches
         private static void DisableMainMenuCameraAnimation(vgMenuCameraController __instance)
         {
             var playMakerFsm = __instance.gameObject.GetComponentInParent(playMakerFsmType);
+            if (!playMakerFsm) return;
             playMakerFsmType.GetProperty("enabled")?.SetValue(playMakerFsm, false, new object[] { });
         }
     }
