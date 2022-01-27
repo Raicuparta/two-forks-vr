@@ -156,5 +156,15 @@ namespace TwoForksVr.Stage
         {
             return teleportController.IsNextToTeleportMarker(playerControllerTransform);
         }
+
+        public Transform GetInteractiveUiTarget()
+        {
+            return interactiveUiTarget ? interactiveUiTarget.TargetTransform : null;
+        }
+
+        public Transform GetStaticUiTarget()
+        {
+            return staticUiTarget ? staticUiTarget.TargetTransform : null;
+        }
     }
 }

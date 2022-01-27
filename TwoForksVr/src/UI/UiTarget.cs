@@ -12,7 +12,7 @@ namespace TwoForksVr.UI
         private Vector3 previousForward;
         private Quaternion rotationVelocity;
         private Quaternion targetRotation;
-        protected Transform TargetTransform;
+        public Transform TargetTransform { get; protected set; }
         protected abstract float MinAngleDelta { get; }
 
         public void SetUp(Camera camera)

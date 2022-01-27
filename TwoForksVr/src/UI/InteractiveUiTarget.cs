@@ -15,7 +15,6 @@ namespace TwoForksVr.UI
             instance.TargetTransform = new GameObject("InteractiveUiTargetTransform").transform;
             instance.TargetTransform.SetParent(instance.transform, false);
             instance.TargetTransform.localPosition = Vector3.forward * 3f;
-            InteractiveUi.SetTargetTransform(instance.TargetTransform);
             return instance;
         }
 
