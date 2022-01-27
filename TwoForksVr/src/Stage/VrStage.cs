@@ -19,7 +19,7 @@ namespace TwoForksVr.Stage
     {
         private static VrStage instance;
 
-        private static readonly string[] setupSkippingScenes = {"Main", "PreLoad"};
+        private static readonly string[] fallbackCameraTagSkipScenes = {"Main", "PreLoad"};
         private BindingsManager bindingsManager;
         private BodyRendererManager bodyRendererManager;
 
@@ -81,8 +81,6 @@ namespace TwoForksVr.Stage
 
         public void SetUp(Camera camera, vgPlayerController playerController)
         {
-            if (setupSkippingScenes.Contains(SceneManager.GetActiveScene().name)) return;
-
             mainCamera = camera;
             if (mainCamera)
             {
@@ -93,7 +91,8 @@ namespace TwoForksVr.Stage
             else
             {
                 fallbackCamera.enabled = true;
-                fallbackCamera.tag = GameTag.MainCamera;
+                if (!fallbackCameraTagSkipScenes.Contains(SceneManager.GetActiveScene().name))
+                    fallbackCamera.tag = GameTag.MainCamera;
                 if (!introFix) introFix = IntroFix.Create();
             }
 
