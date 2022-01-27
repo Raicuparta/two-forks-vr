@@ -122,7 +122,7 @@ namespace TwoForksVr.Stage
                 "The VR Stage is being disabled. This should never happen. Check the call stack of this error to find the culprit.");
         }
 
-        public Camera GetActiveCamera()
+        public Camera GetMainCamera()
         {
             return mainCamera;
         }

@@ -44,7 +44,7 @@ namespace TwoForksVr.VrCamera.Patches
         [HarmonyPatch(typeof(vgUtils), nameof(vgUtils.GetGameCamera))]
         private static bool ReplaceGetCameraResult(ref Camera __result)
         {
-            var camera = StageInstance.GetActiveCamera();
+            var camera = StageInstance.GetMainCamera();
             if (!camera) return true;
 
             __result = camera;
