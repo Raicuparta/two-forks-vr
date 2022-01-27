@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using TwoForksVr.Debugging;
 using TwoForksVr.Helpers;
 using TwoForksVr.Limbs;
@@ -9,6 +10,7 @@ using TwoForksVr.UI;
 using TwoForksVr.VrCamera;
 using TwoForksVr.VrInput;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Valve.VR;
 
 namespace TwoForksVr.Stage
@@ -16,11 +18,14 @@ namespace TwoForksVr.Stage
     public class VrStage : MonoBehaviour
     {
         private static VrStage instance;
+
+        private static readonly string[] setupSkippingScenes = {"Main", "PreLoad"};
         private BindingsManager bindingsManager;
         private BodyRendererManager bodyRendererManager;
 
         private VRCameraManager cameraManager;
         private FadeOverlay fadeOverlay;
+        private Camera fallbackCamera;
         private FakeParenting follow;
         private InteractiveUiTarget interactiveUiTarget;
         private IntroFix introFix;
@@ -32,9 +37,6 @@ namespace TwoForksVr.Stage
         private TurningController turningController;
         private VeryLateUpdateManager veryLateUpdateManager;
         private VrSettingsMenu vrSettingsMenu;
-
-        // No idea why, but if I don't make this static, it gets lost
-        public static Camera FallbackCamera { get; private set; }
 
         public static void Create(Transform parent)
         {
@@ -66,11 +68,11 @@ namespace TwoForksVr.Stage
             instance.vrSettingsMenu = VrSettingsMenu.Create(instance);
             instance.bindingsManager = BindingsManager.Create(instance);
 
-            FallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
-            FallbackCamera.enabled = false;
-            FallbackCamera.clearFlags = CameraClearFlags.Color;
-            FallbackCamera.backgroundColor = Color.black;
-            FallbackCamera.transform.SetParent(instance.transform, false);
+            instance.fallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
+            instance.fallbackCamera.enabled = false;
+            instance.fallbackCamera.clearFlags = CameraClearFlags.Color;
+            instance.fallbackCamera.backgroundColor = Color.black;
+            instance.fallbackCamera.transform.SetParent(instance.transform, false);
 
             instance.gameObject.AddComponent<GeneralDebugger>();
 
@@ -79,21 +81,24 @@ namespace TwoForksVr.Stage
 
         public void SetUp(Camera camera, vgPlayerController playerController)
         {
+            if (setupSkippingScenes.Contains(SceneManager.GetActiveScene().name)) return;
+
             mainCamera = camera;
             if (mainCamera)
             {
                 follow.Target = mainCamera.transform.parent;
-                FallbackCamera.enabled = false;
-                FallbackCamera.tag = GameTag.Untagged;
+                fallbackCamera.enabled = false;
+                fallbackCamera.tag = GameTag.Untagged;
             }
             else
             {
-                FallbackCamera.enabled = true;
+                fallbackCamera.enabled = true;
+                fallbackCamera.tag = GameTag.MainCamera;
                 if (!introFix) introFix = IntroFix.Create();
             }
 
             var playerTransform = playerController ? playerController.transform : null;
-            var nextCamera = mainCamera ? mainCamera : FallbackCamera;
+            var nextCamera = mainCamera ? mainCamera : fallbackCamera;
             cameraManager.SetUp(nextCamera, playerTransform);
             limbManager.SetUp(playerTransform, nextCamera);
             interactiveUiTarget.SetUp(nextCamera);
@@ -108,13 +113,18 @@ namespace TwoForksVr.Stage
 
         private void Update()
         {
-            if (!FallbackCamera.enabled && !(mainCamera && mainCamera.enabled)) SetUp(null, null);
+            if (!fallbackCamera.enabled && !(mainCamera && mainCamera.enabled)) SetUp(null, null);
         }
 
         private void OnDisable()
         {
             throw new Exception(
                 "The VR Stage is being disabled. This should never happen. Check the call stack of this error to find the culprit.");
+        }
+
+        public Camera GetMainCamera()
+        {
+            return mainCamera;
         }
 
         public void RecenterPosition(bool recenterVertically = false)

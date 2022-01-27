@@ -1,5 +1,4 @@
-﻿using TwoForksVr.Helpers;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TwoForksVr.Stage
 {
@@ -16,7 +15,6 @@ namespace TwoForksVr.Stage
         {
             introManager = GameObject.Find("IntroManager");
             if (!introManager) return;
-            VrStage.FallbackCamera.tag = GameTag.MainCamera;
             introManager.SetActive(false);
             GameObject.Find("IntroTextAndBackground").SetActive(false);
         }
