@@ -7,6 +7,7 @@ using TwoForksVr.PlayerBody;
 using TwoForksVr.Settings;
 using TwoForksVr.UI;
 using TwoForksVr.VrCamera;
+using TwoForksVr.VrInput;
 using UnityEngine;
 using Valve.VR;
 
@@ -15,6 +16,7 @@ namespace TwoForksVr.Stage
     public class VrStage : MonoBehaviour
     {
         private static VrStage instance;
+        private BindingsManager bindingsManager;
         private BodyRendererManager bodyRendererManager;
 
         private VRCameraManager cameraManager;
@@ -62,6 +64,7 @@ namespace TwoForksVr.Stage
             instance.roomScaleBodyTransform = RoomScaleBodyTransform.Create(instance, instance.teleportController);
             instance.bodyRendererManager = BodyRendererManager.Create(instance, instance.teleportController);
             instance.vrSettingsMenu = VrSettingsMenu.Create(instance);
+            instance.bindingsManager = BindingsManager.Create(instance);
 
             FallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
             FallbackCamera.enabled = false;
@@ -165,6 +168,20 @@ namespace TwoForksVr.Stage
         public Transform GetStaticUiTarget()
         {
             return staticUiTarget ? staticUiTarget.TargetTransform : null;
+        }
+
+        public bool IsVector2CommandExisting(string command)
+        {
+            if (!bindingsManager) return false;
+
+            return bindingsManager.Vector2XActionMap.ContainsKey(command) ||
+                   bindingsManager.Vector2YActionMap.ContainsKey(command);
+        }
+
+        public SteamVR_Action_Boolean GetBooleanAction(string command)
+        {
+            bindingsManager.BooleanActionMap.TryGetValue(command, out var value);
+            return value;
         }
     }
 }

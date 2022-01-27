@@ -3,7 +3,6 @@ using BepInEx;
 using HarmonyLib;
 using TwoForksVr.Assets;
 using TwoForksVr.Settings;
-using TwoForksVr.VrInput.Patches;
 
 namespace TwoForksVr
 {
@@ -15,7 +14,6 @@ namespace TwoForksVr
             VrSettings.SetUp(Config);
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
             VrAssetLoader.LoadAssets();
-            BindingsPatches.Initialize();
         }
     }
 }
