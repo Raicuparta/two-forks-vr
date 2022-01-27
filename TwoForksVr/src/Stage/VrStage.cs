@@ -43,7 +43,7 @@ namespace TwoForksVr.Stage
             {
                 // Apparently Firewatch will destroy all DontDrestroyOnLoad objects between scenes,
                 // unless they have the MAIN tag.
-                tag = "MAIN",
+                tag = GameTag.Main,
                 transform = {parent = parent}
             };
 
@@ -84,7 +84,7 @@ namespace TwoForksVr.Stage
             {
                 follow.Target = mainCamera.transform.parent;
                 FallbackCamera.enabled = false;
-                FallbackCamera.tag = "Untagged";
+                FallbackCamera.tag = GameTag.Untagged;
             }
             else
             {
