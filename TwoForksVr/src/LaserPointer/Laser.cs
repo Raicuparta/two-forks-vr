@@ -42,8 +42,8 @@ namespace TwoForksVr.LaserPointer
             lineRenderer.SetPositions(new[] {Vector3.zero, Vector3.forward * laserLength});
             lineRenderer.startWidth = 0.005f;
             lineRenderer.endWidth = 0.001f;
-            lineRenderer.endColor = Color.white;
-            lineRenderer.startColor = Color.white;
+            lineRenderer.endColor = new Color(1, 1, 1, 0.8f);
+            lineRenderer.startColor = Color.clear;
             lineRenderer.material.shader = Shader.Find("Particles/Alpha Blended Premultiply");
             lineRenderer.material.SetColor(ShaderProperty.Color, Color.white);
             lineRenderer.sortingOrder = 1000;
