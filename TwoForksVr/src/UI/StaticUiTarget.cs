@@ -1,26 +1,25 @@
-using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
 using UnityEngine;
 
 namespace TwoForksVr.UI
 {
-    public class InteractiveUiTarget : UiTarget
+    public class StaticUiTarget : UiTarget
     {
-        protected override float MinAngleDelta => 45f;
+        protected override float MinAngleDelta => 15f;
 
-        public static InteractiveUiTarget Create(VrStage stage)
+        public static StaticUiTarget Create(VrStage stage)
         {
-            var instance = new GameObject(nameof(InteractiveUiTarget)).AddComponent<InteractiveUiTarget>();
+            var instance = new GameObject(nameof(StaticUiTarget)).AddComponent<StaticUiTarget>();
             instance.transform.SetParent(stage.transform, false);
             instance.TargetTransform = new GameObject("InteractiveUiTargetTransform").transform;
             instance.TargetTransform.SetParent(instance.transform, false);
-            instance.TargetTransform.localPosition = Vector3.forward * 3f;
+            instance.TargetTransform.localPosition = Vector3.forward;
             return instance;
         }
 
         protected override Vector3 GetCameraForward()
         {
-            return MathHelper.GetProjectedForward(CameraTransform);
+            return CameraTransform.forward;
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using TwoForksVr.Assets;
+﻿using System;
+using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
+using TwoForksVr.Settings;
 using UnityEngine;
 using Valve.VR;
 
@@ -40,6 +42,21 @@ namespace TwoForksVr.Limbs
 
             EnableAnimatedHand(playerRootBone);
             gameObject.SetActive(true);
+        }
+
+        private void Awake()
+        {
+            VrSettings.ShowControllerModels.SettingChanged += HandleControllerModelSettingChanged;
+        }
+
+        private void OnDestroy()
+        {
+            VrSettings.ShowControllerModels.SettingChanged -= HandleControllerModelSettingChanged;
+        }
+
+        private void HandleControllerModelSettingChanged(object sender, EventArgs e)
+        {
+            ButtonHighlight.transform.parent.gameObject.SetActive(VrSettings.ShowControllerModels.Value);
         }
 
         private void SetUpPose()

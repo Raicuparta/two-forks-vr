@@ -41,12 +41,13 @@ namespace TwoForksVr.PlayerBody
         {
             if (!navigationController) return;
 
-            if (navigationController.enabled != previousNavigationControlerEnabled)
+            if (navigationController.enabled && !previousNavigationControlerEnabled)
             {
-                previousNavigationControlerEnabled = navigationController.enabled;
                 stage.RecenterPosition(true);
                 stage.RecenterRotation();
             }
+
+            previousNavigationControlerEnabled = navigationController.enabled;
         }
 
         protected override void VeryLateUpdate()

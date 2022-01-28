@@ -15,7 +15,6 @@ namespace TwoForksVr.Stage
         {
             introManager = GameObject.Find("IntroManager");
             if (!introManager) return;
-            VrStage.FallbackCamera.tag = "MainCamera";
             introManager.SetActive(false);
             GameObject.Find("IntroTextAndBackground").SetActive(false);
         }

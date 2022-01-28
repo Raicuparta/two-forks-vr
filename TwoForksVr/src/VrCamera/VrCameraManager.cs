@@ -1,6 +1,5 @@
 ﻿using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
-using TwoForksVr.UI;
 using UnityEngine;
 using UnityEngine.XR;
 using UnityStandardAssets.ImageEffects;
@@ -26,7 +25,6 @@ namespace TwoForksVr.VrCamera
 
         public void SetUp(Camera newCamera, Transform newPlayerTransform)
         {
-            StaticUi.SetTargetCamera(newCamera);
             camera = newCamera;
             playerTransform = newPlayerTransform;
             cameraController = FindObjectOfType<vgCameraController>();
@@ -71,6 +69,7 @@ namespace TwoForksVr.VrCamera
         private void SetUpCamera()
         {
             camera.nearClipPlane = 0.03f;
+            camera.farClipPlane = 3000f;
             var cameraTransform = camera.transform;
 
             if (cameraTransform.parent && cameraTransform.parent.name == "VrCameraParent") return;

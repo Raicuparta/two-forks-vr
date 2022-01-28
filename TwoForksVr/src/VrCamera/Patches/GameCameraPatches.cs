@@ -39,5 +39,16 @@ namespace TwoForksVr.VrCamera.Patches
             minVerticalAngle = 0;
             maxVerticalAngle = 0;
         }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgUtils), nameof(vgUtils.GetGameCamera))]
+        private static bool ReplaceGetCameraResult(ref Camera __result)
+        {
+            var camera = StageInstance.GetMainCamera();
+            if (!camera) return true;
+
+            __result = camera;
+            return false;
+        }
     }
 }

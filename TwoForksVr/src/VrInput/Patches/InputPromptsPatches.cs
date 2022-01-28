@@ -43,16 +43,14 @@ namespace TwoForksVr.VrInput.Patches
 
             foreach (var command in keyBind.commands)
             {
-                BindingsPatches.BooleanActionMap.TryGetValue(command.command, out var action);
-                if (action != null)
-                {
-                    StageInstance.HighlightButton(action);
-                    buttonText.text = action.GetLocalizedOriginPart(SteamVR_Input_Sources.Any,
-                        EVRInputStringBits.VRInputString_InputSource);
-                    buttonText.gameObject.SetActive(true);
-                    // Doing it only for the first command that works, not sure if that canb e a problem.
-                    break;
-                }
+                var action = StageInstance.GetBooleanAction(command.command);
+                if (action == null) continue;
+                StageInstance.HighlightButton(action);
+                buttonText.text = action.GetLocalizedOriginPart(SteamVR_Input_Sources.Any,
+                    EVRInputStringBits.VRInputString_InputSource);
+                buttonText.gameObject.SetActive(true);
+                // Doing it only for the first command that works, not sure if that canb e a problem.
+                break;
             }
 
             return false;
