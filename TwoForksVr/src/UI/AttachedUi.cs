@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TwoForksVr.Helpers;
+using UnityEngine;
 
 namespace TwoForksVr.UI
 {
@@ -17,6 +18,7 @@ namespace TwoForksVr.UI
             var instance = canvas.gameObject.AddComponent<TAttachedUi>();
             if (scale > 0) canvas.transform.localScale = Vector3.one * scale;
             canvas.renderMode = RenderMode.WorldSpace;
+            MaterialHelper.MakeGraphicChildrenDrawOnTop(canvas.gameObject);
             instance.targetTransform = target;
         }
 
