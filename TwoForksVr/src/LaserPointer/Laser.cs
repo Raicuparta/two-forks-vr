@@ -8,6 +8,9 @@ namespace TwoForksVr.LaserPointer
     public class Laser : MonoBehaviour
     {
         private const float laserLength = 1f;
+        private readonly SteamVR_Action_Boolean inputAction = SteamVR_Actions.default_Interact;
+        private bool ignoreNextInput;
+
         private LaserInputModule inputModule;
         private Transform laserTransform;
         private Transform leftHand;
@@ -54,9 +57,17 @@ namespace TwoForksVr.LaserPointer
 
         private void Update()
         {
-            UpdateLaserParent();
             UpdateLaserVisibility();
             UpdateLaserTarget();
+            UpdateLaserParent(SteamVR_Input_Sources.LeftHand, leftHand);
+            UpdateLaserParent(SteamVR_Input_Sources.RightHand, rightHand);
+        }
+
+        private void UpdateLaserParent(SteamVR_Input_Sources inputSource, Transform hand)
+        {
+            if (!inputAction.GetStateDown(inputSource) || transform.parent == hand) return;
+            ignoreNextInput = true;
+            transform.SetParent(hand, false);
         }
 
         public void SetTarget(Vector3? newTarget)
@@ -72,14 +83,6 @@ namespace TwoForksVr.LaserPointer
                     : Vector3.forward * laserLength);
         }
 
-        private void UpdateLaserParent()
-        {
-            if (SteamVR_Actions.default_Interact.GetStateDown(SteamVR_Input_Sources.LeftHand))
-                transform.SetParent(leftHand, false);
-            if (SteamVR_Actions.default_Interact.GetStateDown(SteamVR_Input_Sources.RightHand))
-                transform.SetParent(rightHand, false);
-        }
-
         private bool HasCurrentTarget()
         {
             return vgHudManager.Instance && vgHudManager.Instance.currentTarget || target != null;
@@ -89,6 +92,23 @@ namespace TwoForksVr.LaserPointer
         {
             lineRenderer.enabled =
                 HasCurrentTarget() || SteamVR_Actions.default_Interact.state;
+        }
+
+        public bool ClickDown()
+        {
+            if (ignoreNextInput) return false;
+            return inputAction.stateDown;
+        }
+
+        public bool ClickUp()
+        {
+            if (ignoreNextInput)
+            {
+                ignoreNextInput = false;
+                return false;
+            }
+
+            return inputAction.stateUp;
         }
     }
 }

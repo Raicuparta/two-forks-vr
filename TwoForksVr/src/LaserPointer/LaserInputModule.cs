@@ -1,7 +1,6 @@
 using TwoForksVr.Helpers;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Valve.VR;
 
 namespace TwoForksVr.LaserPointer
 {
@@ -9,7 +8,6 @@ namespace TwoForksVr.LaserPointer
     {
         private const float rayMaxDistance = 30f;
         public Camera EventCamera;
-        private readonly SteamVR_Action_Boolean clickAction = SteamVR_Actions.default_Interact;
         private Laser laser;
 
         public static LaserInputModule Create(Laser laser)
@@ -44,9 +42,12 @@ namespace TwoForksVr.LaserPointer
                 position = EventCamera.WorldToScreenPoint(hit.point)
             }, out _, out _);
 
-            ProcessTouchPress(pointerData, clickAction.stateDown, clickAction.stateUp);
+            var stateDown = laser.ClickDown();
+            var stateUp = laser.ClickUp();
 
-            if (clickAction.stateUp)
+            ProcessTouchPress(pointerData, stateDown, stateUp);
+
+            if (stateUp)
                 RemovePointerData(pointerData);
             else
                 ProcessMove(pointerData);
