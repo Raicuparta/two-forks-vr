@@ -24,6 +24,7 @@ namespace TwoForksVr.VrCamera
             if (!loadingCamera)
             {
                 Logs.LogError("VrLoadingCamera missing vgLoadingCamera property");
+                Destroy(gameObject);
                 return;
             }
 
