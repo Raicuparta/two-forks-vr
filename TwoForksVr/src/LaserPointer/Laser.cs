@@ -49,7 +49,7 @@ namespace TwoForksVr.LaserPointer
             lineRenderer.startColor = Color.clear;
             lineRenderer.material.shader = Shader.Find("Particles/Alpha Blended Premultiply");
             lineRenderer.material.SetColor(ShaderProperty.Color, Color.white);
-            lineRenderer.sortingOrder = 1000;
+            lineRenderer.sortingOrder = 10000;
             lineRenderer.enabled = false;
 
             inputModule = LaserInputModule.Create(this);
