@@ -17,11 +17,21 @@ namespace TwoForksVr.VrCamera.Patches
             isDone = true;
         }
 
-        [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.Start))]
         [HarmonyPrefix]
-        private static void ResetIsDoneOnCameraStart()
+        [HarmonyPatch(typeof(vgCameraController), nameof(vgCameraController.Start))]
+        private static void ResetIsDoneOnCameraStart(vgCameraController __instance)
         {
             isDone = false;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgPlayerNavigationController), nameof(vgPlayerNavigationController.Start))]
+        private static void FixFog(vgPlayerNavigationController __instance)
+        {
+            var stylisticFog = __instance.cameraController.camera.GetComponent<vgStylisticFog>();
+            if (!stylisticFog || !stylisticFog.enabled) return;
+            stylisticFog.enabled = false;
+            stylisticFog.enabled = true;
         }
 
         [HarmonyPrefix]
