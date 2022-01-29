@@ -29,7 +29,6 @@ namespace TwoForksVr.VrCamera.Patches
         private static void ResetIsDoneOnLoading(vgLoadingCamera __instance)
         {
             isDone = false;
-            __instance.GetComponent<Camera>().cullingMask = LayerMask.GetMask("UI");
         }
 
         [HarmonyPrefix]

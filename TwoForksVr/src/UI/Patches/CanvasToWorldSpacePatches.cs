@@ -34,19 +34,6 @@ namespace TwoForksVr.UI.Patches
             PatchCanvases(__instance);
         }
 
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgLoadingCamera), nameof(vgLoadingCamera.OnEnable))]
-        private static void MoveLoadingCanvasToWorldSpace(vgLoadingCamera __instance)
-        {
-            var canvasTransform = __instance.transform.parent;
-            PatchCanvases(canvasTransform);
-
-            // Move loading spinner from corner to center.
-            var loadSpinner = canvasTransform.Find("LoadSpinner/UI_LoadSpinner/");
-            var loadSpinnerPosition = loadSpinner.localPosition;
-            loadSpinner.localPosition = new Vector3(0, loadSpinnerPosition.y, loadSpinnerPosition.z);
-        }
-
         private static bool IsCanvasToIgnore(string canvasName)
         {
             foreach (var s in canvasesToIgnore)
