@@ -18,15 +18,6 @@ namespace TwoForksVr.VrCamera.Patches
             return false;
         }
 
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(vgLoadingCamera), nameof(vgLoadingCamera.OnDisable))]
-        [HarmonyPatch(typeof(vgLoadingCamera), nameof(vgLoadingCamera.LateUpdate))]
-        private static void SyncLoadingCameraEnabledState(vgLoadingCamera __instance)
-        {
-            __instance.transform.parent.parent.parent.Find(VrLoadingCameraName).gameObject
-                .SetActive(__instance.enabled);
-        }
-
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgLoadingCamera), nameof(vgLoadingCamera.OnEnable))]
         private static void MoveLoadingCanvasToWorldSpace(vgLoadingCamera __instance)
@@ -43,6 +34,7 @@ namespace TwoForksVr.VrCamera.Patches
             if (onlyLoadOnceTransform.Find(VrLoadingCameraName)) return;
 
             var parentCamera = new GameObject(VrLoadingCameraName).AddComponent<Camera>();
+            VrLoadingCamera.Create(__instance, parentCamera);
             parentCamera.cullingMask = LayerMask.GetMask("UI");
             parentCamera.transform.SetParent(onlyLoadOnceTransform, false);
             parentCamera.clearFlags = CameraClearFlags.SolidColor;
