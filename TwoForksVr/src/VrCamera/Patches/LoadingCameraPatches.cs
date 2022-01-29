@@ -27,7 +27,7 @@ namespace TwoForksVr.VrCamera.Patches
             // Move loading spinner from corner to center.
             var loadSpinner = canvas.transform.Find("LoadSpinner/UI_LoadSpinner/");
             var loadSpinnerPosition = loadSpinner.localPosition;
-            loadSpinner.localPosition = new Vector3(0, loadSpinnerPosition.y, loadSpinnerPosition.z);
+            loadSpinner.localPosition = new Vector3(0, -150, loadSpinnerPosition.z);
 
             var mainGameFlowTransform = __instance.transform.parent.parent;
             var onlyLoadOnceTransform = mainGameFlowTransform.transform.parent;
