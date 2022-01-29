@@ -23,8 +23,8 @@
         <DebugType>none</DebugType>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="BepInEx.Core" Version="5.4.16" />
-        <PackageReference Include="FirewatchGameLibs" Version="1.1.0" />
+        <PackageReference Include="BepInEx.Core" Version="5.4.16"/>
+        <PackageReference Include="FirewatchGameLibs" Version="1.1.0"/>
     </ItemGroup>
     <ItemGroup>
         <Reference Include="SteamVR">
@@ -32,6 +32,9 @@
         </Reference>
         <Reference Include="SteamVR_Actions">
             <HintPath>..\UnityHelper\obj\Release\SteamVR_Actions.dll</HintPath>
+        </Reference>
+        <Reference Include="SteamVR_Actions">
+            <HintPath>..\UnityHelper\Assets\SteamVR\Input\Plugins\JSON.NET\Valve.Newtonsoft.Json.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>
