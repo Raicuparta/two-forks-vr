@@ -2,11 +2,11 @@ using UnityEngine;
 
 namespace TwoForksVr.Helpers
 {
-    public class FollowLocalTransform : MonoBehaviour
+    public class FollowLocalTransform : TwoForksVrBehavior
     {
         public Transform Target;
 
-        private void LateUpdate()
+        protected override void VeryLateUpdate()
         {
             if (!Target)
             {

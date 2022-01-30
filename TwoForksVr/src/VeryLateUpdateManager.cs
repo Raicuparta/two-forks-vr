@@ -37,6 +37,7 @@ namespace TwoForksVr
 
             TwoForksVrBehavior.InvokeVeryLateUpdate<RoomScaleBodyTransform>();
             TwoForksVrBehavior.InvokeVeryLateUpdate<FakeParenting>();
+            TwoForksVrBehavior.InvokeVeryLateUpdate<FollowLocalTransform>();
         }
     }
 }

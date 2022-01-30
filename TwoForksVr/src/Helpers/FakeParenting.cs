@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace TwoForksVr.Helpers
 {
@@ -6,34 +7,41 @@ namespace TwoForksVr.Helpers
     // without actually changing the hierarchy.
     public class FakeParenting : TwoForksVrBehavior
     {
+        [Flags]
         public enum UpdateType
         {
-            LateUpdate,
-            VeryLateUpdate
+            None = 0,
+            LateUpdate = 1,
+            VeryLateUpdate = 2
         }
 
         private Transform target;
-        private UpdateType updateType;
+        private UpdateType updateTypes;
 
         public static FakeParenting Create(Transform transform, Transform target = null,
             UpdateType updateType = UpdateType.VeryLateUpdate)
         {
             var instance = transform.gameObject.AddComponent<FakeParenting>();
             instance.target = target;
-            instance.updateType = updateType;
+            instance.updateTypes = updateType;
             return instance;
         }
 
         private void LateUpdate()
         {
-            if (updateType != UpdateType.LateUpdate) return;
+            if (!IsUpdateType(UpdateType.LateUpdate)) return;
             UpdateTransform();
         }
 
         protected override void VeryLateUpdate()
         {
-            if (updateType != UpdateType.VeryLateUpdate) return;
+            if (!IsUpdateType(UpdateType.VeryLateUpdate)) return;
             UpdateTransform();
+        }
+
+        private bool IsUpdateType(UpdateType type)
+        {
+            return (updateTypes & type) != UpdateType.None;
         }
 
         public void SetTarget(Transform newTarget)
