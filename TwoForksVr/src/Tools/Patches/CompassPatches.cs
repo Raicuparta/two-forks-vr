@@ -21,9 +21,40 @@ namespace TwoForksVr.Tools.Patches
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(vgTrackingDeviceController), nameof(vgTrackingDeviceController.Start))]
-        private static void CreateTrackingDeviceFakePlayer(vgTrackingDeviceController __instance)
+        private static void CreateVrTrackingDevice(vgTrackingDeviceController __instance)
         {
-            VrTrackingDevice.Create(__instance);
+            // vgTrackingDeviceController.player is used for calculating the compass angle.
+            // This doesn't work in VR, since the hands can move and rotate independently of the player body.
+            // So we replace it for a VrTrackingDevice gameobject, which points in the correct direction.
+            __instance.player = VrTrackingDevice.Create(__instance).gameObject;
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgMapManager), nameof(vgMapManager.UpdateTrackingAngle))]
+        private static void SetUpVrTrackingDeviceForTrackingAngle(vgMapManager __instance, out GameObject __state)
+        {
+            __state = null;
+
+            var trackingController = __instance.trackingController;
+
+            if (!trackingController || !trackingController.player) return;
+
+            // Store the original player model reference in the patch state.
+            __state = __instance.playerModel;
+
+            // Temporarily replace the player model reference with the VrTrackingDevice,
+            // stored in vgTrackingDeviceController.player in a previous patch.
+            __instance.playerModel = __instance.trackingController.player;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgMapManager), nameof(vgMapManager.UpdateTrackingAngle))]
+        private static void ResetVrTrackingDeviceForTrackingAngle(vgMapManager __instance, GameObject __state)
+        {
+            if (__state == null) return;
+
+            // Reset vgMapManager.playerModel with the original value, stored in the prefix patch state.
+            __instance.playerModel = __state;
         }
     }
 }
