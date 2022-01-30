@@ -86,7 +86,7 @@ namespace TwoForksVr.Limbs
                     var isCloneAttachment = cloneChild.name.Equals($"henryHand{handName}Attachment");
                     var isCloneWeddingRing = cloneChild.name.Equals("HenryWeddingRing 1");
                     if (isCloneWeddingRing || isCloneAttachment)
-                        targetChild.gameObject.AddComponent<FakeParenting>().Target = cloneChild;
+                        FakeParenting.Create(targetChild, cloneChild);
 
                     if (!isCloneWeddingRing)
                     {
@@ -123,7 +123,7 @@ namespace TwoForksVr.Limbs
             // just for any behaviours that rely on the real hand transform.
             // I didn't bother making it follow the position and rotation precisely,
             // since I only cared about fixing the map cloth movement.
-            armBone.gameObject.AddComponent<FakeParenting>().Target = transform;
+            FakeParenting.Create(armBone, transform, FakeParenting.UpdateType.LateUpdate);
 
             return armBone;
         }

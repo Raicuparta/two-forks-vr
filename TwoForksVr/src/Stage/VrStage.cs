@@ -57,6 +57,7 @@ namespace TwoForksVr.Stage
             instance.cameraManager = VRCameraManager.Create(instance);
             instance.limbManager = VrLimbManager.Create(instance);
             instance.follow = stageParent.AddComponent<FakeParenting>();
+            instance.follow = FakeParenting.Create(stageParent.transform);
             instance.interactiveUiTarget = InteractiveUiTarget.Create(instance);
             instance.staticUiTarget = StaticUiTarget.Create(instance);
             instance.fadeOverlay = FadeOverlay.Create(instance);
@@ -84,7 +85,7 @@ namespace TwoForksVr.Stage
             mainCamera = camera;
             if (mainCamera)
             {
-                follow.Target = mainCamera.transform.parent;
+                follow.SetTarget(mainCamera.transform.parent);
                 fallbackCamera.enabled = false;
                 fallbackCamera.tag = GameTag.Untagged;
             }
