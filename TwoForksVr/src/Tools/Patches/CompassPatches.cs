@@ -18,5 +18,12 @@ namespace TwoForksVr.Tools.Patches
             transform.localEulerAngles = __instance.newRotation;
             return false;
         }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgTrackingDeviceController), nameof(vgTrackingDeviceController.Start))]
+        private static void CreateTrackingDeviceFakePlayer(vgTrackingDeviceController __instance)
+        {
+            VrTrackingDevice.Create(__instance);
+        }
     }
 }
