@@ -81,24 +81,24 @@ namespace TwoForksVr.Limbs
                 var targetChild = target.Find(cloneChild.name);
                 if (targetChild)
                 {
-                    // Wedding ring and attachment objects are special cases, the originals need to follow the copies.
-                    // The "hand attachment" transform is what's used for holding objects in the palyer's hand.
-                    var isCloneAttachment = cloneChild.name.Equals($"henryArm{handName}Hand");
+                    // Wedding ring and hand root are special cases, the originals need to follow the copies.
+                    var isCloneHandRoot = cloneChild.name.Equals($"henryArm{handName}Hand");
                     var isCloneWeddingRing = cloneChild.name.Equals("HenryWeddingRing 1");
-                    if (isCloneWeddingRing || isCloneAttachment)
+                    if (isCloneWeddingRing || isCloneHandRoot)
                         FakeParenting.Create(targetChild, cloneChild,
-                            isCloneAttachment
+                            isCloneHandRoot
                                 ? FakeParenting.UpdateType.LateUpdate | FakeParenting.UpdateType.VeryLateUpdate
                                 : FakeParenting.UpdateType.VeryLateUpdate);
 
                     if (isCloneWeddingRing) continue;
-                    if (!isCloneAttachment)
-                        cloneChild.gameObject.AddComponent<FollowLocalTransform>().Target = targetChild;
                     FollowAllChildrenRecursive(cloneChild, target.Find(cloneChild.name));
+                    if (isCloneHandRoot) continue;
+                    // Clone hand bones will follow the original bones, to mimick the same animations.
+                    cloneChild.gameObject.AddComponent<CopyLocalTransformValues>().Target = targetChild;
                 }
                 else
                 {
-                    Logs.LogInfo($"Found no child in ${target.name} with name ${cloneChild.name}");
+                    Logs.LogError($"Found no child in ${target.name} with name ${cloneChild.name}");
                 }
             }
         }
@@ -120,12 +120,6 @@ namespace TwoForksVr.Limbs
             var armBone =
                 playerRootBone.Find(
                     $"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2");
-
-            // The original hands are hidden but I still make them follow the fake hands,
-            // just for any behaviours that rely on the real hand transform.
-            // I didn't bother making it follow the position and rotation precisely,
-            // since I only cared about fixing the map cloth movement.
-            // FakeParenting.Create(armBone, transform, FakeParenting.UpdateType.LateUpdate);
 
             return armBone;
         }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace TwoForksVr.Helpers
 {
-    public class FollowLocalTransform : TwoForksVrBehavior
+    public class CopyLocalTransformValues : TwoForksVrBehavior
     {
         public Transform Target;
 
