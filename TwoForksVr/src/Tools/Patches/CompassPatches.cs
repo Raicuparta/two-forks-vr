@@ -23,7 +23,10 @@ namespace TwoForksVr.Tools.Patches
         [HarmonyPatch(typeof(vgTrackingDeviceController), nameof(vgTrackingDeviceController.Start))]
         private static void CreateVrTrackingDevice(vgTrackingDeviceController __instance)
         {
-            VrTrackingDevice.Create(__instance);
+            // vgTrackingDeviceController.player is used for calculating the compass angle.
+            // This doesn't work in VR, since the hands can move and rotate independently of the player body.
+            // So we replace it for a VrTrackingDevice gameobject, which points in the correct direction.
+            __instance.player = VrTrackingDevice.Create(__instance).gameObject;
         }
 
         [HarmonyPrefix]
@@ -36,7 +39,11 @@ namespace TwoForksVr.Tools.Patches
 
             if (!trackingController || !trackingController.player) return;
 
+            // Store the original player model reference in the patch state.
             __state = __instance.playerModel;
+
+            // Temporarily replace the player model reference with the VrTrackingDevice,
+            // stored in vgTrackingDeviceController.player in a previous patch.
             __instance.playerModel = __instance.trackingController.player;
         }
 
@@ -46,6 +53,7 @@ namespace TwoForksVr.Tools.Patches
         {
             if (__state == null) return;
 
+            // Reset vgMapManager.playerModel with the original value, stored in the prefix patch state.
             __instance.playerModel = __state;
         }
     }

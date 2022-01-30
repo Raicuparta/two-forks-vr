@@ -4,11 +4,11 @@ namespace TwoForksVr.Tools
 {
     public class VrTrackingDevice : MonoBehaviour
     {
-        public static void Create(vgTrackingDeviceController trackingDeviceController)
+        public static VrTrackingDevice Create(vgTrackingDeviceController trackingDeviceController)
         {
             var instance = new GameObject("VrTrackingDeviceFakePlayerGameObject").AddComponent<VrTrackingDevice>();
             instance.transform.SetParent(trackingDeviceController.transform, false);
-            trackingDeviceController.player = instance.gameObject;
+            return instance;
         }
 
         private void Update()
