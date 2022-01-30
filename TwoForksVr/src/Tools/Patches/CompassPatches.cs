@@ -28,20 +28,25 @@ namespace TwoForksVr.Tools.Patches
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgMapManager), nameof(vgMapManager.UpdateTrackingAngle))]
-        private static bool FixTrackingAngle(vgMapManager __instance)
+        private static void SetUpVrTrackingDeviceForTrackingAngle(vgMapManager __instance, out GameObject __state)
         {
-            if (__instance.trackingController == null) return true;
+            __state = null;
 
-            var trackingTarget = __instance.GetTrackingTarget();
-            if (trackingTarget == null) return false;
+            var trackingController = __instance.trackingController;
 
-            var vector =
-                __instance.trackingController.player.transform.InverseTransformPoint(trackingTarget.transform.position);
-            __instance.angleToTarget = Mathf.Atan2(vector.x, vector.z) * 57.29578f;
-            if (__instance.trackingController != null)
-                __instance.trackingController.SetAngle(__instance.angleToTarget);
+            if (!trackingController || !trackingController.player) return;
 
-            return false;
+            __state = __instance.playerModel;
+            __instance.playerModel = __instance.trackingController.player;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgMapManager), nameof(vgMapManager.UpdateTrackingAngle))]
+        private static void ResetVrTrackingDeviceForTrackingAngle(vgMapManager __instance, GameObject __state)
+        {
+            if (__state == null) return;
+
+            __instance.playerModel = __state;
         }
     }
 }
