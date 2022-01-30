@@ -1,3 +1,4 @@
+using TwoForksVr.Limbs;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using TwoForksVr.VrCamera;
@@ -10,15 +11,18 @@ namespace TwoForksVr.Locomotion
     {
         private const float smoothRotationSpeed = 150f; // TODO make this configurable.
         private const float snapRotationAngle = 60f; // TODO make this configurable.
+        private VrLimbManager limbManager;
         private vgPlayerNavigationController navigationController;
         private VrStage stage;
         private TeleportController teleportController;
 
-        public static TurningController Create(VrStage stage, TeleportController teleportController)
+        public static TurningController Create(VrStage stage, TeleportController teleportController,
+            VrLimbManager limbManager)
         {
             var instance = stage.gameObject.AddComponent<TurningController>();
             instance.teleportController = teleportController;
             instance.stage = stage;
+            instance.limbManager = limbManager;
             return instance;
         }
 
@@ -30,7 +34,8 @@ namespace TwoForksVr.Locomotion
 
         private void Update()
         {
-            if (!navigationController || !navigationController.enabled || teleportController.IsTeleporting()) return;
+            if (!navigationController || !navigationController.enabled || teleportController.IsTeleporting() ||
+                limbManager.IsToolPickerOpen) return;
 
             if (VrSettings.SnapTurning.Value)
                 UpdateSnapTurning();

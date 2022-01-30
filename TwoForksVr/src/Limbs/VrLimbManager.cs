@@ -10,8 +10,10 @@ namespace TwoForksVr.Limbs
     public class VrLimbManager : MonoBehaviour
     {
         private Laser laser;
+        private ToolPicker toolPicker;
         public VrHand LeftHand { get; private set; }
         public VrHand RightHand { get; private set; }
+        public bool IsToolPickerOpen => toolPicker && toolPicker.IsOpen;
 
         public static VrLimbManager Create(VrStage stage)
         {
@@ -21,7 +23,7 @@ namespace TwoForksVr.Limbs
 
             instance.RightHand = VrHand.Create(instanceTransform);
             instance.LeftHand = VrHand.Create(instanceTransform, true);
-            ToolPicker.Create(
+            instance.toolPicker = ToolPicker.Create(
                 instanceTransform,
                 instance.LeftHand.transform,
                 instance.RightHand.transform

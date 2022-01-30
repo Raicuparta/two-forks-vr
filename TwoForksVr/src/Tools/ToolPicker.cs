@@ -17,8 +17,9 @@ namespace TwoForksVr.Tools
         private ToolPickerItem selectedTool;
         private List<ToolPickerItem> tools;
         private Transform toolsContainer;
+        public bool IsOpen => toolsContainer && toolsContainer.gameObject.activeSelf;
 
-        public static void Create(Transform parent, Transform leftHand, Transform rightHand)
+        public static ToolPicker Create(Transform parent, Transform leftHand, Transform rightHand)
         {
             var instance = Instantiate(VrAssetLoader.ToolPickerPrefab).AddComponent<ToolPicker>();
             instance.transform.SetParent(parent, false);
@@ -32,6 +33,8 @@ namespace TwoForksVr.Tools
                     instance.toolsContainer,
                     index
                 ));
+
+            return instance;
         }
 
         private void Start()

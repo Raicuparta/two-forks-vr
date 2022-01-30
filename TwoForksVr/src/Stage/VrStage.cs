@@ -62,8 +62,9 @@ namespace TwoForksVr.Stage
             instance.staticUiTarget = StaticUiTarget.Create(instance);
             instance.fadeOverlay = FadeOverlay.Create(instance);
             instance.teleportController = TeleportController.Create(instance, instance.limbManager);
+            instance.turningController =
+                TurningController.Create(instance, instance.teleportController, instance.limbManager);
             instance.veryLateUpdateManager = VeryLateUpdateManager.Create(instance);
-            instance.turningController = TurningController.Create(instance, instance.teleportController);
             instance.roomScaleBodyTransform = RoomScaleBodyTransform.Create(instance, instance.teleportController);
             instance.bodyRendererManager = BodyRendererManager.Create(instance, instance.teleportController);
             instance.vrSettingsMenu = VrSettingsMenu.Create(instance);
