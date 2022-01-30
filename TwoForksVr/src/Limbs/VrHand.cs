@@ -103,23 +103,14 @@ namespace TwoForksVr.Limbs
 
         private void EnableAnimatedHand(Transform animatedRootBone)
         {
-            var animatedArmBone = SetUpArmBone(animatedRootBone);
-            if (!animatedArmBone) return;
+            if (!animatedRootBone) return;
+            var animatedArmBone =
+                animatedRootBone.Find(
+                    $"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2");
 
             var clonedArmBone = transform.Find("henry/henryroot/henryPelvis");
             if (!clonedArmBone) Logs.LogError("found no cloned arm bone");
             FollowAllChildrenRecursive(clonedArmBone, animatedArmBone);
-        }
-
-        private Transform SetUpArmBone(Transform playerRootBone)
-        {
-            if (!playerRootBone) return null;
-
-            var armBone =
-                playerRootBone.Find(
-                    $"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2");
-
-            return armBone;
         }
     }
 }
