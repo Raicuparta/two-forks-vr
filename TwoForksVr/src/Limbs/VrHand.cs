@@ -79,27 +79,25 @@ namespace TwoForksVr.Limbs
             foreach (Transform cloneChild in clone)
             {
                 var targetChild = target.Find(cloneChild.name);
-                if (targetChild)
-                {
-                    // Wedding ring and hand root are special cases, the originals need to follow the copies.
-                    var isCloneHandRoot = cloneChild.name.Equals($"henryArm{handName}Hand");
-                    var isCloneWeddingRing = cloneChild.name.Equals("HenryWeddingRing 1");
-                    if (isCloneWeddingRing || isCloneHandRoot)
-                        FakeParenting.Create(targetChild, cloneChild,
-                            isCloneHandRoot
-                                ? FakeParenting.UpdateType.LateUpdate | FakeParenting.UpdateType.VeryLateUpdate
-                                : FakeParenting.UpdateType.VeryLateUpdate);
+                if (!targetChild) continue;
 
-                    if (isCloneWeddingRing) continue;
-                    FollowAllChildrenRecursive(cloneChild, target.Find(cloneChild.name));
-                    if (isCloneHandRoot) continue;
-                    // Clone hand bones will follow the original bones, to mimick the same animations.
-                    cloneChild.gameObject.AddComponent<CopyLocalTransformValues>().Target = targetChild;
-                }
-                else
-                {
-                    Logs.LogError($"Found no child in ${target.name} with name ${cloneChild.name}");
-                }
+                // Wedding ring and hand root are special cases, the originals need to follow the copies.
+                var isCloneHandRoot = cloneChild.name.Equals($"henryArm{handName}Hand");
+                var isCloneWeddingRing = cloneChild.name.Equals("HenryWeddingRing 1");
+                if (isCloneWeddingRing || isCloneHandRoot)
+                    FakeParenting.Create(targetChild, cloneChild,
+                        isCloneHandRoot
+                            ? FakeParenting.UpdateType.LateUpdate | FakeParenting.UpdateType.VeryLateUpdate
+                            : FakeParenting.UpdateType.VeryLateUpdate);
+
+                if (isCloneWeddingRing) continue;
+
+                FollowAllChildrenRecursive(cloneChild, target.Find(cloneChild.name));
+
+                if (isCloneHandRoot) continue;
+
+                // Clone hand bones will follow the original bones, to mimick the same animations.
+                cloneChild.gameObject.AddComponent<CopyLocalTransformValues>().Target = targetChild;
             }
         }
 

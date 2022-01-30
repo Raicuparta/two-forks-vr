@@ -91,6 +91,7 @@ namespace TwoForksVr.PlayerBody
 
         private void MakeMaterialTextureTransparent(Material material, Texture texture = null)
         {
+            if (!material) return;
             material.shader = cutoutShader;
             material.SetTexture(ShaderProperty.MainTexture, texture);
             material.SetColor(ShaderProperty.Color, texture ? Color.white : Color.clear);
