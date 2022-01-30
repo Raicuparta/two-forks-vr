@@ -11,8 +11,6 @@ namespace TwoForksVr.PlayerBody
 {
     public class BodyRendererManager : MonoBehaviour
     {
-        private Material armsMaterial;
-        private Texture armsTexture;
         private Material backpackMaterial;
         private Texture backpackTexture;
         private Material bodyMaterial;
@@ -85,14 +83,15 @@ namespace TwoForksVr.PlayerBody
             backpackMaterial = materials[1];
             backpackTexture = backpackMaterial.mainTexture;
 
-            armsMaterial = materials[2];
-            armsTexture = armsMaterial.mainTexture;
+            var armsMaterial = materials[2];
+            MakeMaterialTextureTransparent(armsMaterial);
 
             SetVisibilityAcordingToState();
         }
 
         private void MakeMaterialTextureTransparent(Material material, Texture texture = null)
         {
+            if (!material) return;
             material.shader = cutoutShader;
             material.SetTexture(ShaderProperty.MainTexture, texture);
             material.SetColor(ShaderProperty.Color, texture ? Color.white : Color.clear);
@@ -109,11 +108,6 @@ namespace TwoForksVr.PlayerBody
             return VrSettings.ShowFeet.Value ? VrAssetLoader.BodyCutoutTexture : null;
         }
 
-        private Texture2D GetArmsTexture()
-        {
-            return isShowingFullBody ? (Texture2D) armsTexture : null;
-        }
-
         private Texture2D GetBackpackTexture()
         {
             return isShowingFullBody ? (Texture2D) backpackTexture : null;
@@ -122,7 +116,6 @@ namespace TwoForksVr.PlayerBody
         private void SetVisibilityAcordingToState()
         {
             MakeMaterialTextureTransparent(bodyMaterial, GetBodyTexture());
-            MakeMaterialTextureTransparent(armsMaterial, GetArmsTexture());
             MakeMaterialTextureTransparent(backpackMaterial, GetBackpackTexture());
         }
     }

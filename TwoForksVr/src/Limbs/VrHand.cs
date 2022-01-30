@@ -79,53 +79,38 @@ namespace TwoForksVr.Limbs
             foreach (Transform cloneChild in clone)
             {
                 var targetChild = target.Find(cloneChild.name);
-                if (targetChild)
-                {
-                    // Wedding ring and attachment objects are special cases, the originals need to follow the copies.
-                    // The "hand attachment" transform is what's used for holding objects in the palyer's hand.
-                    var isCloneAttachment = cloneChild.name.Equals($"henryHand{handName}Attachment");
-                    var isCloneWeddingRing = cloneChild.name.Equals("HenryWeddingRing 1");
-                    if (isCloneWeddingRing || isCloneAttachment)
-                        FakeParenting.Create(targetChild, cloneChild);
+                if (!targetChild) continue;
 
-                    if (!isCloneWeddingRing)
-                    {
-                        cloneChild.gameObject.AddComponent<FollowLocalTransform>().Target = targetChild;
-                        FollowAllChildrenRecursive(cloneChild, target.Find(cloneChild.name));
-                    }
-                }
-                else
-                {
-                    Logs.LogInfo($"Found no child in ${target.name} with name ${cloneChild.name}");
-                }
+                // Wedding ring and hand root are special cases, the originals need to follow the copies.
+                var isCloneHandRoot = cloneChild.name.Equals($"henryArm{handName}Hand");
+                var isCloneWeddingRing = cloneChild.name.Equals("HenryWeddingRing 1");
+                if (isCloneWeddingRing || isCloneHandRoot)
+                    FakeParenting.Create(targetChild, cloneChild,
+                        isCloneHandRoot
+                            ? FakeParenting.UpdateType.LateUpdate | FakeParenting.UpdateType.VeryLateUpdate
+                            : FakeParenting.UpdateType.VeryLateUpdate);
+
+                if (isCloneWeddingRing) continue;
+
+                FollowAllChildrenRecursive(cloneChild, target.Find(cloneChild.name));
+
+                if (isCloneHandRoot) continue;
+
+                // Clone hand bones will follow the original bones, to mimick the same animations.
+                cloneChild.gameObject.AddComponent<CopyLocalTransformValues>().Target = targetChild;
             }
         }
 
         private void EnableAnimatedHand(Transform animatedRootBone)
         {
-            var animatedArmBone = SetUpArmBone(animatedRootBone);
-            if (!animatedArmBone) return;
+            if (!animatedRootBone) return;
+            var animatedArmBone =
+                animatedRootBone.Find(
+                    $"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2");
 
-            var clonedArmBone = transform.Find($"henry/henryroot/henryPelvis/henryArm{handName}Hand");
+            var clonedArmBone = transform.Find("henry/henryroot/henryPelvis");
             if (!clonedArmBone) Logs.LogError("found no cloned arm bone");
             FollowAllChildrenRecursive(clonedArmBone, animatedArmBone);
-        }
-
-        private Transform SetUpArmBone(Transform playerRootBone)
-        {
-            if (!playerRootBone) return null;
-
-            var armBone =
-                playerRootBone.Find(
-                    $"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2/henryArm{handName}Hand");
-
-            // The original hands are hidden but I still make them follow the fake hands,
-            // just for any behaviours that rely on the real hand transform.
-            // I didn't bother making it follow the position and rotation precisely,
-            // since I only cared about fixing the map cloth movement.
-            FakeParenting.Create(armBone, transform, FakeParenting.UpdateType.LateUpdate);
-
-            return armBone;
         }
     }
 }
