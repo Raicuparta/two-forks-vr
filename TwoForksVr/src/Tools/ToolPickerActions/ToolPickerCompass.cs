@@ -23,5 +23,10 @@ namespace TwoForksVr.Tools.ToolPickerActions
         {
             return mapController.compassEquipped;
         }
+
+        protected override bool IsToolAllowed()
+        {
+            return mapController.CanUseCompass();
+        }
     }
 }

@@ -30,5 +30,10 @@ namespace TwoForksVr.Tools.ToolPickerActions
             var canvas = inventoryMenuController.canvas;
             return canvas && canvas.gameObject.activeSelf;
         }
+
+        protected override bool IsToolAllowed()
+        {
+            return vgHudManager.Instance != null;
+        }
     }
 }

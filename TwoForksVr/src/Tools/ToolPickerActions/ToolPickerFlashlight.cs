@@ -25,5 +25,11 @@ namespace TwoForksVr.Tools.ToolPickerActions
         {
             return flashlightController.isActive;
         }
+
+        protected override bool IsToolAllowed()
+        {
+            return flashlightController.hasFlashlightRequirement.Name != string.Empty &&
+                   flashlightController.hasFlashlightRequirement.Verify();
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace TwoForksVr.Tools.ToolPickerActions
         protected abstract void OnSelect();
         protected abstract void OnDeselect();
         protected abstract bool IsEquipped();
+        protected abstract bool IsToolAllowed();
 
         private void Initialize()
         {
@@ -26,6 +27,12 @@ namespace TwoForksVr.Tools.ToolPickerActions
         {
             if (!isInitialized || !IsEquipped()) Initialize();
             OnDeselect();
+        }
+
+        public bool IsAllowed()
+        {
+            if (!isInitialized) Initialize();
+            return IsToolAllowed();
         }
 
         public static ToolPickerAction GetToolPickerAction(VrToolItem itemType)

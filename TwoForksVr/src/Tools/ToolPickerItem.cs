@@ -59,5 +59,10 @@ namespace TwoForksVr.Tools
         {
             toolPickerAction.Deselect();
         }
+
+        public bool IsAllowed()
+        {
+            return toolPickerAction.IsAllowed();
+        }
     }
 }

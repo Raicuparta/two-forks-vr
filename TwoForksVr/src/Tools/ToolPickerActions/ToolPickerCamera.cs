@@ -25,5 +25,10 @@ namespace TwoForksVr.Tools.ToolPickerActions
         {
             return playerController.cameraActive;
         }
+
+        protected override bool IsToolAllowed()
+        {
+            return playerController.AllowDisposableCameraUse();
+        }
     }
 }
