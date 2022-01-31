@@ -28,11 +28,7 @@ namespace TwoForksVr.Tools
             instance.leftHand = leftHand;
 
             instance.tools = new List<ToolPickerItem>();
-            for (var index = 0; index < instance.toolsContainer.childCount; index++)
-                instance.tools.Add(ToolPickerItem.Create(
-                    instance.toolsContainer,
-                    index
-                ));
+            foreach (Transform child in instance.toolsContainer) instance.tools.Add(ToolPickerItem.Create(child));
 
             return instance;
         }
@@ -49,6 +45,25 @@ namespace TwoForksVr.Tools
             if (input.GetStateDown(SteamVR_Input_Sources.RightHand)) OpenToolPicker(rightHand);
             if (input.GetStateDown(SteamVR_Input_Sources.LeftHand)) OpenToolPicker(leftHand);
             if (input.stateUp) CloseToolPicker();
+        }
+
+        private void SetUpTools()
+        {
+            var activeCount = 0;
+            foreach (var tool in tools)
+            {
+                var isAllowed = tool.IsAllowed();
+                tool.gameObject.SetActive(isAllowed);
+                if (isAllowed) activeCount++;
+            }
+
+            var index = 0;
+            foreach (var tool in tools)
+            {
+                if (!tool.gameObject.activeSelf) continue;
+                tool.SetUp(index, activeCount);
+                index++;
+            }
         }
 
         private void SelectCurrentlyHoveredTool()
@@ -77,6 +92,7 @@ namespace TwoForksVr.Tools
             toolsContainer.position = hand.position;
             toolsContainer.LookAt(Camera.main.transform);
             DeselectCurrentlySelectedTool();
+            SetUpTools();
         }
 
         private void CloseToolPicker()

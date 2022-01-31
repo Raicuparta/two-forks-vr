@@ -15,12 +15,12 @@ namespace TwoForksVr.Tools.ToolPickerActions
             inventoryMenuController = Resources.FindObjectsOfTypeAll<vgInventoryMenuController>()[0];
         }
 
-        protected override void OnSelect()
+        protected override void OnEquip()
         {
             inventoryController.OnDisplayInventory();
         }
 
-        protected override void OnDeselect()
+        protected override void OnUnequip()
         {
             inventoryMenuController.OnCloseInventory();
         }
@@ -28,7 +28,17 @@ namespace TwoForksVr.Tools.ToolPickerActions
         protected override bool IsEquipped()
         {
             var canvas = inventoryMenuController.canvas;
-            return canvas && canvas.gameObject.activeSelf;
+            return canvas && canvas.gameObject.activeInHierarchy;
+        }
+
+        protected override bool CanEquipTool()
+        {
+            return vgHudManager.Instance != null;
+        }
+
+        protected override bool IsInitialized()
+        {
+            return inventoryController != null && inventoryMenuController != null;
         }
     }
 }

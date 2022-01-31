@@ -6,15 +6,16 @@ namespace TwoForksVr.Tools.ToolPickerActions
 
         protected override void OnInitialize()
         {
+            if (!vgPlayerController.playerGameObject) return;
             mapController = vgPlayerController.playerGameObject.GetComponent<vgMapController>();
         }
 
-        protected override void OnSelect()
+        protected override void OnEquip()
         {
             mapController.OnToggleCompass();
         }
 
-        protected override void OnDeselect()
+        protected override void OnUnequip()
         {
             mapController.OnToggleCompass();
         }
@@ -22,6 +23,16 @@ namespace TwoForksVr.Tools.ToolPickerActions
         protected override bool IsEquipped()
         {
             return mapController.compassEquipped;
+        }
+
+        protected override bool CanEquipTool()
+        {
+            return mapController.CanUseCompass();
+        }
+
+        protected override bool IsInitialized()
+        {
+            return mapController != null;
         }
     }
 }

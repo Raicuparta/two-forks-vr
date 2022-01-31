@@ -11,12 +11,12 @@ namespace TwoForksVr.Tools.ToolPickerActions
             flashlightController = Object.FindObjectOfType<vgFlashlightController>();
         }
 
-        protected override void OnSelect()
+        protected override void OnEquip()
         {
             flashlightController.ToggleFlashlight();
         }
 
-        protected override void OnDeselect()
+        protected override void OnUnequip()
         {
             flashlightController.ToggleFlashlight();
         }
@@ -24,6 +24,17 @@ namespace TwoForksVr.Tools.ToolPickerActions
         protected override bool IsEquipped()
         {
             return flashlightController.isActive;
+        }
+
+        protected override bool CanEquipTool()
+        {
+            return flashlightController.hasFlashlightRequirement.Name != string.Empty &&
+                   flashlightController.hasFlashlightRequirement.Verify();
+        }
+
+        protected override bool IsInitialized()
+        {
+            return flashlightController != null;
         }
     }
 }
