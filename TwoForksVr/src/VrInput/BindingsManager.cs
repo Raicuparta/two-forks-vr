@@ -62,7 +62,7 @@ namespace TwoForksVr.VrInput
             {
                 {InputName.MoveForward, actionSet.Move},
                 {InputName.LookVerticalStick, actionSet.Rotate},
-                {InputName.Scroll, actionSet.Move},
+                {InputName.Scroll, actionSet.Rotate},
                 {InputName.UIVertical, actionSet.Move}
             };
 
