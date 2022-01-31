@@ -54,17 +54,17 @@ namespace TwoForksVr.Tools
 
         public void Select()
         {
-            toolPickerAction.Select();
+            toolPickerAction.Equip();
         }
 
         public void Deselect()
         {
-            toolPickerAction.Deselect();
+            toolPickerAction.Unequip();
         }
 
         public bool IsAllowed()
         {
-            return toolPickerAction.IsAllowed();
+            return toolPickerAction.CanEquip();
         }
     }
 }

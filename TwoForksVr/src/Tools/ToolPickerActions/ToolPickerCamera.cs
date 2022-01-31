@@ -11,12 +11,12 @@ namespace TwoForksVr.Tools.ToolPickerActions
             playerController = Object.FindObjectOfType<vgPlayerController>();
         }
 
-        protected override void OnSelect()
+        protected override void OnEquip()
         {
             playerController.OnCameraToggle();
         }
 
-        protected override void OnDeselect()
+        protected override void OnUnequip()
         {
             playerController.OnCameraToggle();
             playerController.OnCameraDown();
@@ -27,7 +27,7 @@ namespace TwoForksVr.Tools.ToolPickerActions
             return playerController.cameraActive;
         }
 
-        protected override bool IsToolAllowed()
+        protected override bool CanEquipTool()
         {
             return playerController.AllowDisposableCameraUse();
         }
