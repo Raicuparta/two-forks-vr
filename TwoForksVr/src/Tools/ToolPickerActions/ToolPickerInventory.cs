@@ -28,7 +28,7 @@ namespace TwoForksVr.Tools.ToolPickerActions
         protected override bool IsEquipped()
         {
             var canvas = inventoryMenuController.canvas;
-            return canvas && canvas.gameObject.activeSelf;
+            return canvas && canvas.gameObject.activeInHierarchy;
         }
 
         protected override bool CanEquipTool()
