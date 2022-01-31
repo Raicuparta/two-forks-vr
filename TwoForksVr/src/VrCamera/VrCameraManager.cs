@@ -10,6 +10,7 @@ namespace TwoForksVr.VrCamera
     public class VRCameraManager : MonoBehaviour
     {
         private Camera camera;
+        private Color cameraBackgroundColor;
         private vgCameraController cameraController;
         private int cameraCullingMask;
         private int pauseCameraCullingMask;
@@ -52,11 +53,16 @@ namespace TwoForksVr.VrCamera
             if (cameraCullingMask == 0 && vgPauseManager.Instance.isPaused)
             {
                 cameraCullingMask = camera.cullingMask;
+                cameraBackgroundColor = camera.backgroundColor;
                 camera.cullingMask = pauseCameraCullingMask;
+                camera.clearFlags = CameraClearFlags.Color;
+                camera.backgroundColor = Color.black;
             }
             else if (cameraCullingMask != 0 && !vgPauseManager.Instance.isPaused)
             {
                 camera.cullingMask = cameraCullingMask;
+                camera.clearFlags = CameraClearFlags.Skybox;
+                camera.backgroundColor = cameraBackgroundColor;
                 cameraCullingMask = 0;
             }
         }
