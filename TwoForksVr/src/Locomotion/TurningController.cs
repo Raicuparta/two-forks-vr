@@ -35,7 +35,7 @@ namespace TwoForksVr.Locomotion
         private void Update()
         {
             if (!navigationController || !navigationController.enabled || teleportController.IsTeleporting() ||
-                limbManager.IsToolPickerOpen) return;
+                limbManager.IsToolPickerOpen || vgPauseManager.Instance.isPaused) return;
 
             if (VrSettings.SnapTurning.Value)
                 UpdateSnapTurning();
