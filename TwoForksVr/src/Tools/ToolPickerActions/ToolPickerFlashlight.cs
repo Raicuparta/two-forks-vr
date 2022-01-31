@@ -31,5 +31,10 @@ namespace TwoForksVr.Tools.ToolPickerActions
             return flashlightController.hasFlashlightRequirement.Name != string.Empty &&
                    flashlightController.hasFlashlightRequirement.Verify();
         }
+
+        protected override bool IsInitialized()
+        {
+            return flashlightController != null;
+        }
     }
 }

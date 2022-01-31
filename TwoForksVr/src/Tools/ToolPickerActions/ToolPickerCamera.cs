@@ -19,6 +19,7 @@ namespace TwoForksVr.Tools.ToolPickerActions
         protected override void OnDeselect()
         {
             playerController.OnCameraToggle();
+            playerController.OnCameraDown();
         }
 
         protected override bool IsEquipped()
@@ -29,6 +30,11 @@ namespace TwoForksVr.Tools.ToolPickerActions
         protected override bool IsToolAllowed()
         {
             return playerController.AllowDisposableCameraUse();
+        }
+
+        protected override bool IsInitialized()
+        {
+            return playerController != null;
         }
     }
 }

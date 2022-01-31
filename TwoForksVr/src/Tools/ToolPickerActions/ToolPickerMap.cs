@@ -6,6 +6,7 @@ namespace TwoForksVr.Tools.ToolPickerActions
 
         protected override void OnInitialize()
         {
+            if (!vgPlayerController.playerGameObject) return;
             mapController = vgPlayerController.playerGameObject.GetComponent<vgMapController>();
         }
 
@@ -27,6 +28,11 @@ namespace TwoForksVr.Tools.ToolPickerActions
         protected override bool IsToolAllowed()
         {
             return mapController.CanUseMap();
+        }
+
+        protected override bool IsInitialized()
+        {
+            return mapController != null;
         }
     }
 }

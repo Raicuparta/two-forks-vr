@@ -4,35 +4,41 @@ namespace TwoForksVr.Tools.ToolPickerActions
 {
     public abstract class ToolPickerAction
     {
-        private bool isInitialized;
         protected abstract void OnInitialize();
         protected abstract void OnSelect();
         protected abstract void OnDeselect();
         protected abstract bool IsEquipped();
         protected abstract bool IsToolAllowed();
+        protected abstract bool IsInitialized();
 
         private void Initialize()
         {
             OnInitialize();
-            isInitialized = true;
         }
 
         public void Select()
         {
-            if (!isInitialized || IsEquipped()) Initialize();
+            if (!IsInitialized() || IsEquipped()) Initialize();
             OnSelect();
         }
 
         public void Deselect()
         {
-            if (!isInitialized || !IsEquipped()) Initialize();
+            if (!IsInitialized() || !IsEquipped()) Initialize();
             OnDeselect();
         }
 
         public bool IsAllowed()
         {
-            if (!isInitialized) Initialize();
-            return IsToolAllowed();
+            if (!IsInitialized()) Initialize();
+            try
+            {
+                return IsToolAllowed();
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public static ToolPickerAction GetToolPickerAction(VrToolItem itemType)

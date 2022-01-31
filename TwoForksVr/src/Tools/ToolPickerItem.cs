@@ -11,21 +11,23 @@ namespace TwoForksVr.Tools
         private VrToolItem itemType;
         private ToolPickerAction toolPickerAction;
 
-        public static ToolPickerItem Create(Transform parent, int index)
+        public static ToolPickerItem Create(Transform transform)
         {
-            var transform = parent.GetChild(index);
             var instance = transform.gameObject.AddComponent<ToolPickerItem>();
             instance.itemType = (VrToolItem) Enum.Parse(typeof(VrToolItem), transform.name);
 
-            var angle = index * Mathf.PI * 2f / parent.childCount;
-            instance.transform.localPosition =
-                new Vector3(Mathf.Cos(angle) * circleRadius, Mathf.Sin(angle) * circleRadius, 0);
 
             instance.toolPickerAction = ToolPickerAction.GetToolPickerAction(instance.itemType);
 
             instance.SetUpIcon();
 
             return instance;
+        }
+
+        public void SetUp(int index, int totalCount)
+        {
+            var angle = index * Mathf.PI * 2f / totalCount;
+            transform.localPosition = new Vector3(Mathf.Cos(angle) * circleRadius, Mathf.Sin(angle) * circleRadius, 0);
         }
 
         private void SetUpIcon()

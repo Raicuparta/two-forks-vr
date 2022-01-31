@@ -35,5 +35,10 @@ namespace TwoForksVr.Tools.ToolPickerActions
         {
             return vgHudManager.Instance != null;
         }
+
+        protected override bool IsInitialized()
+        {
+            return inventoryController != null && inventoryMenuController != null;
+        }
     }
 }
