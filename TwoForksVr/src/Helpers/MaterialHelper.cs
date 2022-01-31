@@ -34,10 +34,23 @@ namespace TwoForksVr.Helpers
             MakeMaterialDrawOnTop(graphic.material);
         }
 
+        public static void MakeRendererDrawOnTop(Renderer graphic)
+        {
+            if (graphic.material == Canvas.GetDefaultCanvasMaterial())
+                graphic.material = new Material(graphic.material);
+            MakeMaterialDrawOnTop(graphic.material);
+        }
+
         public static void MakeGraphicChildrenDrawOnTop(GameObject parent)
         {
             var graphics = parent.GetComponentsInChildren<Graphic>(true);
             foreach (var graphic in graphics) MakeGraphicDrawOnTop(graphic);
+        }
+
+        public static void MakeRendererChildrenDrawOnTop(GameObject parent)
+        {
+            var renderers = parent.GetComponentsInChildren<Renderer>(true);
+            foreach (var renderer in renderers) MakeRendererDrawOnTop(renderer);
         }
 
         public static void ReplaceShadersInChildren(GameObject parent, Dictionary<Shader, Shader> shaderMap)

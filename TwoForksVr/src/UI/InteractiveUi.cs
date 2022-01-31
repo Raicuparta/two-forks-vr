@@ -1,4 +1,8 @@
+using System;
 using HarmonyLib;
+using TMPro;
+using TwoForksVr.Assets;
+using TwoForksVr.Helpers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -11,6 +15,21 @@ namespace TwoForksVr.UI
 
         private void Start()
         {
+            var tmpros = gameObject.GetComponentsInChildren<TextMeshProUGUI>();
+            Logs.LogInfo($"### tmpros {tmpros.Length}");
+            foreach (var tmpro in tmpros)
+            {
+                Logs.LogInfo($"### tmpro {tmpro.name}");
+                try
+                {
+                    tmpro.fontMaterial.shader = VrAssetLoader.TMProShader;
+                }
+                catch (Exception exception)
+                {
+                    Logs.LogWarning($"Error setting TMPro shader: ${exception}");
+                }
+            }
+
             SetUpCollider();
             SetUpInputModules();
         }

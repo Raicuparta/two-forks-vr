@@ -47,6 +47,8 @@ namespace TwoForksVr.UI.Patches
 
             FakeParenting.Create(objectStage.transform, RightHand);
 
+            // MaterialHelper.MakeRendererChildrenDrawOnTop(objectStage);
+
             var inventoryObjectParent = objectStage.transform.Find("InventoryObjectParent");
             inventoryObjectParent.localPosition = new Vector3(-0.16f, -0.04f, 0f);
             inventoryObjectParent.localEulerAngles = new Vector3(328.5668f, 166.9781f, 334.8478f);
