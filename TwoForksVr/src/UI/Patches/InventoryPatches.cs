@@ -40,9 +40,9 @@ namespace TwoForksVr.UI.Patches
 
             objectStage.transform.Find("ObjectStageDirectionalLight").gameObject.SetActive(false);
 
-            var footer = __instance.transform.Find("InventoryCanvas/SafeZoner/InventoryVerticalLayout/Menu Footer")
+            var footerButtons = __instance.transform.Find("InventoryCanvas/SafeZoner/InventoryVerticalLayout/Menu Footer/UI_TooltipBar")
                 .gameObject;
-            footer.SetActive(false);
+            footerButtons.SetActive(false);
         }
     }
 }
