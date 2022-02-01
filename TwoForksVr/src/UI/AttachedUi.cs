@@ -6,18 +6,12 @@ namespace TwoForksVr.UI
     {
         private Transform targetTransform;
 
-        public static void Create(Canvas canvas, Transform target, float scale = 0)
-        {
-            Create<AttachedUi>(canvas, target, scale);
-        }
-
         public static void Create<TAttachedUi>(Canvas canvas, Transform target, float scale = 0)
             where TAttachedUi : AttachedUi
         {
             var instance = canvas.gameObject.AddComponent<TAttachedUi>();
             if (scale > 0) canvas.transform.localScale = Vector3.one * scale;
             canvas.renderMode = RenderMode.WorldSpace;
-            // MaterialHelper.MakeGraphicChildrenDrawOnTop(canvas.gameObject);
 
             instance.targetTransform = target;
         }
