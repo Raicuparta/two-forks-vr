@@ -12,7 +12,7 @@ namespace TwoForksVr.UI.Patches
         private static readonly string[] canvasesToDisable =
         {
             "BlackBars", // Cinematic black bars.
-            "Camera" // Disposable camera. TODO: show this information in some other way.
+            "Camera" // Disposable camera.
         };
 
         private static readonly string[] canvasesToIgnore =
