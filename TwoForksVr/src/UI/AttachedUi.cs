@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TwoForksVr.Helpers;
+using UnityEngine;
 
 namespace TwoForksVr.UI
 {
@@ -18,6 +19,13 @@ namespace TwoForksVr.UI
 
         protected virtual void Update()
         {
+            if (!targetTransform)
+            {
+                Logs.LogWarning($"Target transform for AttachedUi {name} is missing, destroying");
+                Destroy(this);
+                return;
+            }
+
             UpdateTransform();
         }
 
