@@ -35,28 +35,28 @@ namespace TwoForksVr.UI.Patches
         {
             try
             {
-            if (IsCanvasToIgnore(__instance.name)) return;
+                if (IsCanvasToIgnore(__instance.name)) return;
 
-            var canvas = __instance.GetComponentInParent<Canvas>();
+                var canvas = __instance.GetComponentInParent<Canvas>();
 
-            if (!canvas) return;
+                if (!canvas) return;
 
-            if (IsCanvasToDisable(canvas.name))
-            {
-                canvas.enabled = false;
-                return;
-            }
+                if (IsCanvasToDisable(canvas.name))
+                {
+                    canvas.enabled = false;
+                    return;
+                }
 
-            if (canvas.renderMode != RenderMode.ScreenSpaceOverlay) return;
+                if (canvas.renderMode != RenderMode.ScreenSpaceOverlay) return;
 
-            LayerHelper.SetLayer(canvas, GameLayer.UI);
+                LayerHelper.SetLayer(canvas, GameLayer.UI);
 
-            // Canvases with graphic raycasters are the ones that receive click events.
-            // Those need to be handled differently, with colliders for the laser ray.
-            if (canvas.GetComponent<GraphicRaycaster>())
-                AttachedUi.Create<InteractiveUi>(canvas, StageInstance.GetInteractiveUiTarget(), 0.002f);
-            else
-                AttachedUi.Create<StaticUi>(canvas, StageInstance.GetStaticUiTarget(), 0.0005f);
+                // Canvases with graphic raycasters are the ones that receive click events.
+                // Those need to be handled differently, with colliders for the laser ray.
+                if (canvas.GetComponent<GraphicRaycaster>())
+                    AttachedUi.Create<InteractiveUi>(canvas, StageInstance.GetInteractiveUiTarget(), 0.002f);
+                else
+                    AttachedUi.Create<StaticUi>(canvas, StageInstance.GetStaticUiTarget(), 0.0005f);
             }
             catch (Exception exception)
             {
