@@ -38,26 +38,39 @@ namespace TwoForksVr.UI.Patches
         }
 
         [HarmonyPostfix]
+        [HarmonyPatch(typeof(TextMeshProUGUI), nameof(TextMeshProUGUI.Awake))]
         [HarmonyPatch(typeof(TextMeshProUGUI), nameof(TextMeshProUGUI.OnEnable))]
         private static void ChangeTMProShader(TextMeshProUGUI __instance)
         {
             try
             {
-                if (!__instance.canvas.GetComponent<GraphicRaycaster>()) return;
+                Logs.LogInfo("ChangeTMProShader 1");
+                Logs.LogInfo($"ChangeTMProShader 1 ({__instance.name})");
+                if (__instance.canvas && !__instance.canvas.GetComponent<GraphicRaycaster>()) return;
 
-                var key = __instance.fontMaterial.name;
+                Logs.LogInfo("ChangeTMProShader 2");
+                var key = __instance.font.name;
 
+                Logs.LogInfo("ChangeTMProShader 3");
                 if (!materialMap.ContainsKey(key))
-                    materialMap[key] = new Material(__instance.fontMaterial)
+                {
+                    Logs.LogInfo($"ChangeTMProShader 3.5 {key}");
+                    materialMap[key] = new Material(__instance.font.material)
                     {
                         shader = VrAssetLoader.TMProShader
                     };
+                }
 
+                Logs.LogInfo("ChangeTMProShader 4");
                 __instance.fontMaterial = materialMap[key];
+                Logs.LogInfo("ChangeTMProShader 5");
+                __instance.fontBaseMaterial = materialMap[key];
+                Logs.LogInfo("ChangeTMProShader 5");
+                __instance.fontSharedMaterial = materialMap[key];
             }
             catch (Exception exception)
             {
-                Logs.LogWarning($"Error in TMPro Patch: {exception}");
+                Logs.LogWarning($"Error in TMPro Patch ({__instance.name}): {exception}");
             }
         }
     }
