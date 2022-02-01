@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using System;
+using HarmonyLib;
 using TwoForksVr.Helpers;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,12 +13,13 @@ namespace TwoForksVr.UI.Patches
         private static readonly string[] canvasesToDisable =
         {
             "BlackBars", // Cinematic black bars.
-            "Camera" // Disposable camera. TODO: show this information in some other way.
+            "Camera" // Disposable camera.
         };
 
         private static readonly string[] canvasesToIgnore =
         {
-            "ExplorerCanvas" // UnityExplorer.
+            "com.sinai.unityexplorer_Root", // UnityExplorer.
+            "com.sinai.unityexplorer.MouseInspector_Root" // UnityExplorer.
         };
 
         [HarmonyPrefix]
@@ -31,31 +33,11 @@ namespace TwoForksVr.UI.Patches
         [HarmonyPatch(typeof(CanvasScaler), "OnEnable")]
         private static void MoveCanvasesToWorldSpace(CanvasScaler __instance)
         {
-            PatchCanvases(__instance);
-        }
+            try
+            {
+            if (IsCanvasToIgnore(__instance.name)) return;
 
-        private static bool IsCanvasToIgnore(string canvasName)
-        {
-            foreach (var s in canvasesToIgnore)
-                if (Equals(s, canvasName))
-                    return true;
-            return false;
-        }
-
-        private static bool IsCanvasToDisable(string canvasName)
-        {
-            foreach (var s in canvasesToDisable)
-                if (Equals(s, canvasName))
-                    return true;
-            return false;
-        }
-
-        private static void PatchCanvases(Component component)
-        {
-            var camera = Camera.main;
-            if (!camera || IsCanvasToIgnore(component.name)) return;
-
-            var canvas = component.GetComponentInParent<Canvas>();
+            var canvas = __instance.GetComponentInParent<Canvas>();
 
             if (!canvas) return;
 
@@ -75,6 +57,27 @@ namespace TwoForksVr.UI.Patches
                 AttachedUi.Create<InteractiveUi>(canvas, StageInstance.GetInteractiveUiTarget(), 0.002f);
             else
                 AttachedUi.Create<StaticUi>(canvas, StageInstance.GetStaticUiTarget(), 0.0005f);
+            }
+            catch (Exception exception)
+            {
+                Logs.LogWarning($"Failed to move canvas to world space ({__instance.name}): {exception}");
+            }
+        }
+
+        private static bool IsCanvasToIgnore(string canvasName)
+        {
+            foreach (var s in canvasesToIgnore)
+                if (Equals(s, canvasName))
+                    return true;
+            return false;
+        }
+
+        private static bool IsCanvasToDisable(string canvasName)
+        {
+            foreach (var s in canvasesToDisable)
+                if (Equals(s, canvasName))
+                    return true;
+            return false;
         }
     }
 }
