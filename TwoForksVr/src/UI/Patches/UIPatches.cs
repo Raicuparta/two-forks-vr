@@ -43,7 +43,7 @@ namespace TwoForksVr.UI.Patches
         {
             try
             {
-                if (!__instance.GetComponentInParent<GraphicRaycaster>()) return;
+                if (!__instance.canvas.GetComponent<GraphicRaycaster>()) return;
 
                 var key = __instance.fontMaterial.name;
 
