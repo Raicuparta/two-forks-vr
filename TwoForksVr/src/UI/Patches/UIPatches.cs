@@ -44,28 +44,18 @@ namespace TwoForksVr.UI.Patches
         {
             try
             {
-                Logs.LogInfo("ChangeTMProShader 1");
-                Logs.LogInfo($"ChangeTMProShader 1 ({__instance.name})");
                 if (__instance.canvas && !__instance.canvas.GetComponent<GraphicRaycaster>()) return;
 
-                Logs.LogInfo("ChangeTMProShader 2");
                 var key = __instance.font.name;
 
-                Logs.LogInfo("ChangeTMProShader 3");
                 if (!materialMap.ContainsKey(key))
-                {
-                    Logs.LogInfo($"ChangeTMProShader 3.5 {key}");
                     materialMap[key] = new Material(__instance.font.material)
                     {
                         shader = VrAssetLoader.TMProShader
                     };
-                }
 
-                Logs.LogInfo("ChangeTMProShader 4");
                 __instance.fontMaterial = materialMap[key];
-                Logs.LogInfo("ChangeTMProShader 5");
                 __instance.fontBaseMaterial = materialMap[key];
-                Logs.LogInfo("ChangeTMProShader 5");
                 __instance.fontSharedMaterial = materialMap[key];
             }
             catch (Exception exception)
