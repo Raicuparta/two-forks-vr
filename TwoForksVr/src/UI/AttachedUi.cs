@@ -19,7 +19,6 @@ namespace TwoForksVr.UI
             canvas.renderMode = RenderMode.WorldSpace;
             // MaterialHelper.MakeGraphicChildrenDrawOnTop(canvas.gameObject);
 
-
             instance.targetTransform = target;
         }
 

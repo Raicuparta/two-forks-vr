@@ -31,7 +31,6 @@ namespace TwoForksVr.Assets
             FadeOverlayPrefab = uiBundle.LoadAsset<GameObject>("fade-overlay");
             TeleportTargetPrefab = uiBundle.LoadAsset<GameObject>("teleport-target");
             TMProShader = uiBundle.LoadAsset<Shader>("TMP_SDF-Mobile");
-            Logs.LogInfo($"### TMProShader?? {TMProShader}");
         }
 
         private static AssetBundle LoadBundle(string assetName)

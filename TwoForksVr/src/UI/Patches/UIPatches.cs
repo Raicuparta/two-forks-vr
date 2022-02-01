@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using HarmonyLib;
 using TMPro;
 using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
+using UnityEngine;
+using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 namespace TwoForksVr.UI.Patches
@@ -10,6 +13,8 @@ namespace TwoForksVr.UI.Patches
     [HarmonyPatch]
     public class UIPatches : TwoForksVrPatch
     {
+        private static readonly Dictionary<string, Material> materialMap = new Dictionary<string, Material>();
+
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.ShowAbilityIcon))]
         private static bool PreventShowingAbilityIcon()
@@ -38,9 +43,17 @@ namespace TwoForksVr.UI.Patches
         {
             try
             {
-                __instance.fontMaterial.shader = VrAssetLoader.TMProShader;
-                __instance.fontBaseMaterial.shader = VrAssetLoader.TMProShader;
-                __instance.fontSharedMaterial.shader = VrAssetLoader.TMProShader;
+                if (!__instance.GetComponentInParent<GraphicRaycaster>()) return;
+
+                var key = __instance.fontMaterial.name;
+
+                if (!materialMap.ContainsKey(key))
+                    materialMap[key] = new Material(__instance.fontMaterial)
+                    {
+                        shader = VrAssetLoader.TMProShader
+                    };
+
+                __instance.fontMaterial = materialMap[key];
             }
             catch (Exception exception)
             {
