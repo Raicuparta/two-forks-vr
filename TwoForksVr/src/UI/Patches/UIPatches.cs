@@ -1,5 +1,9 @@
-﻿using HarmonyLib;
-using UnityEngine;
+﻿using System;
+using HarmonyLib;
+using TMPro;
+using TwoForksVr.Assets;
+using TwoForksVr.Helpers;
+using Object = UnityEngine.Object;
 
 namespace TwoForksVr.UI.Patches
 {
@@ -26,6 +30,22 @@ namespace TwoForksVr.UI.Patches
         private static void DisablePauseBlur(ref bool blur)
         {
             blur = false;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(TextMeshProUGUI), nameof(TextMeshProUGUI.OnEnable))]
+        private static void ChangeTMProShader(TextMeshProUGUI __instance)
+        {
+            try
+            {
+                __instance.fontMaterial.shader = VrAssetLoader.TMProShader;
+                __instance.fontBaseMaterial.shader = VrAssetLoader.TMProShader;
+                __instance.fontSharedMaterial.shader = VrAssetLoader.TMProShader;
+            }
+            catch (Exception exception)
+            {
+                Logs.LogWarning($"Error in TMPro Patch: {exception}");
+            }
         }
     }
 }

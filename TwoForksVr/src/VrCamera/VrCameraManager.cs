@@ -61,9 +61,9 @@ namespace TwoForksVr.VrCamera
             else if (cameraCullingMask != 0 && !vgPauseManager.Instance.isPaused)
             {
                 camera.cullingMask = cameraCullingMask;
+                cameraCullingMask = 0;
                 camera.clearFlags = CameraClearFlags.Skybox;
                 camera.backgroundColor = cameraBackgroundColor;
-                cameraCullingMask = 0;
             }
         }
 
