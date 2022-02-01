@@ -37,7 +37,7 @@ namespace TwoForksVr.UI.Patches
             {
                 if (IsCanvasToIgnore(__instance.name)) return;
 
-                var canvas = __instance.GetComponentInParent<Canvas>();
+                var canvas = __instance.GetComponent<Canvas>();
 
                 if (!canvas) return;
 
