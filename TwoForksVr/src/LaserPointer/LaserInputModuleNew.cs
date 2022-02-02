@@ -81,18 +81,12 @@ namespace TwoForksVr.LaserPointer
 
         private void CastRayFromGaze()
         {
-            var isHit = Physics.Raycast(
+            Physics.Raycast(
                 transform.position,
                 transform.forward,
                 out var hit,
                 30,
                 LayerHelper.GetMask(GameLayer.UI));
-
-            if (!isHit)
-            {
-                laser.SetTarget(null);
-                return;
-            }
 
             laser.SetTarget(hit.point);
 
