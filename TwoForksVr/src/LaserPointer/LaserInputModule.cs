@@ -64,6 +64,8 @@ namespace TwoForksVr.LaserPointer
 
         public override void Process()
         {
+            if (!EventCamera) return;
+
             CastRayFromGaze();
             UpdateCurrentObject();
 
