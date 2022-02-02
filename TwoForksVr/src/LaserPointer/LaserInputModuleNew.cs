@@ -141,21 +141,19 @@ namespace TwoForksVr.LaserPointer
             }
 
             // Drag notification
-            if (pointerData.dragging && moving && pointerData.pointerDrag != null)
+            if (!pointerData.dragging || !moving || pointerData.pointerDrag == null) return;
+            // Before doing drag we should cancel any pointer down state
+            // And clear selection!
+            if (pointerData.pointerPress != pointerData.pointerDrag)
             {
-                // Before doing drag we should cancel any pointer down state
-                // And clear selection!
-                if (pointerData.pointerPress != pointerData.pointerDrag)
-                {
-                    ExecuteEvents.Execute(pointerData.pointerPress, pointerData, ExecuteEvents.pointerUpHandler);
+                ExecuteEvents.Execute(pointerData.pointerPress, pointerData, ExecuteEvents.pointerUpHandler);
 
-                    pointerData.eligibleForClick = false;
-                    pointerData.pointerPress = null;
-                    pointerData.rawPointerPress = null;
-                }
-
-                ExecuteEvents.Execute(pointerData.pointerDrag, pointerData, ExecuteEvents.dragHandler);
+                pointerData.eligibleForClick = false;
+                pointerData.pointerPress = null;
+                pointerData.rawPointerPress = null;
             }
+
+            ExecuteEvents.Execute(pointerData.pointerDrag, pointerData, ExecuteEvents.dragHandler);
         }
 
         private void HandlePendingClick()
