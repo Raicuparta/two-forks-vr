@@ -34,14 +34,8 @@ namespace TwoForksVr.LaserPointer
     {
         public Camera EventCamera;
 
-        /// Time in seconds between the pointer down and up events sent by a Cardboard trigger.
-        /// Allows time for the UI elements to make their state transitions.  If you turn off
-        /// _TapIsTrigger_ in Cardboard, then this setting has no effect.
-        [HideInInspector] public float clickTime = 0.1f; // Based on default time for a button to animate to Pressed.
-
         private Laser laser;
         private Vector3 lastHeadPose;
-
         private PointerEventData pointerData;
 
         public static LaserInputModuleNew Create(Laser laser)
@@ -71,32 +65,19 @@ namespace TwoForksVr.LaserPointer
 
         public override void Process()
         {
-            // Save the previous Game Object
-            var gazeObjectPrevious = GetCurrentGameObject();
-
             CastRayFromGaze();
             UpdateCurrentObject();
 
             // Handle input
             if (!SteamVR_Actions._default.Interact.stateDown && SteamVR_Actions._default.Interact.state)
-            {
                 // Drag is only supported if TapIsTrigger is false.
                 HandleDrag();
-            }
-            else if (Time.unscaledTime - pointerData.clickTime < clickTime)
-            {
-                // Delay new events until clickTime has passed.
-            }
             else if (!pointerData.eligibleForClick && SteamVR_Actions._default.Interact.stateDown)
-            {
                 // New trigger action.
                 HandleTrigger();
-            }
             else if (!SteamVR_Actions._default.Interact.state)
-            {
                 // Check if there is a pending click to handle.
                 HandlePendingClick();
-            }
         }
 
         private void CastRayFromGaze()
@@ -215,7 +196,7 @@ namespace TwoForksVr.LaserPointer
 
             // Save the drag handler as well
             pointerData.pointerDrag = ExecuteEvents.GetEventHandler<IDragHandler>(go);
-            if (pointerData.pointerDrag != null && !false)
+            if (pointerData.pointerDrag != null)
                 ExecuteEvents.Execute(pointerData.pointerDrag, pointerData, ExecuteEvents.initializePotentialDrag);
 
             // Save the pending click state.
@@ -226,14 +207,6 @@ namespace TwoForksVr.LaserPointer
             pointerData.useDragThreshold = true;
             pointerData.clickCount = 1;
             pointerData.clickTime = Time.unscaledTime;
-        }
-
-        private GameObject GetCurrentGameObject()
-        {
-            if (pointerData != null && pointerData.enterEventCamera != null)
-                return pointerData.pointerCurrentRaycast.gameObject;
-
-            return null;
         }
     }
 }
