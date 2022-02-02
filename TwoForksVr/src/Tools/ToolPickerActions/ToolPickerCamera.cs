@@ -22,7 +22,7 @@ namespace TwoForksVr.Tools.ToolPickerActions
             playerController.OnCameraDown();
         }
 
-        protected override bool IsEquipped()
+        protected override bool IsToolEquipped()
         {
             return playerController.cameraActive;
         }

@@ -12,7 +12,9 @@ namespace TwoForksVr.Tools.ToolPickerActions
             inventoryController = Object.FindObjectOfType<vgInventoryController>();
 
             // TODO do this without FindObjectsOfTypeAll.
-            inventoryMenuController = Resources.FindObjectsOfTypeAll<vgInventoryMenuController>()[0];
+            var inventoryMenuControllers = Resources.FindObjectsOfTypeAll<vgInventoryMenuController>();
+            if (inventoryMenuControllers == null || inventoryMenuControllers.Length == 0) return;
+            inventoryMenuController = inventoryMenuControllers[0];
         }
 
         protected override void OnEquip()
@@ -25,7 +27,7 @@ namespace TwoForksVr.Tools.ToolPickerActions
             inventoryMenuController.OnCloseInventory();
         }
 
-        protected override bool IsEquipped()
+        protected override bool IsToolEquipped()
         {
             var canvas = inventoryMenuController.canvas;
             return canvas && canvas.gameObject.activeInHierarchy;

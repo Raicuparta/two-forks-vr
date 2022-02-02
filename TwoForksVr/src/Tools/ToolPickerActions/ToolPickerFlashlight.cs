@@ -21,7 +21,7 @@ namespace TwoForksVr.Tools.ToolPickerActions
             flashlightController.ToggleFlashlight();
         }
 
-        protected override bool IsEquipped()
+        protected override bool IsToolEquipped()
         {
             return flashlightController.isActive;
         }
