@@ -110,5 +110,10 @@ namespace TwoForksVr.LaserPointer
 
             return inputAction.stateUp;
         }
+
+        public bool IsClicking()
+        {
+            return inputAction.state;
+        }
     }
 }
