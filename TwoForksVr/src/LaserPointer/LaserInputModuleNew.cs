@@ -29,7 +29,6 @@ using Valve.VR;
 
 namespace TwoForksVr.LaserPointer
 {
-    [AddComponentMenu("Cardboard/GazeInputModule")]
     public class LaserInputModuleNew : BaseInputModule
     {
         public Camera EventCamera;
