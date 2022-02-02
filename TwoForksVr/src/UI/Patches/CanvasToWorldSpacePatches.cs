@@ -35,7 +35,9 @@ namespace TwoForksVr.UI.Patches
         {
             try
             {
-                if (IsCanvasToIgnore(__instance.name)) return;
+                // This check for !Camera.main needs to stay here,
+                // because without it the map texture will some times be broken. Dunno why.
+                if (!Camera.main || IsCanvasToIgnore(__instance.name)) return;
 
                 var canvas = __instance.GetComponent<Canvas>();
 
