@@ -30,17 +30,13 @@ namespace TwoForksVr.UI.Patches
             return false;
         }
 
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgScrimManager), nameof(vgScrimManager.ShowScrim))]
-        private static void DisablePauseBlur(ref bool blur)
-        {
-            blur = false;
-        }
-
+        // For some reason, the default text shader draws on top of everything.
+        // I'm importing the TMPro shader from a more recent version and replacing it in the font materials.
+        // This way, I can decide which ones I actually want to draw on top.
         [HarmonyPostfix]
         [HarmonyPatch(typeof(TextMeshProUGUI), nameof(TextMeshProUGUI.Awake))]
         [HarmonyPatch(typeof(TextMeshProUGUI), nameof(TextMeshProUGUI.OnEnable))]
-        private static void ChangeTMProShader(TextMeshProUGUI __instance)
+        private static void PreventTextFromDrawingOnTop(TextMeshProUGUI __instance)
         {
             try
             {

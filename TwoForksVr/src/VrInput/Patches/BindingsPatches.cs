@@ -48,7 +48,7 @@ namespace TwoForksVr.VrInput.Patches
         [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.ForwardMovement))]
         private static bool FixForwardMovement(vgPlayerController __instance, float axisValue)
         {
-            if (StageInstance.IsTeleporting()) return false;
+            if (VrSettings.Teleport.Value && __instance.navController && __instance.navController.enabled) return false;
 
             __instance.forwardInput = ProcessAxisValue(axisValue);
             return false;
