@@ -138,11 +138,6 @@ namespace TwoForksVr.Stage
             cameraManager.RecenterRotation();
         }
 
-        public void HighlightButton(params ISteamVR_Action_In_Source[] actions)
-        {
-            limbManager.HighlightButton(actions);
-        }
-
         public void FadeToBlack()
         {
             if (!fadeOverlay) return;
