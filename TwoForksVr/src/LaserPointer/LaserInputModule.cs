@@ -25,7 +25,6 @@
 using TwoForksVr.Helpers;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Valve.VR;
 
 namespace TwoForksVr.LaserPointer
 {
@@ -69,11 +68,14 @@ namespace TwoForksVr.LaserPointer
             CastRay();
             UpdateCurrentObject();
 
-            if (!SteamVR_Actions._default.Interact.stateDown && SteamVR_Actions._default.Interact.state)
+            var clickDown = laser.ClickDown();
+            var isClicking = laser.IsClicking();
+
+            if (!clickDown && isClicking)
                 HandleDrag();
-            else if (!pointerData.eligibleForClick && SteamVR_Actions._default.Interact.stateDown)
+            else if (!pointerData.eligibleForClick && clickDown)
                 HandleTrigger();
-            else if (!SteamVR_Actions._default.Interact.state)
+            else if (!isClicking)
                 HandlePendingClick();
         }
 
