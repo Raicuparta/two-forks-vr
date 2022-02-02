@@ -20,7 +20,7 @@ namespace TwoForksVr.Tools.ToolPickerActions
             mapController.OnToggleCompass();
         }
 
-        protected override bool IsEquipped()
+        protected override bool IsToolEquipped()
         {
             return mapController.compassEquipped;
         }

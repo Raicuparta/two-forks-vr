@@ -7,7 +7,7 @@ namespace TwoForksVr.Tools.ToolPickerActions
         protected abstract void OnInitialize();
         protected abstract void OnEquip();
         protected abstract void OnUnequip();
-        protected abstract bool IsEquipped();
+        protected abstract bool IsToolEquipped();
         protected abstract bool CanEquipTool();
         protected abstract bool IsInitialized();
 
@@ -19,15 +19,21 @@ namespace TwoForksVr.Tools.ToolPickerActions
         public void Equip()
         {
             if (!IsInitialized()) Initialize();
-            if (IsEquipped()) return;
+            if (!IsInitialized() || IsEquipped()) return;
             OnEquip();
         }
 
         public void Unequip()
         {
             if (!IsInitialized()) Initialize();
-            if (!IsEquipped()) return;
+            if (!IsInitialized() || !IsEquipped()) return;
             OnUnequip();
+        }
+
+        private bool IsEquipped()
+        {
+            if (!IsInitialized()) Initialize();
+            return IsInitialized() && IsToolEquipped();
         }
 
         public bool CanEquip()
@@ -35,7 +41,7 @@ namespace TwoForksVr.Tools.ToolPickerActions
             if (!IsInitialized()) Initialize();
             try
             {
-                return CanEquipTool();
+                return IsInitialized() && CanEquipTool();
             }
             catch
             {
