@@ -1,3 +1,4 @@
+using TwoForksVr.Helpers;
 using UnityEngine;
 
 namespace TwoForksVr.Debugging
@@ -60,7 +61,7 @@ namespace TwoForksVr.Debugging
             lineRenderer.endColor = color;
             lineRenderer.startColor = color;
             lineRenderer.material.shader = Shader.Find("Particles/Alpha Blended Premultiply");
-            lineRenderer.material.SetColor(Shader.PropertyToID("_Color"), color);
+            lineRenderer.material.SetColor(ShaderProperty.Color, color);
         }
     }
 }
