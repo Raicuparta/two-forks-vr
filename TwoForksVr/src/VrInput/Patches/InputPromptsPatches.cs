@@ -58,34 +58,6 @@ namespace TwoForksVr.VrInput.Patches
         // }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgInputManager), nameof(vgInputManager.GetFriendlyNameFromVirtualKey))]
-        private static bool ReplaceInputPrompts(ref string friendlyName, string virtualKey)
-        {
-            vgInputManager.Instance.virtualKeyKeyBindMap.TryGetValue(virtualKey, out var keyBind);
-            if (keyBind == null)
-            {
-                Logs.LogWarning($"Failed to find key bind for virtual key {virtualKey}");
-                return true;
-            }
-
-            foreach (var command in keyBind.commands)
-            {
-                var action = StageInstance.GetBooleanAction(command.command);
-                if (action == null) continue;
-                friendlyName = action.GetLocalizedOriginPart(SteamVR_Input_Sources.Any,
-                    EVRInputStringBits.VRInputString_InputSource);
-
-                // Doing it only for the first command that works, not sure if that canb e a problem.
-                return false;
-            }
-
-            Logs.LogWarning($"Failed to find friendly name for virtual key {virtualKey}");
-
-            return true;
-        }
-
-
-        [HarmonyPrefix]
         [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.ClearButtonText))]
         private static bool StopControllerButtonHighlight(TextMeshProUGUI buttonText)
         {
@@ -95,12 +67,49 @@ namespace TwoForksVr.VrInput.Patches
             return false;
         }
 
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.GetIconName))]
+        private static bool ReplacePromptIconsWithVrButtonText(ref string __result, string id)
+        {
+            vgInputManager.Instance.virtualKeyKeyBindMap.TryGetValue(id, out var keyBind);
+            if (keyBind == null)
+            {
+                Logs.LogWarning($"Failed to find key bind for virtual key {id}");
+                return true;
+            }
+
+            foreach (var command in keyBind.commands)
+            {
+                Logs.LogInfo($"Looking for friendly name for command {command.command}");
+                var action = StageInstance.GetBooleanAction(command.command);
+                if (action == null) continue;
+                __result = action.GetLocalizedOriginPart(SteamVR_Input_Sources.Any,
+                    EVRInputStringBits.VRInputString_InputSource);
+
+                // Doing it only for the first command that works, not sure if that canb e a problem.
+                return false;
+            }
+
+            Logs.LogWarning($"Failed to find friendly name for virtual key {id}");
+
+            return true;
+        }
+
         [HarmonyPostfix]
         [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.UpdateEdgeHUD))]
         private static void ClearEdgeText(vgHudManager __instance)
         {
             if (!__instance.edgeObject.activeSelf)
                 __instance.ClearButtonText(__instance.edgeButton, __instance.edgeButtonKeyBoundary);
+        }
+
+        // Patching GetIconName was an easier way to replace the input prompt text,
+        // but for some reason I have to force IsHandlingInput to be true for GetIconName to be called.
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.IsHandlingInput))]
+        private static void ForceToUseGetIconName(ref bool __result)
+        {
+            __result = true;
         }
     }
 }
