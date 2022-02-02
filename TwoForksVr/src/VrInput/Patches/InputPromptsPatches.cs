@@ -17,44 +17,73 @@ namespace TwoForksVr.VrInput.Patches
             StageInstance.HighlightButton();
         }
 
+        // TODO old controller model code.
+        // [HarmonyPrefix]
+        // [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.UpdateButtonText))]
+        // private static bool TriggerControllerButtonHighlight(vgHudManager __instance, string buttonDisplay,
+        //     TextMeshProUGUI buttonText)
+        // {
+        //     if (__instance.currentTarget && !__instance.currentTarget.ShouldDisplayDetail())
+        //     {
+        //         ResetPrompt();
+        //         return false;
+        //     }
+        //
+        //     if (buttonDisplay == currentButtonDisplay) return false;
+        //
+        //     currentButtonDisplay = buttonDisplay;
+        //
+        //     var virtualKey = buttonDisplay.Trim('[', ']');
+        //     vgInputManager.Instance.virtualKeyKeyBindMap.TryGetValue(virtualKey, out var keyBind);
+        //
+        //     if (keyBind == null)
+        //     {
+        //         Logs.LogWarning($"Failed to find keyBind for buttonDisplay {buttonDisplay}");
+        //         return false;
+        //     }
+        //
+        //     foreach (var command in keyBind.commands)
+        //     {
+        //         var action = StageInstance.GetBooleanAction(command.command);
+        //         if (action == null) continue;
+        //         StageInstance.HighlightButton(action);
+        //         buttonText.text = action.GetLocalizedOriginPart(SteamVR_Input_Sources.Any,
+        //             EVRInputStringBits.VRInputString_InputSource);
+        //         buttonText.gameObject.SetActive(true);
+        //         // Doing it only for the first command that works, not sure if that canb e a problem.
+        //         break;
+        //     }
+        //
+        //     return false;
+        // }
+
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.UpdateButtonText))]
-        private static bool TriggerControllerButtonHighlight(vgHudManager __instance, string buttonDisplay,
-            TextMeshProUGUI buttonText)
+        [HarmonyPatch(typeof(vgInputManager), nameof(vgInputManager.GetFriendlyNameFromVirtualKey))]
+        private static bool ReplaceInputPrompts(ref string friendlyName, string virtualKey)
         {
-            if (__instance.currentTarget && !__instance.currentTarget.ShouldDisplayDetail())
-            {
-                ResetPrompt();
-                return false;
-            }
-
-            if (buttonDisplay == currentButtonDisplay) return false;
-
-            currentButtonDisplay = buttonDisplay;
-
-            var virtualKey = buttonDisplay.Trim('[', ']');
             vgInputManager.Instance.virtualKeyKeyBindMap.TryGetValue(virtualKey, out var keyBind);
-
             if (keyBind == null)
             {
-                Logs.LogWarning($"Failed to find keyBind for buttonDisplay {buttonDisplay}");
-                return false;
+                Logs.LogWarning($"Failed to find key bind for virtual key {virtualKey}");
+                return true;
             }
 
             foreach (var command in keyBind.commands)
             {
                 var action = StageInstance.GetBooleanAction(command.command);
                 if (action == null) continue;
-                StageInstance.HighlightButton(action);
-                buttonText.text = action.GetLocalizedOriginPart(SteamVR_Input_Sources.Any,
+                friendlyName = action.GetLocalizedOriginPart(SteamVR_Input_Sources.Any,
                     EVRInputStringBits.VRInputString_InputSource);
-                buttonText.gameObject.SetActive(true);
+
                 // Doing it only for the first command that works, not sure if that canb e a problem.
-                break;
+                return false;
             }
 
-            return false;
+            Logs.LogWarning($"Failed to find friendly name for virtual key {virtualKey}");
+
+            return true;
         }
+
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.ClearButtonText))]
