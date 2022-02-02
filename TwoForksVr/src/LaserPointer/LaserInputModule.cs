@@ -31,8 +31,8 @@ namespace TwoForksVr.LaserPointer
 {
     public class LaserInputModule : BaseInputModule
     {
+        private const float rayDistance = 30f;
         public Camera EventCamera;
-
         private Laser laser;
         private Vector3 lastHeadPose;
         private PointerEventData pointerData;
@@ -69,15 +69,11 @@ namespace TwoForksVr.LaserPointer
             CastRayFromGaze();
             UpdateCurrentObject();
 
-            // Handle input
             if (!SteamVR_Actions._default.Interact.stateDown && SteamVR_Actions._default.Interact.state)
-                // Drag is only supported if TapIsTrigger is false.
                 HandleDrag();
             else if (!pointerData.eligibleForClick && SteamVR_Actions._default.Interact.stateDown)
-                // New trigger action.
                 HandleTrigger();
             else if (!SteamVR_Actions._default.Interact.state)
-                // Check if there is a pending click to handle.
                 HandlePendingClick();
         }
 
@@ -87,7 +83,7 @@ namespace TwoForksVr.LaserPointer
                 transform.position,
                 transform.forward,
                 out var hit,
-                30,
+                rayDistance,
                 LayerHelper.GetMask(GameLayer.UI));
 
             laser.SetTarget(hit.point);
