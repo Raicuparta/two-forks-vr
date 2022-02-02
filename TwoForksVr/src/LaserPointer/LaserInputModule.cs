@@ -79,14 +79,17 @@ namespace TwoForksVr.LaserPointer
 
         private void CastRay()
         {
-            Physics.Raycast(
+            var isHit = Physics.Raycast(
                 transform.position,
                 transform.forward,
                 out var hit,
                 rayDistance,
                 LayerHelper.GetMask(GameLayer.UI));
 
-            laser.SetTarget(hit.point);
+            if (isHit)
+                laser.SetTarget(hit.point);
+            else
+                laser.SetTarget(null);
 
             var pointerPosition = EventCamera.WorldToScreenPoint(hit.point);
 
