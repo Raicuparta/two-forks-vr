@@ -70,12 +70,13 @@ namespace TwoForksVr.LaserPointer
 
             var clickDown = laser.ClickDown();
             var isClicking = laser.IsClicking();
+            var clickUp = laser.ClickUp();
 
             if (!clickDown && isClicking)
                 HandleDrag();
             else if (!pointerData.eligibleForClick && clickDown)
                 HandleTrigger();
-            else if (!isClicking)
+            else if (clickUp)
                 HandlePendingClick();
         }
 
@@ -136,18 +137,7 @@ namespace TwoForksVr.LaserPointer
                 pointerData.dragging = true;
             }
 
-            // Drag notification
             if (!pointerData.dragging || !moving || pointerData.pointerDrag == null) return;
-            // Before doing drag we should cancel any pointer down state
-            // And clear selection!
-            if (pointerData.pointerPress != pointerData.pointerDrag)
-            {
-                ExecuteEvents.Execute(pointerData.pointerPress, pointerData, ExecuteEvents.pointerUpHandler);
-
-                pointerData.eligibleForClick = false;
-                pointerData.pointerPress = null;
-                pointerData.rawPointerPress = null;
-            }
 
             ExecuteEvents.Execute(pointerData.pointerDrag, pointerData, ExecuteEvents.dragHandler);
         }
