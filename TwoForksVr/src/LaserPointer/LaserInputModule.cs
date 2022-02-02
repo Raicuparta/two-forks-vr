@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace TwoForksVr.LaserPointer
 {
-    public class LaserInputModule : StandaloneInputModule
+    public class LaserInputModule : PointerInputModule
     {
         private const float rayMaxDistance = 30f;
         public Camera EventCamera;
@@ -45,12 +45,27 @@ namespace TwoForksVr.LaserPointer
             var stateDown = laser.ClickDown();
             var stateUp = laser.ClickUp();
 
-            ProcessTouchPress(pointerData, stateDown, stateUp);
+            ProcessMove(pointerData);
+            // ProcessTouchPress(pointerData, stateDown, stateUp);
 
-            if (stateUp)
-                RemovePointerData(pointerData);
-            else
-                ProcessMove(pointerData);
+
+            if (pointerData.pointerEnter != null)
+            {
+                var handler = ExecuteEvents.GetEventHandler<IPointerClickHandler>(pointerData.pointerEnter);
+                if (handler == null) return;
+
+                if (stateDown)
+                    ExecuteEvents.ExecuteHierarchy(handler, pointerData, ExecuteEvents.pointerDownHandler);
+                // ExecuteEvents.ExecuteHierarchy(handler, pointerData, ExecuteEvents.pointerClickHandler);
+
+                if (stateUp)
+                    ExecuteEvents.ExecuteHierarchy(handler, pointerData, ExecuteEvents.pointerUpHandler);
+            }
+
+            // if (stateUp)
+            //     RemovePointerData(pointerData);
+            // else
+            //     ProcessMove(pointerData);
         }
     }
 }

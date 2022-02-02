@@ -11,7 +11,7 @@ namespace TwoForksVr.LaserPointer
         private readonly SteamVR_Action_Boolean inputAction = SteamVR_Actions.default_Interact;
         private bool ignoreNextInput;
 
-        private LaserInputModule inputModule;
+        private LaserInputModuleNew inputModule;
         private Transform laserTransform;
         private Transform leftHand;
         private LineRenderer lineRenderer;
@@ -31,7 +31,7 @@ namespace TwoForksVr.LaserPointer
 
         public void SetUp(Camera camera)
         {
-            inputModule.EventCamera = camera;
+            // inputModule.EventCamera = camera;
             target = null;
         }
 
@@ -52,7 +52,7 @@ namespace TwoForksVr.LaserPointer
             lineRenderer.sortingOrder = 10000;
             lineRenderer.enabled = false;
 
-            inputModule = LaserInputModule.Create(this);
+            inputModule = LaserInputModuleNew.Create(this);
         }
 
         private void Update()
@@ -109,6 +109,11 @@ namespace TwoForksVr.LaserPointer
             }
 
             return inputAction.stateUp;
+        }
+
+        public bool IsClicking()
+        {
+            return inputAction.state;
         }
     }
 }
