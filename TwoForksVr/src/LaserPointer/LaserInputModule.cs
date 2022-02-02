@@ -66,7 +66,7 @@ namespace TwoForksVr.LaserPointer
         {
             if (!EventCamera) return;
 
-            CastRayFromGaze();
+            CastRay();
             UpdateCurrentObject();
 
             if (!SteamVR_Actions._default.Interact.stateDown && SteamVR_Actions._default.Interact.state)
@@ -77,7 +77,7 @@ namespace TwoForksVr.LaserPointer
                 HandlePendingClick();
         }
 
-        private void CastRayFromGaze()
+        private void CastRay()
         {
             Physics.Raycast(
                 transform.position,
