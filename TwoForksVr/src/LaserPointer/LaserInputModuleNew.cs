@@ -1,3 +1,5 @@
+// Based on https://github.com/googlearchive/tango-examples-unity/blob/master/TangoWithCardboardExperiments/Assets/Cardboard/Scripts/GazeInputModule.cs
+
 // The MIT License (MIT)
 //
 // Copyright (c) 2015, Unity Technologies & Google, Inc.
@@ -27,33 +29,9 @@ using Valve.VR;
 
 namespace TwoForksVr.LaserPointer
 {
-    /// @ingroup Scripts
-    /// This script provides an implemention of Unity's `BaseInputModule` class, so
-    /// that Canvas-based (_uGUI_) UI elements can be selected by looking at them and
-    /// pulling the Cardboard trigger or touching the screen.
-    /// This uses the player's gaze and the Cardboard trigger as a raycast generator.
-    /// 
-    /// To use, attach to the scene's **EventSystem** object.  Be sure to move it above the
-    /// other modules, such as _TouchInputModule_ and _StandaloneInputModule_, in order
-    /// for the user's gaze to take priority in the event system.
-    /// 
-    /// Next, set the **Canvas** object's _Render Mode_ to **World Space**, and set its _Event Camera_
-    /// to a (mono) camera that is controlled by a CardboardHead.  If you'd like gaze to work
-    /// with 3D scene objects, add a _PhysicsRaycaster_ to the gazing camera, and add a
-    /// component that implements one of the _Event_ interfaces (_EventTrigger_ will work nicely).
-    /// The objects must have colliders too.
-    /// 
-    /// GazeInputModule emits the following events: _Enter_, _Exit_, _Down_, _Up_, _Click_, _Select_,
-    /// _Deselect_, and _UpdateSelected_.  Scroll, move, and submit/cancel events are not emitted.
     [AddComponentMenu("Cardboard/GazeInputModule")]
     public class LaserInputModuleNew : BaseInputModule
     {
-        /// Determines whether gaze input is active in VR Mode only (`true`), or all of the
-        /// time (`false`).  Set to false if you plan to use direct screen taps or other
-        /// input when not in VR Mode.
-        [Tooltip("Whether gaze input is active in VR Mode only (true), or all the time (false).")]
-        public bool vrModeOnly;
-
         public Camera EventCamera;
 
         /// Time in seconds between the pointer down and up events sent by a Cardboard trigger.
@@ -61,12 +39,6 @@ namespace TwoForksVr.LaserPointer
         /// _TapIsTrigger_ in Cardboard, then this setting has no effect.
         [HideInInspector] public float clickTime = 0.1f; // Based on default time for a button to animate to Pressed.
 
-        /// The pixel through which to cast rays, in viewport coordinates.  Generally, the center
-        /// pixel is best, assuming a monoscopic camera is selected as the `Canvas`' event camera.
-        [HideInInspector] public Vector2 hotspot = new Vector2(0.5f, 0.5f);
-
-        // Active state
-        private bool isActive = false;
         private Laser laser;
         private Vector3 lastHeadPose;
 
@@ -79,7 +51,6 @@ namespace TwoForksVr.LaserPointer
             return instance;
         }
 
-        /// @endcond
         public override void DeactivateModule()
         {
             base.DeactivateModule();
@@ -106,9 +77,6 @@ namespace TwoForksVr.LaserPointer
             CastRayFromGaze();
             UpdateCurrentObject();
 
-            // Get the camera
-            var camera = pointerData.enterEventCamera;
-
             // Handle input
             if (!SteamVR_Actions._default.Interact.stateDown && SteamVR_Actions._default.Interact.state)
             {
@@ -131,7 +99,6 @@ namespace TwoForksVr.LaserPointer
             }
         }
 
-        /// @endcond
         private void CastRayFromGaze()
         {
             var isHit = Physics.Raycast(
@@ -261,36 +228,12 @@ namespace TwoForksVr.LaserPointer
             pointerData.clickTime = Time.unscaledTime;
         }
 
-        private Vector2 NormalizedCartesianToSpherical(Vector3 cartCoords)
-        {
-            cartCoords.Normalize();
-            if (cartCoords.x == 0)
-                cartCoords.x = Mathf.Epsilon;
-            var outPolar = Mathf.Atan(cartCoords.z / cartCoords.x);
-            if (cartCoords.x < 0)
-                outPolar += Mathf.PI;
-            var outElevation = Mathf.Asin(cartCoords.y);
-            return new Vector2(outPolar, outElevation);
-        }
-
         private GameObject GetCurrentGameObject()
         {
             if (pointerData != null && pointerData.enterEventCamera != null)
                 return pointerData.pointerCurrentRaycast.gameObject;
 
             return null;
-        }
-
-        private Vector3 GetIntersectionPosition()
-        {
-            // Check for camera
-            var cam = pointerData.enterEventCamera;
-            if (cam == null) return Vector3.zero;
-
-            var intersectionDistance = pointerData.pointerCurrentRaycast.distance + cam.nearClipPlane;
-            var intersectionPosition = cam.transform.position + cam.transform.forward * intersectionDistance;
-
-            return intersectionPosition;
         }
     }
 }
