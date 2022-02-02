@@ -1,5 +1,7 @@
-﻿using TwoForksVr.Assets;
+﻿using System;
+using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
+using TwoForksVr.Settings;
 using UnityEngine;
 using Valve.VR;
 
@@ -9,6 +11,7 @@ namespace TwoForksVr.Limbs
     {
         private string handName;
         private bool isLeft;
+        public VrButtonHighlight ButtonHighlight { get; private set; }
 
         public static VrHand Create(Transform parent, bool isLeft = false)
         {
@@ -20,6 +23,7 @@ namespace TwoForksVr.Limbs
             var instance = transform.gameObject.AddComponent<VrHand>();
             instance.handName = handName;
             instance.isLeft = isLeft;
+            instance.ButtonHighlight = transform.GetComponentInChildren<VrButtonHighlight>();
             instance.SetUpPose();
 
             return instance;
@@ -38,6 +42,21 @@ namespace TwoForksVr.Limbs
 
             EnableAnimatedHand(playerRootBone);
             gameObject.SetActive(true);
+        }
+
+        private void Awake()
+        {
+            VrSettings.ShowControllerModels.SettingChanged += HandleControllerModelSettingChanged;
+        }
+
+        private void OnDestroy()
+        {
+            VrSettings.ShowControllerModels.SettingChanged -= HandleControllerModelSettingChanged;
+        }
+
+        private void HandleControllerModelSettingChanged(object sender, EventArgs e)
+        {
+            ButtonHighlight.transform.parent.gameObject.SetActive(VrSettings.ShowControllerModels.Value);
         }
 
         private void SetUpPose()
