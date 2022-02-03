@@ -72,34 +72,16 @@ namespace TwoForksVr.VrInput.Patches
         private static bool ReplacePromptIconsWithVrButtonText(ref string __result, string id)
         {
             __result = id; // TODO should just hide the prompt in this case?
-            vgInputManager.Instance.virtualKeyKeyBindMap.TryGetValue(id, out var keyBind);
-            if (keyBind == null)
+
+            var action = StageInstance.GetInputAction(id);
+            if (action == null)
             {
-                Logs.LogWarning($"Failed to find key bind for virtual key {id}");
+                Logs.LogWarning($"Failed to find actionInput for virtual key {id}");
                 return false;
             }
 
-            if (keyBind.commands.Count == 0)
-            {
-                Logs.LogWarning($"keybind {id} is empty");
-                Logs.LogInfo($"names: {keyBind.keyData.names.Join()}");
-                Logs.LogInfo($"virtualKeyNames: {keyBind.keyData.virtualKeyNames.Join()}");
-                return false;
-            }
-
-            foreach (var command in keyBind.commands)
-            {
-                Logs.LogInfo($"Looking for friendly name for command {command.command}");
-                var action = StageInstance.GetInputAction(command.command);
-                if (action == null) continue;
-                __result = action.Action.GetLocalizedOriginPart(SteamVR_Input_Sources.Any,
-                    EVRInputStringBits.VRInputString_InputSource);
-
-                // Doing it only for the first command that works, not sure if that canb e a problem.
-                return false;
-            }
-
-            Logs.LogWarning($"Failed to find friendly name for virtual key {id}");
+            __result = action.Action.GetLocalizedOriginPart(SteamVR_Input_Sources.Any,
+                EVRInputStringBits.VRInputString_InputSource);
 
             return false;
         }

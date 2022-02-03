@@ -191,9 +191,9 @@ namespace TwoForksVr.Stage
         //            bindingsManager.Vector2YActionMap.ContainsKey(command);
         // }
 
-        public IActionInput GetInputAction(string command)
+        public IActionInput GetInputAction(string virtualKey)
         {
-            bindingsManager.ActionMap.TryGetValue(command, out var value);
+            bindingsManager.ActionMap.TryGetValue(virtualKey, out var value);
             return value;
         }
     }
