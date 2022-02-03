@@ -33,6 +33,9 @@ namespace TwoForksVr.Debugging
                 }
             }
 
+            Logs.LogInfo("## Virtual keys: ##");
+            foreach (var item in inputManager.customLayout.mapping) Logs.LogInfo($"virtual key: {item.virtualKey}");
+
             Logs.LogInfo("## Ended key bind logs ##");
         }
 

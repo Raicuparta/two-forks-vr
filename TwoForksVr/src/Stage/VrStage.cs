@@ -9,6 +9,7 @@ using TwoForksVr.Settings;
 using TwoForksVr.UI;
 using TwoForksVr.VrCamera;
 using TwoForksVr.VrInput;
+using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Valve.VR;
@@ -181,17 +182,18 @@ namespace TwoForksVr.Stage
             return staticUiTarget ? staticUiTarget.TargetTransform : null;
         }
 
-        public bool IsVector2CommandExisting(string command)
-        {
-            if (!bindingsManager) return false;
+        // TODO check if this is needed, and find another way.
+        // public bool IsVector2CommandExisting(string command)
+        // {
+        //     if (!bindingsManager) return false;
+        //
+        //     return bindingsManager.Vector2XActionMap.ContainsKey(command) ||
+        //            bindingsManager.Vector2YActionMap.ContainsKey(command);
+        // }
 
-            return bindingsManager.Vector2XActionMap.ContainsKey(command) ||
-                   bindingsManager.Vector2YActionMap.ContainsKey(command);
-        }
-
-        public SteamVR_Action_Boolean GetBooleanAction(string command)
+        public IActionInput GetInputAction(string command)
         {
-            bindingsManager.BooleanActionMap.TryGetValue(command, out var value);
+            bindingsManager.ActionMap.TryGetValue(command, out var value);
             return value;
         }
     }

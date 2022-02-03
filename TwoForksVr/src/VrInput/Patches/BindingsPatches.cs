@@ -60,7 +60,36 @@ namespace TwoForksVr.VrInput.Patches
         [HarmonyPatch(typeof(vgKeyBind), nameof(vgKeyBind.TriggerCommand))]
         private static bool IgnoreDefaultAxisInputs(string command)
         {
-            return !StageInstance.IsVector2CommandExisting(command);
+            return true;
+            // TODO check if this is needed, and find another way.
+            // return !StageInstance.IsVector2CommandExisting(command);
+        }
+
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.UpdateActiveController))]
+        private static bool ForceXboxController(vgRewiredInput __instance)
+        {
+            __instance.activeController = vgControllerLayoutChoice.XBox;
+            __instance.mCurrentIconMap = __instance.IconMap_Xbox;
+            __instance.mCurrentIconMap.Init();
+
+            if (vgSettingsManager.Instance &&
+                vgSettingsManager.Instance.controller != (int) __instance.activeController)
+                vgSettingsManager.Instance.controller = (int) __instance.activeController;
+
+            return false;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgAxisData), nameof(vgAxisData.Update))]
+        // [HarmonyPatch(typeof(vgAxisData), nameof(vgButtonData.Update))]
+        private static void ReadVrAxisInput(vgAxisData __instance)
+        {
+            __instance.axisValue = 0f;
+
+            foreach (var virtualKey in __instance.virtualKeyNames)
+                __instance.axisValue += BindingsManager.Instance.GetValue(virtualKey);
         }
     }
 }

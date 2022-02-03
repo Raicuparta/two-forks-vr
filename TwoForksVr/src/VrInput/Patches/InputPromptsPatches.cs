@@ -68,22 +68,31 @@ namespace TwoForksVr.VrInput.Patches
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.GetIconName))]
+        [HarmonyPatch(typeof(vgButtonIconMap), nameof(vgButtonIconMap.GetIconName))]
         private static bool ReplacePromptIconsWithVrButtonText(ref string __result, string id)
         {
+            __result = id; // TODO should just hide the prompt in this case?
             vgInputManager.Instance.virtualKeyKeyBindMap.TryGetValue(id, out var keyBind);
             if (keyBind == null)
             {
                 Logs.LogWarning($"Failed to find key bind for virtual key {id}");
-                return true;
+                return false;
+            }
+
+            if (keyBind.commands.Count == 0)
+            {
+                Logs.LogWarning($"keybind {id} is empty");
+                Logs.LogInfo($"names: {keyBind.keyData.names.Join()}");
+                Logs.LogInfo($"virtualKeyNames: {keyBind.keyData.virtualKeyNames.Join()}");
+                return false;
             }
 
             foreach (var command in keyBind.commands)
             {
                 Logs.LogInfo($"Looking for friendly name for command {command.command}");
-                var action = StageInstance.GetBooleanAction(command.command);
+                var action = StageInstance.GetInputAction(command.command);
                 if (action == null) continue;
-                __result = action.GetLocalizedOriginPart(SteamVR_Input_Sources.Any,
+                __result = action.Action.GetLocalizedOriginPart(SteamVR_Input_Sources.Any,
                     EVRInputStringBits.VRInputString_InputSource);
 
                 // Doing it only for the first command that works, not sure if that canb e a problem.
@@ -92,7 +101,15 @@ namespace TwoForksVr.VrInput.Patches
 
             Logs.LogWarning($"Failed to find friendly name for virtual key {id}");
 
-            return true;
+            return false;
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgButtonIconMap), nameof(vgButtonIconMap.HasIcon))]
+        private static bool ReplacePromptIconsWithVrButtonText(ref bool __result)
+        {
+            __result = true;
+            return false;
         }
 
         [HarmonyPostfix]

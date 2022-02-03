@@ -57,6 +57,8 @@ namespace Valve.VR
         
         private static SteamVR_Action_Boolean p_default_Teleport;
         
+        private static SteamVR_Action_Boolean p_default_Radio;
+        
         private static SteamVR_Action_Vibration p_default_Haptic;
         
         public static SteamVR_Action_Boolean default_Interact
@@ -219,6 +221,14 @@ namespace Valve.VR
             }
         }
         
+        public static SteamVR_Action_Boolean default_Radio
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_Radio.GetCopy <SteamVR_Action_Boolean>();
+            }
+        }
+        
         public static SteamVR_Action_Vibration default_Haptic
         {
             get
@@ -251,6 +261,7 @@ namespace Valve.VR
                     SteamVR_Actions.default_SnapTurnRight,
                     SteamVR_Actions.default_SnapTurnLeft,
                     SteamVR_Actions.default_Teleport,
+                    SteamVR_Actions.default_Radio,
                     SteamVR_Actions.default_Haptic};
             Valve.VR.SteamVR_Input.actionsIn = new Valve.VR.ISteamVR_Action_In[]
             {
@@ -273,7 +284,8 @@ namespace Valve.VR
                     SteamVR_Actions.default_Grip,
                     SteamVR_Actions.default_SnapTurnRight,
                     SteamVR_Actions.default_SnapTurnLeft,
-                    SteamVR_Actions.default_Teleport};
+                    SteamVR_Actions.default_Teleport,
+                    SteamVR_Actions.default_Radio};
             Valve.VR.SteamVR_Input.actionsOut = new Valve.VR.ISteamVR_Action_Out[]
             {
                     SteamVR_Actions.default_Haptic};
@@ -299,7 +311,8 @@ namespace Valve.VR
                     SteamVR_Actions.default_Grip,
                     SteamVR_Actions.default_SnapTurnRight,
                     SteamVR_Actions.default_SnapTurnLeft,
-                    SteamVR_Actions.default_Teleport};
+                    SteamVR_Actions.default_Teleport,
+                    SteamVR_Actions.default_Radio};
             Valve.VR.SteamVR_Input.actionsSingle = new Valve.VR.SteamVR_Action_Single[0];
             Valve.VR.SteamVR_Input.actionsVector2 = new Valve.VR.SteamVR_Action_Vector2[]
             {
@@ -327,7 +340,8 @@ namespace Valve.VR
                     SteamVR_Actions.default_Grip,
                     SteamVR_Actions.default_SnapTurnRight,
                     SteamVR_Actions.default_SnapTurnLeft,
-                    SteamVR_Actions.default_Teleport};
+                    SteamVR_Actions.default_Teleport,
+                    SteamVR_Actions.default_Radio};
         }
         
         private static void PreInitActions()
@@ -352,6 +366,7 @@ namespace Valve.VR
             SteamVR_Actions.p_default_SnapTurnRight = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/SnapTurnRight")));
             SteamVR_Actions.p_default_SnapTurnLeft = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/SnapTurnLeft")));
             SteamVR_Actions.p_default_Teleport = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/Teleport")));
+            SteamVR_Actions.p_default_Radio = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/Radio")));
             SteamVR_Actions.p_default_Haptic = ((SteamVR_Action_Vibration)(SteamVR_Action.Create <SteamVR_Action_Vibration>("/actions/default/out/Haptic")));
         }
     }
