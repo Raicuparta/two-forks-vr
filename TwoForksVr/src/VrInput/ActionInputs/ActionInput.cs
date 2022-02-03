@@ -1,5 +1,4 @@
-﻿using System;
-using Valve.VR;
+﻿using Valve.VR;
 
 namespace TwoForksVr.VrInput.ActionInputs
 {
@@ -7,20 +6,16 @@ namespace TwoForksVr.VrInput.ActionInputs
     {
         protected readonly TAction SpecificAction;
 
-        protected ActionInput(TAction action, bool optional = false)
+        protected ActionInput(TAction action)
         {
             SpecificAction = action;
-            Optional = optional;
         }
 
-        public Action<float> OnChange { get; set; }
-
         public ISteamVR_Action_In Action => SpecificAction;
-        public bool Optional { get; }
-        public abstract bool Active { get; }
+        public bool Active => Action.active;
         public abstract float Value { get; }
         public abstract bool ValueUp { get; }
         public abstract bool ValueDown { get; }
-        public abstract SteamVR_Input_Sources ActiveSource { get; }
+        public SteamVR_Input_Sources ActiveSource => Action?.activeDevice ?? SteamVR_Input_Sources.Any;
     }
 }

@@ -15,15 +15,11 @@
         public const string Confirm = "ConfirmButton";
         public const string NextMenu = "NextMenuButton";
         public const string PreviousMenu = "PreviousMenuButton";
-        public const string ScrollUpDown = "ScrollUpDown";
         public const string LookXAxisStick = "LookXAxis_Stick";
-        public const string UIRightStickHorizontal = "UIRightStickHorizontal";
-        public const string LookYAxisStick = "LookYAxis_Stick";
-        public const string UIRightStickVertical = "UIRightStickVertical";
         public const string MoveXAxis = "MoveXAxis";
         public const string MoveYAxis = "MoveYAxis";
 
-        // These are unused in VR, since they can be done with gestures.
+        // These are unused in VR, since they can be done with gestures
         public const string Zoom = "ZoomButton";
         public const string Map = "MapButton";
         public const string MapRegion = "MapRegionButton";
@@ -32,9 +28,9 @@
         public const string Inventory = "InventoryButton";
 
         // These I don't know what they're for.
+        public const string UIRightStickHorizontal = "UIRightStickHorizontal";
+        public const string UIRightStickVertical = "UIRightStickVertical";
         public const string EndBracketKey = "EndBracketKey";
-        public const string ItemsLeftRight = "ItemsLeftRight";
-        public const string ItemsUpDown = "ItemsUpDown";
         public const string UILeftStickHorizontal = "UILeftStickHorizontal";
         public const string UILeftStickVertical = "UILeftStickVertical";
 
@@ -47,6 +43,10 @@
         public const string StrafeRightKeyboard = "StrafeRightKeyboard";
 
         // These I just don't need.
+        public const string LookYAxisStick = "LookYAxis_Stick";
+        public const string ScrollUpDown = "ScrollUpDown";
+        public const string ItemsLeftRight = "ItemsLeftRight";
+        public const string ItemsUpDown = "ItemsUpDown";
         public const string QuickSave = "QuickSaveButton";
         public const string QuickLoad = "QuickLoadButton";
         public const string DialogSelectionScroll = "DialogSelectionScroll";

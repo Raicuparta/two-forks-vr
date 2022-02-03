@@ -45,18 +45,6 @@ namespace TwoForksVr.VrInput
             };
         }
 
-        private void OnDestroy()
-        {
-            // foreach (var entry in Vector2XActionMap)
-            //     entry.Value.RemoveAllListeners(SteamVR_Input_Sources.Any);
-            // foreach (var entry in Vector2YActionMap)
-            //     entry.Value.RemoveAllListeners(SteamVR_Input_Sources.Any);
-            // foreach (var entry in BooleanActionMap)
-            //     entry.Value.RemoveAllListeners(SteamVR_Input_Sources.Any);
-            // foreach (var entry in InvertedBooleanActionMap)
-            //     entry.Value.RemoveAllListeners(SteamVR_Input_Sources.Any);
-        }
-
         public float GetValue(string virtualKey)
         {
             ActionMap.TryGetValue(virtualKey, out var actionInput);
@@ -79,32 +67,6 @@ namespace TwoForksVr.VrInput
             if (actionInput == null) return false;
 
             return actionInput.ValueDown;
-        }
-
-        private static void TriggerCommand(string virtualKey, float axisValue)
-        {
-            if (!vgInputManager.Instance || vgInputManager.Instance.virtualKeyKeyBindMap == null ||
-                vgInputManager.Instance.commandCallbackMap == null) return;
-
-            vgInputManager.Instance.virtualKeyKeyBindMap.TryGetValue(virtualKey, out var keyBind);
-            if (keyBind == null) return;
-
-            var commandCallbackMap = vgInputManager.Instance.commandCallbackMap;
-
-            foreach (var keyBindCommand in keyBind.commands)
-                if (!vgInputManager.Instance.flushCommands &&
-                    commandCallbackMap.TryGetValue(keyBindCommand.command, out var inputDelegate))
-                    inputDelegate?.Invoke(axisValue);
-        }
-
-        private static bool IsCommandAllowed(string command)
-        {
-            foreach (var keyBind in vgInputManager.Instance.virtualKeyKeyBindMap.Values)
-            foreach (var keyBindCommand in keyBind.commands)
-                if (keyBindCommand.command == command)
-                    return true;
-
-            return false;
         }
     }
 }

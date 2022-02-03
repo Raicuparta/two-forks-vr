@@ -5,7 +5,6 @@ namespace TwoForksVr.VrInput.ActionInputs
     public interface IActionInput
     {
         ISteamVR_Action_In Action { get; }
-        bool Optional { get; }
         bool Active { get; }
         float Value { get; }
         bool ValueUp { get; }
