@@ -34,25 +34,14 @@ namespace TwoForksVr.VrInput
                 {VirtualKey.Cancel, ActionInputDefinitions.Cancel},
                 {VirtualKey.DialogUp, ActionInputDefinitions.UIUp},
                 {VirtualKey.DialogDown, ActionInputDefinitions.UIDown},
-                // {InputName.UIUp, ActionInputDefinitions.UIUp},
-                // {InputName.UIDown, ActionInputDefinitions.UIDown},
-                // {InputName.LockNumberUp, ActionInputDefinitions.UIUp},
-                // {InputName.LockNumberDown, ActionInputDefinitions.UIDown},
-                // {InputName.LockTumblerRight, ActionInputDefinitions.NextPage},
-                // {InputName.LockTumblerLeft, ActionInputDefinitions.PreviousPage},
                 {VirtualKey.Jog, ActionInputDefinitions.Jog},
                 {VirtualKey.Pause, ActionInputDefinitions.Cancel},
                 {VirtualKey.NextMenu, ActionInputDefinitions.NextPage},
                 {VirtualKey.PreviousMenu, ActionInputDefinitions.PreviousPage},
-                {VirtualKey.Radio, ActionInputDefinitions.RadioUp},
+                {VirtualKey.Radio, ActionInputDefinitions.Radio},
                 {VirtualKey.MoveXAxis, ActionInputDefinitions.MoveX},
                 {VirtualKey.LookXAxisStick, ActionInputDefinitions.RotateX},
-                {VirtualKey.UIRightStickHorizontal, ActionInputDefinitions.MoveX},
-                {VirtualKey.MoveYAxis, ActionInputDefinitions.MoveY},
-                {VirtualKey.LookYAxisStick, ActionInputDefinitions.RotateY},
-                {VirtualKey.ScrollUpDown, ActionInputDefinitions.RotateY},
-                // {InputName.DialogSelectionScroll, ActionInputDefinitions.RotateY},
-                {VirtualKey.UIRightStickVertical, ActionInputDefinitions.MoveY}
+                {VirtualKey.MoveYAxis, ActionInputDefinitions.MoveY}
             };
         }
 

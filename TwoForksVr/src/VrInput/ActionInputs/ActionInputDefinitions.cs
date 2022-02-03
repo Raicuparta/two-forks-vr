@@ -13,11 +13,8 @@ namespace TwoForksVr.VrInput.ActionInputs
         public static readonly BooleanActionInput Grip =
             new BooleanActionInput(_default.Grip);
 
-        public static readonly BooleanActionInput RadioUp =
+        public static readonly BooleanActionInput Radio =
             new BooleanActionInput(_default.Radio);
-
-        public static readonly BooleanActionInput RadioDown =
-            new BooleanActionInput(_default.Radio, true);
 
         public static readonly BooleanActionInput Interact =
             new BooleanActionInput(_default.Interact);
