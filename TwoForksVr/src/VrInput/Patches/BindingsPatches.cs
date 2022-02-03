@@ -81,15 +81,18 @@ namespace TwoForksVr.VrInput.Patches
             return false;
         }
 
-        [HarmonyPostfix]
+        [HarmonyPrefix]
         [HarmonyPatch(typeof(vgAxisData), nameof(vgAxisData.Update))]
         // [HarmonyPatch(typeof(vgAxisData), nameof(vgButtonData.Update))]
-        private static void ReadVrAxisInput(vgAxisData __instance)
+        private static bool ReadVrAxisInput(vgAxisData __instance)
         {
+            __instance.axisValueLastFrame = __instance.axisValue;
             __instance.axisValue = 0f;
 
             foreach (var virtualKey in __instance.virtualKeyNames)
                 __instance.axisValue += BindingsManager.Instance.GetValue(virtualKey);
+
+            return false;
         }
     }
 }
