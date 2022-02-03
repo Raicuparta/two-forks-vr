@@ -13,11 +13,14 @@ namespace TwoForksVr.VrInput.ActionInputs
             Optional = optional;
         }
 
+        public Action<float> OnChange { get; set; }
+
         public ISteamVR_Action_In Action => SpecificAction;
         public bool Optional { get; }
         public abstract bool Active { get; }
         public abstract float Value { get; }
+        public abstract bool ValueUp { get; }
+        public abstract bool ValueDown { get; }
         public abstract SteamVR_Input_Sources ActiveSource { get; }
-        public Action<float> OnChange { get; set; }
     }
 }

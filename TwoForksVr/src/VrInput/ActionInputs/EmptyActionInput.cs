@@ -13,5 +13,7 @@ namespace TwoForksVr.VrInput.ActionInputs
         public override float Value => 0;
         public override SteamVR_Input_Sources ActiveSource => SteamVR_Input_Sources.Any;
         public string TexturePath { get; }
+        public override bool ValueUp => false;
+        public override bool ValueDown => false;
     }
 }

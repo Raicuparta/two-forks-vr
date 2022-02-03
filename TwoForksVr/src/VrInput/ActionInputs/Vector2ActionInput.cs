@@ -49,5 +49,7 @@ namespace TwoForksVr.VrInput.ActionInputs
         }
 
         public string TextureModifier { get; }
+        public override bool ValueUp => false;
+        public override bool ValueDown => false;
     }
 }

@@ -8,6 +8,8 @@ namespace TwoForksVr.VrInput.ActionInputs
         bool Optional { get; }
         bool Active { get; }
         float Value { get; }
+        bool ValueUp { get; }
+        bool ValueDown { get; }
         SteamVR_Input_Sources ActiveSource { get; }
     }
 }

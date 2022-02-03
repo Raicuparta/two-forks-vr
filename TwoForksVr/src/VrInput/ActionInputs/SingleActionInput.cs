@@ -10,7 +10,8 @@ namespace TwoForksVr.VrInput.ActionInputs
 
         public override bool Active => SpecificAction.active;
         public override float Value => SpecificAction.axis;
-
+        public override bool ValueUp => false;
+        public override bool ValueDown => false;
         public override SteamVR_Input_Sources ActiveSource => SpecificAction.activeDevice;
     }
 }

@@ -15,6 +15,8 @@ namespace TwoForksVr.VrInput.ActionInputs
 
         public override bool Active => SpecificAction.active;
         public override float Value => SpecificAction.state ? 1 : 0; // TODO inverted?
+        public override bool ValueUp => SpecificAction.stateUp;
+        public override bool ValueDown => SpecificAction.stateDown;
 
         public override SteamVR_Input_Sources ActiveSource => SpecificAction.activeDevice;
 

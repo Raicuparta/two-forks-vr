@@ -83,7 +83,6 @@ namespace TwoForksVr.VrInput.Patches
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgAxisData), nameof(vgAxisData.Update))]
-        // [HarmonyPatch(typeof(vgAxisData), nameof(vgButtonData.Update))]
         private static bool ReadVrAxisInput(vgAxisData __instance)
         {
             __instance.axisValueLastFrame = __instance.axisValue;
@@ -91,6 +90,38 @@ namespace TwoForksVr.VrInput.Patches
 
             foreach (var virtualKey in __instance.virtualKeyNames)
                 __instance.axisValue += BindingsManager.Instance.GetValue(virtualKey);
+
+            return false;
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgButtonData), nameof(vgButtonData.Update))]
+        private static bool ReadVrButtonInput(vgButtonData __instance)
+        {
+            __instance.keyUp = false;
+            __instance.keyDown = false;
+            var flag = false;
+
+            foreach (var id in __instance.virtualKeyNames)
+            {
+                // TODO this could be cleaner if I force RewiredInputState.IsHandlingInput() to be true
+                // and then patch RewiredInputState.GetButtonUp(virtualKey), etc.
+                __instance.keyUp |= BindingsManager.Instance.GetUp(id);
+                __instance.keyDown |= BindingsManager.Instance.GetDown(id);
+                flag |= BindingsManager.Instance.GetValue(id) != 0;
+            }
+
+            if (__instance.keyUp || __instance.isHeld && !flag)
+            {
+                __instance.keyUp = true;
+                __instance.lastReleaseTime = Time.realtimeSinceStartup;
+            }
+
+            if (__instance.keyDown)
+            {
+                __instance.lastPressTime = Time.realtimeSinceStartup;
+                __instance.lastHoldTime = 0f;
+            }
 
             return false;
         }

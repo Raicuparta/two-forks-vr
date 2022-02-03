@@ -76,6 +76,22 @@ namespace TwoForksVr.VrInput
             return actionInput.Value;
         }
 
+        public bool GetUp(string virtualKey)
+        {
+            ActionMap.TryGetValue(virtualKey, out var actionInput);
+            if (actionInput == null) return false;
+
+            return actionInput.ValueUp;
+        }
+
+        public bool GetDown(string virtualKey)
+        {
+            ActionMap.TryGetValue(virtualKey, out var actionInput);
+            if (actionInput == null) return false;
+
+            return actionInput.ValueDown;
+        }
+
         private static void TriggerCommand(string virtualKey, float axisValue)
         {
             if (!vgInputManager.Instance || vgInputManager.Instance.virtualKeyKeyBindMap == null ||
