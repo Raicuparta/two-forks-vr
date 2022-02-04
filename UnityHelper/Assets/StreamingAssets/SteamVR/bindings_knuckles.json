@@ -190,6 +190,15 @@
                   "sub_mode" : "touch"
                },
                "path" : "/user/hand/left/input/thumbstick"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/default/in/radio"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/grip"
             }
          ]
       }

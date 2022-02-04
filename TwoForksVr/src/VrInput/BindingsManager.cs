@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
+using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
 using Valve.VR;
 
@@ -8,11 +9,9 @@ namespace TwoForksVr.VrInput
 {
     public class BindingsManager : MonoBehaviour
     {
-        private static SteamVR_Input_ActionSet_default actionSet;
-        public Dictionary<string, SteamVR_Action_Boolean> BooleanActionMap { get; private set; }
-        public Dictionary<string, SteamVR_Action_Boolean> InvertedBooleanActionMap { get; private set; }
-        public Dictionary<string, SteamVR_Action_Vector2> Vector2XActionMap { get; private set; }
-        public Dictionary<string, SteamVR_Action_Vector2> Vector2YActionMap { get; private set; }
+        public static SteamVR_Input_ActionSet_default ActionSet = SteamVR_Actions._default;
+        public Dictionary<string, IActionInput> ActionMap { get; private set; }
+
 
         public static BindingsManager Create(VrStage stage)
         {
@@ -24,99 +23,48 @@ namespace TwoForksVr.VrInput
         {
             Logs.LogInfo("## Initializing Bindings Patches");
 
-            actionSet = SteamVR_Actions._default;
-            BooleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>
+            ActionMap = new Dictionary<string, IActionInput>
             {
-                {InputName.LocomotionAction, actionSet.Interact},
-                {InputName.UseCamera, actionSet.Interact},
-                {InputName.Use, actionSet.Interact},
-                {InputName.UISubmit, actionSet.Interact},
-                {InputName.StowHeldObject, actionSet.Jog},
-                {InputName.UICancel, actionSet.Cancel},
-                {InputName.DialogSelectionUp, actionSet.UIUp},
-                {InputName.DialogSelectionDown, actionSet.UIDown},
-                {InputName.UIUp, actionSet.UIUp},
-                {InputName.UIDown, actionSet.UIDown},
-                {InputName.LockNumberUp, actionSet.UIUp},
-                {InputName.LockNumberDown, actionSet.UIDown},
-                {InputName.LockTumblerRight, actionSet.NextPage},
-                {InputName.LockTumblerLeft, actionSet.PreviousPage},
-                {InputName.LockCancel, actionSet.Cancel},
-                {InputName.ToggleJog, actionSet.Jog},
-                {InputName.Pause, actionSet.Cancel},
-                {InputName.NextMenu, actionSet.NextPage},
-                {InputName.PreviousMenu, actionSet.PreviousPage},
-                {InputName.RadioUp, actionSet.Grip}
+                {VirtualKey.LocomotionAction, ActionInputDefinitions.Interact},
+                {VirtualKey.Use, ActionInputDefinitions.Interact},
+                {VirtualKey.Confirm, ActionInputDefinitions.Interact},
+                {VirtualKey.StoreObject, ActionInputDefinitions.Jog},
+                {VirtualKey.Cancel, ActionInputDefinitions.Cancel},
+                {VirtualKey.DialogUp, ActionInputDefinitions.UIUp},
+                {VirtualKey.DialogDown, ActionInputDefinitions.UIDown},
+                {VirtualKey.Jog, ActionInputDefinitions.Jog},
+                {VirtualKey.Pause, ActionInputDefinitions.Cancel},
+                {VirtualKey.NextMenu, ActionInputDefinitions.NextPage},
+                {VirtualKey.PreviousMenu, ActionInputDefinitions.PreviousPage},
+                {VirtualKey.Radio, ActionInputDefinitions.Radio},
+                {VirtualKey.MoveXAxis, ActionInputDefinitions.MoveX},
+                {VirtualKey.LookXAxisStick, ActionInputDefinitions.RotateX},
+                {VirtualKey.MoveYAxis, ActionInputDefinitions.MoveY}
             };
-            InvertedBooleanActionMap = new Dictionary<string, SteamVR_Action_Boolean>
-            {
-                {InputName.RadioDown, actionSet.Grip}
-            };
-            Vector2XActionMap = new Dictionary<string, SteamVR_Action_Vector2>
-            {
-                {InputName.MoveStrafe, actionSet.Move},
-                {InputName.LookHorizontalStick, actionSet.Rotate},
-                {InputName.UIHorizontal, actionSet.Move}
-            };
-            Vector2YActionMap = new Dictionary<string, SteamVR_Action_Vector2>
-            {
-                {InputName.MoveForward, actionSet.Move},
-                {InputName.LookVerticalStick, actionSet.Rotate},
-                {InputName.Scroll, actionSet.Rotate},
-                {InputName.UIVertical, actionSet.Move}
-            };
-
-            foreach (var entry in Vector2XActionMap)
-                entry.Value.onChange += (action, source, axis, delta) =>
-                    TriggerCommand(entry.Key, axis.x);
-            foreach (var entry in Vector2YActionMap)
-                entry.Value.onChange += (action, source, axis, delta) =>
-                    TriggerCommand(entry.Key, axis.y);
-            foreach (var entry in BooleanActionMap)
-                entry.Value.onChange += (action, source, state) =>
-                {
-                    if (!state) return;
-                    TriggerCommand(entry.Key, 1);
-                };
-            foreach (var entry in InvertedBooleanActionMap)
-                entry.Value.onChange += (action, source, state) =>
-                {
-                    if (state) return;
-                    TriggerCommand(entry.Key, 1, true);
-                };
         }
 
-        private void OnDestroy()
+        public float GetValue(string virtualKey)
         {
-            foreach (var entry in Vector2XActionMap)
-                entry.Value.RemoveAllListeners(SteamVR_Input_Sources.Any);
-            foreach (var entry in Vector2YActionMap)
-                entry.Value.RemoveAllListeners(SteamVR_Input_Sources.Any);
-            foreach (var entry in BooleanActionMap)
-                entry.Value.RemoveAllListeners(SteamVR_Input_Sources.Any);
-            foreach (var entry in InvertedBooleanActionMap)
-                entry.Value.RemoveAllListeners(SteamVR_Input_Sources.Any);
+            ActionMap.TryGetValue(virtualKey, out var actionInput);
+            if (actionInput == null) return 0;
+
+            return actionInput.Value;
         }
 
-        private static void TriggerCommand(string command, float axisValue, bool forceAllowed = false)
+        public bool GetUp(string virtualKey)
         {
-            if (!vgInputManager.Instance || vgInputManager.Instance.commandCallbackMap == null) return;
+            ActionMap.TryGetValue(virtualKey, out var actionInput);
+            if (actionInput == null) return false;
 
-            if (!forceAllowed && !IsCommandAllowed(command)) return;
-
-            var commandCallbackMap = vgInputManager.Instance.commandCallbackMap;
-            if (!vgInputManager.Instance.flushCommands &&
-                commandCallbackMap.TryGetValue(command, out var inputDelegate)) inputDelegate?.Invoke(axisValue);
+            return actionInput.ValueUp;
         }
 
-        private static bool IsCommandAllowed(string command)
+        public bool GetDown(string virtualKey)
         {
-            foreach (var keyBind in vgInputManager.Instance.virtualKeyKeyBindMap.Values)
-            foreach (var keyBindCommand in keyBind.commands)
-                if (keyBindCommand.command == command)
-                    return true;
+            ActionMap.TryGetValue(virtualKey, out var actionInput);
+            if (actionInput == null) return false;
 
-            return false;
+            return actionInput.ValueDown;
         }
     }
 }

@@ -21,26 +21,10 @@ namespace TwoForksVr.VrInput.Patches
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.UpdateActiveController))]
-        private static bool ForceXboxController(vgRewiredInput __instance)
-        {
-            __instance.activeController = vgControllerLayoutChoice.XBox;
-            __instance.mCurrentIconMap = __instance.IconMap_Xbox;
-            __instance.mCurrentIconMap.Init();
-
-            if (vgSettingsManager.Instance &&
-                vgSettingsManager.Instance.controller != (int) __instance.activeController)
-                vgSettingsManager.Instance.controller = (int) __instance.activeController;
-
-            return false;
-        }
-
-        [HarmonyPrefix]
         [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.CheckForPCControls))]
-        private static bool ForceDisablePcControls(vgPlayerController __instance)
+        private static bool DisableJogDisableThreshold(vgPlayerController __instance)
         {
             __instance.minimumInputForJog = 0f;
-            __instance.PCControlsActive = false;
             return false;
         }
 
@@ -71,12 +55,60 @@ namespace TwoForksVr.VrInput.Patches
             return valueSign * Mathf.InverseLerp(innerDeadzone, 1f - outerDeadzone, absoluteValue);
         }
 
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.UpdateActiveController))]
+        private static bool ForceXboxController(vgRewiredInput __instance)
+        {
+            __instance.activeController = vgControllerLayoutChoice.XBox;
+            __instance.mCurrentIconMap = __instance.IconMap_Xbox;
+            __instance.mCurrentIconMap.Init();
+
+            if (vgSettingsManager.Instance &&
+                vgSettingsManager.Instance.controller != (int) __instance.activeController)
+                vgSettingsManager.Instance.controller = (int) __instance.activeController;
+
+            return false;
+        }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgKeyBind), nameof(vgKeyBind.TriggerCommand))]
-        private static bool IgnoreDefaultAxisInputs(string command)
+        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.GetButtonUp))]
+        private static bool ReadVrButtonInputUp(ref bool __result, string id)
         {
-            return !StageInstance.IsVector2CommandExisting(command);
+            __result = StageInstance.GetInputUp(id);
+            return false;
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.GetAxis))]
+        private static bool ReadVrAxisInput(ref float __result, string id)
+        {
+            __result = StageInstance.GetInputValue(id);
+            return false;
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.GetButtonDown))]
+        private static bool ReadVrButtonInputDown(ref bool __result, string id)
+        {
+            __result = StageInstance.GetInputDown(id);
+            return false;
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.GetButton))]
+        private static bool ReadVrButtonInputValue(ref bool __result, string id)
+        {
+            __result = StageInstance.GetInputValue(id) != 0;
+            return false;
+        }
+
+        // Forcing Rewired to always handle input makes it easier to patch button input values,
+        // and also helps with patching the input prompt icons.
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.IsHandlingInput))]
+        private static void ForceRewiredHandlingInput(ref bool __result)
+        {
+            __result = true;
         }
     }
 }

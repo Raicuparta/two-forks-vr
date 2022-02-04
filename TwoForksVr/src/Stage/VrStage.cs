@@ -9,6 +9,7 @@ using TwoForksVr.Settings;
 using TwoForksVr.UI;
 using TwoForksVr.VrCamera;
 using TwoForksVr.VrInput;
+using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Valve.VR;
@@ -138,6 +139,11 @@ namespace TwoForksVr.Stage
             cameraManager.RecenterRotation();
         }
 
+        public void HighlightButton(params ISteamVR_Action_In_Source[] actions)
+        {
+            limbManager.HighlightButton(actions);
+        }
+
         public void FadeToBlack()
         {
             if (!fadeOverlay) return;
@@ -176,18 +182,27 @@ namespace TwoForksVr.Stage
             return staticUiTarget ? staticUiTarget.TargetTransform : null;
         }
 
-        public bool IsVector2CommandExisting(string command)
+        public IActionInput GetInputAction(string virtualKey)
         {
-            if (!bindingsManager) return false;
-
-            return bindingsManager.Vector2XActionMap.ContainsKey(command) ||
-                   bindingsManager.Vector2YActionMap.ContainsKey(command);
+            if (!bindingsManager) return null;
+            bindingsManager.ActionMap.TryGetValue(virtualKey, out var value);
+            return value;
         }
 
-        public SteamVR_Action_Boolean GetBooleanAction(string command)
+        public float GetInputValue(string virtualKey)
         {
-            bindingsManager.BooleanActionMap.TryGetValue(command, out var value);
-            return value;
+            if (!bindingsManager) return 0;
+            return bindingsManager.GetValue(virtualKey);
+        }
+
+        public bool GetInputUp(string virtualKey)
+        {
+            return bindingsManager && bindingsManager.GetUp(virtualKey);
+        }
+
+        public bool GetInputDown(string virtualKey)
+        {
+            return bindingsManager && bindingsManager.GetDown(virtualKey);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
+using TwoForksVr.VrInput;
 using UnityEngine;
 using Valve.VR;
 
@@ -9,6 +10,7 @@ namespace TwoForksVr.Limbs
     {
         private string handName;
         private bool isLeft;
+        public VrButtonHighlight ButtonHighlight { get; private set; }
 
         public static VrHand Create(Transform parent, bool isLeft = false)
         {
@@ -20,6 +22,7 @@ namespace TwoForksVr.Limbs
             var instance = transform.gameObject.AddComponent<VrHand>();
             instance.handName = handName;
             instance.isLeft = isLeft;
+            instance.ButtonHighlight = transform.GetComponentInChildren<VrButtonHighlight>();
             instance.SetUpPose();
 
             return instance;
@@ -46,12 +49,12 @@ namespace TwoForksVr.Limbs
             if (isLeft)
             {
                 pose.inputSource = SteamVR_Input_Sources.LeftHand;
-                pose.poseAction = SteamVR_Actions.default_PoseLeftHand;
+                pose.poseAction = BindingsManager.ActionSet.PoseLeftHand;
             }
             else
             {
                 pose.inputSource = SteamVR_Input_Sources.RightHand;
-                pose.poseAction = SteamVR_Actions.default_PoseRightHand;
+                pose.poseAction = BindingsManager.ActionSet.PoseRightHand;
             }
         }
 

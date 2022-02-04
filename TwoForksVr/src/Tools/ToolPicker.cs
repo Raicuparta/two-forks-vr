@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
+using TwoForksVr.VrInput;
 using UnityEngine;
 using Valve.VR;
 
@@ -10,7 +11,7 @@ namespace TwoForksVr.Tools
     {
         private const float minSquareDistance = 0.03f;
 
-        private readonly SteamVR_Action_Boolean input = SteamVR_Actions.default_ToolPicker;
+        private readonly SteamVR_Action_Boolean input = BindingsManager.ActionSet.ToolPicker;
         private ToolPickerItem hoveredTool;
         private Transform leftHand;
         private Transform rightHand;

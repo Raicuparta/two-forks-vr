@@ -2,6 +2,7 @@ using TwoForksVr.Assets;
 using TwoForksVr.Limbs;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
+using TwoForksVr.VrInput;
 using UnityEngine;
 using Valve.VR;
 
@@ -10,7 +11,7 @@ namespace TwoForksVr.Locomotion
     public class TeleportController : MonoBehaviour
     {
         private const float triggerTeleportSquareDistance = 0.3f;
-        private static readonly SteamVR_Action_Boolean teleportInput = SteamVR_Actions.default_Teleport;
+        private static readonly SteamVR_Action_Boolean teleportInput = BindingsManager.ActionSet.Teleport;
         private VrLimbManager limbManager;
         private vgPlayerNavigationController navigationController;
         private TeleportArc teleportArc;

@@ -84,6 +84,10 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/Radio",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     }
@@ -174,7 +178,8 @@
       "/actions/default/in/Grip": "Grip",
       "/actions/default/in/SnapTurnRight": "Snap Turn Right",
       "/actions/default/in/SnapTurnLeft": "Snap Turn Left",
-      "/actions/default/in/Teleport": "Teleport"
+      "/actions/default/in/Teleport": "Teleport",
+      "/actions/default/in/Radio": "Radio"
     }
   ]
 }
