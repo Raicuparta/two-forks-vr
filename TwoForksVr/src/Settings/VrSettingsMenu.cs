@@ -1,8 +1,10 @@
+using System.Linq;
 using TwoForksVr.Assets;
 using TwoForksVr.Stage;
 using TwoForksVr.UI;
 using UnityEngine;
 using UnityEngine.UI;
+using Valve.VR.InteractionSystem;
 
 namespace TwoForksVr.Settings
 {
@@ -26,16 +28,29 @@ namespace TwoForksVr.Settings
             var toggleObject = layoutGroup.GetComponentInChildren<Toggle>(true).gameObject;
             toggleObject.SetActive(false);
 
-            foreach (var configEntry in VrSettings.Config)
-            {
-                var toggleInstance = Instantiate(toggleObject, layoutGroup, false);
-                toggleInstance.SetActive(true);
-                toggleInstance.GetComponentInChildren<Text>().text = configEntry.Value.Description.Description;
-                var toggleInput = toggleInstance.GetComponentInChildren<Toggle>();
-                toggleInput.isOn = (bool) configEntry.Value.BoxedValue;
+            var sectionObject = layoutGroup.Find("Section").gameObject;
+            sectionObject.SetActive(false);
 
-                toggleInput.onValueChanged.AddListener(isOn => { configEntry.Value.BoxedValue = isOn; });
-            }
+            var categories = VrSettings.Config.GroupBy(entry => entry.Key.Section);
+            categories.ForEach(category =>
+            {
+                var sectionInstance = Instantiate(sectionObject, layoutGroup, false);
+                sectionInstance.SetActive(true);
+
+                var title = sectionInstance.transform.Find("Title").GetComponent<Text>();
+                title.text = category.Key;
+
+                category.ForEach(configEntry =>
+                {
+                    var toggleInstance = Instantiate(toggleObject, sectionInstance.transform, false);
+                    toggleInstance.SetActive(true);
+                    toggleInstance.GetComponentInChildren<Text>().text = configEntry.Value.Description.Description;
+                    var toggleInput = toggleInstance.GetComponentInChildren<Toggle>();
+                    toggleInput.isOn = (bool) configEntry.Value.BoxedValue;
+
+                    toggleInput.onValueChanged.AddListener(isOn => { configEntry.Value.BoxedValue = isOn; });
+                });
+            });
 
             instance.Close();
 
