@@ -182,15 +182,6 @@ namespace TwoForksVr.Stage
             return staticUiTarget ? staticUiTarget.TargetTransform : null;
         }
 
-        // TODO check if this is needed, and find another way.
-        // public bool IsVector2CommandExisting(string command)
-        // {
-        //     if (!bindingsManager) return false;
-        //
-        //     return bindingsManager.Vector2XActionMap.ContainsKey(command) ||
-        //            bindingsManager.Vector2YActionMap.ContainsKey(command);
-        // }
-
         public IActionInput GetInputAction(string virtualKey)
         {
             if (!bindingsManager) return null;

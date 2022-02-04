@@ -55,17 +55,6 @@ namespace TwoForksVr.VrInput.Patches
             return valueSign * Mathf.InverseLerp(innerDeadzone, 1f - outerDeadzone, absoluteValue);
         }
 
-
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgKeyBind), nameof(vgKeyBind.TriggerCommand))]
-        private static bool IgnoreDefaultAxisInputs(string command)
-        {
-            return true;
-            // TODO check if this is needed, and find another way.
-            // return !StageInstance.IsVector2CommandExisting(command);
-        }
-
-
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.UpdateActiveController))]
         private static bool ForceXboxController(vgRewiredInput __instance)

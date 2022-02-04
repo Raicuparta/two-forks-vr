@@ -19,7 +19,6 @@ namespace TwoForksVr.Settings.Patches
         [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.minimalInterface), MethodType.Setter)]
         private static void ForceEnableMinimalInterface(ref bool value)
         {
-            // TODO don't force this?
             value = true;
         }
 
