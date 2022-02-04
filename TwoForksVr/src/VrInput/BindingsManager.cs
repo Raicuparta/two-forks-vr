@@ -27,7 +27,6 @@ namespace TwoForksVr.VrInput
             ActionMap = new Dictionary<string, IActionInput>
             {
                 {VirtualKey.LocomotionAction, ActionInputDefinitions.Interact},
-                {VirtualKey.Camera, ActionInputDefinitions.Interact},
                 {VirtualKey.Use, ActionInputDefinitions.Interact},
                 {VirtualKey.Confirm, ActionInputDefinitions.Interact},
                 {VirtualKey.StoreObject, ActionInputDefinitions.Jog},
