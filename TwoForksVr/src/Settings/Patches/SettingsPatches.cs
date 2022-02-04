@@ -20,7 +20,7 @@ namespace TwoForksVr.Settings.Patches
         private static void ForceEnableMinimalInterface(ref bool value)
         {
             // TODO don't force this?
-            // value = true;
+            value = true;
         }
 
         [HarmonyPrefix]

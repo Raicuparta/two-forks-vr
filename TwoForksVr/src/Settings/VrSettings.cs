@@ -9,7 +9,6 @@ namespace TwoForksVr.Settings
         public static ConfigEntry<bool> ShowFeet { get; private set; }
         public static ConfigEntry<bool> ShowBody { get; private set; }
         public static ConfigEntry<bool> Teleport { get; private set; }
-        public static ConfigEntry<bool> ShowControllerModels { get; private set; }
         public static ConfigEntry<bool> FixedCameraDuringAnimations { get; private set; }
 
         public static void SetUp(ConfigFile config)
@@ -25,8 +24,6 @@ namespace TwoForksVr.Settings
                 "Show player body");
             ShowFeet = config.Bind("Config", "ShowFeet", true,
                 "Show player feet");
-            ShowControllerModels = config.Bind("Config", "ShowControllerModels", false,
-                "Show controller models with button hints");
         }
     }
 }
