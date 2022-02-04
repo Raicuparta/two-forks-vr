@@ -101,14 +101,5 @@ namespace TwoForksVr.VrInput.Patches
             if (!__instance.edgeObject.activeSelf)
                 __instance.ClearButtonText(__instance.edgeButton, __instance.edgeButtonKeyBoundary);
         }
-
-        // Patching GetIconName was an easier way to replace the input prompt text,
-        // but for some reason I have to force IsHandlingInput to be true for GetIconName to be called.
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.IsHandlingInput))]
-        private static void ForceToUseGetIconName(ref bool __result)
-        {
-            __result = true;
-        }
     }
 }

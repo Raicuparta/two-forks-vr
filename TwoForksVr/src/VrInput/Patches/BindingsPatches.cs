@@ -82,48 +82,44 @@ namespace TwoForksVr.VrInput.Patches
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgAxisData), nameof(vgAxisData.Update))]
-        private static bool ReadVrAxisInput(vgAxisData __instance)
+        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.GetButtonUp))]
+        private static bool ReadVrButtonInputUp(ref bool __result, string id)
         {
-            __instance.axisValueLastFrame = __instance.axisValue;
-            __instance.axisValue = 0f;
-
-            foreach (var virtualKey in __instance.virtualKeyNames)
-                __instance.axisValue += StageInstance.GetInputValue(virtualKey);
-
+            __result = StageInstance.GetInputUp(id);
             return false;
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgButtonData), nameof(vgButtonData.Update))]
-        private static bool ReadVrButtonInput(vgButtonData __instance)
+        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.GetAxis))]
+        private static bool ReadVrAxisInput(ref float __result, string id)
         {
-            __instance.keyUp = false;
-            __instance.keyDown = false;
-            var flag = false;
-
-            foreach (var id in __instance.virtualKeyNames)
-            {
-                // TODO this could be cleaner if I force RewiredInputState.IsHandlingInput() to be true
-                // and then patch RewiredInputState.GetButtonUp(virtualKey), etc.
-                __instance.keyUp |= StageInstance.GetInputUp(id);
-                __instance.keyDown |= StageInstance.GetInputDown(id);
-                flag |= StageInstance.GetInputValue(id) != 0;
-            }
-
-            if (__instance.keyUp || __instance.isHeld && !flag)
-            {
-                __instance.keyUp = true;
-                __instance.lastReleaseTime = Time.realtimeSinceStartup;
-            }
-
-            if (__instance.keyDown)
-            {
-                __instance.lastPressTime = Time.realtimeSinceStartup;
-                __instance.lastHoldTime = 0f;
-            }
-
+            __result = StageInstance.GetInputValue(id);
             return false;
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.GetButtonDown))]
+        private static bool ReadVrButtonInputDown(ref bool __result, string id)
+        {
+            __result = StageInstance.GetInputDown(id);
+            return false;
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.GetButton))]
+        private static bool ReadVrButtonInputValue(ref bool __result, string id)
+        {
+            __result = StageInstance.GetInputValue(id) != 0;
+            return false;
+        }
+
+        // Forcing Rewired to always handle input makes it easier to patch button input values,
+        // and also helps with patching the input prompt icons.
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.IsHandlingInput))]
+        private static void ForceRewiredHandlingInput(ref bool __result)
+        {
+            __result = true;
         }
     }
 }
