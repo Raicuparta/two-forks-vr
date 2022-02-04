@@ -3,27 +3,23 @@ using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
 using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
-using Valve.VR;
 
 namespace TwoForksVr.VrInput
 {
     public class BindingsManager : MonoBehaviour
     {
-        public static BindingsManager Instance; // TODO no singleton.
-        private static SteamVR_Input_ActionSet_default actionSet;
         public Dictionary<string, IActionInput> ActionMap { get; private set; }
 
         public static BindingsManager Create(VrStage stage)
         {
-            Instance = stage.gameObject.AddComponent<BindingsManager>();
-            return Instance;
+            var instance = stage.gameObject.AddComponent<BindingsManager>();
+            return instance;
         }
 
         private void Awake()
         {
             Logs.LogInfo("## Initializing Bindings Patches");
 
-            actionSet = SteamVR_Actions._default;
             ActionMap = new Dictionary<string, IActionInput>
             {
                 {VirtualKey.LocomotionAction, ActionInputDefinitions.Interact},
