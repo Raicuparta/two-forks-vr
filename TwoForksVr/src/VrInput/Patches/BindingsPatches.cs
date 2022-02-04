@@ -89,7 +89,7 @@ namespace TwoForksVr.VrInput.Patches
             __instance.axisValue = 0f;
 
             foreach (var virtualKey in __instance.virtualKeyNames)
-                __instance.axisValue += BindingsManager.Instance.GetValue(virtualKey);
+                __instance.axisValue += StageInstance.GetInputValue(virtualKey);
 
             return false;
         }
@@ -106,9 +106,9 @@ namespace TwoForksVr.VrInput.Patches
             {
                 // TODO this could be cleaner if I force RewiredInputState.IsHandlingInput() to be true
                 // and then patch RewiredInputState.GetButtonUp(virtualKey), etc.
-                __instance.keyUp |= BindingsManager.Instance.GetUp(id);
-                __instance.keyDown |= BindingsManager.Instance.GetDown(id);
-                flag |= BindingsManager.Instance.GetValue(id) != 0;
+                __instance.keyUp |= StageInstance.GetInputUp(id);
+                __instance.keyDown |= StageInstance.GetInputDown(id);
+                flag |= StageInstance.GetInputValue(id) != 0;
             }
 
             if (__instance.keyUp || __instance.isHeld && !flag)

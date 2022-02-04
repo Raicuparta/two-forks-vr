@@ -193,8 +193,25 @@ namespace TwoForksVr.Stage
 
         public IActionInput GetInputAction(string virtualKey)
         {
+            if (!bindingsManager) return null;
             bindingsManager.ActionMap.TryGetValue(virtualKey, out var value);
             return value;
+        }
+
+        public float GetInputValue(string virtualKey)
+        {
+            if (!bindingsManager) return 0;
+            return bindingsManager.GetValue(virtualKey);
+        }
+
+        public bool GetInputUp(string virtualKey)
+        {
+            return bindingsManager && bindingsManager.GetUp(virtualKey);
+        }
+
+        public bool GetInputDown(string virtualKey)
+        {
+            return bindingsManager && bindingsManager.GetDown(virtualKey);
         }
     }
 }
