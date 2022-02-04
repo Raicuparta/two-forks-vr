@@ -3,12 +3,15 @@ using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
 using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
+using Valve.VR;
 
 namespace TwoForksVr.VrInput
 {
     public class BindingsManager : MonoBehaviour
     {
+        public static SteamVR_Input_ActionSet_default ActionSet = SteamVR_Actions._default;
         public Dictionary<string, IActionInput> ActionMap { get; private set; }
+
 
         public static BindingsManager Create(VrStage stage)
         {

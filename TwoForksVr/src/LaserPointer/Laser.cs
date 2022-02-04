@@ -1,5 +1,6 @@
 ﻿using TwoForksVr.Helpers;
 using TwoForksVr.LaserPointer.Patches;
+using TwoForksVr.VrInput;
 using UnityEngine;
 using Valve.VR;
 
@@ -8,7 +9,7 @@ namespace TwoForksVr.LaserPointer
     public class Laser : MonoBehaviour
     {
         private const float laserLength = 1f;
-        private readonly SteamVR_Action_Boolean inputAction = SteamVR_Actions.default_Interact;
+        private readonly SteamVR_Action_Boolean inputAction = BindingsManager.ActionSet.Interact;
         private bool ignoreNextInput;
 
         private LaserInputModule inputModule;
@@ -91,7 +92,7 @@ namespace TwoForksVr.LaserPointer
         private void UpdateLaserVisibility()
         {
             lineRenderer.enabled =
-                HasCurrentTarget() || SteamVR_Actions.default_Interact.state;
+                HasCurrentTarget() || BindingsManager.ActionSet.Interact.state;
         }
 
         public bool ClickDown()

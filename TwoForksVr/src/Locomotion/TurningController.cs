@@ -2,8 +2,8 @@ using TwoForksVr.Limbs;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using TwoForksVr.VrCamera;
+using TwoForksVr.VrInput;
 using UnityEngine;
-using Valve.VR;
 
 namespace TwoForksVr.Locomotion
 {
@@ -45,13 +45,13 @@ namespace TwoForksVr.Locomotion
 
         private void UpdateSnapTurning()
         {
-            if (SteamVR_Actions.default_SnapTurnLeft.stateDown)
+            if (BindingsManager.ActionSet.SnapTurnLeft.stateDown)
             {
                 stage.FadeToBlack();
                 Invoke(nameof(SnapTurnLeft), FadeOverlay.Duration);
             }
 
-            if (SteamVR_Actions.default_SnapTurnRight.stateDown)
+            if (BindingsManager.ActionSet.SnapTurnRight.stateDown)
             {
                 stage.FadeToBlack();
                 Invoke(nameof(SnapTurnRight), FadeOverlay.Duration);
@@ -62,7 +62,7 @@ namespace TwoForksVr.Locomotion
         {
             navigationController.transform.Rotate(
                 Vector3.up,
-                SteamVR_Actions._default.Rotate.axis.x * smoothRotationSpeed * Time.unscaledDeltaTime);
+                BindingsManager.ActionSet.Rotate.axis.x * smoothRotationSpeed * Time.unscaledDeltaTime);
         }
 
         private void SnapTurnLeft()

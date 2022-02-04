@@ -1,9 +1,9 @@
 ﻿using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
+using TwoForksVr.VrInput;
 using UnityEngine;
 using UnityEngine.XR;
 using UnityStandardAssets.ImageEffects;
-using Valve.VR;
 
 namespace TwoForksVr.VrCamera
 {
@@ -42,7 +42,7 @@ namespace TwoForksVr.VrCamera
 
         private void Update()
         {
-            if (SteamVR_Actions.default_Recenter.stateDown) RecenterPosition(true);
+            if (BindingsManager.ActionSet.Recenter.stateDown) RecenterPosition(true);
             UpdateCulling();
         }
 

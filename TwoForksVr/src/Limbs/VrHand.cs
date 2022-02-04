@@ -2,6 +2,7 @@
 using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
 using TwoForksVr.Settings;
+using TwoForksVr.VrInput;
 using UnityEngine;
 using Valve.VR;
 
@@ -65,12 +66,12 @@ namespace TwoForksVr.Limbs
             if (isLeft)
             {
                 pose.inputSource = SteamVR_Input_Sources.LeftHand;
-                pose.poseAction = SteamVR_Actions.default_PoseLeftHand;
+                pose.poseAction = BindingsManager.ActionSet.PoseLeftHand;
             }
             else
             {
                 pose.inputSource = SteamVR_Input_Sources.RightHand;
-                pose.poseAction = SteamVR_Actions.default_PoseRightHand;
+                pose.poseAction = BindingsManager.ActionSet.PoseRightHand;
             }
         }
 
