@@ -12,8 +12,11 @@ namespace TwoForksVr.LaserPointer.Patches
         {
             var laser = StageInstance.GetLaserTransform();
             if (!StageInstance.GetLaserTransform()) return;
+
+            var playerPlane = new Plane(laser.forward, cameraOrigin);
+
             cameraFacing = laser.forward;
-            cameraOrigin = laser.position;
+            cameraOrigin = playerPlane.ClosestPointOnPlane(laser.position);
         }
     }
 }
