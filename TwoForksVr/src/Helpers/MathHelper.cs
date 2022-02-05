@@ -102,15 +102,5 @@ namespace TwoForksVr.Helpers
                 Mathf.Infinity,
                 Time.unscaledDeltaTime);
         }
-
-        public static Vector3 ClosestPointOnPlane(Vector3 planeOffset, Vector3 planeNormal, Vector3 point)
-        {
-            return point + DistanceFromPlane(planeOffset, planeNormal, point) * planeNormal;
-        }
-
-        public static float DistanceFromPlane(Vector3 planeOffset, Vector3 planeNormal, Vector3 point)
-        {
-            return Vector3.Dot(planeOffset - point, planeNormal);
-        }
     }
 }
