@@ -38,12 +38,13 @@ namespace TwoForksVr.Limbs
             return instance;
         }
 
-        public void SetUp(Transform playerTransform, Camera camera)
+        public void SetUp(vgPlayerController playerController, Camera camera)
         {
+            var playerTransform = playerController ? playerController.transform : null;
             var skeletonRoot = GetSkeletonRoot(playerTransform);
             var armsMaterial = GetArmsMaterial(playerTransform);
-            RightHand.SetUp(skeletonRoot, armsMaterial);
-            LeftHand.SetUp(skeletonRoot, armsMaterial);
+            RightHand.SetUp(skeletonRoot, armsMaterial, playerController);
+            LeftHand.SetUp(skeletonRoot, armsMaterial, playerController);
             Laser.SetUp(camera);
 
             VrFoot.Create(skeletonRoot);

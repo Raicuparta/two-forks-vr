@@ -9,7 +9,9 @@ namespace TwoForksVr.Limbs
     public class VrHand : MonoBehaviour
     {
         private string handName;
+        private FakeParenting handRootFakeParenting;
         private bool isLeft;
+        private vgPlayerNavigationController navigationController;
         public VrButtonHighlight ButtonHighlight { get; private set; }
 
         public static VrHand Create(Transform parent, bool isLeft = false)
@@ -28,7 +30,7 @@ namespace TwoForksVr.Limbs
             return instance;
         }
 
-        public void SetUp(Transform playerRootBone, Material armsMaterial)
+        public void SetUp(Transform playerRootBone, Material armsMaterial, vgPlayerController playerController)
         {
             // Need to deactive and reactivate the object to make SteamVR_Behaviour_Pose work properly.
             gameObject.SetActive(false);
@@ -39,8 +41,17 @@ namespace TwoForksVr.Limbs
                 material.CopyPropertiesFromMaterial(armsMaterial);
             }
 
+            if (playerController) navigationController = playerController.navController;
+
             EnableAnimatedHand(playerRootBone);
             gameObject.SetActive(true);
+        }
+
+        private void Update()
+        {
+            if (!navigationController || !handRootFakeParenting) return;
+
+            handRootFakeParenting.enabled = navigationController.enabled;
         }
 
         private void SetUpPose()
@@ -67,12 +78,12 @@ namespace TwoForksVr.Limbs
 
                 // Wedding ring and hand root are special cases, the originals need to follow the copies.
                 var isCloneHandRoot = cloneChild.name.Equals($"henryArm{handName}Hand");
+                if (isCloneHandRoot)
+                    handRootFakeParenting = FakeParenting.Create(targetChild, cloneChild,
+                        FakeParenting.UpdateType.LateUpdate | FakeParenting.UpdateType.VeryLateUpdate);
+
                 var isCloneWeddingRing = cloneChild.name.Equals("HenryWeddingRing 1");
-                if (isCloneWeddingRing || isCloneHandRoot)
-                    FakeParenting.Create(targetChild, cloneChild,
-                        isCloneHandRoot
-                            ? FakeParenting.UpdateType.LateUpdate | FakeParenting.UpdateType.VeryLateUpdate
-                            : FakeParenting.UpdateType.VeryLateUpdate);
+                if (isCloneWeddingRing) FakeParenting.Create(targetChild, cloneChild);
 
                 if (isCloneWeddingRing) continue;
 

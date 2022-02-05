@@ -102,7 +102,7 @@ namespace TwoForksVr.Stage
             var playerTransform = playerController ? playerController.transform : null;
             var nextCamera = mainCamera ? mainCamera : fallbackCamera;
             cameraManager.SetUp(nextCamera, playerTransform);
-            limbManager.SetUp(playerTransform, nextCamera);
+            limbManager.SetUp(playerController, nextCamera);
             interactiveUiTarget.SetUp(nextCamera);
             staticUiTarget.SetUp(nextCamera);
             teleportController.SetUp(playerController);
