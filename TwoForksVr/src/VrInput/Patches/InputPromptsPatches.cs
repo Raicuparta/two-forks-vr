@@ -11,16 +11,14 @@ namespace TwoForksVr.VrInput.Patches
         [HarmonyPatch(typeof(vgButtonIconMap), nameof(vgButtonIconMap.GetIconName))]
         private static bool ReplacePromptIconsWithVrButtonText(ref string __result, string id)
         {
-            __result = id; // TODO should just hide the prompt in this case?
-
-            var action = StageInstance.GetInputAction(id);
-            if (action == null)
+            var inputAction = StageInstance.GetInputAction(id);
+            if (inputAction == null)
             {
                 Logs.LogWarning($"Failed to find actionInput for virtual key {id}");
-                return false;
+                return true;
             }
 
-            __result = action.Action.GetLocalizedOriginPart(SteamVR_Input_Sources.Any,
+            __result = inputAction.Action.GetLocalizedOriginPart(SteamVR_Input_Sources.Any,
                 EVRInputStringBits.VRInputString_InputSource);
 
             return false;
