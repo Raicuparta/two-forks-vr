@@ -9,7 +9,7 @@ namespace TwoForksVr.Limbs
 {
     public class VrLimbManager : MonoBehaviour
     {
-        private Laser laser;
+        public VrLaser Laser;
         private ToolPicker toolPicker;
         public VrHand LeftHand { get; private set; }
         public VrHand RightHand { get; private set; }
@@ -28,7 +28,7 @@ namespace TwoForksVr.Limbs
                 instance.LeftHand.transform,
                 instance.RightHand.transform
             );
-            instance.laser = Laser.Create(
+            instance.Laser = VrLaser.Create(
                 instance.LeftHand.transform,
                 instance.RightHand.transform
             );
@@ -44,7 +44,7 @@ namespace TwoForksVr.Limbs
             var armsMaterial = GetArmsMaterial(playerTransform);
             RightHand.SetUp(skeletonRoot, armsMaterial);
             LeftHand.SetUp(skeletonRoot, armsMaterial);
-            laser.SetUp(camera);
+            Laser.SetUp(camera);
 
             VrFoot.Create(skeletonRoot);
             VrFoot.Create(skeletonRoot, true);

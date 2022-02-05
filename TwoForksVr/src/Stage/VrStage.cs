@@ -204,5 +204,11 @@ namespace TwoForksVr.Stage
         {
             return bindingsManager && bindingsManager.GetDown(virtualKey);
         }
+
+        public Transform GetLaserTransform()
+        {
+            if (limbManager == null || limbManager.Laser == null) return null;
+            return limbManager.Laser.transform;
+        }
     }
 }

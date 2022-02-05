@@ -32,14 +32,14 @@ namespace TwoForksVr.LaserPointer
     {
         private const float rayDistance = 30f;
         public Camera EventCamera;
-        private Laser laser;
         private Vector3 lastHeadPose;
         private PointerEventData pointerData;
+        private VrLaser vrLaser;
 
-        public static LaserInputModule Create(Laser laser)
+        public static LaserInputModule Create(VrLaser vrLaser)
         {
-            var instance = laser.gameObject.AddComponent<LaserInputModule>();
-            instance.laser = laser;
+            var instance = vrLaser.gameObject.AddComponent<LaserInputModule>();
+            instance.vrLaser = vrLaser;
             return instance;
         }
 
@@ -68,9 +68,9 @@ namespace TwoForksVr.LaserPointer
             CastRay();
             UpdateCurrentObject();
 
-            var clickDown = laser.ClickDown();
-            var isClicking = laser.IsClicking();
-            var clickUp = laser.ClickUp();
+            var clickDown = vrLaser.ClickDown();
+            var isClicking = vrLaser.IsClicking();
+            var clickUp = vrLaser.ClickUp();
 
             if (!clickDown && isClicking)
                 HandleDrag();
@@ -90,9 +90,9 @@ namespace TwoForksVr.LaserPointer
                 LayerHelper.GetMask(GameLayer.UI));
 
             if (isHit)
-                laser.SetTarget(hit.point);
+                vrLaser.SetTarget(hit.point);
             else
-                laser.SetTarget(null);
+                vrLaser.SetTarget(null);
 
             var pointerPosition = EventCamera.WorldToScreenPoint(hit.point);
 
