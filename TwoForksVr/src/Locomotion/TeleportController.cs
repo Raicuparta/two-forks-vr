@@ -62,7 +62,7 @@ namespace TwoForksVr.Locomotion
         {
             return VrSettings.Teleport.Value &&
                    teleportInput.GetState(SteamVR_Input_Sources.Any) && navigationController &&
-                   navigationController.enabled;
+                   navigationController.enabled && !vgPauseManager.Instance.isPaused;
         }
 
         private void UpdatePlayerRotation()
