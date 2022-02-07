@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using HarmonyLib;
-using TwoForksVr.Helpers;
 using TwoForksVr.Settings;
 using UnityEngine;
 using Valve.VR;
@@ -14,11 +13,21 @@ namespace TwoForksVr.VrInput.Patches
         private const float outerDeadzone = 0.5f;
         private const float innerDeadzone = 0.1f;
 
-        private static readonly Dictionary<string, string> replacementCommandMap = new Dictionary<string, string>
-        {
-            // Fixes UIDown action triggering both dialog selection and interact.
-            {CommandName.DialogSelectionDownOrUse, CommandName.DialogSelectionDown}
-        };
+        private static readonly Dictionary<string, Dictionary<string, string>> replacementCommandMap =
+            new Dictionary<string, Dictionary<string, string>>
+            {
+                {
+                    VirtualKey.DialogDown,
+                    new Dictionary<string, string>
+                    {
+                        // Fixes UIDown triggering interact.
+                        {CommandName.DialogSelectionDownOrUse, CommandName.DialogSelectionDown},
+
+                        // Fixes UIDown triggering lock tumbler right..
+                        {CommandName.LockTumblerRight, CommandName.None}
+                    }
+                }
+            };
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(SteamVR_Input), nameof(SteamVR_Input.GetActionsFileFolder))]
@@ -97,16 +106,32 @@ namespace TwoForksVr.VrInput.Patches
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgKeyBind), nameof(vgKeyBind.TriggerCommand))]
-        private static bool ReplaceCommands(ref string command, float axisValue)
+        [HarmonyPatch(typeof(vgInputManager), nameof(vgInputManager.ProcessContextStack))]
+        private static void FixCommandsAhhhhhhh(LinkedList<vgInputContext> stack)
         {
-            if (Mathf.Abs(axisValue) > 0.5f)
-                Logs.LogInfo($"TriggerCommand {command}");
-            replacementCommandMap.TryGetValue(command, out var replacementCommand);
-            if (replacementCommand == null) return true;
-            if (replacementCommand == CommandName.None) return false;
-            command = replacementCommand;
-            return true;
+            foreach (var inputContext in stack)
+            foreach (var commandMapping in inputContext.commandMap)
+            {
+                replacementCommandMap.TryGetValue(commandMapping.virtualKey, out var commandReplacements);
+                if (commandReplacements == null) continue;
+
+                for (var i = 0; i < commandMapping.commands.Count; i++)
+                {
+                    var command = commandMapping.commands[i];
+                    commandReplacements.TryGetValue(command.command, out var replacementCommand);
+                    switch (replacementCommand)
+                    {
+                        case null:
+                            continue;
+                        case CommandName.None:
+                            commandMapping.commands.RemoveAt(i);
+                            continue;
+                        default:
+                            commandMapping.commands[i].command = replacementCommand;
+                            break;
+                    }
+                }
+            }
         }
     }
 }
