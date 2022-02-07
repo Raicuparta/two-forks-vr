@@ -26,6 +26,40 @@ namespace TwoForksVr.VrInput.Patches
                         // Fixes UIDown triggering lock tumbler right..
                         {CommandName.LockTumblerRight, CommandName.None}
                     }
+                },
+                // Keyboard move keys are needed to interact with locks and UI stuff,
+                // but need to prevent them from triggering player movement.
+                {
+                    VirtualKey.MoveBackwardKeyboard,
+                    new Dictionary<string, string>
+                    {
+                        {CommandName.BackwardKeyDown, CommandName.None},
+                        {CommandName.BackwardKeyUp, CommandName.None}
+                    }
+                },
+                {
+                    VirtualKey.MoveForwardKeyboard,
+                    new Dictionary<string, string>
+                    {
+                        {CommandName.ForwardKeyDown, CommandName.None},
+                        {CommandName.ForwardKeyUp, CommandName.None}
+                    }
+                },
+                {
+                    VirtualKey.StrafeLeftKeyboard,
+                    new Dictionary<string, string>
+                    {
+                        {CommandName.StrafeLeftKeyDown, CommandName.None},
+                        {CommandName.StrafeLeftKeyUp, CommandName.None}
+                    }
+                },
+                {
+                    VirtualKey.StrafeRightKeyboard,
+                    new Dictionary<string, string>
+                    {
+                        {CommandName.StrafeRightKeyDown, CommandName.None},
+                        {CommandName.StrafeRightKeyUp, CommandName.None}
+                    }
                 }
             };
 
