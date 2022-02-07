@@ -51,8 +51,6 @@ namespace TwoForksVr.UI.Patches
                     };
 
                 __instance.fontMaterial = materialMap[key];
-                __instance.fontBaseMaterial = materialMap[key];
-                __instance.fontSharedMaterial = materialMap[key];
             }
             catch (Exception exception)
             {
