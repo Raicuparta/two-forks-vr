@@ -26,9 +26,9 @@ namespace TwoForksVr.VrInput.Patches
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgButtonIconMap), nameof(vgButtonIconMap.HasIcon))]
-        private static bool ReplacePromptIconsWithVrButtonText(ref bool __result)
+        private static bool ReplacePromptIconsWithVrButtonText(ref bool __result, string id)
         {
-            __result = true;
+            __result = StageInstance.GetInputAction(id) != null;
             return false;
         }
     }
