@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using HarmonyLib;
 using TwoForksVr.Settings;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace TwoForksVr.VrInput.Patches
     {
         private const float outerDeadzone = 0.5f;
         private const float innerDeadzone = 0.1f;
+        private static readonly HashSet<string> ignoredCommands = new HashSet<string> {"DialogSelectionDownOrUse"};
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(SteamVR_Input), nameof(SteamVR_Input.GetActionsFileFolder))]
@@ -109,6 +111,13 @@ namespace TwoForksVr.VrInput.Patches
         private static void ForceRewiredHandlingInput(ref bool __result)
         {
             __result = true;
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgKeyBind), nameof(vgKeyBind.TriggerCommand))]
+        private static bool RemoveIgnoredCommands(string command)
+        {
+            return !ignoredCommands.Contains(command);
         }
     }
 }
