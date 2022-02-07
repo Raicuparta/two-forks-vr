@@ -7,7 +7,7 @@ namespace TwoForksVr.PlayerBody
 {
     public class RoomScaleBodyTransform : TwoForksVrBehavior
     {
-        private const float minPositionOffset = 0;
+        private const float minPositionOffset = 0.05f;
         private const float maxPositionOffset = 1f;
 
         private Transform cameraTransform;
@@ -69,13 +69,17 @@ namespace TwoForksVr.PlayerBody
             var localPositionDelta = cameraPosition - prevCameraPosition;
             localPositionDelta.y = 0;
 
-            var worldPositionDelta = stage.transform.TransformVector(localPositionDelta);
+            var cameraToPlayer = cameraTransform.position - characterController.transform.position;
+            cameraToPlayer.y = 0;
+            var cameraPlayerDistance = cameraToPlayer.sqrMagnitude;
 
-            if (worldPositionDelta.sqrMagnitude < minPositionOffset || !navigationController.onGround ||
-                !navigationController.enabled) return;
+            var worldPositionDelta = stage.transform.TransformVector(localPositionDelta);
 
             prevCameraPosition = cameraPosition;
 
+            if (cameraPlayerDistance < minPositionOffset || !navigationController.onGround ||
+                !navigationController.enabled) return;
+            
             if (worldPositionDelta.sqrMagnitude > maxPositionOffset) return;
 
             var groundedPositionDelta = Vector3.ProjectOnPlane(worldPositionDelta, navigationController.groundNormal);
@@ -86,7 +90,7 @@ namespace TwoForksVr.PlayerBody
             // like resetting animations.
             navigationController.positionLastFrame = characterController.transform.position;
 
-            stage.RecenterPosition();
+            stage.transform.position -= groundedPositionDelta;
         }
 
         private Vector3 GetCameraForward()
