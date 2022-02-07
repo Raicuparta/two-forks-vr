@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using HarmonyLib;
+using TwoForksVr.Helpers;
 using TwoForksVr.Settings;
 using UnityEngine;
 using Valve.VR;
@@ -16,7 +17,7 @@ namespace TwoForksVr.VrInput.Patches
         private static readonly Dictionary<string, string> replacementCommandMap = new Dictionary<string, string>
         {
             // Fixes UIDown action triggering both dialog selection and interact.
-            {"DialogSelectionDownOrUse", "DialogSelectionDown"}
+            {CommandName.DialogSelectionDownOrUse, CommandName.DialogSelectionDown}
         };
 
         [HarmonyPrefix]
@@ -97,11 +98,15 @@ namespace TwoForksVr.VrInput.Patches
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgKeyBind), nameof(vgKeyBind.TriggerCommand))]
-        private static void ReplaceCommands(ref string command)
+        private static bool ReplaceCommands(ref string command, float axisValue)
         {
+            if (Mathf.Abs(axisValue) > 0.5f)
+                Logs.LogInfo($"TriggerCommand {command}");
             replacementCommandMap.TryGetValue(command, out var replacementCommand);
-            if (replacementCommand == null) return;
+            if (replacementCommand == null) return true;
+            if (replacementCommand == CommandName.None) return false;
             command = replacementCommand;
+            return true;
         }
     }
 }
