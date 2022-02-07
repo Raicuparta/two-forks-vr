@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using HarmonyLib;
 using TwoForksVr.Settings;
 using UnityEngine;
@@ -12,19 +13,17 @@ namespace TwoForksVr.VrInput.Patches
         private const float outerDeadzone = 0.5f;
         private const float innerDeadzone = 0.1f;
 
+        private static readonly Dictionary<string, string> replacementCommandMap = new Dictionary<string, string>
+        {
+            // Fixes UIDown action triggering both dialog selection and interact.
+            {"DialogSelectionDownOrUse", "DialogSelectionDown"}
+        };
+
         [HarmonyPrefix]
         [HarmonyPatch(typeof(SteamVR_Input), nameof(SteamVR_Input.GetActionsFileFolder))]
         private static bool GetActionsFileFromMod(ref string __result)
         {
             __result = $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/TwoForksVrAssets/Bindings";
-            return false;
-        }
-
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.CheckForPCControls))]
-        private static bool DisableJogDisableThreshold(vgPlayerController __instance)
-        {
-            __instance.minimumInputForJog = 0f;
             return false;
         }
 
@@ -53,21 +52,6 @@ namespace TwoForksVr.VrInput.Patches
             var valueSign = Mathf.Sign(value);
             var absoluteValue = Mathf.Abs(value);
             return valueSign * Mathf.InverseLerp(innerDeadzone, 1f - outerDeadzone, absoluteValue);
-        }
-
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.UpdateActiveController))]
-        private static bool ForceXboxController(vgRewiredInput __instance)
-        {
-            __instance.activeController = vgControllerLayoutChoice.XBox;
-            __instance.mCurrentIconMap = __instance.IconMap_Xbox;
-            __instance.mCurrentIconMap.Init();
-
-            if (vgSettingsManager.Instance &&
-                vgSettingsManager.Instance.controller != (int) __instance.activeController)
-                vgSettingsManager.Instance.controller = (int) __instance.activeController;
-
-            return false;
         }
 
         [HarmonyPrefix]
@@ -109,6 +93,15 @@ namespace TwoForksVr.VrInput.Patches
         private static void ForceRewiredHandlingInput(ref bool __result)
         {
             __result = true;
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgKeyBind), nameof(vgKeyBind.TriggerCommand))]
+        private static void ReplaceCommands(ref string command)
+        {
+            replacementCommandMap.TryGetValue(command, out var replacementCommand);
+            if (replacementCommand == null) return;
+            command = replacementCommand;
         }
     }
 }
