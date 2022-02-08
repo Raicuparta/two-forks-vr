@@ -50,7 +50,13 @@ namespace TwoForksVr.UI.Patches
                         shader = VrAssetLoader.TMProShader
                     };
 
-                __instance.fontMaterial = materialMap[key];
+                var material = materialMap[key];
+                __instance.fontMaterial = material;
+                __instance.fontBaseMaterial = material;
+
+                // Problem: setting fontSharedMaterial is needed to prevent errors and the empty settings dropdowns,
+                // but it also makes the dialog choices stop rendering on top.
+                __instance.fontSharedMaterial = material;
             }
             catch (Exception exception)
             {
