@@ -4,6 +4,7 @@ using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
+using Valve.VR;
 
 namespace TwoForksVr.Locomotion
 {
@@ -35,9 +36,8 @@ namespace TwoForksVr.Locomotion
 
         private void Update()
         {
-            // TODO check specific sources.
-            if (teleportInput.ButtonDown) SetHand(limbManager.LeftHand);
-            // if (teleportInput.GetStateDown(SteamVR_Input_Sources.RightHand)) SetHand(limbManager.RightHand);
+            if (teleportInput.GetButtonDown(SteamVR_Input_Sources.LeftHand)) SetHand(limbManager.LeftHand);
+            if (teleportInput.GetButtonDown(SteamVR_Input_Sources.RightHand)) SetHand(limbManager.RightHand);
             UpdateArc();
             UpdatePlayerRotation();
         }

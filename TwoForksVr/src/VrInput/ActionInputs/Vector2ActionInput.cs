@@ -15,17 +15,18 @@ namespace TwoForksVr.VrInput.ActionInputs
 
         public string TextureModifier { get; }
 
-        protected override float GetValue()
+        protected override float GetValue(SteamVR_Input_Sources source)
         {
-            return yOnly ? SpecificAction.axis.y : SpecificAction.axis.x;
+            var axis = SpecificAction.GetAxis(source);
+            return yOnly ? axis.y : axis.x;
         }
 
-        protected override bool GetValueUp()
+        protected override bool GetValueUp(SteamVR_Input_Sources source)
         {
             return false;
         }
 
-        protected override bool GetValueDown()
+        protected override bool GetValueDown(SteamVR_Input_Sources source)
         {
             return false;
         }

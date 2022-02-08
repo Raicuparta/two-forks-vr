@@ -11,17 +11,17 @@ namespace TwoForksVr.VrInput.ActionInputs
 
         public string TexturePath { get; }
 
-        protected override float GetValue()
+        protected override float GetValue(SteamVR_Input_Sources source)
         {
             return 0;
         }
 
-        protected override bool GetValueUp()
+        protected override bool GetValueUp(SteamVR_Input_Sources source)
         {
             return false;
         }
 
-        protected override bool GetValueDown()
+        protected override bool GetValueDown(SteamVR_Input_Sources source)
         {
             return false;
         }

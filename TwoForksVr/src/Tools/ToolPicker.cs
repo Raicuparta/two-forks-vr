@@ -3,6 +3,7 @@ using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
 using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
+using Valve.VR;
 
 namespace TwoForksVr.Tools
 {
@@ -40,11 +41,10 @@ namespace TwoForksVr.Tools
 
         private void Update()
         {
-            // TODO check specific sources.
-            if (input.ButtonValue) UpdateSelectedTool(rightHand);
-            // if (input.GetState(SteamVR_Input_Sources.LeftHand)) UpdateSelectedTool(leftHand);
-            if (input.ButtonValue) OpenToolPicker(rightHand);
-            // if (input.GetStateDown(SteamVR_Input_Sources.LeftHand)) OpenToolPicker(leftHand);
+            if (input.GetButtonValue(SteamVR_Input_Sources.RightHand)) UpdateSelectedTool(rightHand);
+            if (input.GetButtonValue(SteamVR_Input_Sources.LeftHand)) UpdateSelectedTool(leftHand);
+            if (input.GetButtonDown(SteamVR_Input_Sources.RightHand)) OpenToolPicker(rightHand);
+            if (input.GetButtonDown(SteamVR_Input_Sources.LeftHand)) OpenToolPicker(leftHand);
             if (input.ButtonUp) CloseToolPicker();
         }
 

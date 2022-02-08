@@ -61,9 +61,7 @@ namespace TwoForksVr.LaserPointer
 
         private void UpdateLaserParent(SteamVR_Input_Sources inputSource, Transform hand)
         {
-            // TODO: check specific input source here.
-            // if (!actionInput.GetStateDown(inputSource) || transform.parent == hand) return;
-            if (!actionInput.ButtonDown || transform.parent == hand) return;
+            if (!actionInput.GetButtonDown(inputSource) || transform.parent == hand) return;
             ignoreNextInput = true;
             transform.SetParent(hand, false);
         }

@@ -11,19 +11,19 @@ namespace TwoForksVr.VrInput.ActionInputs
             IsEitherHandValue = isEitherHand;
         }
 
-        protected override float GetValue()
+        protected override float GetValue(SteamVR_Input_Sources source)
         {
-            return SpecificAction.state ? 1 : 0;
+            return SpecificAction.GetState(source) ? 1 : 0;
         }
 
-        protected override bool GetValueUp()
+        protected override bool GetValueUp(SteamVR_Input_Sources source)
         {
-            return SpecificAction.stateUp;
+            return SpecificAction.GetStateUp(source);
         }
 
-        protected override bool GetValueDown()
+        protected override bool GetValueDown(SteamVR_Input_Sources source)
         {
-            return SpecificAction.stateDown;
+            return SpecificAction.GetStateDown(source);
         }
     }
 }
