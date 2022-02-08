@@ -36,10 +36,12 @@ namespace TwoForksVr.UI.Patches
             {"textRadio_concept", $"Hold [{VirtualKey.Radio}] to radio about current subject of interest."},
             {"textRadio_heldobject", $"Hold [{VirtualKey.Radio}] to talk about currently held object."},
 
+            // There's no zooming in VR. Couldn't figure out an easy way to hide the whole tutorial box,
+            // so I'm just showing the jogging tutorial instead.
+            {"textZoom", $"[{VirtualKey.Jog}] to toggle jogging."},
+
             // Unused tutorial text.
-            {"Text", ""},
-            // There's no zoom button in VR. This shows an emtpy tutorial text container, which is a bit ugly...
-            {"textZoom", ""}
+            {"Text", ""}
         };
 
         [HarmonyPrefix]
