@@ -58,7 +58,7 @@ namespace TwoForksVr.UI.Patches
                 if (canvas.GetComponent<GraphicRaycaster>())
                     AttachedUi.Create<InteractiveUi>(canvas, StageInstance.GetInteractiveUiTarget(), 0.002f);
                 else
-                    AttachedUi.Create<StaticUi>(canvas, StageInstance.GetStaticUiTarget(), 0.0004f);
+                    AttachedUi.Create<StaticUi>(canvas, StageInstance.GetStaticUiTarget(), 0.00045f);
             }
             catch (Exception exception)
             {
