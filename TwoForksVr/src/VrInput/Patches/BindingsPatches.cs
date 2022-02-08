@@ -60,6 +60,14 @@ namespace TwoForksVr.VrInput.Patches
                         {CommandName.StrafeRightKeyDown, CommandName.None},
                         {CommandName.StrafeRightKeyUp, CommandName.None}
                     }
+                },
+                {
+                    VirtualKey.ScrollUpDown,
+                    new Dictionary<string, string>
+                    {
+                        {CommandName.DialogSelectionScroll, CommandName.None},
+                        {CommandName.Scroll, CommandName.None}
+                    }
                 }
             };
 

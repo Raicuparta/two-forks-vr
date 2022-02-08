@@ -12,32 +12,34 @@ namespace TwoForksVr.UI.Patches
     {
         private static readonly Dictionary<string, string> tutorialTextMap = new Dictionary<string, string>
         {
-            {"Text", ""},
-            {"textRadio", "Hold [RadioButton] to activate radio."},
-            {"textRadio_select_dialog", $"[[{VirtualKey.DialogUp}] to select dialog."},
-            {"textUse_radio", "Release [RadioButton] to talk to Delilah."},
+            {"textRadio", $"Hold [{VirtualKey.Radio}] to activate radio."},
+            {"textRadio_select_dialog", $"[{VirtualKey.ScrollUpDown}] to select dialog."},
+            {"textUse_radio", $"Release [{VirtualKey.Radio}] to talk to Delilah."},
             {"textInspect_object", "Look at hand to inspect objects."},
             {"textInspect_object_move", ""},
-            {"textRadio_object", "Aim with hand and hold [RadioButton] to talk about targeted object."},
+            {"textRadio_object", $"Aim with hand and hold [{VirtualKey.Radio}] to talk about targeted object."},
             {"textJournal_examine", "Look at hand to inspect journal."},
-            {"textJournal_stow", "[StoreObjectButton] to keep journal."},
+            {"textJournal_stow", $"[{VirtualKey.StoreObject}] to keep journal."},
             {"textCompass", $"Hold [{VirtualKey.ToolPicker}] to select compass from tool picker."},
-            // {"textZoom", "Hold [ZoomButton] to zoom."},
-            {"textZoom", ""},
             {"textFlashlight", $"Hold [{VirtualKey.ToolPicker}] to select flashlight from tool picker."},
             {"textMap", $"Hold [{VirtualKey.ToolPicker}] to select map from tool picker."},
-            {"textJog_toggle", "[JogButton] to toggle jogging."},
-            {"textMantle", "[LocomotionActionButton] to climb over obstructions."},
-            {"textUse_object", "Aim with hand and press [UseButton] to use objects."},
+            {"textJog_toggle", $"[{VirtualKey.Jog}] to toggle jogging."},
+            {"textMantle", $"[{VirtualKey.LocomotionAction}] to climb over obstructions."},
+            {"textUse_object", $"Aim with hand and press [{VirtualKey.Use}] to use objects."},
             {"textInventory_open", $"Hold [{VirtualKey.ToolPicker}] to select notes inventory from the tool picker."},
             {"textInventory_browse", "Use hand laser to browse notes."},
-            {"textInventory_read", "[StoreObjectButton] to store note"},
+            {"textInventory_read", $"[{VirtualKey.StoreObject}] to store note"},
             {"textCamera", $"Hold [{VirtualKey.ToolPicker}] to select camera from tool picker."},
-            {"textCamera_picture", "[UseButton] to take a picture."},
+            {"textCamera_picture", $"[{VirtualKey.Use}] to take a picture."},
             {"textCamera_lower", $"Press [{VirtualKey.ToolPicker}] to lower camera."},
             {"textWaveReceiver", $"Hold [{VirtualKey.ToolPicker}] to select wave receiver from tool picker."},
-            {"textRadio_concept", "Hold [RadioButton] to radio about current subject of interest."},
-            {"textRadio_heldobject", "Hold [RadioButton] to talk about currently held object."}
+            {"textRadio_concept", $"Hold [{VirtualKey.Radio}] to radio about current subject of interest."},
+            {"textRadio_heldobject", $"Hold [{VirtualKey.Radio}] to talk about currently held object."},
+
+            // Unused tutorial text.
+            {"Text", ""},
+            // There's no zoom button in VR. This shows an emtpy tutorial text container, which is a bit ugly...
+            {"textZoom", ""}
         };
 
         [HarmonyPrefix]

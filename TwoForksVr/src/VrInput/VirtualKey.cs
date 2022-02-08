@@ -44,7 +44,6 @@
 
         // These I just don't need.
         public const string LookYAxisStick = "LookYAxis_Stick";
-        public const string ScrollUpDown = "ScrollUpDown";
         public const string ItemsLeftRight = "ItemsLeftRight";
         public const string ItemsUpDown = "ItemsUpDown";
         public const string QuickSave = "QuickSaveButton";
@@ -71,5 +70,6 @@
 
         // These are special cases, virtual keys created specifically for VR, just for the prompts.
         public const string ToolPicker = "ToolPickerButton";
+        public const string ScrollUpDown = "ScrollUpDown";
     }
 }
