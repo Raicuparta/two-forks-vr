@@ -67,5 +67,16 @@ namespace TwoForksVr.UI.Patches
                 Logs.LogWarning($"Error in TMPro Patch ({__instance.name}): {exception}");
             }
         }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.Awake))]
+        private static void HideHudElements(vgHudManager __instance)
+        {
+            var safeZoner = __instance.transform.Find("uGUI Root/HUD/SafeZoner");
+            safeZoner.Find("HeldObjectHUDParent/HeldObjectHUDAnimator/ExamineItem").gameObject.SetActive(false);
+            var reticule = safeZoner.Find("ReticuleGroup/ReticuleParent/ReticuleCanvasGroup/Reticule");
+            reticule.GetComponent<Image>().enabled = false;
+            reticule.Find("ReticuleLarge").GetComponent<Image>().enabled = false;
+        }
     }
 }

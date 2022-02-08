@@ -42,7 +42,7 @@ namespace TwoForksVr.VrInput.Patches
         [HarmonyPatch(typeof(vgButtonIconMap), nameof(vgButtonIconMap.HasIcon))]
         private static bool CheckHasIconFromVrInputs(ref bool __result, string id)
         {
-            __result = StageInstance.GetInputAction(id) != null;
+            __result = true;
             return false;
         }
     }
