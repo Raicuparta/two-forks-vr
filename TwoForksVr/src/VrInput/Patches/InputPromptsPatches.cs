@@ -1,6 +1,5 @@
 using System.Globalization;
 using HarmonyLib;
-using TwoForksVr.Helpers;
 using Valve.VR;
 
 namespace TwoForksVr.VrInput.Patches
@@ -15,9 +14,8 @@ namespace TwoForksVr.VrInput.Patches
         private static bool ReplacePromptIconsWithVrButtonText(ref string __result, string id)
         {
             var inputAction = StageInstance.GetInputAction(id);
-            if (inputAction == null)
+            if (inputAction?.Action == null || !inputAction.Action.active)
             {
-                Logs.LogWarning($"Failed to find actionInput for virtual key {id}");
                 __result = "n/a";
                 return false;
             }
