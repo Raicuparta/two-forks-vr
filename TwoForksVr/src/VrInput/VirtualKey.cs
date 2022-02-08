@@ -8,7 +8,6 @@
         public const string LocomotionAction = "LocomotionActionButton";
         public const string Use = "UseButton";
         public const string Jog = "JogButton";
-        public const string Camera = "CameraButton";
         public const string StoreObject = "StoreObjectButton";
         public const string Cancel = "CancelButton";
         public const string Pause = "PauseButton";
@@ -18,14 +17,19 @@
         public const string LookXAxisStick = "LookXAxis_Stick";
         public const string MoveXAxis = "MoveXAxis";
         public const string MoveYAxis = "MoveYAxis";
+        public const string MoveForwardKeyboard = "MoveForwardKeyboard";
+        public const string MoveBackwardKeyboard = "MoveBackwardKeyboard";
+        public const string StrafeLeftKeyboard = "StrafeLeftKeyboard";
+        public const string StrafeRightKeyboard = "StrafeRightKeyboard";
 
-        // These are unused in VR, since they can be done with gestures
+        // These are unused in VR, since they can be done with gestures or menus.
         public const string Zoom = "ZoomButton";
         public const string Map = "MapButton";
         public const string MapRegion = "MapRegionButton";
         public const string Flashlight = "FlashlightButton";
         public const string ReadMode = "ReadModeButton";
         public const string Inventory = "InventoryButton";
+        public const string Camera = "CameraButton";
 
         // These I don't know what they're for.
         public const string UIRightStickHorizontal = "UIRightStickHorizontal";
@@ -37,14 +41,9 @@
         // These are mouse/keyboard only.
         public const string LookXAxisMouse = "LookXAxis_Mouse";
         public const string LookYAxisMouse = "LookYAxis_Mouse";
-        public const string MoveForwardKeyboard = "MoveForwardKeyboard";
-        public const string MoveBackwardKeyboard = "MoveBackwardKeyboard";
-        public const string StrafeLeftKeyboard = "StrafeLeftKeyboard";
-        public const string StrafeRightKeyboard = "StrafeRightKeyboard";
 
         // These I just don't need.
         public const string LookYAxisStick = "LookYAxis_Stick";
-        public const string ScrollUpDown = "ScrollUpDown";
         public const string ItemsLeftRight = "ItemsLeftRight";
         public const string ItemsUpDown = "ItemsUpDown";
         public const string QuickSave = "QuickSaveButton";
@@ -68,5 +67,9 @@
         public const string PressDemo3 = "PressDemo3";
         public const string PressDemo4 = "PressDemo4";
         public const string TakeDebugScreenshot = "TakeDebugScreenshot";
+
+        // These are special cases, virtual keys created specifically for VR, just for the prompts.
+        public const string ToolPicker = "ToolPickerButton";
+        public const string ScrollUpDown = "ScrollUpDown";
     }
 }

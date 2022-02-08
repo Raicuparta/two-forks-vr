@@ -16,13 +16,6 @@ namespace TwoForksVr.Settings.Patches
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.minimalInterface), MethodType.Setter)]
-        private static void ForceEnableMinimalInterface(ref bool value)
-        {
-            value = true;
-        }
-
-        [HarmonyPrefix]
         [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.MotionBlurQuality), MethodType.Setter)]
         private static void ForceNoMotionBlur(ref int value)
         {
@@ -44,14 +37,6 @@ namespace TwoForksVr.Settings.Patches
         private static bool HideResolutionOptions()
         {
             return false;
-        }
-
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgSettingsMenuController), nameof(vgSettingsMenuController.Start))]
-        private static void RemoveControlsTab(vgSettingsMenuController __instance)
-        {
-            __instance.screens.RemoveAt(2);
-            Object.Destroy(__instance.selectionGroup.buttonElements[2].gameObject);
         }
     }
 }

@@ -67,5 +67,26 @@ namespace TwoForksVr.UI.Patches
                 Logs.LogWarning($"Error in TMPro Patch ({__instance.name}): {exception}");
             }
         }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.Awake))]
+        private static void HideHudElements(vgHudManager __instance)
+        {
+            __instance.readObjectButtonGroup.transform.parent.Find("ExamineItem").gameObject.SetActive(false);
+            __instance.readObjectButtonGroup.SetActive(false);
+
+            // Dummy object is just so the hud manager still has a valid reference after we destroy the object.
+            __instance.readObjectButtonGroup = new GameObject("Dummy");
+            __instance.readObjectButtonGroup.transform.SetParent(__instance.transform, false);
+
+            var safeZoner = __instance.transform.Find("uGUI Root/HUD/SafeZoner");
+            var reticule = safeZoner.Find("ReticuleGroup/ReticuleParent/ReticuleCanvasGroup/Reticule");
+            reticule.GetComponent<Image>().enabled = false;
+            reticule.Find("ReticuleLarge").GetComponent<Image>().enabled = false;
+
+            var bottomLeftObjects = safeZoner.Find("BottomLeftObjects");
+            bottomLeftObjects.Find("CompassOnScreenTooltip").gameObject.SetActive(false);
+            bottomLeftObjects.Find("MapOnScreenTooltip").gameObject.SetActive(false);
+        }
     }
 }

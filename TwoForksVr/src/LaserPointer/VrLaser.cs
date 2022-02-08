@@ -1,5 +1,5 @@
 ﻿using TwoForksVr.Helpers;
-using TwoForksVr.VrInput;
+using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
 using Valve.VR;
 
@@ -8,7 +8,7 @@ namespace TwoForksVr.LaserPointer
     public class VrLaser : MonoBehaviour
     {
         private const float laserLength = 1f;
-        private readonly SteamVR_Action_Boolean inputAction = BindingsManager.ActionSet.Interact;
+        private readonly IActionInput actionInput = ActionInputDefinitions.Interact;
         private bool ignoreNextInput;
 
         private LaserInputModule inputModule;
@@ -61,7 +61,7 @@ namespace TwoForksVr.LaserPointer
 
         private void UpdateLaserParent(SteamVR_Input_Sources inputSource, Transform hand)
         {
-            if (!inputAction.GetStateDown(inputSource) || transform.parent == hand) return;
+            if (!actionInput.GetButtonDown(inputSource) || transform.parent == hand) return;
             ignoreNextInput = true;
             transform.SetParent(hand, false);
         }
@@ -87,13 +87,13 @@ namespace TwoForksVr.LaserPointer
         private void UpdateLaserVisibility()
         {
             lineRenderer.enabled =
-                HasCurrentTarget() || BindingsManager.ActionSet.Interact.state;
+                HasCurrentTarget() || ActionInputDefinitions.Interact.AxisValue != 0;
         }
 
         public bool ClickDown()
         {
             if (ignoreNextInput) return false;
-            return inputAction.stateDown;
+            return actionInput.ButtonDown;
         }
 
         public bool ClickUp()
@@ -104,12 +104,12 @@ namespace TwoForksVr.LaserPointer
                 return false;
             }
 
-            return inputAction.stateUp;
+            return actionInput.ButtonUp;
         }
 
         public bool IsClicking()
         {
-            return inputAction.state;
+            return actionInput.ButtonValue;
         }
     }
 }

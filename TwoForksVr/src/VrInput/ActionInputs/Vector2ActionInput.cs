@@ -13,9 +13,22 @@ namespace TwoForksVr.VrInput.ActionInputs
             TextureModifier = textureModifier;
         }
 
-        public override float Value => yOnly ? SpecificAction.axis.y : SpecificAction.axis.x;
         public string TextureModifier { get; }
-        public override bool ValueUp => false;
-        public override bool ValueDown => false;
+
+        protected override float GetValue(SteamVR_Input_Sources source)
+        {
+            var axis = SpecificAction.GetAxis(source);
+            return yOnly ? axis.y : axis.x;
+        }
+
+        protected override bool GetValueUp(SteamVR_Input_Sources source)
+        {
+            return false;
+        }
+
+        protected override bool GetValueDown(SteamVR_Input_Sources source)
+        {
+            return false;
+        }
     }
 }

@@ -13,6 +13,12 @@ namespace TwoForksVr.VrInput.Patches
         private const float outerDeadzone = 0.5f;
         private const float innerDeadzone = 0.1f;
 
+        private static readonly HashSet<string> ignoredVirtualKeys = new HashSet<string>
+        {
+            VirtualKey.ScrollUpDown,
+            VirtualKey.Inventory
+        };
+
         private static readonly Dictionary<string, Dictionary<string, string>> replacementCommandMap =
             new Dictionary<string, Dictionary<string, string>>
             {
@@ -146,6 +152,12 @@ namespace TwoForksVr.VrInput.Patches
             foreach (var inputContext in stack)
             foreach (var commandMapping in inputContext.commandMap)
             {
+                if (ignoredVirtualKeys.Contains(commandMapping.virtualKey))
+                {
+                    commandMapping.commands.Clear();
+                    continue;
+                }
+
                 replacementCommandMap.TryGetValue(commandMapping.virtualKey, out var commandReplacements);
                 if (commandReplacements == null) continue;
 

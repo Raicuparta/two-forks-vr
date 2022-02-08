@@ -9,9 +9,21 @@ namespace TwoForksVr.VrInput.ActionInputs
             TexturePath = texturePath;
         }
 
-        public override float Value => 0;
         public string TexturePath { get; }
-        public override bool ValueUp => false;
-        public override bool ValueDown => false;
+
+        protected override float GetValue(SteamVR_Input_Sources source)
+        {
+            return 0;
+        }
+
+        protected override bool GetValueUp(SteamVR_Input_Sources source)
+        {
+            return false;
+        }
+
+        protected override bool GetValueDown(SteamVR_Input_Sources source)
+        {
+            return false;
+        }
     }
 }

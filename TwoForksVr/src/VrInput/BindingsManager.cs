@@ -9,9 +9,7 @@ namespace TwoForksVr.VrInput
 {
     public class BindingsManager : MonoBehaviour
     {
-        public static SteamVR_Input_ActionSet_default ActionSet = SteamVR_Actions._default;
         public Dictionary<string, IActionInput> ActionMap { get; private set; }
-
 
         public static BindingsManager Create(VrStage stage)
         {
@@ -43,8 +41,28 @@ namespace TwoForksVr.VrInput
                 {VirtualKey.MoveForwardKeyboard, ActionInputDefinitions.UIUp},
                 {VirtualKey.MoveBackwardKeyboard, ActionInputDefinitions.UIDown},
                 {VirtualKey.StrafeRightKeyboard, ActionInputDefinitions.NextPage},
-                {VirtualKey.StrafeLeftKeyboard, ActionInputDefinitions.PreviousPage}
+                {VirtualKey.StrafeLeftKeyboard, ActionInputDefinitions.PreviousPage},
+
+                // Unused for actually controlling stuff, but used for the input prompts.
+                {VirtualKey.ScrollUpDown, ActionInputDefinitions.UIUp},
+                {VirtualKey.ToolPicker, ActionInputDefinitions.ToolPicker},
+                {VirtualKey.Inventory, ActionInputDefinitions.Cancel}
             };
+
+            SteamVR_Events.System(EVREventType.VREvent_Input_BindingsUpdated).Listen(HandleVrBindingsUpdated);
+        }
+
+        private void OnDestroy()
+        {
+            SteamVR_Events.System(EVREventType.VREvent_Input_BindingsUpdated).Remove(HandleVrBindingsUpdated);
+        }
+
+        private static void HandleVrBindingsUpdated(VREvent_t arg0)
+        {
+            if (!vgInputManager.Instance) return;
+
+            // This resets the input prompts. The layout choice argument isn't actually used.
+            vgInputManager.Instance.SetControllerLayout(vgControllerLayoutChoice.KeyboardMouse);
         }
 
         public float GetValue(string virtualKey)
@@ -52,7 +70,7 @@ namespace TwoForksVr.VrInput
             ActionMap.TryGetValue(virtualKey, out var actionInput);
             if (actionInput == null) return 0;
 
-            return actionInput.Value;
+            return actionInput.AxisValue;
         }
 
         public bool GetUp(string virtualKey)
@@ -60,7 +78,7 @@ namespace TwoForksVr.VrInput
             ActionMap.TryGetValue(virtualKey, out var actionInput);
             if (actionInput == null) return false;
 
-            return actionInput.ValueUp;
+            return actionInput.ButtonUp;
         }
 
         public bool GetDown(string virtualKey)
@@ -68,7 +86,7 @@ namespace TwoForksVr.VrInput
             ActionMap.TryGetValue(virtualKey, out var actionInput);
             if (actionInput == null) return false;
 
-            return actionInput.ValueDown;
+            return actionInput.ButtonDown;
         }
     }
 }

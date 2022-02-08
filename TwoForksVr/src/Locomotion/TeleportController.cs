@@ -2,7 +2,7 @@ using TwoForksVr.Assets;
 using TwoForksVr.Limbs;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
-using TwoForksVr.VrInput;
+using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
 using Valve.VR;
 
@@ -11,7 +11,7 @@ namespace TwoForksVr.Locomotion
     public class TeleportController : MonoBehaviour
     {
         private const float triggerTeleportSquareDistance = 0.3f;
-        private static readonly SteamVR_Action_Boolean teleportInput = BindingsManager.ActionSet.Teleport;
+        private static readonly IActionInput teleportInput = ActionInputDefinitions.Teleport;
         private VrLimbManager limbManager;
         private vgPlayerNavigationController navigationController;
         private TeleportArc teleportArc;
@@ -36,8 +36,8 @@ namespace TwoForksVr.Locomotion
 
         private void Update()
         {
-            if (teleportInput.GetStateDown(SteamVR_Input_Sources.LeftHand)) SetHand(limbManager.LeftHand);
-            if (teleportInput.GetStateDown(SteamVR_Input_Sources.RightHand)) SetHand(limbManager.RightHand);
+            if (teleportInput.GetButtonDown(SteamVR_Input_Sources.LeftHand)) SetHand(limbManager.LeftHand);
+            if (teleportInput.GetButtonDown(SteamVR_Input_Sources.RightHand)) SetHand(limbManager.RightHand);
             UpdateArc();
             UpdatePlayerRotation();
         }
@@ -61,7 +61,7 @@ namespace TwoForksVr.Locomotion
         public bool IsTeleporting()
         {
             return VrSettings.Teleport.Value &&
-                   teleportInput.GetState(SteamVR_Input_Sources.Any) && navigationController &&
+                   teleportInput.ButtonValue && navigationController &&
                    navigationController.enabled && !vgPauseManager.Instance.isPaused;
         }
 
