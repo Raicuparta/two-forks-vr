@@ -40,23 +40,27 @@ namespace TwoForksVr.UI.Patches
         {
             try
             {
-                if (__instance.canvas && !__instance.canvas.GetComponent<GraphicRaycaster>()) return;
+                var isInteractive = __instance.canvas && __instance.canvas.GetComponent<GraphicRaycaster>();
+                var key = $"{__instance.font.name}{(isInteractive ? "interactive" : "non-interactive")}";
 
-                var key = __instance.font.name;
+                materialMap.TryGetValue(key, out var material);
 
-                if (!materialMap.ContainsKey(key))
-                    materialMap[key] = new Material(__instance.font.material)
-                    {
-                        shader = VrAssetLoader.TMProShader
-                    };
+                if (material == null)
+                {
+                    material = new Material(__instance.font.material);
+                    if (__instance.canvas && __instance.canvas.GetComponent<GraphicRaycaster>())
+                        material.shader = VrAssetLoader.TMProShader;
 
-                var material = materialMap[key];
-                __instance.fontMaterial = material;
-                __instance.fontBaseMaterial = material;
+                    materialMap[key] = material;
+                }
+
+                __instance.SetFontMaterial(material);
+                __instance.SetSharedFontMaterial(material);
+                __instance.SetFontBaseMaterial(material);
 
                 // Problem: setting fontSharedMaterial is needed to prevent errors and the empty settings dropdowns,
                 // but it also makes the dialog choices stop rendering on top.
-                __instance.fontSharedMaterial = material;
+                // __instance.fontSharedMaterial = material;
             }
             catch (Exception exception)
             {
