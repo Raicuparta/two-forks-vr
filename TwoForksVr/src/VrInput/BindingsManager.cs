@@ -32,6 +32,8 @@ namespace TwoForksVr.VrInput
                 {VirtualKey.Cancel, ActionInputDefinitions.Cancel},
                 {VirtualKey.DialogUp, ActionInputDefinitions.UIUp},
                 {VirtualKey.DialogDown, ActionInputDefinitions.UIDown},
+                // TODO: use ScrollUpDown for the radio prompt.
+                // {VirtualKey.ScrollUpDown, ActionInputDefinitions.RotateY},
                 {VirtualKey.Jog, ActionInputDefinitions.Jog},
                 {VirtualKey.Pause, ActionInputDefinitions.Cancel},
                 {VirtualKey.NextMenu, ActionInputDefinitions.NextPage},

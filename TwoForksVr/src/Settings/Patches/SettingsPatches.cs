@@ -16,13 +16,6 @@ namespace TwoForksVr.Settings.Patches
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.minimalInterface), MethodType.Setter)]
-        private static void ForceEnableMinimalInterface(ref bool value)
-        {
-            value = true;
-        }
-
-        [HarmonyPrefix]
         [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.MotionBlurQuality), MethodType.Setter)]
         private static void ForceNoMotionBlur(ref int value)
         {
