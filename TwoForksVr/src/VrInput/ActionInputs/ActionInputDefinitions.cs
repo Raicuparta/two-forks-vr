@@ -21,16 +21,16 @@
             new BooleanActionInput(BindingsManager.ActionSet.Jog);
 
         public static readonly BooleanActionInput UIUp =
-            new BooleanActionInput(BindingsManager.ActionSet.UIUp, " ^");
+            new BooleanActionInput(BindingsManager.ActionSet.UIUp);
 
         public static readonly BooleanActionInput UIDown =
-            new BooleanActionInput(BindingsManager.ActionSet.UIDown, " v");
+            new BooleanActionInput(BindingsManager.ActionSet.UIDown);
 
         public static readonly BooleanActionInput NextPage =
-            new BooleanActionInput(BindingsManager.ActionSet.NextPage, " >");
+            new BooleanActionInput(BindingsManager.ActionSet.NextPage);
 
         public static readonly BooleanActionInput PreviousPage =
-            new BooleanActionInput(BindingsManager.ActionSet.PreviousPage, " <");
+            new BooleanActionInput(BindingsManager.ActionSet.PreviousPage);
 
         public static readonly Vector2ActionInput MoveX =
             new Vector2ActionInput(BindingsManager.ActionSet.Move);

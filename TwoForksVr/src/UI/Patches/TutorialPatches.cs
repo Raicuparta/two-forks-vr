@@ -12,8 +12,9 @@ namespace TwoForksVr.UI.Patches
     {
         private static readonly Dictionary<string, string> tutorialTextMap = new Dictionary<string, string>
         {
+            {"Text", ""},
             {"textRadio", "Hold [RadioButton] to activate radio."},
-            {"textRadio_select_dialog", "[ScrollUpDown] to select dialog."},
+            {"textRadio_select_dialog", $"[[{VirtualKey.DialogUp}] to select dialog."},
             {"textUse_radio", "Release [RadioButton] to talk to Delilah."},
             {"textInspect_object", "Look at hand to inspect objects."},
             {"textInspect_object_move", ""},
@@ -30,8 +31,7 @@ namespace TwoForksVr.UI.Patches
             {"textUse_object", "Aim with hand and press [UseButton] to use objects."},
             {"textInventory_open", $"Hold [{VirtualKey.ToolPicker}] to select notes inventory from the tool picker."},
             {"textInventory_browse", "Use hand laser to browse notes."},
-            // {"textInventory_read", "[ReadModeButton] to read note"},
-            {"textInventory_read", ""},
+            {"textInventory_read", "[StoreObjectButton] to store note"},
             {"textCamera", $"Hold [{VirtualKey.ToolPicker}] to select camera from tool picker."},
             {"textCamera_picture", "[UseButton] to take a picture."},
             {"textCamera_lower", $"Press [{VirtualKey.ToolPicker}] to lower camera."},
