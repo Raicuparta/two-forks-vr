@@ -47,7 +47,8 @@ namespace TwoForksVr.VrInput
 
                 // Unused for actually controlling stuff, but used for the input prompts.
                 {VirtualKey.ScrollUpDown, ActionInputDefinitions.UIUp},
-                {VirtualKey.ToolPicker, ActionInputDefinitions.ToolPicker}
+                {VirtualKey.ToolPicker, ActionInputDefinitions.ToolPicker},
+                {VirtualKey.Inventory, ActionInputDefinitions.Cancel}
             };
         }
 
