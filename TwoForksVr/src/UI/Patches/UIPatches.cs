@@ -83,6 +83,10 @@ namespace TwoForksVr.UI.Patches
             var reticule = safeZoner.Find("ReticuleGroup/ReticuleParent/ReticuleCanvasGroup/Reticule");
             reticule.GetComponent<Image>().enabled = false;
             reticule.Find("ReticuleLarge").GetComponent<Image>().enabled = false;
+
+            var bottomLeftObjects = safeZoner.Find("BottomLeftObjects");
+            bottomLeftObjects.Find("CompassOnScreenTooltip").gameObject.SetActive(false);
+            bottomLeftObjects.Find("MapOnScreenTooltip").gameObject.SetActive(false);
         }
     }
 }
