@@ -39,7 +39,11 @@ namespace TwoForksVr.VrInput
                 {VirtualKey.Radio, ActionInputDefinitions.Radio},
                 {VirtualKey.MoveXAxis, ActionInputDefinitions.MoveX},
                 {VirtualKey.LookXAxisStick, ActionInputDefinitions.RotateX},
-                {VirtualKey.MoveYAxis, ActionInputDefinitions.MoveY}
+                {VirtualKey.MoveYAxis, ActionInputDefinitions.MoveY},
+                {VirtualKey.MoveForwardKeyboard, ActionInputDefinitions.UIUp},
+                {VirtualKey.MoveBackwardKeyboard, ActionInputDefinitions.UIDown},
+                {VirtualKey.StrafeRightKeyboard, ActionInputDefinitions.NextPage},
+                {VirtualKey.StrafeLeftKeyboard, ActionInputDefinitions.PreviousPage}
             };
         }
 

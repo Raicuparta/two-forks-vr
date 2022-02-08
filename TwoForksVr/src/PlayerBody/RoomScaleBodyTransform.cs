@@ -39,6 +39,21 @@ namespace TwoForksVr.PlayerBody
 
         private void Update()
         {
+            UpdateRecenterOnEnablingNavigationController();
+        }
+
+        protected override void VeryLateUpdate()
+        {
+            if (ShouldSkipUpdate()) return;
+            UpdateRotation();
+            UpdateRoomScalePosition();
+        }
+
+        // The navigation controller gets disabled while some larger animations are playing.
+        // Room scale body transform adjustments are paused while the navigation controller is disabled.
+        // So we recenter the position and rotation when the navigation controller is enabled again.
+        private void UpdateRecenterOnEnablingNavigationController()
+        {
             if (!navigationController) return;
 
             if (navigationController.enabled && !previousNavigationControlerEnabled)
@@ -48,13 +63,6 @@ namespace TwoForksVr.PlayerBody
             }
 
             previousNavigationControlerEnabled = navigationController.enabled;
-        }
-
-        protected override void VeryLateUpdate()
-        {
-            if (ShouldSkipUpdate()) return;
-            UpdateRotation();
-            UpdateRoomScalePosition();
         }
 
         private bool ShouldSkipUpdate()

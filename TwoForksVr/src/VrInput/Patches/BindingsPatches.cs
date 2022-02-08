@@ -13,11 +13,55 @@ namespace TwoForksVr.VrInput.Patches
         private const float outerDeadzone = 0.5f;
         private const float innerDeadzone = 0.1f;
 
-        private static readonly Dictionary<string, string> replacementCommandMap = new Dictionary<string, string>
-        {
-            // Fixes UIDown action triggering both dialog selection and interact.
-            {"DialogSelectionDownOrUse", "DialogSelectionDown"}
-        };
+        private static readonly Dictionary<string, Dictionary<string, string>> replacementCommandMap =
+            new Dictionary<string, Dictionary<string, string>>
+            {
+                {
+                    VirtualKey.DialogDown,
+                    new Dictionary<string, string>
+                    {
+                        // Fixes UIDown triggering interact.
+                        {CommandName.DialogSelectionDownOrUse, CommandName.DialogSelectionDown},
+
+                        // Fixes UIDown triggering lock tumbler right..
+                        {CommandName.LockTumblerRight, CommandName.None}
+                    }
+                },
+                // Keyboard move keys are needed to interact with locks and UI stuff,
+                // but need to prevent them from triggering player movement.
+                {
+                    VirtualKey.MoveBackwardKeyboard,
+                    new Dictionary<string, string>
+                    {
+                        {CommandName.BackwardKeyDown, CommandName.None},
+                        {CommandName.BackwardKeyUp, CommandName.None}
+                    }
+                },
+                {
+                    VirtualKey.MoveForwardKeyboard,
+                    new Dictionary<string, string>
+                    {
+                        {CommandName.ForwardKeyDown, CommandName.None},
+                        {CommandName.ForwardKeyUp, CommandName.None}
+                    }
+                },
+                {
+                    VirtualKey.StrafeLeftKeyboard,
+                    new Dictionary<string, string>
+                    {
+                        {CommandName.StrafeLeftKeyDown, CommandName.None},
+                        {CommandName.StrafeLeftKeyUp, CommandName.None}
+                    }
+                },
+                {
+                    VirtualKey.StrafeRightKeyboard,
+                    new Dictionary<string, string>
+                    {
+                        {CommandName.StrafeRightKeyDown, CommandName.None},
+                        {CommandName.StrafeRightKeyUp, CommandName.None}
+                    }
+                }
+            };
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(SteamVR_Input), nameof(SteamVR_Input.GetActionsFileFolder))]
@@ -96,12 +140,32 @@ namespace TwoForksVr.VrInput.Patches
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgKeyBind), nameof(vgKeyBind.TriggerCommand))]
-        private static void ReplaceCommands(ref string command)
+        [HarmonyPatch(typeof(vgInputManager), nameof(vgInputManager.ProcessContextStack))]
+        private static void FixCommandsAhhhhhhh(LinkedList<vgInputContext> stack)
         {
-            replacementCommandMap.TryGetValue(command, out var replacementCommand);
-            if (replacementCommand == null) return;
-            command = replacementCommand;
+            foreach (var inputContext in stack)
+            foreach (var commandMapping in inputContext.commandMap)
+            {
+                replacementCommandMap.TryGetValue(commandMapping.virtualKey, out var commandReplacements);
+                if (commandReplacements == null) continue;
+
+                for (var i = 0; i < commandMapping.commands.Count; i++)
+                {
+                    var command = commandMapping.commands[i];
+                    commandReplacements.TryGetValue(command.command, out var replacementCommand);
+                    switch (replacementCommand)
+                    {
+                        case null:
+                            continue;
+                        case CommandName.None:
+                            commandMapping.commands.RemoveAt(i);
+                            continue;
+                        default:
+                            commandMapping.commands[i].command = replacementCommand;
+                            break;
+                    }
+                }
+            }
         }
     }
 }
