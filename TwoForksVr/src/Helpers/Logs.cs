@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TwoForksVr.Helpers
 {
@@ -25,7 +24,7 @@ namespace TwoForksVr.Helpers
         public static void LogError(object data)
         {
 #if DEBUG
-            Debug.LogError($"{data}: {Environment.StackTrace}");
+            Debug.LogError(data);
 #endif
         }
     }
