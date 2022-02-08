@@ -45,7 +45,8 @@ namespace TwoForksVr.VrInput
                 {VirtualKey.MoveForwardKeyboard, ActionInputDefinitions.UIUp},
                 {VirtualKey.MoveBackwardKeyboard, ActionInputDefinitions.UIDown},
                 {VirtualKey.StrafeRightKeyboard, ActionInputDefinitions.NextPage},
-                {VirtualKey.StrafeLeftKeyboard, ActionInputDefinitions.PreviousPage}
+                {VirtualKey.StrafeLeftKeyboard, ActionInputDefinitions.PreviousPage},
+                {VirtualKey.ToolPicker, ActionInputDefinitions.ToolPicker}
             };
         }
 

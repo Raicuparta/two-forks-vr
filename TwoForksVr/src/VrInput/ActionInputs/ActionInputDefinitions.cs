@@ -46,5 +46,8 @@
 
         public static readonly BooleanActionInput Recenter =
             new BooleanActionInput(BindingsManager.ActionSet.Recenter);
+
+        public static readonly BooleanActionInput ToolPicker =
+            new BooleanActionInput(BindingsManager.ActionSet.ToolPicker);
     }
 }
