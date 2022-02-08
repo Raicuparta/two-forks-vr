@@ -14,12 +14,18 @@ namespace TwoForksVr.VrInput.ActionInputs
         }
 
         public ISteamVR_Action_In Action => SpecificAction;
-        public bool Active => Action.active;
-        public abstract float Value { get; }
-        public abstract bool ValueUp { get; }
-        public abstract bool ValueDown { get; }
+        public float AxisValue => Action.active ? GetValue() : 0;
+        public bool ButtonValue => Action.active && GetValue() != 0;
+        public bool ButtonUp => Action.active && GetValueUp();
+        public bool ButtonDown => Action.active && GetValueDown();
         public bool IsEitherHand => IsEitherHandValue;
         public string PromptSuffix => PromptSuffixValue;
-        public SteamVR_Input_Sources ActiveSource => Action?.activeDevice ?? SteamVR_Input_Sources.Any;
+
+        public SteamVR_Input_Sources ActiveSource =>
+            Action != null && Action.active ? Action.activeDevice : SteamVR_Input_Sources.Any;
+
+        protected abstract float GetValue();
+        protected abstract bool GetValueUp();
+        protected abstract bool GetValueDown();
     }
 }

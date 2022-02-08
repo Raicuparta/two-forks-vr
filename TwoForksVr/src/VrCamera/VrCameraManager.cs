@@ -1,6 +1,6 @@
 ﻿using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
-using TwoForksVr.VrInput;
+using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
 using UnityEngine.XR;
 using UnityStandardAssets.ImageEffects;
@@ -42,7 +42,7 @@ namespace TwoForksVr.VrCamera
 
         private void Update()
         {
-            if (BindingsManager.ActionSet.Recenter.stateDown) RecenterPosition(true);
+            if (ActionInputDefinitions.Recenter.ButtonDown) RecenterPosition(true);
             UpdateCulling();
         }
 

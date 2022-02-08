@@ -9,9 +9,21 @@ namespace TwoForksVr.VrInput.ActionInputs
             TexturePath = texturePath;
         }
 
-        public override float Value => 0;
         public string TexturePath { get; }
-        public override bool ValueUp => false;
-        public override bool ValueDown => false;
+
+        protected override float GetValue()
+        {
+            return 0;
+        }
+
+        protected override bool GetValueUp()
+        {
+            return false;
+        }
+
+        protected override bool GetValueDown()
+        {
+            return false;
+        }
     }
 }

@@ -13,9 +13,21 @@ namespace TwoForksVr.VrInput.ActionInputs
             TextureModifier = textureModifier;
         }
 
-        public override float Value => yOnly ? SpecificAction.axis.y : SpecificAction.axis.x;
         public string TextureModifier { get; }
-        public override bool ValueUp => false;
-        public override bool ValueDown => false;
+
+        protected override float GetValue()
+        {
+            return yOnly ? SpecificAction.axis.y : SpecificAction.axis.x;
+        }
+
+        protected override bool GetValueUp()
+        {
+            return false;
+        }
+
+        protected override bool GetValueDown()
+        {
+            return false;
+        }
     }
 }

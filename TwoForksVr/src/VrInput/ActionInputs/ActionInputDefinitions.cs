@@ -1,53 +1,66 @@
-﻿namespace TwoForksVr.VrInput.ActionInputs
+﻿using Valve.VR;
+
+namespace TwoForksVr.VrInput.ActionInputs
 {
     public static class ActionInputDefinitions
     {
+        public static readonly SteamVR_Input_ActionSet_default ActionSet = SteamVR_Actions._default;
+
         public static readonly EmptyActionInput Empty =
             new EmptyActionInput();
 
         public static readonly BooleanActionInput Cancel =
-            new BooleanActionInput(BindingsManager.ActionSet.Cancel);
+            new BooleanActionInput(ActionSet.Cancel);
 
         public static readonly BooleanActionInput Grip =
-            new BooleanActionInput(BindingsManager.ActionSet.Grip);
+            new BooleanActionInput(ActionSet.Grip);
 
         public static readonly BooleanActionInput Radio =
-            new BooleanActionInput(BindingsManager.ActionSet.Radio);
+            new BooleanActionInput(ActionSet.Radio);
 
         public static readonly BooleanActionInput Interact =
-            new BooleanActionInput(BindingsManager.ActionSet.Interact, "", true);
+            new BooleanActionInput(ActionSet.Interact, "", true);
 
         public static readonly BooleanActionInput Jog =
-            new BooleanActionInput(BindingsManager.ActionSet.Jog);
+            new BooleanActionInput(ActionSet.Jog);
 
         public static readonly BooleanActionInput UIUp =
-            new BooleanActionInput(BindingsManager.ActionSet.UIUp);
+            new BooleanActionInput(ActionSet.UIUp);
 
         public static readonly BooleanActionInput UIDown =
-            new BooleanActionInput(BindingsManager.ActionSet.UIDown);
+            new BooleanActionInput(ActionSet.UIDown);
 
         public static readonly BooleanActionInput NextPage =
-            new BooleanActionInput(BindingsManager.ActionSet.NextPage);
+            new BooleanActionInput(ActionSet.NextPage);
 
         public static readonly BooleanActionInput PreviousPage =
-            new BooleanActionInput(BindingsManager.ActionSet.PreviousPage);
+            new BooleanActionInput(ActionSet.PreviousPage);
 
         public static readonly Vector2ActionInput MoveX =
-            new Vector2ActionInput(BindingsManager.ActionSet.Move);
+            new Vector2ActionInput(ActionSet.Move);
 
         public static readonly Vector2ActionInput MoveY =
-            new Vector2ActionInput(BindingsManager.ActionSet.Move, true);
+            new Vector2ActionInput(ActionSet.Move, true);
 
         public static readonly Vector2ActionInput RotateX =
-            new Vector2ActionInput(BindingsManager.ActionSet.Rotate);
+            new Vector2ActionInput(ActionSet.Rotate);
 
         public static readonly Vector2ActionInput RotateY =
-            new Vector2ActionInput(BindingsManager.ActionSet.Rotate, true);
+            new Vector2ActionInput(ActionSet.Rotate, true);
 
         public static readonly BooleanActionInput Recenter =
-            new BooleanActionInput(BindingsManager.ActionSet.Recenter);
+            new BooleanActionInput(ActionSet.Recenter);
 
         public static readonly BooleanActionInput ToolPicker =
-            new BooleanActionInput(BindingsManager.ActionSet.ToolPicker);
+            new BooleanActionInput(ActionSet.ToolPicker);
+
+        public static readonly BooleanActionInput Teleport =
+            new BooleanActionInput(ActionSet.Teleport);
+
+        public static readonly BooleanActionInput SnapTurnLeft =
+            new BooleanActionInput(ActionSet.SnapTurnLeft);
+
+        public static readonly BooleanActionInput SnapTurnRight =
+            new BooleanActionInput(ActionSet.SnapTurnRight);
     }
 }

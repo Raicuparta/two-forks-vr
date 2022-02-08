@@ -11,8 +11,19 @@ namespace TwoForksVr.VrInput.ActionInputs
             IsEitherHandValue = isEitherHand;
         }
 
-        public override float Value => SpecificAction.state ? 1 : 0;
-        public override bool ValueUp => SpecificAction.stateUp;
-        public override bool ValueDown => SpecificAction.stateDown;
+        protected override float GetValue()
+        {
+            return SpecificAction.state ? 1 : 0;
+        }
+
+        protected override bool GetValueUp()
+        {
+            return SpecificAction.stateUp;
+        }
+
+        protected override bool GetValueDown()
+        {
+            return SpecificAction.stateDown;
+        }
     }
 }
