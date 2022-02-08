@@ -26,14 +26,14 @@ namespace TwoForksVr.VrInput.Patches
             var hand = "";
             if (!inputAction.IsEitherHand)
             {
-                if (source == SteamVR_Input_Sources.RightHand) hand = "right";
-                if (source == SteamVR_Input_Sources.LeftHand) hand = "left";
+                if (source == SteamVR_Input_Sources.RightHand) hand = "right ";
+                if (source == SteamVR_Input_Sources.LeftHand) hand = "left ";
             }
 
             var name = inputAction.Action.GetRenderModelComponentName(inputAction.ActiveSource);
             name = name.Replace("button_", "");
             name = name.Replace("thumb", "");
-            __result = textInfo.ToTitleCase($"{hand} {name} {inputAction.PromptSuffix}");
+            __result = textInfo.ToTitleCase($"{hand}{name}{inputAction.PromptSuffix}");
 
             return false;
         }
