@@ -72,8 +72,14 @@ namespace TwoForksVr.UI.Patches
         [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.Awake))]
         private static void HideHudElements(vgHudManager __instance)
         {
+            __instance.readObjectButtonGroup.transform.parent.Find("ExamineItem").gameObject.SetActive(false);
+            __instance.readObjectButtonGroup.SetActive(false);
+
+            // Dummy object is just so the hud manager still has a valid reference after we destroy the object.
+            __instance.readObjectButtonGroup = new GameObject("Dummy");
+            __instance.readObjectButtonGroup.transform.SetParent(__instance.transform, false);
+
             var safeZoner = __instance.transform.Find("uGUI Root/HUD/SafeZoner");
-            safeZoner.Find("HeldObjectHUDParent/HeldObjectHUDAnimator/ExamineItem").gameObject.SetActive(false);
             var reticule = safeZoner.Find("ReticuleGroup/ReticuleParent/ReticuleCanvasGroup/Reticule");
             reticule.GetComponent<Image>().enabled = false;
             reticule.Find("ReticuleLarge").GetComponent<Image>().enabled = false;
