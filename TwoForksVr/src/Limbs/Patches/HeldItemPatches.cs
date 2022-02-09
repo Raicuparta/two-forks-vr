@@ -9,7 +9,7 @@ namespace TwoForksVr.Limbs.Patches
     {
         private static readonly string[] attachmentNameBlocklist =
         {
-            "BackPack"
+            "Backpack"
         };
 
         [HarmonyPrefix]

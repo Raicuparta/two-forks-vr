@@ -1,5 +1,6 @@
 using TwoForksVr.Helpers;
 using TwoForksVr.Locomotion;
+using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using UnityEngine;
 
@@ -56,13 +57,20 @@ namespace TwoForksVr.PlayerBody
         {
             if (!navigationController) return;
 
-            if (navigationController.enabled != previousNavigationControlerEnabled)
+            if (HasNavigatorStateChanged())
             {
                 stage.RecenterPosition(true);
                 stage.RecenterRotation();
             }
 
             previousNavigationControlerEnabled = navigationController.enabled;
+        }
+
+        private bool HasNavigatorStateChanged()
+        {
+            if (VrSettings.FixedCameraDuringAnimations.Value)
+                return navigationController.enabled != previousNavigationControlerEnabled;
+            return navigationController.enabled && !previousNavigationControlerEnabled;
         }
 
         private bool ShouldSkipUpdate()

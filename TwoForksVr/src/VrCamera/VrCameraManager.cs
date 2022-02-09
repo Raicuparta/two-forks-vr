@@ -42,7 +42,12 @@ namespace TwoForksVr.VrCamera
 
         private void Update()
         {
-            if (ActionInputDefinitions.Recenter.ButtonDown) RecenterPosition(true);
+            if (ActionInputDefinitions.Recenter.ButtonDown)
+            {
+                RecenterPosition(true);
+                RecenterRotation();
+            }
+
             UpdateCulling();
         }
 
@@ -70,6 +75,7 @@ namespace TwoForksVr.VrCamera
         private void RecenterIncludingVertical()
         {
             RecenterPosition(true);
+            RecenterRotation();
         }
 
         private void SetUpCamera()
@@ -132,6 +138,7 @@ namespace TwoForksVr.VrCamera
 
         public void RecenterRotation()
         {
+            if (!playerTransform || !camera) return;
             var angleOffset = playerTransform.eulerAngles.y - camera.transform.eulerAngles.y;
             transform.RotateAround(playerTransform.position, Vector3.up, angleOffset);
         }
