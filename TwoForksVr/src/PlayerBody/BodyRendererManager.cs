@@ -77,15 +77,10 @@ namespace TwoForksVr.PlayerBody
 
         private void UpdateArmsVisibility()
         {
-            if (isShowingArms)
-            {
-                currentShowArmsTime += Time.deltaTime;
-                Logs.LogInfo($"currentShowArmsTime {currentShowArmsTime}");
-            }
+            if (isShowingArms) currentShowArmsTime += Time.deltaTime;
 
             if (currentShowArmsTime <= minShowArmsTime) return;
 
-            Logs.LogInfo("## UpdateArmsVisibility");
             currentShowArmsTime = 0;
             SetArmsVisibilityAccordingToState();
         }
@@ -95,12 +90,10 @@ namespace TwoForksVr.PlayerBody
             var shoudlShowArms = ShouldShowArms();
             if (!isShowingArms && shoudlShowArms)
             {
-                Logs.LogInfo("## IF");
                 isShowingArms = true;
             }
             else if (isShowingArms && !shoudlShowArms)
             {
-                Logs.LogInfo("## ELSE IF");
                 currentShowArmsTime = 0;
                 isShowingArms = false;
                 SetArmsVisibilityAccordingToState();
