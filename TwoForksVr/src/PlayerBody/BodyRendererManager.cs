@@ -11,15 +11,18 @@ namespace TwoForksVr.PlayerBody
 {
     public class BodyRendererManager : MonoBehaviour
     {
+        private Material armsMaterial;
         private Material backpackMaterial;
         private Texture backpackTexture;
         private Material bodyMaterial;
         private Texture bodyTexture;
         private Shader cutoutShader;
+        private bool isShowingArms;
         private bool isShowingFullBody;
         private vgPlayerNavigationController navigationController;
         private SkinnedMeshRenderer renderer;
         private TeleportController teleportController;
+        private Shader transparentShader;
 
         public static BodyRendererManager Create(VrStage stage, TeleportController teleportController)
         {
@@ -42,10 +45,22 @@ namespace TwoForksVr.PlayerBody
         private void Awake()
         {
             VrSettings.Config.SettingChanged += HandleSettingsChanged;
+            transparentShader = Shader.Find("Marmoset/Transparent/Effects/Diffuse IBL Additive");
             cutoutShader = Shader.Find("Marmoset/Transparent/Cutout/Bumped Specular IBL");
         }
 
         private void Update()
+        {
+            UpdateShowFullBody();
+            UpdateShowArms();
+        }
+
+        private void OnDestroy()
+        {
+            VrSettings.Config.SettingChanged -= HandleSettingsChanged;
+        }
+
+        private void UpdateShowFullBody()
         {
             var shouldShowFullBody = ShouldShowFullBody();
             if (!isShowingFullBody && shouldShowFullBody)
@@ -54,19 +69,36 @@ namespace TwoForksVr.PlayerBody
                 isShowingFullBody = false;
             else
                 return;
-            SetVisibilityAcordingToState();
+            SetBodyVisibilityAccordingToState();
         }
 
-        private void OnDestroy()
+        private void UpdateShowArms()
         {
-            VrSettings.Config.SettingChanged -= HandleSettingsChanged;
+            var shoudlShowArms = ShouldShowArms();
+            if (!isShowingArms && shoudlShowArms)
+                isShowingArms = true;
+            else if (isShowingArms && !shoudlShowArms)
+                isShowingArms = false;
+            else
+                return;
+            SetArmsVisibilityAccordingToState();
         }
 
         private bool ShouldShowFullBody()
         {
             return teleportController.IsTeleporting() ||
-                   VrSettings.FixedCameraDuringAnimations.Value && navigationController &&
-                   !navigationController.enabled;
+                   VrSettings.FixedCameraDuringAnimations.Value && !IsNavigationControllerEnabled();
+        }
+
+        private bool IsNavigationControllerEnabled()
+        {
+            return navigationController && navigationController.enabled;
+        }
+
+        private bool ShouldShowArms()
+        {
+            // TODO add setting for this
+            return !teleportController.IsTeleporting() && !IsNavigationControllerEnabled();
         }
 
         // Hides body parts by either making them completely invisible,
@@ -83,23 +115,24 @@ namespace TwoForksVr.PlayerBody
             backpackMaterial = materials[1];
             backpackTexture = backpackMaterial.mainTexture;
 
-            var armsMaterial = materials[2];
-            MakeMaterialTextureTransparent(armsMaterial);
+            armsMaterial = materials[2];
 
-            SetVisibilityAcordingToState();
+            SetBodyVisibilityAccordingToState();
+            SetArmsVisibilityAccordingToState();
         }
 
         private void MakeMaterialTextureTransparent(Material material, Texture texture = null)
         {
             if (!material) return;
-            material.shader = cutoutShader;
+            material.shader = texture ? transparentShader : cutoutShader;
             material.SetTexture(ShaderProperty.MainTexture, texture);
             material.SetColor(ShaderProperty.Color, texture ? Color.white : Color.clear);
         }
 
         private void HandleSettingsChanged(object sender, EventArgs e)
         {
-            SetVisibilityAcordingToState();
+            SetBodyVisibilityAccordingToState();
+            SetArmsVisibilityAccordingToState();
         }
 
         private Texture2D GetBodyTexture()
@@ -113,10 +146,20 @@ namespace TwoForksVr.PlayerBody
             return isShowingFullBody ? (Texture2D) backpackTexture : null;
         }
 
-        private void SetVisibilityAcordingToState()
+        private Texture2D GetArmsTexture()
+        {
+            return isShowingArms ? VrAssetLoader.ArmsCutoutTexture : null;
+        }
+
+        private void SetBodyVisibilityAccordingToState()
         {
             MakeMaterialTextureTransparent(bodyMaterial, GetBodyTexture());
             MakeMaterialTextureTransparent(backpackMaterial, GetBackpackTexture());
+        }
+
+        private void SetArmsVisibilityAccordingToState()
+        {
+            MakeMaterialTextureTransparent(armsMaterial, GetArmsTexture());
         }
     }
 }

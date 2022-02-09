@@ -10,6 +10,7 @@ namespace TwoForksVr.Assets
         public static GameObject ToolPickerPrefab { get; private set; }
         public static GameObject ShoeLid { get; private set; }
         public static Texture2D BodyCutoutTexture { get; private set; }
+        public static Texture2D ArmsCutoutTexture { get; private set; }
         public static Shader TMProShader { get; private set; }
         public static GameObject VrSettingsMenuPrefab { get; private set; }
         public static GameObject LeftHandPrefab { get; private set; }
@@ -24,6 +25,8 @@ namespace TwoForksVr.Assets
             LeftHandPrefab = bodyBundle.LoadAsset<GameObject>("left-hand");
             RightHandPrefab = bodyBundle.LoadAsset<GameObject>("right-hand");
             BodyCutoutTexture = bodyBundle.LoadAsset<Texture2D>("body-cutout");
+            ArmsCutoutTexture = bodyBundle.LoadAsset<Texture2D>("arms_diffuse_gradient");
+            Logs.LogInfo($"ArmsCutoutTexture {ArmsCutoutTexture.name}");
 
             var uiBundle = LoadBundle("ui");
             ToolPickerPrefab = uiBundle.LoadAsset<GameObject>("tool-picker");

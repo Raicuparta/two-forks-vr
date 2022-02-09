@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2687622404
+CRC: 301523043
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a2b421d568fec82910cad8643a4ec1a9
+    Hash: 8a20ea810529f9a4bafea9a215a5d30c
   TypeTreeHash:
     serializedVersion: 2
     Hash: a1807d8ecc5816ee3dc9e1344537e62f
@@ -32,6 +32,7 @@ ClassTypes:
 - Class: 137
   Script: {instanceID: 0}
 Assets:
+- Assets/Texture2D/arms_diffuse_gradient.png
 - Assets/Prefabs/shoe-lid.prefab
 - Assets/Texture2D/body-cutout.png
 - Assets/Prefabs/right-hand.prefab
