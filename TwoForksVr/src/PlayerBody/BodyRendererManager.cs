@@ -113,8 +113,8 @@ namespace TwoForksVr.PlayerBody
 
         private bool ShouldShowArms()
         {
-            // TODO add setting for this
-            return !teleportController.IsTeleporting() && !IsNavigationControllerEnabled();
+            return VrSettings.ShowHandsDuringAnimations.Value && !teleportController.IsTeleporting() &&
+                   !IsNavigationControllerEnabled();
         }
 
         // Hides body parts by either making them completely invisible,
