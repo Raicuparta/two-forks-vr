@@ -2,7 +2,7 @@ using TwoForksVr.Limbs;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using TwoForksVr.VrCamera;
-using TwoForksVr.VrInput;
+using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
 
 namespace TwoForksVr.Locomotion
@@ -45,13 +45,13 @@ namespace TwoForksVr.Locomotion
 
         private void UpdateSnapTurning()
         {
-            if (BindingsManager.ActionSet.SnapTurnLeft.stateDown)
+            if (ActionInputDefinitions.SnapTurnLeft.ButtonDown)
             {
                 stage.FadeToBlack();
                 Invoke(nameof(SnapTurnLeft), FadeOverlay.Duration);
             }
 
-            if (BindingsManager.ActionSet.SnapTurnRight.stateDown)
+            if (ActionInputDefinitions.SnapTurnRight.ButtonDown)
             {
                 stage.FadeToBlack();
                 Invoke(nameof(SnapTurnRight), FadeOverlay.Duration);
@@ -62,7 +62,7 @@ namespace TwoForksVr.Locomotion
         {
             navigationController.transform.Rotate(
                 Vector3.up,
-                BindingsManager.ActionSet.Rotate.axis.x * smoothRotationSpeed * Time.unscaledDeltaTime);
+                ActionInputDefinitions.RotateX.AxisValue * smoothRotationSpeed * Time.unscaledDeltaTime);
         }
 
         private void SnapTurnLeft()

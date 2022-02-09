@@ -21,7 +21,7 @@ namespace TwoForksVr.Settings
             SnapTurning = config.Bind(turningCategory, "SnapTurning", false,
                 "Snap turning");
             Teleport = config.Bind(locomotionCategory, "Teleport", false,
-                "Fixed camera whie moving (\"teleport\" locomotion)");
+                "Fixed camera while moving (\"teleport\" locomotion)");
             FixedCameraDuringAnimations = config.Bind(locomotionCategory, "FixedCameraDuringAnimations", false,
                 "Fixed camera during animations (experimental)");
             ShowBody = config.Bind(playerBodyCategory, "ShowBody", false,

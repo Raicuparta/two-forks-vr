@@ -13,7 +13,7 @@ namespace TwoForksVr.LaserPointer.Patches
         // I tried a bunch of nice ways to fix this, but the only reliable solution was this hack, where I make the
         // targeting ray start at an offset behind the laser, so that we have some more distance between the origin and
         // the targets.
-        private const float targetingOriginOffset = 0.8f;
+        private const float targetingOriginOffset = 0.7f;
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgPlayerTargeting), nameof(vgPlayerTargeting.UpdateTarget))]

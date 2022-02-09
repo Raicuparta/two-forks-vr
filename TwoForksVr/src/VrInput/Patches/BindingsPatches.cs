@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using HarmonyLib;
 using TwoForksVr.Settings;
 using UnityEngine;
@@ -12,19 +13,67 @@ namespace TwoForksVr.VrInput.Patches
         private const float outerDeadzone = 0.5f;
         private const float innerDeadzone = 0.1f;
 
+        private static readonly HashSet<string> ignoredVirtualKeys = new HashSet<string>
+        {
+            VirtualKey.ScrollUpDown,
+            VirtualKey.Inventory
+        };
+
+        private static readonly Dictionary<string, Dictionary<string, string>> replacementCommandMap =
+            new Dictionary<string, Dictionary<string, string>>
+            {
+                {
+                    VirtualKey.DialogDown,
+                    new Dictionary<string, string>
+                    {
+                        // Fixes UIDown triggering interact.
+                        {CommandName.DialogSelectionDownOrUse, CommandName.DialogSelectionDown},
+
+                        // Fixes UIDown triggering lock tumbler right..
+                        {CommandName.LockTumblerRight, CommandName.None}
+                    }
+                },
+                // Keyboard move keys are needed to interact with locks and UI stuff,
+                // but need to prevent them from triggering player movement.
+                {
+                    VirtualKey.MoveBackwardKeyboard,
+                    new Dictionary<string, string>
+                    {
+                        {CommandName.BackwardKeyDown, CommandName.None},
+                        {CommandName.BackwardKeyUp, CommandName.None}
+                    }
+                },
+                {
+                    VirtualKey.MoveForwardKeyboard,
+                    new Dictionary<string, string>
+                    {
+                        {CommandName.ForwardKeyDown, CommandName.None},
+                        {CommandName.ForwardKeyUp, CommandName.None}
+                    }
+                },
+                {
+                    VirtualKey.StrafeLeftKeyboard,
+                    new Dictionary<string, string>
+                    {
+                        {CommandName.StrafeLeftKeyDown, CommandName.None},
+                        {CommandName.StrafeLeftKeyUp, CommandName.None}
+                    }
+                },
+                {
+                    VirtualKey.StrafeRightKeyboard,
+                    new Dictionary<string, string>
+                    {
+                        {CommandName.StrafeRightKeyDown, CommandName.None},
+                        {CommandName.StrafeRightKeyUp, CommandName.None}
+                    }
+                }
+            };
+
         [HarmonyPrefix]
         [HarmonyPatch(typeof(SteamVR_Input), nameof(SteamVR_Input.GetActionsFileFolder))]
         private static bool GetActionsFileFromMod(ref string __result)
         {
             __result = $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/TwoForksVrAssets/Bindings";
-            return false;
-        }
-
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.CheckForPCControls))]
-        private static bool DisableJogDisableThreshold(vgPlayerController __instance)
-        {
-            __instance.minimumInputForJog = 0f;
             return false;
         }
 
@@ -53,21 +102,6 @@ namespace TwoForksVr.VrInput.Patches
             var valueSign = Mathf.Sign(value);
             var absoluteValue = Mathf.Abs(value);
             return valueSign * Mathf.InverseLerp(innerDeadzone, 1f - outerDeadzone, absoluteValue);
-        }
-
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgRewiredInput), nameof(vgRewiredInput.UpdateActiveController))]
-        private static bool ForceXboxController(vgRewiredInput __instance)
-        {
-            __instance.activeController = vgControllerLayoutChoice.XBox;
-            __instance.mCurrentIconMap = __instance.IconMap_Xbox;
-            __instance.mCurrentIconMap.Init();
-
-            if (vgSettingsManager.Instance &&
-                vgSettingsManager.Instance.controller != (int) __instance.activeController)
-                vgSettingsManager.Instance.controller = (int) __instance.activeController;
-
-            return false;
         }
 
         [HarmonyPrefix]
@@ -109,6 +143,41 @@ namespace TwoForksVr.VrInput.Patches
         private static void ForceRewiredHandlingInput(ref bool __result)
         {
             __result = true;
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgInputManager), nameof(vgInputManager.ProcessContextStack))]
+        private static void FixCommandsAhhhhhhh(LinkedList<vgInputContext> stack)
+        {
+            foreach (var inputContext in stack)
+            foreach (var commandMapping in inputContext.commandMap)
+            {
+                if (ignoredVirtualKeys.Contains(commandMapping.virtualKey))
+                {
+                    commandMapping.commands.Clear();
+                    continue;
+                }
+
+                replacementCommandMap.TryGetValue(commandMapping.virtualKey, out var commandReplacements);
+                if (commandReplacements == null) continue;
+
+                for (var i = 0; i < commandMapping.commands.Count; i++)
+                {
+                    var command = commandMapping.commands[i];
+                    commandReplacements.TryGetValue(command.command, out var replacementCommand);
+                    switch (replacementCommand)
+                    {
+                        case null:
+                            continue;
+                        case CommandName.None:
+                            commandMapping.commands.RemoveAt(i);
+                            continue;
+                        default:
+                            commandMapping.commands[i].command = replacementCommand;
+                            break;
+                    }
+                }
+            }
         }
     }
 }

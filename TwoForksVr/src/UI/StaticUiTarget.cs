@@ -5,7 +5,7 @@ namespace TwoForksVr.UI
 {
     public class StaticUiTarget : UiTarget
     {
-        protected override float MinAngleDelta => 15f;
+        protected override float MinAngleDelta => 20f;
 
         public static StaticUiTarget Create(VrStage stage)
         {

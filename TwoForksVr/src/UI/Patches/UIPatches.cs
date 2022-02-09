@@ -40,24 +40,53 @@ namespace TwoForksVr.UI.Patches
         {
             try
             {
-                if (__instance.canvas && !__instance.canvas.GetComponent<GraphicRaycaster>()) return;
+                var isInteractive = __instance.canvas && __instance.canvas.GetComponent<GraphicRaycaster>();
+                var key = $"{__instance.font.name}{(isInteractive ? "interactive" : "non-interactive")}";
 
-                var key = __instance.font.name;
+                materialMap.TryGetValue(key, out var material);
 
-                if (!materialMap.ContainsKey(key))
-                    materialMap[key] = new Material(__instance.font.material)
-                    {
-                        shader = VrAssetLoader.TMProShader
-                    };
+                if (material == null)
+                {
+                    material = new Material(__instance.font.material);
+                    if (__instance.canvas && __instance.canvas.GetComponent<GraphicRaycaster>())
+                        material.shader = VrAssetLoader.TMProShader;
 
-                __instance.fontMaterial = materialMap[key];
-                __instance.fontBaseMaterial = materialMap[key];
-                __instance.fontSharedMaterial = materialMap[key];
+                    materialMap[key] = material;
+                }
+
+                __instance.SetFontMaterial(material);
+                __instance.SetSharedFontMaterial(material);
+                __instance.SetFontBaseMaterial(material);
+
+                // Problem: setting fontSharedMaterial is needed to prevent errors and the empty settings dropdowns,
+                // but it also makes the dialog choices stop rendering on top.
+                // __instance.fontSharedMaterial = material;
             }
             catch (Exception exception)
             {
                 Logs.LogWarning($"Error in TMPro Patch ({__instance.name}): {exception}");
             }
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgHudManager), nameof(vgHudManager.Awake))]
+        private static void HideHudElements(vgHudManager __instance)
+        {
+            __instance.readObjectButtonGroup.transform.parent.Find("ExamineItem").gameObject.SetActive(false);
+            __instance.readObjectButtonGroup.SetActive(false);
+
+            // Dummy object is just so the hud manager still has a valid reference after we destroy the object.
+            __instance.readObjectButtonGroup = new GameObject("Dummy");
+            __instance.readObjectButtonGroup.transform.SetParent(__instance.transform, false);
+
+            var safeZoner = __instance.transform.Find("uGUI Root/HUD/SafeZoner");
+            var reticule = safeZoner.Find("ReticuleGroup/ReticuleParent/ReticuleCanvasGroup/Reticule");
+            reticule.GetComponent<Image>().enabled = false;
+            reticule.Find("ReticuleLarge").GetComponent<Image>().enabled = false;
+
+            var bottomLeftObjects = safeZoner.Find("BottomLeftObjects");
+            bottomLeftObjects.Find("CompassOnScreenTooltip").gameObject.SetActive(false);
+            bottomLeftObjects.Find("MapOnScreenTooltip").gameObject.SetActive(false);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
-using TwoForksVr.VrInput;
+using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
 using Valve.VR;
 
@@ -11,7 +11,7 @@ namespace TwoForksVr.Tools
     {
         private const float minSquareDistance = 0.03f;
 
-        private readonly SteamVR_Action_Boolean input = BindingsManager.ActionSet.ToolPicker;
+        private readonly IActionInput input = ActionInputDefinitions.ToolPicker;
         private ToolPickerItem hoveredTool;
         private Transform leftHand;
         private Transform rightHand;
@@ -41,11 +41,11 @@ namespace TwoForksVr.Tools
 
         private void Update()
         {
-            if (input.GetState(SteamVR_Input_Sources.RightHand)) UpdateSelectedTool(rightHand);
-            if (input.GetState(SteamVR_Input_Sources.LeftHand)) UpdateSelectedTool(leftHand);
-            if (input.GetStateDown(SteamVR_Input_Sources.RightHand)) OpenToolPicker(rightHand);
-            if (input.GetStateDown(SteamVR_Input_Sources.LeftHand)) OpenToolPicker(leftHand);
-            if (input.stateUp) CloseToolPicker();
+            if (input.GetButtonValue(SteamVR_Input_Sources.RightHand)) UpdateSelectedTool(rightHand);
+            if (input.GetButtonValue(SteamVR_Input_Sources.LeftHand)) UpdateSelectedTool(leftHand);
+            if (input.GetButtonDown(SteamVR_Input_Sources.RightHand)) OpenToolPicker(rightHand);
+            if (input.GetButtonDown(SteamVR_Input_Sources.LeftHand)) OpenToolPicker(leftHand);
+            if (input.ButtonUp) CloseToolPicker();
         }
 
         private void SetUpTools()
