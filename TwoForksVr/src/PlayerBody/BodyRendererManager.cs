@@ -11,20 +11,22 @@ namespace TwoForksVr.PlayerBody
 {
     public class BodyRendererManager : MonoBehaviour
     {
-        private const float minShowArmsTime = 0.3f;
+        // After vgPlayerNavigationController has been disabled for this time in seconds, the hands become visible.
+        private const float minimumNavigationDisabledTimeToShowArms = 0.3f;
+
+        private float timeToShowArms;
+        private bool isCountingTimeToShowArms;
+        private bool isShowingFullBody;
         private Material armsMaterial;
         private Material backpackMaterial;
-        private Texture backpackTexture;
         private Material bodyMaterial;
+        private Texture backpackTexture;
         private Texture bodyTexture;
-        private float currentShowArmsTime;
         private Shader cutoutShader;
-        private bool isShowingArms;
-        private bool isShowingFullBody;
-        private vgPlayerNavigationController navigationController;
-        private SkinnedMeshRenderer renderer;
-        private TeleportController teleportController;
         private Shader transparentShader;
+        private vgPlayerNavigationController navigationController;
+        private SkinnedMeshRenderer playerRenderer;
+        private TeleportController teleportController;
 
         public static BodyRendererManager Create(VrStage stage, TeleportController teleportController)
         {
@@ -37,11 +39,11 @@ namespace TwoForksVr.PlayerBody
         {
             if (!playerController) return;
             var playerBody = playerController.transform.Find("henry/body").gameObject;
-            renderer = playerBody.GetComponent<SkinnedMeshRenderer>();
+            playerRenderer = playerBody.GetComponent<SkinnedMeshRenderer>();
             LayerHelper.SetLayer(playerBody, GameLayer.PlayerBody);
             navigationController = playerController.navController;
 
-            HideBodyParts();
+            SetUpMaterials();
         }
 
         private void Awake()
@@ -77,25 +79,25 @@ namespace TwoForksVr.PlayerBody
 
         private void UpdateArmsVisibility()
         {
-            if (isShowingArms) currentShowArmsTime += Time.deltaTime;
+            if (isCountingTimeToShowArms) timeToShowArms += Time.deltaTime;
 
-            if (currentShowArmsTime <= minShowArmsTime) return;
+            if (timeToShowArms <= minimumNavigationDisabledTimeToShowArms) return;
 
-            currentShowArmsTime = 0;
+            timeToShowArms = 0;
             SetArmsVisibilityAccordingToState();
         }
 
         private void UpdateIsShowingArms()
         {
             var shoudlShowArms = ShouldShowArms();
-            if (!isShowingArms && shoudlShowArms)
+            if (!isCountingTimeToShowArms && shoudlShowArms)
             {
-                isShowingArms = true;
+                isCountingTimeToShowArms = true;
             }
-            else if (isShowingArms && !shoudlShowArms)
+            else if (isCountingTimeToShowArms && !shoudlShowArms)
             {
-                currentShowArmsTime = 0;
-                isShowingArms = false;
+                timeToShowArms = 0;
+                isCountingTimeToShowArms = false;
                 SetArmsVisibilityAccordingToState();
             }
         }
@@ -117,13 +119,11 @@ namespace TwoForksVr.PlayerBody
                    !IsNavigationControllerEnabled();
         }
 
-        // Hides body parts by either making them completely invisible,
-        // or by using transparent textures to leave parts visible (hands and feet).
-        private void HideBodyParts()
+        private void SetUpMaterials()
         {
-            renderer.shadowCastingMode = ShadowCastingMode.TwoSided;
+            playerRenderer.shadowCastingMode = ShadowCastingMode.TwoSided;
 
-            var materials = renderer.materials;
+            var materials = playerRenderer.materials;
 
             bodyMaterial = materials[0];
             bodyTexture = bodyMaterial.mainTexture;
@@ -164,7 +164,7 @@ namespace TwoForksVr.PlayerBody
 
         private Texture2D GetArmsTexture()
         {
-            return isShowingArms ? VrAssetLoader.ArmsCutoutTexture : null;
+            return isCountingTimeToShowArms ? VrAssetLoader.ArmsCutoutTexture : null;
         }
 
         private void SetBodyVisibilityAccordingToState()
