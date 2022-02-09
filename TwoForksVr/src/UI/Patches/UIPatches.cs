@@ -80,8 +80,10 @@ namespace TwoForksVr.UI.Patches
             __instance.readObjectButtonGroup.transform.SetParent(__instance.transform, false);
 
             var safeZoner = __instance.transform.Find("uGUI Root/HUD/SafeZoner");
-            var reticule = safeZoner.Find("ReticuleGroup/ReticuleParent/ReticuleCanvasGroup/Reticule");
+            var reticuleCanvasGroup = safeZoner.Find("ReticuleGroup/ReticuleParent/ReticuleCanvasGroup");
+            var reticule = reticuleCanvasGroup.Find("Reticule");
             reticule.GetComponent<Image>().enabled = false;
+            reticuleCanvasGroup.Find("ReticuleDisabled").GetComponent<Image>().enabled = false;
             reticule.Find("ReticuleLarge").GetComponent<Image>().enabled = false;
 
             var bottomLeftObjects = safeZoner.Find("BottomLeftObjects");
