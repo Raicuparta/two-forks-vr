@@ -8,7 +8,6 @@ namespace TwoForksVr.Assets
     {
         private const string assetsDir = "/BepInEx/plugins/TwoForksVrAssets/AssetBundles/";
         public static GameObject ToolPickerPrefab { get; private set; }
-        public static GameObject ShoeLid { get; private set; }
         public static Texture2D BodyCutoutTexture { get; private set; }
         public static Texture2D ArmsCutoutTexture { get; private set; }
         public static Shader TMProShader { get; private set; }
@@ -21,7 +20,6 @@ namespace TwoForksVr.Assets
         public static void LoadAssets()
         {
             var bodyBundle = LoadBundle("body");
-            ShoeLid = bodyBundle.LoadAsset<GameObject>("shoe-lid");
             LeftHandPrefab = bodyBundle.LoadAsset<GameObject>("left-hand");
             RightHandPrefab = bodyBundle.LoadAsset<GameObject>("right-hand");
             BodyCutoutTexture = bodyBundle.LoadAsset<Texture2D>("body-cutout");

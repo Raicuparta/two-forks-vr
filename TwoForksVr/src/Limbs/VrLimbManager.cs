@@ -46,9 +46,6 @@ namespace TwoForksVr.Limbs
             RightHand.SetUp(skeletonRoot, armsMaterial, playerController);
             LeftHand.SetUp(skeletonRoot, armsMaterial, playerController);
             Laser.SetUp(camera);
-
-            VrFoot.Create(skeletonRoot);
-            VrFoot.Create(skeletonRoot, true);
         }
 
         public void HighlightButton(params ISteamVR_Action_In_Source[] actions)
