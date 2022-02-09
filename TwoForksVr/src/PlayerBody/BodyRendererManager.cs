@@ -11,11 +11,13 @@ namespace TwoForksVr.PlayerBody
 {
     public class BodyRendererManager : MonoBehaviour
     {
+        private const float minShowArmsTime = 0.3f;
         private Material armsMaterial;
         private Material backpackMaterial;
         private Texture backpackTexture;
         private Material bodyMaterial;
         private Texture bodyTexture;
+        private float currentShowArmsTime;
         private Shader cutoutShader;
         private bool isShowingArms;
         private bool isShowingFullBody;
@@ -52,7 +54,8 @@ namespace TwoForksVr.PlayerBody
         private void Update()
         {
             UpdateShowFullBody();
-            UpdateShowArms();
+            UpdateIsShowingArms();
+            UpdateArmsVisibility();
         }
 
         private void OnDestroy()
@@ -72,16 +75,36 @@ namespace TwoForksVr.PlayerBody
             SetBodyVisibilityAccordingToState();
         }
 
-        private void UpdateShowArms()
+        private void UpdateArmsVisibility()
+        {
+            if (isShowingArms)
+            {
+                currentShowArmsTime += Time.deltaTime;
+                Logs.LogInfo($"currentShowArmsTime {currentShowArmsTime}");
+            }
+
+            if (currentShowArmsTime <= minShowArmsTime) return;
+
+            Logs.LogInfo("## UpdateArmsVisibility");
+            currentShowArmsTime = 0;
+            SetArmsVisibilityAccordingToState();
+        }
+
+        private void UpdateIsShowingArms()
         {
             var shoudlShowArms = ShouldShowArms();
             if (!isShowingArms && shoudlShowArms)
+            {
+                Logs.LogInfo("## IF");
                 isShowingArms = true;
+            }
             else if (isShowingArms && !shoudlShowArms)
+            {
+                Logs.LogInfo("## ELSE IF");
+                currentShowArmsTime = 0;
                 isShowingArms = false;
-            else
-                return;
-            SetArmsVisibilityAccordingToState();
+                SetArmsVisibilityAccordingToState();
+            }
         }
 
         private bool ShouldShowFullBody()
@@ -159,6 +182,7 @@ namespace TwoForksVr.PlayerBody
 
         private void SetArmsVisibilityAccordingToState()
         {
+            Logs.LogInfo("#### SetArmsVisibilityAccordingToState");
             MakeMaterialTextureTransparent(armsMaterial, GetArmsTexture());
         }
     }
