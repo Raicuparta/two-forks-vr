@@ -11,7 +11,6 @@ namespace TwoForksVr.Settings
         public static ConfigFile Config { get; private set; }
         public static ConfigEntry<bool> SnapTurning { get; private set; }
         public static ConfigEntry<bool> ShowFeet { get; private set; }
-        public static ConfigEntry<bool> ShowBody { get; private set; }
         public static ConfigEntry<bool> Teleport { get; private set; }
         public static ConfigEntry<bool> FixedCameraDuringAnimations { get; private set; }
 
@@ -24,8 +23,6 @@ namespace TwoForksVr.Settings
                 "Fixed camera while moving (\"teleport\" locomotion)");
             FixedCameraDuringAnimations = config.Bind(locomotionCategory, "FixedCameraDuringAnimations", false,
                 "Fixed camera during animations (experimental)");
-            ShowBody = config.Bind(playerBodyCategory, "ShowBody", false,
-                "Show player body");
             ShowFeet = config.Bind(playerBodyCategory, "ShowFeet", true,
                 "Show player feet");
         }

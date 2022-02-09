@@ -153,7 +153,7 @@ namespace TwoForksVr.PlayerBody
 
         private Texture2D GetBodyTexture()
         {
-            if (VrSettings.ShowBody.Value || isShowingFullBody) return (Texture2D) bodyTexture;
+            if (isShowingFullBody) return (Texture2D) bodyTexture;
             return VrSettings.ShowFeet.Value ? VrAssetLoader.BodyCutoutTexture : null;
         }
 
@@ -175,7 +175,6 @@ namespace TwoForksVr.PlayerBody
 
         private void SetArmsVisibilityAccordingToState()
         {
-            Logs.LogInfo("#### SetArmsVisibilityAccordingToState");
             MakeMaterialTextureTransparent(armsMaterial, GetArmsTexture());
         }
     }
