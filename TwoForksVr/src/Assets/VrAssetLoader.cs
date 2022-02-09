@@ -23,7 +23,7 @@ namespace TwoForksVr.Assets
             LeftHandPrefab = bodyBundle.LoadAsset<GameObject>("left-hand");
             RightHandPrefab = bodyBundle.LoadAsset<GameObject>("right-hand");
             BodyCutoutTexture = bodyBundle.LoadAsset<Texture2D>("body-cutout");
-            ArmsCutoutTexture = bodyBundle.LoadAsset<Texture2D>("arms_diffuse_gradient");
+            ArmsCutoutTexture = bodyBundle.LoadAsset<Texture2D>("arm-texture");
             Logs.LogInfo($"ArmsCutoutTexture {ArmsCutoutTexture.name}");
 
             var uiBundle = LoadBundle("ui");

@@ -12,7 +12,6 @@ namespace TwoForksVr.Limbs
         private FakeParenting handRootFakeParenting;
         private bool isLeft;
         private vgPlayerNavigationController navigationController;
-        public VrButtonHighlight ButtonHighlight { get; private set; }
 
         public static VrHand Create(Transform parent, bool isLeft = false)
         {
@@ -24,7 +23,6 @@ namespace TwoForksVr.Limbs
             var instance = transform.gameObject.AddComponent<VrHand>();
             instance.handName = handName;
             instance.isLeft = isLeft;
-            instance.ButtonHighlight = transform.GetComponentInChildren<VrButtonHighlight>();
             instance.SetUpPose();
 
             return instance;

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1798297119
+CRC: 3388443652
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a855a0d40f6f7fefe245e1e5f1d5ac5d
+    Hash: 00323b9de7e16aa1f72e69bb30447e10
   TypeTreeHash:
     serializedVersion: 2
     Hash: 30a26e28640c789a69d83092cccef46a
@@ -66,13 +66,13 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Shader/TMPro_Mobile.cginc
-- Assets/Shader/TMP_SDF-Mobile.shader
-- Assets/Prefabs/vr-settings-menu.prefab
-- Assets/Prefabs/tool-picker.prefab
-- Assets/Shader/TMPro_Surface.cginc
-- Assets/Prefabs/teleport-target.prefab
-- Assets/Shader/TMPro.cginc
-- Assets/Prefabs/fade-overlay.prefab
-- Assets/Shader/TMPro_Properties.cginc
+- Assets/Bundles/UI/TMPro_Mobile.cginc
+- Assets/Bundles/UI/TMP_SDF-Mobile.shader
+- Assets/Bundles/UI/vr-settings-menu.prefab
+- Assets/Bundles/UI/tool-picker.prefab
+- Assets/Bundles/UI/TMPro_Surface.cginc
+- Assets/Bundles/UI/teleport-target.prefab
+- Assets/Bundles/UI/TMPro.cginc
+- Assets/Bundles/UI/fade-overlay.prefab
+- Assets/Bundles/UI/TMPro_Properties.cginc
 Dependencies: []
