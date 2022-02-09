@@ -24,7 +24,6 @@ namespace TwoForksVr.PlayerBody
         private vgPlayerNavigationController navigationController;
         private SkinnedMeshRenderer playerRenderer;
         private TeleportController teleportController;
-
         private float timeToShowArms;
         private Shader transparentShader;
 
@@ -104,8 +103,7 @@ namespace TwoForksVr.PlayerBody
 
         private bool ShouldShowFullBody()
         {
-            return teleportController.IsTeleporting() ||
-                   VrSettings.FixedCameraDuringAnimations.Value && !IsNavigationControllerEnabled();
+            return teleportController.IsTeleporting();
         }
 
         private bool IsNavigationControllerEnabled()

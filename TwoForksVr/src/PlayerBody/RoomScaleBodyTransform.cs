@@ -56,7 +56,7 @@ namespace TwoForksVr.PlayerBody
         {
             if (!navigationController) return;
 
-            if (navigationController.enabled && !previousNavigationControlerEnabled)
+            if (navigationController.enabled != previousNavigationControlerEnabled)
             {
                 stage.RecenterPosition(true);
                 stage.RecenterRotation();
