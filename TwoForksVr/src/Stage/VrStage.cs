@@ -12,7 +12,6 @@ using TwoForksVr.VrInput;
 using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Valve.VR;
 
 namespace TwoForksVr.Stage
 {
@@ -102,7 +101,7 @@ namespace TwoForksVr.Stage
             var playerTransform = playerController ? playerController.transform : null;
             var nextCamera = mainCamera ? mainCamera : fallbackCamera;
             cameraManager.SetUp(nextCamera, playerTransform);
-            limbManager.SetUp(playerTransform, nextCamera);
+            limbManager.SetUp(playerController, nextCamera);
             interactiveUiTarget.SetUp(nextCamera);
             staticUiTarget.SetUp(nextCamera);
             teleportController.SetUp(playerController);
@@ -137,11 +136,6 @@ namespace TwoForksVr.Stage
         public void RecenterRotation()
         {
             cameraManager.RecenterRotation();
-        }
-
-        public void HighlightButton(params ISteamVR_Action_In_Source[] actions)
-        {
-            limbManager.HighlightButton(actions);
         }
 
         public void FadeToBlack()

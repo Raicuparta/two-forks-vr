@@ -1,5 +1,6 @@
 ﻿using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
+using TwoForksVr.Settings;
 using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
 using Valve.VR;
@@ -9,8 +10,9 @@ namespace TwoForksVr.Limbs
     public class VrHand : MonoBehaviour
     {
         private string handName;
+        private FakeParenting handRootFakeParenting;
         private bool isLeft;
-        public VrButtonHighlight ButtonHighlight { get; private set; }
+        private vgPlayerNavigationController navigationController;
 
         public static VrHand Create(Transform parent, bool isLeft = false)
         {
@@ -22,13 +24,12 @@ namespace TwoForksVr.Limbs
             var instance = transform.gameObject.AddComponent<VrHand>();
             instance.handName = handName;
             instance.isLeft = isLeft;
-            instance.ButtonHighlight = transform.GetComponentInChildren<VrButtonHighlight>();
             instance.SetUpPose();
 
             return instance;
         }
 
-        public void SetUp(Transform playerRootBone, Material armsMaterial)
+        public void SetUp(Transform playerRootBone, Material armsMaterial, vgPlayerController playerController)
         {
             // Need to deactive and reactivate the object to make SteamVR_Behaviour_Pose work properly.
             gameObject.SetActive(false);
@@ -39,8 +40,18 @@ namespace TwoForksVr.Limbs
                 material.CopyPropertiesFromMaterial(armsMaterial);
             }
 
+            if (playerController) navigationController = playerController.navController;
+
             EnableAnimatedHand(playerRootBone);
             gameObject.SetActive(true);
+        }
+
+        private void Update()
+        {
+            if (!VrSettings.UseOriginalHandsWhileNavigationDisabled.Value || !navigationController ||
+                !handRootFakeParenting) return;
+
+            handRootFakeParenting.enabled = navigationController.enabled;
         }
 
         private void SetUpPose()
@@ -67,12 +78,12 @@ namespace TwoForksVr.Limbs
 
                 // Wedding ring and hand root are special cases, the originals need to follow the copies.
                 var isCloneHandRoot = cloneChild.name.Equals($"henryArm{handName}Hand");
+                if (isCloneHandRoot)
+                    handRootFakeParenting = FakeParenting.Create(targetChild, cloneChild,
+                        FakeParenting.UpdateType.LateUpdate | FakeParenting.UpdateType.VeryLateUpdate);
+
                 var isCloneWeddingRing = cloneChild.name.Equals("HenryWeddingRing 1");
-                if (isCloneWeddingRing || isCloneHandRoot)
-                    FakeParenting.Create(targetChild, cloneChild,
-                        isCloneHandRoot
-                            ? FakeParenting.UpdateType.LateUpdate | FakeParenting.UpdateType.VeryLateUpdate
-                            : FakeParenting.UpdateType.VeryLateUpdate);
+                if (isCloneWeddingRing) FakeParenting.Create(targetChild, cloneChild);
 
                 if (isCloneWeddingRing) continue;
 

@@ -3,7 +3,6 @@ using TwoForksVr.Stage;
 using TwoForksVr.Tools;
 using TwoForksVr.UI.Patches;
 using UnityEngine;
-using Valve.VR;
 
 namespace TwoForksVr.Limbs
 {
@@ -38,30 +37,14 @@ namespace TwoForksVr.Limbs
             return instance;
         }
 
-        public void SetUp(Transform playerTransform, Camera camera)
+        public void SetUp(vgPlayerController playerController, Camera camera)
         {
+            var playerTransform = playerController ? playerController.transform : null;
             var skeletonRoot = GetSkeletonRoot(playerTransform);
             var armsMaterial = GetArmsMaterial(playerTransform);
-            RightHand.SetUp(skeletonRoot, armsMaterial);
-            LeftHand.SetUp(skeletonRoot, armsMaterial);
+            RightHand.SetUp(skeletonRoot, armsMaterial, playerController);
+            LeftHand.SetUp(skeletonRoot, armsMaterial, playerController);
             Laser.SetUp(camera);
-
-            VrFoot.Create(skeletonRoot);
-            VrFoot.Create(skeletonRoot, true);
-        }
-
-        public void HighlightButton(params ISteamVR_Action_In_Source[] actions)
-        {
-            if (actions.Length == 0)
-            {
-                LeftHand.ButtonHighlight.HideAllButtonHints();
-                RightHand.ButtonHighlight.HideAllButtonHints();
-            }
-            else
-            {
-                LeftHand.ButtonHighlight.ShowButtonHint(actions);
-                RightHand.ButtonHighlight.ShowButtonHint(actions);
-            }
         }
 
         private static Material GetArmsMaterial(Transform playerTransform)
