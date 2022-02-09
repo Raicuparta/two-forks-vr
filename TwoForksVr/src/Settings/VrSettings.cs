@@ -11,7 +11,7 @@ namespace TwoForksVr.Settings
         public static ConfigFile Config { get; private set; }
         public static ConfigEntry<bool> SnapTurning { get; private set; }
         public static ConfigEntry<bool> ShowFeet { get; private set; }
-        public static ConfigEntry<bool> ShowHandsDuringAnimations { get; private set; }
+        public static ConfigEntry<bool> UseOriginalHandsWhileNavigationDisabled { get; private set; }
         public static ConfigEntry<bool> Teleport { get; private set; }
         public static ConfigEntry<bool> FixedCameraDuringAnimations { get; private set; }
 
@@ -26,8 +26,9 @@ namespace TwoForksVr.Settings
                 "Fixed camera during animations (experimental)");
             ShowFeet = config.Bind(playerBodyCategory, "ShowFeet", true,
                 "Show player feet");
-            ShowHandsDuringAnimations = config.Bind(playerBodyCategory, "ShowHandsDuringAnimations", true,
-                "Show ghost hands during some animations");
+            UseOriginalHandsWhileNavigationDisabled = config.Bind(playerBodyCategory,
+                "UseOriginalHandsWhileNavigationDisabled", true,
+                "Enable ghost hands during long animations");
         }
     }
 }

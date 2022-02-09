@@ -13,20 +13,20 @@ namespace TwoForksVr.PlayerBody
     {
         // After vgPlayerNavigationController has been disabled for this time in seconds, the hands become visible.
         private const float minimumNavigationDisabledTimeToShowArms = 0.3f;
-
-        private float timeToShowArms;
-        private bool isCountingTimeToShowArms;
-        private bool isShowingFullBody;
         private Material armsMaterial;
         private Material backpackMaterial;
-        private Material bodyMaterial;
         private Texture backpackTexture;
+        private Material bodyMaterial;
         private Texture bodyTexture;
         private Shader cutoutShader;
-        private Shader transparentShader;
+        private bool isCountingTimeToShowArms;
+        private bool isShowingFullBody;
         private vgPlayerNavigationController navigationController;
         private SkinnedMeshRenderer playerRenderer;
         private TeleportController teleportController;
+
+        private float timeToShowArms;
+        private Shader transparentShader;
 
         public static BodyRendererManager Create(VrStage stage, TeleportController teleportController)
         {
@@ -115,7 +115,7 @@ namespace TwoForksVr.PlayerBody
 
         private bool ShouldShowArms()
         {
-            return VrSettings.ShowHandsDuringAnimations.Value && !teleportController.IsTeleporting() &&
+            return VrSettings.UseOriginalHandsWhileNavigationDisabled.Value && !teleportController.IsTeleporting() &&
                    !IsNavigationControllerEnabled();
         }
 

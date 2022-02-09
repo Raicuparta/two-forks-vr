@@ -1,5 +1,6 @@
 ﻿using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
+using TwoForksVr.Settings;
 using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
 using Valve.VR;
@@ -47,7 +48,8 @@ namespace TwoForksVr.Limbs
 
         private void Update()
         {
-            if (!navigationController || !handRootFakeParenting) return;
+            if (!VrSettings.UseOriginalHandsWhileNavigationDisabled.Value || !navigationController ||
+                !handRootFakeParenting) return;
 
             handRootFakeParenting.enabled = navigationController.enabled;
         }
