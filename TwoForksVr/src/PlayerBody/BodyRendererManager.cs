@@ -24,8 +24,9 @@ namespace TwoForksVr.PlayerBody
         private vgPlayerNavigationController navigationController;
         private SkinnedMeshRenderer playerRenderer;
         private TeleportController teleportController;
+
         private float timeToShowArms;
-        private Shader transparentShader;
+        // private Shader transparentShader;
 
         public static BodyRendererManager Create(VrStage stage, TeleportController teleportController)
         {
@@ -47,7 +48,7 @@ namespace TwoForksVr.PlayerBody
         private void Awake()
         {
             VrSettings.Config.SettingChanged += HandleSettingsChanged;
-            transparentShader = Shader.Find("Marmoset/Transparent/Effects/Diffuse IBL Additive");
+            // transparentShader = Shader.Find("Valve/VR/Highlight");
             cutoutShader = Shader.Find("Marmoset/Transparent/Cutout/Bumped Specular IBL");
         }
 
@@ -127,6 +128,7 @@ namespace TwoForksVr.PlayerBody
 
             backpackMaterial = materials[1];
             backpackTexture = backpackMaterial.mainTexture;
+            MakeMaterialTextureTransparent(backpackMaterial);
 
             armsMaterial = materials[2];
 
@@ -137,7 +139,7 @@ namespace TwoForksVr.PlayerBody
         private void MakeMaterialTextureTransparent(Material material, Texture texture = null)
         {
             if (!material) return;
-            material.shader = texture ? transparentShader : cutoutShader;
+            material.shader = texture ? VrAssetLoader.HighlightShader : cutoutShader;
             material.SetTexture(ShaderProperty.MainTexture, texture);
             material.SetColor(ShaderProperty.Color, texture ? Color.white : Color.clear);
         }
@@ -150,13 +152,8 @@ namespace TwoForksVr.PlayerBody
 
         private Texture2D GetBodyTexture()
         {
-            if (isShowingFullBody) return (Texture2D) bodyTexture;
+            if (isShowingFullBody) return VrAssetLoader.BodyCutoutTexture;
             return VrSettings.ShowFeet.Value ? VrAssetLoader.BodyCutoutTexture : null;
-        }
-
-        private Texture2D GetBackpackTexture()
-        {
-            return isShowingFullBody ? (Texture2D) backpackTexture : null;
         }
 
         private Texture2D GetArmsTexture()
@@ -167,7 +164,6 @@ namespace TwoForksVr.PlayerBody
         private void SetBodyVisibilityAccordingToState()
         {
             MakeMaterialTextureTransparent(bodyMaterial, GetBodyTexture());
-            MakeMaterialTextureTransparent(backpackMaterial, GetBackpackTexture());
         }
 
         private void SetArmsVisibilityAccordingToState()

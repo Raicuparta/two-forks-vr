@@ -11,6 +11,7 @@ namespace TwoForksVr.Assets
         public static Texture2D BodyCutoutTexture { get; private set; }
         public static Texture2D ArmsCutoutTexture { get; private set; }
         public static Shader TMProShader { get; private set; }
+        public static Shader HighlightShader { get; private set; }
         public static GameObject VrSettingsMenuPrefab { get; private set; }
         public static GameObject LeftHandPrefab { get; private set; }
         public static GameObject RightHandPrefab { get; private set; }
@@ -31,6 +32,7 @@ namespace TwoForksVr.Assets
             VrSettingsMenuPrefab = uiBundle.LoadAsset<GameObject>("vr-settings-menu");
             FadeOverlayPrefab = uiBundle.LoadAsset<GameObject>("fade-overlay");
             TeleportTargetPrefab = uiBundle.LoadAsset<GameObject>("teleport-target");
+            HighlightShader = TeleportTargetPrefab.GetComponentInChildren<Renderer>().material.shader;
             TMProShader = uiBundle.LoadAsset<Shader>("TMP_SDF-Mobile");
         }
 
