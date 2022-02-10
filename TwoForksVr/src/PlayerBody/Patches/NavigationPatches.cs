@@ -40,13 +40,5 @@ namespace TwoForksVr.PlayerBody.Patches
             goalLocation.y = player.transform.position.y;
             player.GetComponent<CharacterController>().Move(goalLocation - player.transform.position);
         }
-
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(vgPlayerMover), nameof(vgPlayerMover.StopMoveTo))]
-        private static void RecenterPlayerAfterMovingToTarget()
-        {
-            StageInstance.RecenterPosition(true);
-            StageInstance.RecenterRotation();
-        }
     }
 }
