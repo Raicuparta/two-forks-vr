@@ -39,7 +39,6 @@ namespace TwoForksVr.PlayerBody
             if (!playerController) return;
             var playerBody = playerController.transform.Find("henry/body").gameObject;
             playerRenderer = playerBody.GetComponent<SkinnedMeshRenderer>();
-            LayerHelper.SetLayer(playerBody, GameLayer.PlayerBody);
             navigationController = playerController.navController;
 
             SetUpMaterials();
