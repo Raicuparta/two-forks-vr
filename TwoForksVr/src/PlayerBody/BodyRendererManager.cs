@@ -14,19 +14,14 @@ namespace TwoForksVr.PlayerBody
         // After vgPlayerNavigationController has been disabled for this time in seconds, the hands become visible.
         private const float minimumNavigationDisabledTimeToShowArms = 0.3f;
         private Material armsMaterial;
-        private Material backpackMaterial;
-        private Texture backpackTexture;
         private Material bodyMaterial;
-        private Texture bodyTexture;
         private Shader cutoutShader;
         private bool isCountingTimeToShowArms;
         private bool isShowingFullBody;
         private vgPlayerNavigationController navigationController;
         private SkinnedMeshRenderer playerRenderer;
         private TeleportController teleportController;
-
         private float timeToShowArms;
-        // private Shader transparentShader;
 
         public static BodyRendererManager Create(VrStage stage, TeleportController teleportController)
         {
@@ -48,7 +43,6 @@ namespace TwoForksVr.PlayerBody
         private void Awake()
         {
             VrSettings.Config.SettingChanged += HandleSettingsChanged;
-            // transparentShader = Shader.Find("Valve/VR/Highlight");
             cutoutShader = Shader.Find("Marmoset/Transparent/Cutout/Bumped Specular IBL");
         }
 
@@ -73,7 +67,7 @@ namespace TwoForksVr.PlayerBody
                 isShowingFullBody = false;
             else
                 return;
-            SetBodyVisibilityAccordingToState();
+            SetBodyTexture();
         }
 
         private void UpdateArmsVisibility()
@@ -83,7 +77,7 @@ namespace TwoForksVr.PlayerBody
             if (timeToShowArms <= minimumNavigationDisabledTimeToShowArms) return;
 
             timeToShowArms = 0;
-            SetArmsVisibilityAccordingToState();
+            SetArmsTexture();
         }
 
         private void UpdateIsShowingArms()
@@ -97,7 +91,7 @@ namespace TwoForksVr.PlayerBody
             {
                 timeToShowArms = 0;
                 isCountingTimeToShowArms = false;
-                SetArmsVisibilityAccordingToState();
+                SetArmsTexture();
             }
         }
 
@@ -124,19 +118,17 @@ namespace TwoForksVr.PlayerBody
             var materials = playerRenderer.materials;
 
             bodyMaterial = materials[0];
-            bodyTexture = bodyMaterial.mainTexture;
 
-            backpackMaterial = materials[1];
-            backpackTexture = backpackMaterial.mainTexture;
-            MakeMaterialTextureTransparent(backpackMaterial);
+            var backpackMaterial = materials[1];
+            SetTexture(backpackMaterial);
 
             armsMaterial = materials[2];
 
-            SetBodyVisibilityAccordingToState();
-            SetArmsVisibilityAccordingToState();
+            SetBodyTexture();
+            SetArmsTexture();
         }
 
-        private void MakeMaterialTextureTransparent(Material material, Texture texture = null)
+        private void SetTexture(Material material, Texture texture = null)
         {
             if (!material) return;
             material.shader = texture ? VrAssetLoader.HighlightShader : cutoutShader;
@@ -146,29 +138,29 @@ namespace TwoForksVr.PlayerBody
 
         private void HandleSettingsChanged(object sender, EventArgs e)
         {
-            SetBodyVisibilityAccordingToState();
-            SetArmsVisibilityAccordingToState();
+            SetBodyTexture();
+            SetArmsTexture();
         }
 
         private Texture2D GetBodyTexture()
         {
-            if (isShowingFullBody) return VrAssetLoader.BodyCutoutTexture;
-            return VrSettings.ShowFeet.Value ? VrAssetLoader.BodyCutoutTexture : null;
+            if (isShowingFullBody) return VrAssetLoader.PlayerBodyTexture;
+            return VrSettings.ShowLegs.Value ? VrAssetLoader.PlayerBodyTexture : null;
         }
 
         private Texture2D GetArmsTexture()
         {
-            return isCountingTimeToShowArms ? VrAssetLoader.ArmsCutoutTexture : null;
+            return isCountingTimeToShowArms ? VrAssetLoader.PlayerArmsTexture : null;
         }
 
-        private void SetBodyVisibilityAccordingToState()
+        private void SetBodyTexture()
         {
-            MakeMaterialTextureTransparent(bodyMaterial, GetBodyTexture());
+            SetTexture(bodyMaterial, GetBodyTexture());
         }
 
-        private void SetArmsVisibilityAccordingToState()
+        private void SetArmsTexture()
         {
-            MakeMaterialTextureTransparent(armsMaterial, GetArmsTexture());
+            SetTexture(armsMaterial, GetArmsTexture());
         }
     }
 }
