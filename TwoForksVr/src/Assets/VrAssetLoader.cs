@@ -8,8 +8,8 @@ namespace TwoForksVr.Assets
     {
         private const string assetsDir = "/BepInEx/plugins/TwoForksVrAssets/AssetBundles/";
         public static GameObject ToolPickerPrefab { get; private set; }
-        public static Texture2D BodyCutoutTexture { get; private set; }
-        public static Texture2D ArmsCutoutTexture { get; private set; }
+        public static Texture2D PlayerBodyTexture { get; private set; }
+        public static Texture2D PlayerArmsTexture { get; private set; }
         public static Shader TMProShader { get; private set; }
         public static Shader HighlightShader { get; private set; }
         public static GameObject VrSettingsMenuPrefab { get; private set; }
@@ -23,9 +23,8 @@ namespace TwoForksVr.Assets
             var bodyBundle = LoadBundle("body");
             LeftHandPrefab = bodyBundle.LoadAsset<GameObject>("left-hand");
             RightHandPrefab = bodyBundle.LoadAsset<GameObject>("right-hand");
-            BodyCutoutTexture = bodyBundle.LoadAsset<Texture2D>("body-cutout");
-            ArmsCutoutTexture = bodyBundle.LoadAsset<Texture2D>("arm-texture");
-            Logs.LogInfo($"ArmsCutoutTexture {ArmsCutoutTexture.name}");
+            PlayerBodyTexture = bodyBundle.LoadAsset<Texture2D>("body-texture");
+            PlayerArmsTexture = bodyBundle.LoadAsset<Texture2D>("arm-texture");
 
             var uiBundle = LoadBundle("ui");
             ToolPickerPrefab = uiBundle.LoadAsset<GameObject>("tool-picker");

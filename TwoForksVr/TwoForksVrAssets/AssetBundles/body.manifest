@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4013481157
+CRC: 610477152
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 2e1bf8e9e43fd67d3644b648c5da3ce5
+    Hash: 16ff09d30ddb8d98aa13475e0a9e7004
   TypeTreeHash:
     serializedVersion: 2
     Hash: a1807d8ecc5816ee3dc9e1344537e62f
@@ -32,7 +32,7 @@ ClassTypes:
 - Class: 137
   Script: {instanceID: 0}
 Assets:
-- Assets/Bundles/Body/body-cutout.png
+- Assets/Bundles/Body/body-texture.png
 - Assets/Bundles/Body/arm-texture.png
 - Assets/Bundles/Body/right-hand.prefab
 - Assets/Bundles/Body/left-hand.prefab
