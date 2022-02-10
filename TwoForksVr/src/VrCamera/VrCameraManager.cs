@@ -141,6 +141,7 @@ namespace TwoForksVr.VrCamera
             if (!playerTransform || !camera) return;
             var angleOffset = playerTransform.eulerAngles.y - camera.transform.eulerAngles.y;
             transform.RotateAround(playerTransform.position, Vector3.up, angleOffset);
+            transform.eulerAngles = Vector3.up * transform.eulerAngles.y;
         }
     }
 }

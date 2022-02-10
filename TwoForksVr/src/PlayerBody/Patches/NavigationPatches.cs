@@ -32,13 +32,21 @@ namespace TwoForksVr.PlayerBody.Patches
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(vgPlayerMover), nameof(vgPlayerMover.StartMoveTo))]
-        private static void MovePlayerInstantly(vgPlayerMover __instance, GameObject player)
+        private static void MovePlayerToTargetInstantly(vgPlayerMover __instance, GameObject player)
         {
             if (player == null || player.tag != "Player") return;
 
             var goalLocation = __instance.GetGoalLocation();
             goalLocation.y = player.transform.position.y;
             player.GetComponent<CharacterController>().Move(goalLocation - player.transform.position);
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgPlayerMover), nameof(vgPlayerMover.StopMoveTo))]
+        private static void RecenterPlayerAfterMovingToTarget()
+        {
+            StageInstance.RecenterPosition(true);
+            StageInstance.RecenterRotation();
         }
     }
 }
