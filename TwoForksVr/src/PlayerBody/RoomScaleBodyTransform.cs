@@ -57,13 +57,17 @@ namespace TwoForksVr.PlayerBody
         {
             if (!navigationController) return;
 
-            if (HasNavigatorStateChanged())
-            {
-                stage.RecenterPosition(true);
-                stage.RecenterRotation();
-            }
+            // Recentering immediately after animations didn't always work well for some animations,
+            // so instead I'm recentering with a small delay.
+            if (HasNavigatorStateChanged()) Invoke(nameof(Recenter), 0.1f);
 
             previousNavigationControlerEnabled = navigationController.enabled;
+        }
+
+        private void Recenter()
+        {
+            stage.RecenterPosition(true);
+            stage.RecenterRotation();
         }
 
         private bool HasNavigatorStateChanged()
