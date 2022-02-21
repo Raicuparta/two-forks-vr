@@ -15,15 +15,15 @@ namespace TwoForksVr.Limbs
         private vgPlayerNavigationController navigationController;
         private Transform rootBone;
 
-        public static VrHand Create(Transform parent, bool isDominant = false)
+        public static VrHand Create(Transform parent, bool isNonDominant = false)
         {
-            var transform = Instantiate(isDominant ? VrAssetLoader.LeftHandPrefab : VrAssetLoader.RightHandPrefab,
+            var transform = Instantiate(isNonDominant ? VrAssetLoader.LeftHandPrefab : VrAssetLoader.RightHandPrefab,
                 parent,
                 false).transform;
             LayerHelper.SetLayerRecursive(transform.gameObject, GameLayer.UI);
-            transform.name = $"{(isDominant ? "Dominand" : "NonDominant")}VrHand";
+            transform.name = $"{(isNonDominant ? "Dominand" : "NonDominant")}VrHand";
             var instance = transform.gameObject.AddComponent<VrHand>();
-            instance.isDominant = isDominant;
+            instance.isDominant = isNonDominant;
 
             return instance;
         }

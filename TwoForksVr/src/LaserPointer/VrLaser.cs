@@ -1,7 +1,6 @@
 ﻿using TwoForksVr.Helpers;
 using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
-using Valve.VR;
 
 namespace TwoForksVr.LaserPointer
 {
@@ -12,19 +11,15 @@ namespace TwoForksVr.LaserPointer
         private bool ignoreNextInput;
 
         private LaserInputModule inputModule;
-        private Transform leftHand;
         private LineRenderer lineRenderer;
-        private Transform rightHand;
         private Vector3? target;
 
-        public static VrLaser Create(Transform leftHand, Transform rightHand)
+        public static VrLaser Create(Transform dominantHand)
         {
             var instance = new GameObject("VrHandLaser").AddComponent<VrLaser>();
             var instanceTransform = instance.transform;
-            instanceTransform.SetParent(rightHand, false);
+            instanceTransform.SetParent(dominantHand, false);
             instanceTransform.localEulerAngles = new Vector3(39.132f, 356.9302f, 0.3666f);
-            instance.rightHand = rightHand;
-            instance.leftHand = leftHand;
             return instance;
         }
 
@@ -55,15 +50,6 @@ namespace TwoForksVr.LaserPointer
         {
             UpdateLaserVisibility();
             UpdateLaserTarget();
-            UpdateLaserParent(SteamVR_Input_Sources.LeftHand, leftHand);
-            UpdateLaserParent(SteamVR_Input_Sources.RightHand, rightHand);
-        }
-
-        private void UpdateLaserParent(SteamVR_Input_Sources inputSource, Transform hand)
-        {
-            if (!actionInput.GetButtonDown(inputSource) || transform.parent == hand) return;
-            ignoreNextInput = true;
-            transform.SetParent(hand, false);
         }
 
         public void SetTarget(Vector3? newTarget)
