@@ -5,6 +5,7 @@ namespace TwoForksVr.Settings
 {
     public static class VrSettings
     {
+        private const string controlsCategory = "Controls";
         private const string locomotionCategory = "Locomotion";
         private const string playerBodyCategory = "Player Body";
         private const string turningCategory = "Turning";
@@ -15,6 +16,7 @@ namespace TwoForksVr.Settings
         public static ConfigEntry<bool> UseOriginalHandsWhileNavigationDisabled { get; private set; }
         public static ConfigEntry<bool> Teleport { get; private set; }
         public static ConfigEntry<bool> FixedCameraDuringAnimations { get; private set; }
+        public static ConfigEntry<bool> LeftHandedMode { get; private set; }
 
         public static void SetUp(ConfigFile config)
         {
@@ -32,6 +34,8 @@ namespace TwoForksVr.Settings
             UseOriginalHandsWhileNavigationDisabled = config.Bind(playerBodyCategory,
                 "UseOriginalHandsWhileNavigationDisabled", true,
                 "Enable ghost hands during some animations");
+            LeftHandedMode = config.Bind(controlsCategory, "LeftHandedMode", true,
+                "Left handed mode (also mirrors body)");
         }
 
         private static void SetUpResolution()

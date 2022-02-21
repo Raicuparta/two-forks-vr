@@ -7,7 +7,7 @@ namespace TwoForksVr.UI.Patches
     [HarmonyPatch]
     public class InventoryPatches : TwoForksVrPatch
     {
-        public static Transform RightHand;
+        public static Transform DominantHand;
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(vgInventoryScreenController), nameof(vgInventoryScreenController.OnEnable))]
@@ -35,7 +35,7 @@ namespace TwoForksVr.UI.Patches
         [HarmonyPatch(typeof(vgInventoryScreenController), nameof(vgInventoryScreenController.Start))]
         private static void InventoryFollowMainCamera(vgInventoryScreenController __instance)
         {
-            if (RightHand == null)
+            if (DominantHand == null)
             {
                 Logs.LogError(
                     "Right hand transform hasn't been set up properly in InventoryFollowMainCamera patch");
@@ -45,7 +45,7 @@ namespace TwoForksVr.UI.Patches
             var objectStage = __instance.transform.Find("ObjectStage").gameObject;
             if (objectStage.GetComponent<FakeParenting>()) return;
 
-            FakeParenting.Create(objectStage.transform, RightHand);
+            FakeParenting.Create(objectStage.transform, DominantHand);
 
             var inventoryObjectParent = objectStage.transform.Find("InventoryObjectParent");
             inventoryObjectParent.localPosition = new Vector3(-0.16f, -0.04f, 0f);

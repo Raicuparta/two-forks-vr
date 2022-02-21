@@ -1,4 +1,5 @@
 ﻿using TwoForksVr.LaserPointer;
+using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using TwoForksVr.Tools;
 using TwoForksVr.UI.Patches;
@@ -10,8 +11,8 @@ namespace TwoForksVr.Limbs
     {
         public VrLaser Laser;
         private ToolPicker toolPicker;
-        public VrHand LeftHand { get; private set; }
-        public VrHand RightHand { get; private set; }
+        public VrHand NonDominantHand { get; private set; }
+        public VrHand DominantHand { get; private set; }
         public bool IsToolPickerOpen => toolPicker && toolPicker.IsOpen;
 
         public static VrLimbManager Create(VrStage stage)
@@ -20,19 +21,19 @@ namespace TwoForksVr.Limbs
             var instanceTransform = instance.transform;
             instanceTransform.SetParent(stage.transform, false);
 
-            instance.RightHand = VrHand.Create(instanceTransform);
-            instance.LeftHand = VrHand.Create(instanceTransform, true);
+            instance.DominantHand = VrHand.Create(instanceTransform, true);
+            instance.NonDominantHand = VrHand.Create(instanceTransform);
             instance.toolPicker = ToolPicker.Create(
                 instanceTransform,
-                instance.LeftHand.transform,
-                instance.RightHand.transform
+                instance.NonDominantHand.transform,
+                instance.DominantHand.transform
             );
             instance.Laser = VrLaser.Create(
-                instance.LeftHand.transform,
-                instance.RightHand.transform
+                instance.NonDominantHand.transform,
+                instance.DominantHand.transform
             );
 
-            InventoryPatches.RightHand = instance.RightHand.transform;
+            InventoryPatches.DominantHand = instance.DominantHand.transform;
 
             return instance;
         }
@@ -42,8 +43,8 @@ namespace TwoForksVr.Limbs
             var playerTransform = playerController ? playerController.transform : null;
             var skeletonRoot = GetSkeletonRoot(playerTransform);
             var armsMaterial = GetArmsMaterial(playerTransform);
-            RightHand.SetUp(skeletonRoot, armsMaterial, playerController);
-            LeftHand.SetUp(skeletonRoot, armsMaterial, playerController);
+            DominantHand.SetUp(skeletonRoot, armsMaterial, playerController);
+            NonDominantHand.SetUp(skeletonRoot, armsMaterial, playerController);
             Laser.SetUp(camera);
         }
 
@@ -56,7 +57,12 @@ namespace TwoForksVr.Limbs
 
         private static Transform GetSkeletonRoot(Transform playerTransform)
         {
-            return playerTransform ? playerTransform.Find("henry/henryroot") : null;
+            if (playerTransform == null) return null;
+
+            var henry = playerTransform.Find("henry");
+            henry.localScale = new Vector3(VrSettings.LeftHandedMode.Value ? -1 : 1, 1, 1);
+
+            return henry.Find("henryroot");
         }
     }
 }
