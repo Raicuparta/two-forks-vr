@@ -1,109 +1,113 @@
 {
   "actions": [
     {
-      "name": "/actions/default/in/Interact",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/default/in/PoseRightHand",
+      "name": "/actions/perhand/in/PoseRightHand",
       "type": "pose"
     },
     {
-      "name": "/actions/default/in/SkeletonLeftHand",
+      "name": "/actions/perhand/in/SkeletonLeftHand",
       "type": "skeleton",
       "skeleton": "/skeleton/hand/left"
     },
     {
-      "name": "/actions/default/in/SkeletonRightHand",
+      "name": "/actions/perhand/in/SkeletonRightHand",
       "type": "skeleton",
       "skeleton": "/skeleton/hand/right"
     },
     {
-      "name": "/actions/default/in/HeadsetOnHead",
+      "name": "/actions/perhand/in/HeadsetOnHead",
       "type": "boolean",
       "requirement": "optional"
     },
     {
-      "name": "/actions/default/in/PoseLeftHand",
+      "name": "/actions/perhand/in/PoseLeftHand",
       "type": "pose"
     },
     {
-      "name": "/actions/default/in/Move",
+      "name": "/actions/perhand/in/Move",
       "type": "vector2"
     },
     {
-      "name": "/actions/default/in/Rotate",
+      "name": "/actions/perhand/in/Rotate",
       "type": "vector2"
     },
     {
-      "name": "/actions/default/in/Jog",
+      "name": "/actions/perhand/in/Jog",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/ToolPicker",
+      "name": "/actions/perhand/in/ToolPicker",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/NextPage",
+      "name": "/actions/perhand/in/NextPage",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/PreviousPage",
+      "name": "/actions/perhand/in/PreviousPage",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/Cancel",
+      "name": "/actions/perhand/in/Cancel",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/UIUp",
+      "name": "/actions/perhand/in/UIUp",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/UIDown",
+      "name": "/actions/perhand/in/UIDown",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/Recenter",
+      "name": "/actions/perhand/in/Recenter",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/Grip",
+      "name": "/actions/perhand/in/Grip",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/SnapTurnRight",
+      "name": "/actions/perhand/in/SnapTurnRight",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/SnapTurnLeft",
+      "name": "/actions/perhand/in/SnapTurnLeft",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/Teleport",
+      "name": "/actions/perhand/in/Teleport",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/Radio",
+      "name": "/actions/perhand/in/StoreItem",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/StoreItem",
+      "name": "/actions/perhand/in/LocomotionAction",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/LocomotionAction",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/default/out/Haptic",
+      "name": "/actions/perhand/out/Haptic",
       "type": "vibration"
+    },
+    {
+      "name": "/actions/mirrored/in/Radio",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/mirrored/in/Interact",
+      "type": "boolean"
     }
   ],
   "action_sets": [
     {
-      "name": "/actions/default",
+      "name": "/actions/perhand",
       "usage": "leftright"
+    },
+    {
+      "name": "/actions/mirrored",
+      "usage": "single"
     }
   ],
   "default_bindings": [
@@ -163,33 +167,32 @@
   "localization": [
     {
       "language_tag": "en_US",
-      "/actions/default/in/HeadsetOnHead": "Headset on head (proximity sensor)",
-      "/actions/default/in/SkeletonLeftHand": "Skeleton (Left)",
-      "/actions/default/in/SkeletonRightHand": "Skeleton (Right)",
-      "/actions/default/out/Haptic": "Haptic",
-      "/actions/default/in/interact": "Interact",
-      "/actions/default/in/Interact": "Interact",
-      "/actions/default/in/PoseRightHand": "Pose (Right)",
-      "/actions/default/in/PoseLeftHand": "Pose (Left)",
-      "/actions/default/in/Move": "Move",
-      "/actions/default/in/Rotate": "Rotate",
-      "/actions/default/in/Jog": "Jog",
-      "/actions/default/in/NextPage": "Next Page",
-      "/actions/default/in/PreviousPage": "Previous Page",
-      "/actions/default/in/Cancel": "Cancel",
-      "/actions/default/in/ToolPicker": "Tool Picker",
-      "/actions/default/in/UiUp": "UI Up",
-      "/actions/default/in/UiDown": "UiDown",
-      "/actions/default/in/UIUp": "UI Up",
-      "/actions/default/in/UIDown": "UI Down",
-      "/actions/default/in/Recenter": "Recenter",
-      "/actions/default/in/Grip": "Grip",
-      "/actions/default/in/SnapTurnRight": "Snap Turn Right",
-      "/actions/default/in/SnapTurnLeft": "Snap Turn Left",
-      "/actions/default/in/Teleport": "Teleport",
-      "/actions/default/in/Radio": "Radio",
-      "/actions/default/in/StoreItem": "Store Item",
-      "/actions/default/in/LocomotionAction": "Climb / Jump"
+      "/actions/perhand/in/HeadsetOnHead": "Headset on head (proximity sensor)",
+      "/actions/perhand/in/SkeletonLeftHand": "Skeleton (Left)",
+      "/actions/perhand/in/SkeletonRightHand": "Skeleton (Right)",
+      "/actions/perhand/out/Haptic": "Haptic",
+      "/actions/perhand/in/PoseRightHand": "Pose (Right)",
+      "/actions/perhand/in/PoseLeftHand": "Pose (Left)",
+      "/actions/perhand/in/Move": "Move",
+      "/actions/perhand/in/Rotate": "Rotate",
+      "/actions/perhand/in/Jog": "Jog",
+      "/actions/perhand/in/NextPage": "Next Page",
+      "/actions/perhand/in/PreviousPage": "Previous Page",
+      "/actions/perhand/in/Cancel": "Cancel",
+      "/actions/perhand/in/ToolPicker": "Tool Picker",
+      "/actions/perhand/in/UiUp": "UI Up",
+      "/actions/perhand/in/UiDown": "UiDown",
+      "/actions/perhand/in/UIUp": "UI Up",
+      "/actions/perhand/in/UIDown": "UI Down",
+      "/actions/perhand/in/Recenter": "Recenter",
+      "/actions/perhand/in/Grip": "Grip",
+      "/actions/perhand/in/SnapTurnRight": "Snap Turn Right",
+      "/actions/perhand/in/SnapTurnLeft": "Snap Turn Left",
+      "/actions/perhand/in/Teleport": "Teleport",
+      "/actions/perhand/in/StoreItem": "Store Item",
+      "/actions/perhand/in/LocomotionAction": "Climb / Jump",
+      "/actions/mirrored/in/Radio": "Radio",
+      "/actions/mirrored/in/Interact": "Interact"
     }
   ]
 }

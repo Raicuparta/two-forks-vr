@@ -7,16 +7,16 @@
       "sources": [],
       "skeleton": []
     },
-    "/actions/default": {
+    "/actions/perhand": {
       "chords": [],
       "poses": [],
       "haptics": [
         {
-          "output": "/actions/default/out/haptic",
+          "output": "/actions/perhand/out/haptic",
           "path": "/user/hand/left/output/haptic"
         },
         {
-          "output": "/actions/default/out/haptic",
+          "output": "/actions/perhand/out/haptic",
           "path": "/user/hand/right/output/haptic"
         }
       ],

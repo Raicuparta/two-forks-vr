@@ -14,22 +14,14 @@ namespace Valve.VR
     using UnityEngine;
     
     
-    public class SteamVR_Input_ActionSet_default : Valve.VR.SteamVR_ActionSet
+    public class SteamVR_Input_ActionSet_perhand : Valve.VR.SteamVR_ActionSet
     {
-        
-        public virtual SteamVR_Action_Boolean Interact
-        {
-            get
-            {
-                return SteamVR_Actions.default_Interact;
-            }
-        }
         
         public virtual SteamVR_Action_Pose PoseRightHand
         {
             get
             {
-                return SteamVR_Actions.default_PoseRightHand;
+                return SteamVR_Actions.perhand_PoseRightHand;
             }
         }
         
@@ -37,7 +29,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_SkeletonLeftHand;
+                return SteamVR_Actions.perhand_SkeletonLeftHand;
             }
         }
         
@@ -45,7 +37,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_SkeletonRightHand;
+                return SteamVR_Actions.perhand_SkeletonRightHand;
             }
         }
         
@@ -53,7 +45,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_HeadsetOnHead;
+                return SteamVR_Actions.perhand_HeadsetOnHead;
             }
         }
         
@@ -61,7 +53,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_PoseLeftHand;
+                return SteamVR_Actions.perhand_PoseLeftHand;
             }
         }
         
@@ -69,7 +61,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_Move;
+                return SteamVR_Actions.perhand_Move;
             }
         }
         
@@ -77,7 +69,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_Rotate;
+                return SteamVR_Actions.perhand_Rotate;
             }
         }
         
@@ -85,7 +77,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_Jog;
+                return SteamVR_Actions.perhand_Jog;
             }
         }
         
@@ -93,7 +85,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_ToolPicker;
+                return SteamVR_Actions.perhand_ToolPicker;
             }
         }
         
@@ -101,7 +93,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_NextPage;
+                return SteamVR_Actions.perhand_NextPage;
             }
         }
         
@@ -109,7 +101,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_PreviousPage;
+                return SteamVR_Actions.perhand_PreviousPage;
             }
         }
         
@@ -117,7 +109,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_Cancel;
+                return SteamVR_Actions.perhand_Cancel;
             }
         }
         
@@ -125,7 +117,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_UIUp;
+                return SteamVR_Actions.perhand_UIUp;
             }
         }
         
@@ -133,7 +125,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_UIDown;
+                return SteamVR_Actions.perhand_UIDown;
             }
         }
         
@@ -141,7 +133,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_Recenter;
+                return SteamVR_Actions.perhand_Recenter;
             }
         }
         
@@ -149,7 +141,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_Grip;
+                return SteamVR_Actions.perhand_Grip;
             }
         }
         
@@ -157,7 +149,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_SnapTurnRight;
+                return SteamVR_Actions.perhand_SnapTurnRight;
             }
         }
         
@@ -165,7 +157,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_SnapTurnLeft;
+                return SteamVR_Actions.perhand_SnapTurnLeft;
             }
         }
         
@@ -173,15 +165,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_Teleport;
-            }
-        }
-        
-        public virtual SteamVR_Action_Boolean Radio
-        {
-            get
-            {
-                return SteamVR_Actions.default_Radio;
+                return SteamVR_Actions.perhand_Teleport;
             }
         }
         
@@ -189,7 +173,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_StoreItem;
+                return SteamVR_Actions.perhand_StoreItem;
             }
         }
         
@@ -197,7 +181,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_LocomotionAction;
+                return SteamVR_Actions.perhand_LocomotionAction;
             }
         }
         
@@ -205,7 +189,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.default_Haptic;
+                return SteamVR_Actions.perhand_Haptic;
             }
         }
     }
