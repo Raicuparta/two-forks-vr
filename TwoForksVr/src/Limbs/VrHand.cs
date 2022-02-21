@@ -14,10 +14,12 @@ namespace TwoForksVr.Limbs
         private bool isLeft;
         private vgPlayerNavigationController navigationController;
 
-        public static VrHand Create(Transform parent, bool isLeft = false)
+        public static VrHand Create(Transform parent, bool isDominant = false)
         {
-            var handName = isLeft ? "Left" : "Right";
-            var transform = Instantiate(isLeft ? VrAssetLoader.LeftHandPrefab : VrAssetLoader.RightHandPrefab, parent,
+            var isLeft = VrSettings.LeftHandedMode.Value ? !isDominant : isDominant;
+            var handName = isDominant ? "Left" : "Right";
+            var transform = Instantiate(isDominant ? VrAssetLoader.LeftHandPrefab : VrAssetLoader.RightHandPrefab,
+                parent,
                 false).transform;
             LayerHelper.SetLayerRecursive(transform.gameObject, GameLayer.UI);
             transform.name = $"{handName}Hand";
@@ -43,6 +45,9 @@ namespace TwoForksVr.Limbs
             if (playerController) navigationController = playerController.navController;
 
             EnableAnimatedHand(playerRootBone);
+
+            transform.localScale = new Vector3(VrSettings.LeftHandedMode.Value ? -1 : 1, 1, 1);
+
             gameObject.SetActive(true);
         }
 
@@ -99,6 +104,7 @@ namespace TwoForksVr.Limbs
         private void EnableAnimatedHand(Transform animatedRootBone)
         {
             if (!animatedRootBone) return;
+
             var animatedArmBone =
                 animatedRootBone.Find(
                     $"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2");
