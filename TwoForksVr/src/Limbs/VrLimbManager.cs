@@ -23,17 +23,14 @@ namespace TwoForksVr.Limbs
             var instanceTransform = instance.transform;
             instanceTransform.SetParent(stage.transform, false);
 
-            instance.DominantHand = VrHand.Create(instanceTransform, true);
-            instance.NonDominantHand = VrHand.Create(instanceTransform);
+            instance.DominantHand = VrHand.Create(instanceTransform);
+            instance.NonDominantHand = VrHand.Create(instanceTransform, true);
             instance.toolPicker = ToolPicker.Create(
                 instanceTransform,
                 instance.NonDominantHand.transform,
                 instance.DominantHand.transform
             );
-            instance.Laser = VrLaser.Create(
-                instance.NonDominantHand.transform,
-                instance.DominantHand.transform
-            );
+            instance.Laser = VrLaser.Create(instance.DominantHand.transform);
 
             InventoryPatches.DominantHand = instance.DominantHand.transform;
 
