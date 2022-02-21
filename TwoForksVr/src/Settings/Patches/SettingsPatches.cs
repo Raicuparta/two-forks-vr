@@ -61,5 +61,16 @@ namespace TwoForksVr.Settings.Patches
                 "RightColumn/UI_ScrollingContentArea GFXQuality/ScrollContents/ContentsContainer/MotionBlurOption");
             motionBlur.gameObject.SetActive(false);
         }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.Awake))]
+        private static void OverrideDefaultSettings(vgSettingsManager __instance)
+        {
+            __instance._BloomQuality = 0;
+            __instance._LightShaftQuality = 0;
+            __instance._SSAOQuality = 0;
+            __instance._shadowQuality = 2;
+            __instance._detailDistance = 1;
+        }
     }
 }
