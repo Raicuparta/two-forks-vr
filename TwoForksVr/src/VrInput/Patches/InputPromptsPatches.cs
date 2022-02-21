@@ -22,11 +22,8 @@ namespace TwoForksVr.VrInput.Patches
 
             var source = inputAction.ActiveSource;
             var hand = "";
-            if (!inputAction.IsEitherHand)
-            {
-                if (source == SteamVR_Input_Sources.RightHand) hand = "right ";
-                if (source == SteamVR_Input_Sources.LeftHand) hand = "left ";
-            }
+            if (source == SteamVR_Input_Sources.RightHand) hand = "right ";
+            if (source == SteamVR_Input_Sources.LeftHand) hand = "left ";
 
             var name = inputAction.Action.GetRenderModelComponentName(inputAction.ActiveSource);
             name = name.Replace("button_", "");

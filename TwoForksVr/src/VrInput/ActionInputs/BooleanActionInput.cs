@@ -4,11 +4,10 @@ namespace TwoForksVr.VrInput.ActionInputs
 {
     public class BooleanActionInput : ActionInput<SteamVR_Action_Boolean>
     {
-        public BooleanActionInput(SteamVR_Action_Boolean action, string promptSuffix = "", bool isEitherHand = false) :
+        public BooleanActionInput(SteamVR_Action_Boolean action, InputHandedness handedness = InputHandedness.Any) :
             base(action)
         {
-            PromptSuffixValue = promptSuffix;
-            IsEitherHandValue = isEitherHand;
+            HandednessValue = handedness;
         }
 
         protected override float GetValue(SteamVR_Input_Sources source)

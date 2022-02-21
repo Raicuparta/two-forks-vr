@@ -10,10 +10,10 @@ namespace TwoForksVr.VrInput.ActionInputs
             new BooleanActionInput(ActionSet.Cancel);
 
         public static readonly BooleanActionInput Radio =
-            new BooleanActionInput(ActionSet.Radio);
+            new BooleanActionInput(ActionSet.Radio, InputHandedness.NonDominant);
 
         public static readonly BooleanActionInput Interact =
-            new BooleanActionInput(ActionSet.Interact, "", true);
+            new BooleanActionInput(ActionSet.Interact, InputHandedness.Dominant);
 
         public static readonly BooleanActionInput Jog =
             new BooleanActionInput(ActionSet.Jog);
