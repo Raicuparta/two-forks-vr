@@ -1,4 +1,5 @@
 using BepInEx.Configuration;
+using UnityEngine;
 
 namespace TwoForksVr.Settings
 {
@@ -17,6 +18,8 @@ namespace TwoForksVr.Settings
 
         public static void SetUp(ConfigFile config)
         {
+            SetUpResolution();
+
             Config = config;
             SnapTurning = config.Bind(turningCategory, "SnapTurning", false,
                 "Snap turning");
@@ -29,6 +32,11 @@ namespace TwoForksVr.Settings
             UseOriginalHandsWhileNavigationDisabled = config.Bind(playerBodyCategory,
                 "UseOriginalHandsWhileNavigationDisabled", true,
                 "Enable ghost hands during some animations");
+        }
+
+        private static void SetUpResolution()
+        {
+            Screen.SetResolution(1920, 1080, false);
         }
     }
 }
