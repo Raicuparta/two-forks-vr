@@ -10,7 +10,9 @@ namespace TwoForksVr.Settings.Patches
     {
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.headBob), MethodType.Setter)]
-        private static void ForceDisableHeadBob(ref bool value)
+        [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.invertY), MethodType.Setter)]
+        [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.triggerSwap), MethodType.Setter)]
+        private static void ForceDisableBoolSetting(ref bool value)
         {
             value = false;
         }
