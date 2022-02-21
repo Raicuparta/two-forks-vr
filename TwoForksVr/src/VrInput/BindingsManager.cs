@@ -23,10 +23,10 @@ namespace TwoForksVr.VrInput
 
             ActionMap = new Dictionary<string, IActionInput>
             {
-                {VirtualKey.LocomotionAction, ActionInputDefinitions.Interact},
+                {VirtualKey.LocomotionAction, ActionInputDefinitions.LocomotionAction},
                 {VirtualKey.Use, ActionInputDefinitions.Interact},
                 {VirtualKey.Confirm, ActionInputDefinitions.Interact},
-                {VirtualKey.StoreObject, ActionInputDefinitions.Jog},
+                {VirtualKey.StoreObject, ActionInputDefinitions.StoreItem},
                 {VirtualKey.Cancel, ActionInputDefinitions.Cancel},
                 {VirtualKey.DialogUp, ActionInputDefinitions.UIUp},
                 {VirtualKey.DialogDown, ActionInputDefinitions.UIDown},

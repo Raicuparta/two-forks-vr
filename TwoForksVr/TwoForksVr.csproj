@@ -14,6 +14,9 @@
             "$(MSBuildBinPath)\MSBuild.exe" "$(SolutionDir)\UnityHelper\SteamVR.csproj" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_40;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64"
             "$(MSBuildBinPath)\MSBuild.exe" "$(SolutionDir)\UnityHelper\SteamVR_Actions.csproj" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_40;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64"
         </PreBuildEvent>
+        <PreBuildEvent>
+            xcopy /Y /S "$(SolutionDir)UnityHelper\Assets\StreamingAssets\SteamVR\*.json" "$(SolutionDir)TwoForksVr\TwoForksVrAssets\Bindings\*.json"
+        </PreBuildEvent>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
         <DebugType>full</DebugType>
@@ -23,8 +26,8 @@
         <DebugType>none</DebugType>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="BepInEx.Core" Version="5.4.16" />
-        <PackageReference Include="FirewatchGameLibs" Version="1.1.0" />
+        <PackageReference Include="BepInEx.Core" Version="5.4.16"/>
+        <PackageReference Include="FirewatchGameLibs" Version="1.1.0"/>
     </ItemGroup>
     <ItemGroup>
         <Reference Include="SteamVR">
