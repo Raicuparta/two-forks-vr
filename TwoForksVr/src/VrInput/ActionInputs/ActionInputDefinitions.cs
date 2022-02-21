@@ -6,14 +6,8 @@ namespace TwoForksVr.VrInput.ActionInputs
     {
         public static readonly SteamVR_Input_ActionSet_default ActionSet = SteamVR_Actions._default;
 
-        public static readonly EmptyActionInput Empty =
-            new EmptyActionInput();
-
         public static readonly BooleanActionInput Cancel =
             new BooleanActionInput(ActionSet.Cancel);
-
-        public static readonly BooleanActionInput Grip =
-            new BooleanActionInput(ActionSet.Grip);
 
         public static readonly BooleanActionInput Radio =
             new BooleanActionInput(ActionSet.Radio);
@@ -45,9 +39,6 @@ namespace TwoForksVr.VrInput.ActionInputs
         public static readonly Vector2ActionInput RotateX =
             new Vector2ActionInput(ActionSet.Rotate);
 
-        public static readonly Vector2ActionInput RotateY =
-            new Vector2ActionInput(ActionSet.Rotate, true);
-
         public static readonly BooleanActionInput Recenter =
             new BooleanActionInput(ActionSet.Recenter);
 
@@ -62,5 +53,11 @@ namespace TwoForksVr.VrInput.ActionInputs
 
         public static readonly BooleanActionInput SnapTurnRight =
             new BooleanActionInput(ActionSet.SnapTurnRight);
+
+        public static readonly BooleanActionInput StoreItem =
+            new BooleanActionInput(ActionSet.StoreItem);
+
+        public static readonly BooleanActionInput LocomotionAction =
+            new BooleanActionInput(ActionSet.LocomotionAction);
     }
 }

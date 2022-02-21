@@ -88,6 +88,14 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/StoreItem",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/LocomotionAction",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     }
@@ -179,7 +187,9 @@
       "/actions/default/in/SnapTurnRight": "Snap Turn Right",
       "/actions/default/in/SnapTurnLeft": "Snap Turn Left",
       "/actions/default/in/Teleport": "Teleport",
-      "/actions/default/in/Radio": "Radio"
+      "/actions/default/in/Radio": "Radio",
+      "/actions/default/in/StoreItem": "Store Item",
+      "/actions/default/in/LocomotionAction": "Climb / Jump"
     }
   ]
 }
