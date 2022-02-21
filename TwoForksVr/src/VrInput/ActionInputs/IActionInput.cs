@@ -9,7 +9,7 @@ namespace TwoForksVr.VrInput.ActionInputs
         bool ButtonValue { get; }
         bool ButtonUp { get; }
         bool ButtonDown { get; }
-        bool IsEitherHand { get; }
+        InputHandedness Handedness { get; }
         string PromptSuffix { get; }
         SteamVR_Input_Sources ActiveSource { get; }
 
