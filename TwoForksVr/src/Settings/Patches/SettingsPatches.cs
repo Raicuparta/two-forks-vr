@@ -40,5 +40,26 @@ namespace TwoForksVr.Settings.Patches
         {
             return false;
         }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgSettingsMenuController), nameof(vgSettingsMenuController.Start))]
+        private static void HideRedundantSettingsMenuItems(vgSettingsMenuController __instance)
+        {
+            var safeZoner = __instance.transform.Find("SafeZoner");
+
+            var headBob =
+                safeZoner.Find(
+                    "SettingsOptionsRoot/CanvasGroup/SettingsVerticalList/GameplayGrid/GameplayLeftColumn/Head Bob Checkbox");
+            headBob.gameObject.SetActive(false);
+
+            var graphicsCanvasGroup = safeZoner.Find("GFXOptionsRoot/CanvasGroup/");
+
+            var graphicsLeftColumn = graphicsCanvasGroup.Find("LeftColumn");
+            graphicsLeftColumn.gameObject.SetActive(false);
+
+            var motionBlur = graphicsCanvasGroup.Find(
+                "RightColumn/UI_ScrollingContentArea GFXQuality/ScrollContents/ContentsContainer/MotionBlurOption");
+            motionBlur.gameObject.SetActive(false);
+        }
     }
 }
