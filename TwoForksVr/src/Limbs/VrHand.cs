@@ -1,4 +1,5 @@
-﻿using TwoForksVr.Assets;
+﻿using System;
+using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
 using TwoForksVr.Settings;
 using TwoForksVr.VrInput.ActionInputs;
@@ -9,24 +10,20 @@ namespace TwoForksVr.Limbs
 {
     public class VrHand : MonoBehaviour
     {
-        private string handName;
         private FakeParenting handRootFakeParenting;
-        private bool isLeft;
+        private bool isDominant;
         private vgPlayerNavigationController navigationController;
+        private Transform rootBone;
 
         public static VrHand Create(Transform parent, bool isDominant = false)
         {
-            var isLeft = VrSettings.LeftHandedMode.Value ? !isDominant : isDominant;
-            var handName = isDominant ? "Left" : "Right";
             var transform = Instantiate(isDominant ? VrAssetLoader.LeftHandPrefab : VrAssetLoader.RightHandPrefab,
                 parent,
                 false).transform;
             LayerHelper.SetLayerRecursive(transform.gameObject, GameLayer.UI);
-            transform.name = $"{handName}Hand";
+            transform.name = $"{(isDominant ? "Dominand" : "NonDominant")}VrHand";
             var instance = transform.gameObject.AddComponent<VrHand>();
-            instance.handName = handName;
-            instance.isLeft = isLeft;
-            instance.SetUpPose();
+            instance.isDominant = isDominant;
 
             return instance;
         }
@@ -44,11 +41,16 @@ namespace TwoForksVr.Limbs
 
             if (playerController) navigationController = playerController.navController;
 
-            EnableAnimatedHand(playerRootBone);
+            rootBone = playerRootBone;
 
-            transform.localScale = new Vector3(VrSettings.LeftHandedMode.Value ? -1 : 1, 1, 1);
+            SetUpHandedness();
 
             gameObject.SetActive(true);
+        }
+
+        private void Awake()
+        {
+            VrSettings.LeftHandedMode.SettingChanged += HandleLeftHandedModeSettingChanged;
         }
 
         private void Update()
@@ -59,7 +61,27 @@ namespace TwoForksVr.Limbs
             handRootFakeParenting.enabled = navigationController.enabled;
         }
 
-        private void SetUpPose()
+        private void HandleLeftHandedModeSettingChanged(object sender, EventArgs e)
+        {
+            SetUpHandedness();
+        }
+
+        private void SetUpHandedness()
+        {
+            var isLeft = VrSettings.LeftHandedMode.Value ? !isDominant : isDominant;
+
+            // In Firewatch, Henry is right-handed. He holds the radio with his left hand,
+            // but he picks up and throws objects with his right hand. To allow for left handedness in VR, we need to
+            // swap the original hands. We can achieve this by targetting different hand and arm bones.
+            // So, when playing in left handed mode, the right hand will have armBoneName = "Left",
+            // because the player is controlling Henry's left hand with their right VR controller.
+            var armBoneName = isDominant ? "Left" : "Right";
+            transform.localScale = new Vector3(VrSettings.LeftHandedMode.Value ? -1 : 1, 1, 1);
+            EnableAnimatedHand(armBoneName);
+            SetUpPose(isLeft);
+        }
+
+        private void SetUpPose(bool isLeft)
         {
             var pose = gameObject.GetComponent<SteamVR_Behaviour_Pose>();
             if (isLeft)
@@ -74,7 +96,7 @@ namespace TwoForksVr.Limbs
             }
         }
 
-        private void FollowAllChildrenRecursive(Transform clone, Transform target)
+        private void FollowAllChildrenRecursive(Transform clone, Transform target, string handName)
         {
             foreach (Transform cloneChild in clone)
             {
@@ -92,7 +114,7 @@ namespace TwoForksVr.Limbs
 
                 if (isCloneWeddingRing) continue;
 
-                FollowAllChildrenRecursive(cloneChild, target.Find(cloneChild.name));
+                FollowAllChildrenRecursive(cloneChild, target.Find(cloneChild.name), handName);
 
                 if (isCloneHandRoot) continue;
 
@@ -101,17 +123,16 @@ namespace TwoForksVr.Limbs
             }
         }
 
-        private void EnableAnimatedHand(Transform animatedRootBone)
+        private void EnableAnimatedHand(string handName)
         {
-            if (!animatedRootBone) return;
+            if (!rootBone) return;
 
-            var animatedArmBone =
-                animatedRootBone.Find(
-                    $"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2");
+            var armBone = rootBone.Find(
+                $"henryPelvis/henrySpineA/henrySpineB/henrySpineC/henrySpineD/henrySpider{handName}1/henrySpider{handName}2/henrySpider{handName}IK/henryArm{handName}Collarbone/henryArm{handName}1/henryArm{handName}2");
 
             var clonedArmBone = transform.Find("henry/henryroot/henryPelvis");
             if (!clonedArmBone) Logs.LogError("found no cloned arm bone");
-            FollowAllChildrenRecursive(clonedArmBone, animatedArmBone);
+            FollowAllChildrenRecursive(clonedArmBone, armBone, handName);
         }
     }
 }

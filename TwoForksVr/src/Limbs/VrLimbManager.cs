@@ -1,4 +1,5 @@
-﻿using TwoForksVr.LaserPointer;
+﻿using System;
+using TwoForksVr.LaserPointer;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using TwoForksVr.Tools;
@@ -10,6 +11,7 @@ namespace TwoForksVr.Limbs
     public class VrLimbManager : MonoBehaviour
     {
         public VrLaser Laser;
+        private Transform henryTransform;
         private ToolPicker toolPicker;
         public VrHand NonDominantHand { get; private set; }
         public VrHand DominantHand { get; private set; }
@@ -46,6 +48,17 @@ namespace TwoForksVr.Limbs
             DominantHand.SetUp(skeletonRoot, armsMaterial, playerController);
             NonDominantHand.SetUp(skeletonRoot, armsMaterial, playerController);
             Laser.SetUp(camera);
+            SetUpHandedness();
+        }
+
+        private void Awake()
+        {
+            VrSettings.LeftHandedMode.SettingChanged += HandleLeftHandedModeSettingChanged;
+        }
+
+        private void HandleLeftHandedModeSettingChanged(object sender, EventArgs e)
+        {
+            SetUpHandedness();
         }
 
         private static Material GetArmsMaterial(Transform playerTransform)
@@ -55,14 +68,20 @@ namespace TwoForksVr.Limbs
                 : playerTransform.Find("henry/body")?.GetComponent<SkinnedMeshRenderer>().materials[2];
         }
 
-        private static Transform GetSkeletonRoot(Transform playerTransform)
+        private void SetUpHandedness()
+        {
+            if (!henryTransform) return;
+
+            henryTransform.localScale = new Vector3(VrSettings.LeftHandedMode.Value ? -1 : 1, 1, 1);
+        }
+
+        private Transform GetSkeletonRoot(Transform playerTransform)
         {
             if (playerTransform == null) return null;
 
-            var henry = playerTransform.Find("henry");
-            henry.localScale = new Vector3(VrSettings.LeftHandedMode.Value ? -1 : 1, 1, 1);
+            henryTransform = playerTransform.Find("henry");
 
-            return henry.Find("henryroot");
+            return henryTransform.Find("henryroot");
         }
     }
 }
