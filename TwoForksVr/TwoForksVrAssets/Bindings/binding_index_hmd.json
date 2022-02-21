@@ -1,7 +1,7 @@
 {
   "alias_info": {},
   "bindings": {
-    "/actions/default": {
+    "/actions/perhand": {
       "chords": [],
       "haptics": [],
       "poses": [],
@@ -10,7 +10,7 @@
         {
           "inputs": {
             "click": {
-              "output": "/actions/default/in/headsetonhead"
+              "output": "/actions/perhand/in/headsetonhead"
             }
           },
           "mode": "button",

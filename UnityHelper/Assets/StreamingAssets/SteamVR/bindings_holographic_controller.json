@@ -10,51 +10,12 @@
          "skeleton" : [],
          "sources" : []
       },
-      "/actions/default" : {
-         "chords" : [
-            {
-               "inputs" : [
-                  [ "/user/hand/left/input/trigger", "click" ],
-                  [ "/user/hand/right/input/trigger", "click" ]
-               ],
-               "output" : "/actions/default/in/recenter"
-            }
-         ],
-         "haptics" : [
-            {
-               "output" : "/actions/default/out/haptic",
-               "path" : "/user/hand/left/output/haptic"
-            },
-            {
-               "output" : "/actions/default/out/haptic",
-               "path" : "/user/hand/right/output/haptic"
-            }
-         ],
-         "poses" : [
-            {
-               "output" : "/actions/default/in/poselefthand",
-               "path" : "/user/hand/left/pose/raw"
-            },
-            {
-               "output" : "/actions/default/in/poserighthand",
-               "path" : "/user/hand/right/pose/raw"
-            }
-         ],
-         "skeleton" : [
-            {
-               "output" : "/actions/default/in/skeletonlefthand",
-               "path" : "/user/hand/left/input/skeleton/left"
-            },
-            {
-               "output" : "/actions/default/in/skeletonrighthand",
-               "path" : "/user/hand/right/input/skeleton/right"
-            }
-         ],
+      "/actions/mirrored" : {
          "sources" : [
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/default/in/interact"
+                     "output" : "/actions/mirrored/in/radio"
                   }
                },
                "mode" : "button",
@@ -63,7 +24,7 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/default/in/interact"
+                     "output" : "/actions/mirrored/in/radio"
                   }
                },
                "mode" : "button",
@@ -72,7 +33,68 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/default/in/grip"
+                     "output" : "/actions/mirrored/in/interact"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/mirrored/in/interact"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/trigger"
+            }
+         ]
+      },
+      "/actions/perhand" : {
+         "chords" : [
+            {
+               "inputs" : [
+                  [ "/user/hand/left/input/trigger", "click" ],
+                  [ "/user/hand/right/input/trigger", "click" ]
+               ],
+               "output" : "/actions/perhand/in/recenter"
+            }
+         ],
+         "haptics" : [
+            {
+               "output" : "/actions/perhand/out/haptic",
+               "path" : "/user/hand/left/output/haptic"
+            },
+            {
+               "output" : "/actions/perhand/out/haptic",
+               "path" : "/user/hand/right/output/haptic"
+            }
+         ],
+         "poses" : [
+            {
+               "output" : "/actions/perhand/in/poselefthand",
+               "path" : "/user/hand/left/pose/raw"
+            },
+            {
+               "output" : "/actions/perhand/in/poserighthand",
+               "path" : "/user/hand/right/pose/raw"
+            }
+         ],
+         "skeleton" : [
+            {
+               "output" : "/actions/perhand/in/skeletonlefthand",
+               "path" : "/user/hand/left/input/skeleton/left"
+            },
+            {
+               "output" : "/actions/perhand/in/skeletonrighthand",
+               "path" : "/user/hand/right/input/skeleton/right"
+            }
+         ],
+         "sources" : [
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/perhand/in/grip"
                   }
                },
                "mode" : "button",
@@ -81,7 +103,7 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/default/in/grip"
+                     "output" : "/actions/perhand/in/grip"
                   }
                },
                "mode" : "button",
@@ -90,10 +112,10 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/default/in/jog"
+                     "output" : "/actions/perhand/in/jog"
                   },
                   "position" : {
-                     "output" : "/actions/default/in/move"
+                     "output" : "/actions/perhand/in/move"
                   }
                },
                "mode" : "joystick",
@@ -102,10 +124,10 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/default/in/toolpicker"
+                     "output" : "/actions/perhand/in/toolpicker"
                   },
                   "position" : {
-                     "output" : "/actions/default/in/rotate"
+                     "output" : "/actions/perhand/in/rotate"
                   }
                },
                "mode" : "joystick",
@@ -114,10 +136,10 @@
             {
                "inputs" : {
                   "east" : {
-                     "output" : "/actions/default/in/nextpage"
+                     "output" : "/actions/perhand/in/nextpage"
                   },
                   "west" : {
-                     "output" : "/actions/default/in/previouspage"
+                     "output" : "/actions/perhand/in/previouspage"
                   }
                },
                "mode" : "dpad",
@@ -129,10 +151,10 @@
             {
                "inputs" : {
                   "north" : {
-                     "output" : "/actions/default/in/uiup"
+                     "output" : "/actions/perhand/in/uiup"
                   },
                   "south" : {
-                     "output" : "/actions/default/in/uidown"
+                     "output" : "/actions/perhand/in/uidown"
                   }
                },
                "mode" : "dpad",
@@ -144,7 +166,7 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/default/in/cancel"
+                     "output" : "/actions/perhand/in/cancel"
                   }
                },
                "mode" : "button",
@@ -153,7 +175,7 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/default/in/cancel"
+                     "output" : "/actions/perhand/in/cancel"
                   }
                },
                "mode" : "button",
@@ -162,7 +184,7 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/default/in/storeitem"
+                     "output" : "/actions/perhand/in/storeitem"
                   }
                },
                "mode" : "button",
@@ -171,7 +193,7 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/default/in/storeitem"
+                     "output" : "/actions/perhand/in/storeitem"
                   }
                },
                "mode" : "button",
@@ -180,13 +202,13 @@
             {
                "inputs" : {
                   "east" : {
-                     "output" : "/actions/default/in/snapturnright"
+                     "output" : "/actions/perhand/in/snapturnright"
                   },
                   "north" : {
-                     "output" : "/actions/default/in/teleport"
+                     "output" : "/actions/perhand/in/teleport"
                   },
                   "west" : {
-                     "output" : "/actions/default/in/snapturnleft"
+                     "output" : "/actions/perhand/in/snapturnleft"
                   }
                },
                "mode" : "dpad",
@@ -198,7 +220,7 @@
             {
                "inputs" : {
                   "north" : {
-                     "output" : "/actions/default/in/teleport"
+                     "output" : "/actions/perhand/in/teleport"
                   }
                },
                "mode" : "dpad",
@@ -210,16 +232,7 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/default/in/radio"
-                  }
-               },
-               "mode" : "button",
-               "path" : "/user/hand/left/input/grip"
-            },
-            {
-               "inputs" : {
-                  "click" : {
-                     "output" : "/actions/default/in/locomotionaction"
+                     "output" : "/actions/perhand/in/locomotionaction"
                   }
                },
                "mode" : "button",
@@ -228,7 +241,7 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/default/in/locomotionaction"
+                     "output" : "/actions/perhand/in/locomotionaction"
                   }
                },
                "mode" : "button",
