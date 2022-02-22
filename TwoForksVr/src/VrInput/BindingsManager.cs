@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
 using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
@@ -19,7 +18,10 @@ namespace TwoForksVr.VrInput
 
         private void Awake()
         {
-            Logs.LogInfo("## Initializing Bindings Patches");
+            SteamVR_Events.System(EVREventType.VREvent_Input_BindingsUpdated).Listen(HandleVrBindingsUpdated);
+
+            SteamVR_Actions.mirrored.Activate();
+            SteamVR_Actions.perhand.Activate();
 
             ActionMap = new Dictionary<string, IActionInput>
             {
@@ -48,8 +50,6 @@ namespace TwoForksVr.VrInput
                 {VirtualKey.ToolPicker, ActionInputDefinitions.ToolPicker},
                 {VirtualKey.Inventory, ActionInputDefinitions.Cancel}
             };
-
-            SteamVR_Events.System(EVREventType.VREvent_Input_BindingsUpdated).Listen(HandleVrBindingsUpdated);
         }
 
         private void OnDestroy()
