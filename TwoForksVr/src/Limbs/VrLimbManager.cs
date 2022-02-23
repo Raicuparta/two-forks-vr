@@ -12,6 +12,7 @@ namespace TwoForksVr.Limbs
     {
         public VrLaser Laser;
         private Transform henryTransform;
+        private vgPlayerNavigationController navigationController;
         private ToolPicker toolPicker;
         public VrHand NonDominantHand { get; private set; }
         public VrHand DominantHand { get; private set; }
@@ -40,12 +41,13 @@ namespace TwoForksVr.Limbs
         public void SetUp(vgPlayerController playerController, Camera camera)
         {
             var playerTransform = playerController ? playerController.transform : null;
+            navigationController = playerController ? playerController.navController : null;
             var skeletonRoot = GetSkeletonRoot(playerTransform);
             var armsMaterial = GetArmsMaterial(playerTransform);
             DominantHand.SetUp(skeletonRoot, armsMaterial, playerController);
             NonDominantHand.SetUp(skeletonRoot, armsMaterial, playerController);
             Laser.SetUp(camera);
-            SetUpHandedness();
+            UpdateHandedness();
         }
 
         private void Awake()
@@ -53,9 +55,14 @@ namespace TwoForksVr.Limbs
             VrSettings.LeftHandedMode.SettingChanged += HandleLeftHandedModeSettingChanged;
         }
 
+        private void Update()
+        {
+            UpdateHandedness();
+        }
+
         private void HandleLeftHandedModeSettingChanged(object sender, EventArgs e)
         {
-            SetUpHandedness();
+            UpdateHandedness();
         }
 
         private static Material GetArmsMaterial(Transform playerTransform)
@@ -65,11 +72,12 @@ namespace TwoForksVr.Limbs
                 : playerTransform.Find("henry/body")?.GetComponent<SkinnedMeshRenderer>().materials[2];
         }
 
-        private void SetUpHandedness()
+        private void UpdateHandedness()
         {
-            if (!henryTransform) return;
+            if (!henryTransform || !navigationController) return;
 
-            henryTransform.localScale = new Vector3(VrSettings.LeftHandedMode.Value ? -1 : 1, 1, 1);
+            henryTransform.localScale =
+                new Vector3(VrSettings.LeftHandedMode.Value && navigationController.enabled ? -1 : 1, 1, 1);
         }
 
         private Transform GetSkeletonRoot(Transform playerTransform)
