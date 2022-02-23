@@ -64,5 +64,29 @@ namespace Valve.VR
                 return SteamVR_Actions.mirrored_Rotate;
             }
         }
+        
+        public virtual SteamVR_Action_Boolean SnapTurnLeft
+        {
+            get
+            {
+                return SteamVR_Actions.mirrored_SnapTurnLeft;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean SnapTurnRight
+        {
+            get
+            {
+                return SteamVR_Actions.mirrored_SnapTurnRight;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean Teleport
+        {
+            get
+            {
+                return SteamVR_Actions.mirrored_Teleport;
+            }
+        }
     }
 }

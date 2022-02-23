@@ -39,14 +39,6 @@ namespace Valve.VR
         
         private static SteamVR_Action_Boolean p_perhand_Recenter;
         
-        private static SteamVR_Action_Boolean p_perhand_Grip;
-        
-        private static SteamVR_Action_Boolean p_perhand_SnapTurnRight;
-        
-        private static SteamVR_Action_Boolean p_perhand_SnapTurnLeft;
-        
-        private static SteamVR_Action_Boolean p_perhand_Teleport;
-        
         private static SteamVR_Action_Boolean p_perhand_StoreItem;
         
         private static SteamVR_Action_Boolean p_perhand_LocomotionAction;
@@ -64,6 +56,12 @@ namespace Valve.VR
         private static SteamVR_Action_Vector2 p_mirrored_Move;
         
         private static SteamVR_Action_Vector2 p_mirrored_Rotate;
+        
+        private static SteamVR_Action_Boolean p_mirrored_SnapTurnLeft;
+        
+        private static SteamVR_Action_Boolean p_mirrored_SnapTurnRight;
+        
+        private static SteamVR_Action_Boolean p_mirrored_Teleport;
         
         public static SteamVR_Action_Pose perhand_PoseRightHand
         {
@@ -153,38 +151,6 @@ namespace Valve.VR
             }
         }
         
-        public static SteamVR_Action_Boolean perhand_Grip
-        {
-            get
-            {
-                return SteamVR_Actions.p_perhand_Grip.GetCopy <SteamVR_Action_Boolean>();
-            }
-        }
-        
-        public static SteamVR_Action_Boolean perhand_SnapTurnRight
-        {
-            get
-            {
-                return SteamVR_Actions.p_perhand_SnapTurnRight.GetCopy <SteamVR_Action_Boolean>();
-            }
-        }
-        
-        public static SteamVR_Action_Boolean perhand_SnapTurnLeft
-        {
-            get
-            {
-                return SteamVR_Actions.p_perhand_SnapTurnLeft.GetCopy <SteamVR_Action_Boolean>();
-            }
-        }
-        
-        public static SteamVR_Action_Boolean perhand_Teleport
-        {
-            get
-            {
-                return SteamVR_Actions.p_perhand_Teleport.GetCopy <SteamVR_Action_Boolean>();
-            }
-        }
-        
         public static SteamVR_Action_Boolean perhand_StoreItem
         {
             get
@@ -257,6 +223,30 @@ namespace Valve.VR
             }
         }
         
+        public static SteamVR_Action_Boolean mirrored_SnapTurnLeft
+        {
+            get
+            {
+                return SteamVR_Actions.p_mirrored_SnapTurnLeft.GetCopy <SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean mirrored_SnapTurnRight
+        {
+            get
+            {
+                return SteamVR_Actions.p_mirrored_SnapTurnRight.GetCopy <SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean mirrored_Teleport
+        {
+            get
+            {
+                return SteamVR_Actions.p_mirrored_Teleport.GetCopy <SteamVR_Action_Boolean>();
+            }
+        }
+        
         private static void InitializeActionArrays()
         {
             Valve.VR.SteamVR_Input.actions = new Valve.VR.SteamVR_Action[]
@@ -272,10 +262,6 @@ namespace Valve.VR
                     SteamVR_Actions.perhand_UIUp,
                     SteamVR_Actions.perhand_UIDown,
                     SteamVR_Actions.perhand_Recenter,
-                    SteamVR_Actions.perhand_Grip,
-                    SteamVR_Actions.perhand_SnapTurnRight,
-                    SteamVR_Actions.perhand_SnapTurnLeft,
-                    SteamVR_Actions.perhand_Teleport,
                     SteamVR_Actions.perhand_StoreItem,
                     SteamVR_Actions.perhand_LocomotionAction,
                     SteamVR_Actions.perhand_Haptic,
@@ -284,7 +270,10 @@ namespace Valve.VR
                     SteamVR_Actions.mirrored_ToolPicker,
                     SteamVR_Actions.mirrored_Jog,
                     SteamVR_Actions.mirrored_Move,
-                    SteamVR_Actions.mirrored_Rotate};
+                    SteamVR_Actions.mirrored_Rotate,
+                    SteamVR_Actions.mirrored_SnapTurnLeft,
+                    SteamVR_Actions.mirrored_SnapTurnRight,
+                    SteamVR_Actions.mirrored_Teleport};
             Valve.VR.SteamVR_Input.actionsIn = new Valve.VR.ISteamVR_Action_In[]
             {
                     SteamVR_Actions.perhand_PoseRightHand,
@@ -298,10 +287,6 @@ namespace Valve.VR
                     SteamVR_Actions.perhand_UIUp,
                     SteamVR_Actions.perhand_UIDown,
                     SteamVR_Actions.perhand_Recenter,
-                    SteamVR_Actions.perhand_Grip,
-                    SteamVR_Actions.perhand_SnapTurnRight,
-                    SteamVR_Actions.perhand_SnapTurnLeft,
-                    SteamVR_Actions.perhand_Teleport,
                     SteamVR_Actions.perhand_StoreItem,
                     SteamVR_Actions.perhand_LocomotionAction,
                     SteamVR_Actions.mirrored_Radio,
@@ -309,7 +294,10 @@ namespace Valve.VR
                     SteamVR_Actions.mirrored_ToolPicker,
                     SteamVR_Actions.mirrored_Jog,
                     SteamVR_Actions.mirrored_Move,
-                    SteamVR_Actions.mirrored_Rotate};
+                    SteamVR_Actions.mirrored_Rotate,
+                    SteamVR_Actions.mirrored_SnapTurnLeft,
+                    SteamVR_Actions.mirrored_SnapTurnRight,
+                    SteamVR_Actions.mirrored_Teleport};
             Valve.VR.SteamVR_Input.actionsOut = new Valve.VR.ISteamVR_Action_Out[]
             {
                     SteamVR_Actions.perhand_Haptic};
@@ -329,16 +317,15 @@ namespace Valve.VR
                     SteamVR_Actions.perhand_UIUp,
                     SteamVR_Actions.perhand_UIDown,
                     SteamVR_Actions.perhand_Recenter,
-                    SteamVR_Actions.perhand_Grip,
-                    SteamVR_Actions.perhand_SnapTurnRight,
-                    SteamVR_Actions.perhand_SnapTurnLeft,
-                    SteamVR_Actions.perhand_Teleport,
                     SteamVR_Actions.perhand_StoreItem,
                     SteamVR_Actions.perhand_LocomotionAction,
                     SteamVR_Actions.mirrored_Radio,
                     SteamVR_Actions.mirrored_Interact,
                     SteamVR_Actions.mirrored_ToolPicker,
-                    SteamVR_Actions.mirrored_Jog};
+                    SteamVR_Actions.mirrored_Jog,
+                    SteamVR_Actions.mirrored_SnapTurnLeft,
+                    SteamVR_Actions.mirrored_SnapTurnRight,
+                    SteamVR_Actions.mirrored_Teleport};
             Valve.VR.SteamVR_Input.actionsSingle = new Valve.VR.SteamVR_Action_Single[0];
             Valve.VR.SteamVR_Input.actionsVector2 = new Valve.VR.SteamVR_Action_Vector2[]
             {
@@ -358,10 +345,6 @@ namespace Valve.VR
                     SteamVR_Actions.perhand_UIUp,
                     SteamVR_Actions.perhand_UIDown,
                     SteamVR_Actions.perhand_Recenter,
-                    SteamVR_Actions.perhand_Grip,
-                    SteamVR_Actions.perhand_SnapTurnRight,
-                    SteamVR_Actions.perhand_SnapTurnLeft,
-                    SteamVR_Actions.perhand_Teleport,
                     SteamVR_Actions.perhand_StoreItem,
                     SteamVR_Actions.perhand_LocomotionAction,
                     SteamVR_Actions.mirrored_Radio,
@@ -369,7 +352,10 @@ namespace Valve.VR
                     SteamVR_Actions.mirrored_ToolPicker,
                     SteamVR_Actions.mirrored_Jog,
                     SteamVR_Actions.mirrored_Move,
-                    SteamVR_Actions.mirrored_Rotate};
+                    SteamVR_Actions.mirrored_Rotate,
+                    SteamVR_Actions.mirrored_SnapTurnLeft,
+                    SteamVR_Actions.mirrored_SnapTurnRight,
+                    SteamVR_Actions.mirrored_Teleport};
         }
         
         private static void PreInitActions()
@@ -385,10 +371,6 @@ namespace Valve.VR
             SteamVR_Actions.p_perhand_UIUp = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/perhand/in/UIUp")));
             SteamVR_Actions.p_perhand_UIDown = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/perhand/in/UIDown")));
             SteamVR_Actions.p_perhand_Recenter = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/perhand/in/Recenter")));
-            SteamVR_Actions.p_perhand_Grip = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/perhand/in/Grip")));
-            SteamVR_Actions.p_perhand_SnapTurnRight = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/perhand/in/SnapTurnRight")));
-            SteamVR_Actions.p_perhand_SnapTurnLeft = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/perhand/in/SnapTurnLeft")));
-            SteamVR_Actions.p_perhand_Teleport = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/perhand/in/Teleport")));
             SteamVR_Actions.p_perhand_StoreItem = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/perhand/in/StoreItem")));
             SteamVR_Actions.p_perhand_LocomotionAction = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/perhand/in/LocomotionAction")));
             SteamVR_Actions.p_perhand_Haptic = ((SteamVR_Action_Vibration)(SteamVR_Action.Create <SteamVR_Action_Vibration>("/actions/perhand/out/Haptic")));
@@ -398,6 +380,9 @@ namespace Valve.VR
             SteamVR_Actions.p_mirrored_Jog = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/mirrored/in/Jog")));
             SteamVR_Actions.p_mirrored_Move = ((SteamVR_Action_Vector2)(SteamVR_Action.Create <SteamVR_Action_Vector2>("/actions/mirrored/in/Move")));
             SteamVR_Actions.p_mirrored_Rotate = ((SteamVR_Action_Vector2)(SteamVR_Action.Create <SteamVR_Action_Vector2>("/actions/mirrored/in/Rotate")));
+            SteamVR_Actions.p_mirrored_SnapTurnLeft = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/mirrored/in/SnapTurnLeft")));
+            SteamVR_Actions.p_mirrored_SnapTurnRight = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/mirrored/in/SnapTurnRight")));
+            SteamVR_Actions.p_mirrored_Teleport = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/mirrored/in/Teleport")));
         }
     }
 }
