@@ -124,7 +124,7 @@ namespace TwoForksVr.Limbs
                 if (isCloneHandRoot) continue;
 
                 // Clone hand bones will follow the original bones, to mimick the same animations.
-                cloneChild.gameObject.AddComponent<CopyLocalTransformValues>().Target = targetChild;
+                CopyLocalTransformValues.Create(cloneChild.gameObject, targetChild);
             }
         }
 
