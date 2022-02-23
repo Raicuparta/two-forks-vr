@@ -127,18 +127,6 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/perhand/in/jog"
-                  },
-                  "position" : {
-                     "output" : "/actions/perhand/in/move"
-                  }
-               },
-               "mode" : "joystick",
-               "path" : "/user/hand/left/input/joystick"
-            },
-            {
-               "inputs" : {
-                  "click" : {
                      "output" : "/actions/perhand/in/locomotionaction"
                   }
                },
@@ -267,6 +255,15 @@
                },
                "mode" : "joystick",
                "path" : "/user/hand/right/input/joystick"
+            },
+            {
+               "inputs" : {
+                  "position" : {
+                     "output" : "/actions/perhand/in/move"
+                  }
+               },
+               "mode" : "joystick",
+               "path" : "/user/hand/left/input/joystick"
             }
          ]
       }
