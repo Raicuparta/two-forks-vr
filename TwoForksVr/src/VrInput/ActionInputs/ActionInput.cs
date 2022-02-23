@@ -7,7 +7,6 @@ namespace TwoForksVr.VrInput.ActionInputs
     {
         protected readonly TAction SpecificAction;
         protected InputHandedness HandednessValue;
-        protected string PromptSuffixValue;
 
         protected ActionInput(TAction action)
         {
@@ -20,7 +19,7 @@ namespace TwoForksVr.VrInput.ActionInputs
             {
                 var isLeftHanded = VrSettings.LeftHandedMode.Value;
                 var isSwappedSticks = VrSettings.SwapSticks.Value;
-                switch (Handedness)
+                switch (HandednessValue)
                 {
                     case InputHandedness.Dominant:
                         return isLeftHanded ? SteamVR_Input_Sources.LeftHand : SteamVR_Input_Sources.RightHand;
@@ -37,33 +36,38 @@ namespace TwoForksVr.VrInput.ActionInputs
             }
         }
 
-        public InputHandedness Handedness => HandednessValue;
         public ISteamVR_Action_In Action => SpecificAction;
         public float AxisValue => GetAxisValue(HandSource);
         public bool ButtonValue => GetButtonValue(HandSource);
         public bool ButtonUp => GetButtonUp(HandSource);
         public bool ButtonDown => GetButtonDown(HandSource);
-        public string PromptSuffix => PromptSuffixValue;
 
-        public SteamVR_Input_Sources ActiveSource =>
-            Action != null && Action.active ? Action.activeDevice : SteamVR_Input_Sources.Any;
+        public SteamVR_Input_Sources ActiveSource
+        {
+            get
+            {
+                if (HandSource != SteamVR_Input_Sources.Any) return HandSource;
 
-        public float GetAxisValue(SteamVR_Input_Sources source)
+                return Action != null && Action.active ? Action.activeDevice : SteamVR_Input_Sources.Any;
+            }
+        }
+
+        private float GetAxisValue(SteamVR_Input_Sources source)
         {
             return Action.active ? GetValue(source) : 0;
         }
 
-        public bool GetButtonValue(SteamVR_Input_Sources source)
+        private bool GetButtonValue(SteamVR_Input_Sources source)
         {
             return Action.active && GetValue(source) != 0;
         }
 
-        public bool GetButtonUp(SteamVR_Input_Sources source)
+        private bool GetButtonUp(SteamVR_Input_Sources source)
         {
             return Action.active && GetValueUp(source);
         }
 
-        public bool GetButtonDown(SteamVR_Input_Sources source)
+        private bool GetButtonDown(SteamVR_Input_Sources source)
         {
             return Action.active && GetValueDown(source);
         }
