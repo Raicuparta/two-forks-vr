@@ -48,17 +48,22 @@ namespace TwoForksVr.Limbs
             gameObject.SetActive(true);
         }
 
-        private void Awake()
-        {
-            VrSettings.LeftHandedMode.SettingChanged += HandleLeftHandedModeSettingChanged;
-        }
-
         private void Update()
         {
             if (!VrSettings.UseOriginalHandsWhileNavigationDisabled.Value || !navigationController ||
                 !handRootFakeParenting) return;
 
             handRootFakeParenting.enabled = navigationController.enabled;
+        }
+
+        private void OnEnable()
+        {
+            VrSettings.LeftHandedMode.SettingChanged += HandleLeftHandedModeSettingChanged;
+        }
+
+        private void OnDisable()
+        {
+            VrSettings.LeftHandedMode.SettingChanged -= HandleLeftHandedModeSettingChanged;
         }
 
         private void HandleLeftHandedModeSettingChanged(object sender, EventArgs e)

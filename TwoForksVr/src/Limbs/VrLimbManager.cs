@@ -46,29 +46,39 @@ namespace TwoForksVr.Limbs
             UpdateHandedness();
         }
 
-        private void Awake()
-        {
-            VrSettings.LeftHandedMode.SettingChanged += HandleLeftHandedModeSettingChanged;
-        }
-
         private void Update()
         {
             UpdateHandedness();
         }
 
-        public VrHand GetRightHand()
+        private void OnEnable()
+        {
+            VrSettings.LeftHandedMode.SettingChanged += HandleLeftHandedModeSettingChanged;
+        }
+
+        private void OnDisable()
+        {
+            VrSettings.LeftHandedMode.SettingChanged -= HandleLeftHandedModeSettingChanged;
+        }
+
+        private VrHand GetRightHand()
         {
             return VrSettings.LeftHandedMode.Value ? NonDominantHand : DominantHand;
         }
 
-        public VrHand GetLeftHand()
+        private VrHand GetLeftHand()
         {
             return VrSettings.LeftHandedMode.Value ? DominantHand : NonDominantHand;
         }
 
-        public VrHand GetStickDominantHand()
+        public VrHand GetRotationStickHand()
         {
             return VrSettings.SwapSticks.Value ? GetLeftHand() : GetRightHand();
+        }
+
+        public VrHand GetMovementStickHand()
+        {
+            return VrSettings.SwapSticks.Value ? GetRightHand() : GetLeftHand();
         }
 
         private void HandleLeftHandedModeSettingChanged(object sender, EventArgs e)

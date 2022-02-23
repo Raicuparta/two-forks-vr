@@ -86,7 +86,7 @@ namespace TwoForksVr.Tools
             if (toolsContainer.gameObject.activeSelf || !Camera.main) return;
 
             toolsContainer.gameObject.SetActive(true);
-            toolsContainer.position = limbManager.GetStickDominantHand().transform.position;
+            toolsContainer.position = limbManager.GetRotationStickHand().transform.position;
             toolsContainer.LookAt(Camera.main.transform);
             DeselectCurrentlySelectedTool();
             SetUpTools();
@@ -111,7 +111,7 @@ namespace TwoForksVr.Tools
             foreach (var tool in tools)
             {
                 var distance =
-                    MathHelper.GetSquareDistance(tool.transform, limbManager.GetStickDominantHand().transform);
+                    MathHelper.GetSquareDistance(tool.transform, limbManager.GetRotationStickHand().transform);
                 if (!(distance < minSquareDistance) || !(distance < selectedToolDistance)) continue;
                 nextSelectedTool = tool;
                 selectedToolDistance = distance;
