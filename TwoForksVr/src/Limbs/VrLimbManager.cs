@@ -94,8 +94,14 @@ namespace TwoForksVr.Limbs
         {
             if (!henryTransform || !navigationController) return;
 
-            henryTransform.localScale =
-                new Vector3(VrSettings.LeftHandedMode.Value && navigationController.enabled ? -1 : 1, 1, 1);
+            var scale = new Vector3(VrSettings.LeftHandedMode.Value && navigationController.enabled ? -1 : 1, 1, 1);
+
+            henryTransform.localScale = scale;
+
+            var playerController = navigationController.playerController;
+
+            if (playerController && playerController.inventory && playerController.inventory.heldObject)
+                playerController.inventory.heldObject.transform.localScale = scale;
         }
 
         private Transform GetSkeletonRoot(Transform playerTransform)
