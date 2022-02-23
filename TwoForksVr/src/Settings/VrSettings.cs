@@ -6,9 +6,8 @@ namespace TwoForksVr.Settings
     public static class VrSettings
     {
         private const string controlsCategory = "Controls";
-        private const string locomotionCategory = "Locomotion";
+        private const string comfortCategory = "Comfort";
         private const string playerBodyCategory = "Player Body";
-        private const string turningCategory = "Turning";
 
         public static ConfigFile Config { get; private set; }
         public static ConfigEntry<bool> SnapTurning { get; private set; }
@@ -24,20 +23,20 @@ namespace TwoForksVr.Settings
             SetUpResolution();
 
             Config = config;
-            SnapTurning = config.Bind(turningCategory, "SnapTurning", false,
+            SnapTurning = config.Bind(comfortCategory, "SnapTurning", false,
                 "Snap turning");
-            Teleport = config.Bind(locomotionCategory, "Teleport", false,
+            Teleport = config.Bind(comfortCategory, "Teleport", false,
                 "Fixed camera while moving (\"teleport\" locomotion)");
-            FixedCameraDuringAnimations = config.Bind(locomotionCategory, "FixedCameraDuringAnimations", false,
+            FixedCameraDuringAnimations = config.Bind(comfortCategory, "FixedCameraDuringAnimations", false,
                 "Fixed camera during animations (experimental)");
             ShowLegs = config.Bind(playerBodyCategory, "ShowLegs", true,
                 "Show ghost legs at all times");
             UseOriginalHandsWhileNavigationDisabled = config.Bind(playerBodyCategory,
                 "UseOriginalHandsWhileNavigationDisabled", true,
                 "Enable ghost hands during some animations");
-            LeftHandedMode = config.Bind(controlsCategory, "LeftHandedMode", true,
-                "Left handed mode (also mirrors body)");
-            SwapSticks = config.Bind(controlsCategory, "SwapSticks", true,
+            LeftHandedMode = config.Bind(controlsCategory, "LeftHandedMode", false,
+                "Left handed mode (might break some animations)");
+            SwapSticks = config.Bind(controlsCategory, "SwapSticks", false,
                 "Swap movement / rotation sticks");
         }
 
