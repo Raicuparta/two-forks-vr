@@ -28,7 +28,7 @@ namespace TwoForksVr.VrInput.Patches
             var name = inputAction.Action.GetRenderModelComponentName(inputAction.ActiveSource);
             name = name.Replace("button_", "");
             name = name.Replace("thumb", "");
-            __result = textInfo.ToTitleCase($"{hand}{name}{inputAction.PromptSuffix}");
+            __result = textInfo.ToTitleCase($"{hand}{name}");
 
             return false;
         }

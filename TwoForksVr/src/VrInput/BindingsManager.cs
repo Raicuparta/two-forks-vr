@@ -59,6 +59,11 @@ namespace TwoForksVr.VrInput
 
         private static void HandleVrBindingsUpdated(VREvent_t arg0)
         {
+            UpdatePrompts();
+        }
+
+        private static void UpdatePrompts()
+        {
             if (!vgInputManager.Instance) return;
 
             // This resets the input prompts. The layout choice argument isn't actually used.
