@@ -1,22 +1,22 @@
-using TwoForksVr.Settings;
 using UnityEngine;
 
 namespace TwoForksVr.Limbs
 {
-    public class VrHandednessXMirror : MonoBehaviour
+    public class VrHandednessXMirror : SwapScaleFromHandedness
     {
-        private Vector3 defaultScale;
-        private Vector3 mirroredScale;
-
-        private void Awake()
+        public static void Create(Transform transform)
         {
-            defaultScale = transform.localScale;
-            mirroredScale = new Vector3(-defaultScale.x, defaultScale.y, defaultScale.z);
+            var instance = transform.gameObject.AddComponent<VrHandednessXMirror>();
+            instance.rightHandedScale = transform.localScale;
+            instance.leftHandedScale =
+                new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
 
         private void Update()
         {
-            transform.localScale = VrSettings.LeftHandedMode.Value ? mirroredScale : defaultScale;
+            // Some things I needed to flip were being reset somewhere, and I didn't feel like fixing that.
+            // So I'm just forcing the correct scale every frame.
+            HandednessChanged();
         }
     }
 }
