@@ -81,14 +81,6 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Boolean ToolPicker
-        {
-            get
-            {
-                return SteamVR_Actions.perhand_ToolPicker;
-            }
-        }
-        
         public virtual SteamVR_Action_Boolean NextPage
         {
             get

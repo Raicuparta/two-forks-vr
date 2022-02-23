@@ -32,5 +32,13 @@ namespace Valve.VR
                 return SteamVR_Actions.mirrored_Interact;
             }
         }
+        
+        public virtual SteamVR_Action_Boolean ToolPicker
+        {
+            get
+            {
+                return SteamVR_Actions.mirrored_ToolPicker;
+            }
+        }
     }
 }

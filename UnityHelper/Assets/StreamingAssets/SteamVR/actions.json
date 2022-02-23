@@ -36,10 +36,6 @@
       "type": "boolean"
     },
     {
-      "name": "/actions/perhand/in/ToolPicker",
-      "type": "boolean"
-    },
-    {
       "name": "/actions/perhand/in/NextPage",
       "type": "boolean"
     },
@@ -97,6 +93,10 @@
     },
     {
       "name": "/actions/mirrored/in/Interact",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/mirrored/in/ToolPicker",
       "type": "boolean"
     }
   ],
@@ -179,7 +179,6 @@
       "/actions/perhand/in/NextPage": "Next Page",
       "/actions/perhand/in/PreviousPage": "Previous Page",
       "/actions/perhand/in/Cancel": "Cancel",
-      "/actions/perhand/in/ToolPicker": "Tool Picker",
       "/actions/perhand/in/UiUp": "UI Up",
       "/actions/perhand/in/UiDown": "UiDown",
       "/actions/perhand/in/UIUp": "UI Up",
@@ -192,7 +191,8 @@
       "/actions/perhand/in/StoreItem": "Store Item",
       "/actions/perhand/in/LocomotionAction": "Climb / Jump",
       "/actions/mirrored/in/Radio": "Radio",
-      "/actions/mirrored/in/Interact": "Interact"
+      "/actions/mirrored/in/Interact": "Interact",
+      "/actions/mirrored/in/ToolPicker": "Tool Picker"
     }
   ]
 }
