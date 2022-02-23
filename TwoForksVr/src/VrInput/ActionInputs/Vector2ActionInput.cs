@@ -6,11 +6,13 @@ namespace TwoForksVr.VrInput.ActionInputs
     {
         private readonly bool yOnly;
 
-        public Vector2ActionInput(SteamVR_Action_Vector2 action, bool yOnly = false,
+        public Vector2ActionInput(SteamVR_Action_Vector2 action, InputHandedness handedness = InputHandedness.Any,
+            bool yOnly = false,
             string textureModifier = null) : base(action)
         {
             this.yOnly = yOnly;
             TextureModifier = textureModifier;
+            HandednessValue = handedness;
         }
 
         public string TextureModifier { get; }

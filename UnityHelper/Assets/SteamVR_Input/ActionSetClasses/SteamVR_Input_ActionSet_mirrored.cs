@@ -48,5 +48,21 @@ namespace Valve.VR
                 return SteamVR_Actions.mirrored_Jog;
             }
         }
+        
+        public virtual SteamVR_Action_Vector2 Move
+        {
+            get
+            {
+                return SteamVR_Actions.mirrored_Move;
+            }
+        }
+        
+        public virtual SteamVR_Action_Vector2 Rotate
+        {
+            get
+            {
+                return SteamVR_Actions.mirrored_Rotate;
+            }
+        }
     }
 }
