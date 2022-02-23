@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using BepInEx.Configuration;
+using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
@@ -18,8 +20,6 @@ namespace TwoForksVr.VrInput
 
         private void Awake()
         {
-            SteamVR_Events.System(EVREventType.VREvent_Input_BindingsUpdated).Listen(HandleVrBindingsUpdated);
-
             SteamVR_Actions.mirrored.Activate();
             SteamVR_Actions.perhand.Activate();
 
@@ -52,9 +52,21 @@ namespace TwoForksVr.VrInput
             };
         }
 
-        private void OnDestroy()
+        private void OnEnable()
+        {
+            SteamVR_Events.System(EVREventType.VREvent_Input_BindingsUpdated).Listen(HandleVrBindingsUpdated);
+            VrSettings.Config.SettingChanged += HandleSettingChanged;
+        }
+
+        private void OnDisable()
         {
             SteamVR_Events.System(EVREventType.VREvent_Input_BindingsUpdated).Remove(HandleVrBindingsUpdated);
+            VrSettings.Config.SettingChanged -= HandleSettingChanged;
+        }
+
+        private static void HandleSettingChanged(object sender, SettingChangedEventArgs e)
+        {
+            UpdatePrompts();
         }
 
         private static void HandleVrBindingsUpdated(VREvent_t arg0)
