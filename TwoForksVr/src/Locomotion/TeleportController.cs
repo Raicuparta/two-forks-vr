@@ -36,8 +36,8 @@ namespace TwoForksVr.Locomotion
 
         private void Update()
         {
-            if (teleportInput.GetButtonDown(SteamVR_Input_Sources.LeftHand)) SetHand(limbManager.NonDominantHand);
-            if (teleportInput.GetButtonDown(SteamVR_Input_Sources.RightHand)) SetHand(limbManager.DominantHand);
+            if (teleportInput.GetButtonDown(SteamVR_Input_Sources.LeftHand)) SetHand(limbManager.GetLeftHand());
+            if (teleportInput.GetButtonDown(SteamVR_Input_Sources.RightHand)) SetHand(limbManager.GetRightHand());
             UpdateArc();
             UpdatePlayerRotation();
         }
