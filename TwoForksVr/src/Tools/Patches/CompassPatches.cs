@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using TwoForksVr.Helpers;
+using TwoForksVr.Settings;
 using UnityEngine;
 
 namespace TwoForksVr.Tools.Patches
@@ -12,6 +13,7 @@ namespace TwoForksVr.Tools.Patches
         private static bool FixCompassDirection(vgCompass __instance)
         {
             var transform = __instance.transform;
+            transform.parent.localScale = new Vector3(VrSettings.LeftHandedMode.Value ? -1 : 1, 1, 1);
             var forward = Vector3.ProjectOnPlane(-transform.parent.forward, Vector3.up);
             var angle = MathHelper.SignedAngle(forward, Vector3.forward, Vector3.up);
             __instance.newRotation.y = angle - 165f - __instance.worldOffset;
