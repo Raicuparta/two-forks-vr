@@ -1,10 +1,10 @@
+using System;
 using TwoForksVr.Assets;
 using TwoForksVr.Limbs;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
-using Valve.VR;
 
 namespace TwoForksVr.Locomotion
 {
@@ -34,10 +34,13 @@ namespace TwoForksVr.Locomotion
                 playerController ? playerController.GetComponent<vgPlayerNavigationController>() : null;
         }
 
+        private void Start()
+        {
+            UpdateHand();
+        }
+
         private void Update()
         {
-            if (teleportInput.GetButtonDown(SteamVR_Input_Sources.LeftHand)) SetHand(limbManager.GetLeftHand());
-            if (teleportInput.GetButtonDown(SteamVR_Input_Sources.RightHand)) SetHand(limbManager.GetRightHand());
             UpdateArc();
             UpdatePlayerRotation();
         }
@@ -47,6 +50,21 @@ namespace TwoForksVr.Locomotion
             if (!navigationController || !VrSettings.Teleport.Value || !navigationController.enabled) return;
 
             navigationController.playerController.forwardInput = IsTeleporting() ? 1 : 0;
+        }
+
+        private void OnEnable()
+        {
+            VrSettings.SwapSticks.SettingChanged += SwapSticksOnSettingChanged;
+        }
+
+        private void OnDisable()
+        {
+            VrSettings.SwapSticks.SettingChanged -= SwapSticksOnSettingChanged;
+        }
+
+        private void SwapSticksOnSettingChanged(object sender, EventArgs e)
+        {
+            UpdateHand();
         }
 
         public bool IsNextToTeleportMarker(Transform objectTransform)
@@ -96,9 +114,9 @@ namespace TwoForksVr.Locomotion
             }
         }
 
-        private void SetHand(VrHand hand)
+        private void UpdateHand()
         {
-            teleportArc.transform.SetParent(hand.transform, false);
+            teleportArc.transform.SetParent(limbManager.GetMovementStickHand().transform, false);
         }
     }
 }
