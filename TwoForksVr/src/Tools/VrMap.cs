@@ -6,15 +6,15 @@ namespace TwoForksVr.Tools
     {
         private const float mapScale = 2f;
 
-        public static VrMap Create(Transform mapInHand, string handName)
+        public static void Create(Transform mapInHand)
         {
-            if (!mapInHand || mapInHand.GetComponent<VrMap>()) return null;
+            if (!mapInHand || mapInHand.GetComponent<VrMap>()) return;
 
             // Very hard to read the map in VR since we can't zoom in.
             // So making it bigger to make it easier, especially for lower resolution headsets.
             mapInHand.parent.parent.localScale = Vector3.one * mapScale;
 
-            return mapInHand.gameObject.AddComponent<VrMap>();
+            mapInHand.gameObject.AddComponent<VrMap>();
         }
 
         private void Start()
