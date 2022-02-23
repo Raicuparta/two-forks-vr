@@ -24,14 +24,6 @@
       "type": "pose"
     },
     {
-      "name": "/actions/perhand/in/Move",
-      "type": "vector2"
-    },
-    {
-      "name": "/actions/perhand/in/Rotate",
-      "type": "vector2"
-    },
-    {
       "name": "/actions/perhand/in/NextPage",
       "type": "boolean"
     },
@@ -98,6 +90,14 @@
     {
       "name": "/actions/mirrored/in/Jog",
       "type": "boolean"
+    },
+    {
+      "name": "/actions/mirrored/in/Move",
+      "type": "vector2"
+    },
+    {
+      "name": "/actions/mirrored/in/Rotate",
+      "type": "vector2"
     }
   ],
   "action_sets": [
@@ -173,8 +173,6 @@
       "/actions/perhand/out/Haptic": "Haptic",
       "/actions/perhand/in/PoseRightHand": "Pose (Right)",
       "/actions/perhand/in/PoseLeftHand": "Pose (Left)",
-      "/actions/perhand/in/Move": "Move",
-      "/actions/perhand/in/Rotate": "Rotate",
       "/actions/perhand/in/NextPage": "Next Page",
       "/actions/perhand/in/PreviousPage": "Previous Page",
       "/actions/perhand/in/Cancel": "Cancel",
@@ -192,7 +190,9 @@
       "/actions/mirrored/in/Radio": "Radio",
       "/actions/mirrored/in/Interact": "Interact",
       "/actions/mirrored/in/ToolPicker": "Tool Picker",
-      "/actions/mirrored/in/Jog": "Jog"
+      "/actions/mirrored/in/Jog": "Jog",
+      "/actions/mirrored/in/Move": "Move",
+      "/actions/mirrored/in/Rotate": "Rotate"
     }
   ]
 }

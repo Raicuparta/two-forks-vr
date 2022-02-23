@@ -17,7 +17,7 @@ namespace TwoForksVr.VrInput.ActionInputs
             new BooleanActionInput(MirroredActionSet.Interact, InputHandedness.Dominant);
 
         public static readonly BooleanActionInput Jog =
-            new BooleanActionInput(MirroredActionSet.Jog, InputHandedness.StickNonDominant);
+            new BooleanActionInput(MirroredActionSet.Jog, InputHandedness.MovementStick);
 
         public static readonly BooleanActionInput UIUp =
             new BooleanActionInput(PerHandActionSet.UIUp);
@@ -32,19 +32,19 @@ namespace TwoForksVr.VrInput.ActionInputs
             new BooleanActionInput(PerHandActionSet.PreviousPage);
 
         public static readonly Vector2ActionInput MoveX =
-            new Vector2ActionInput(PerHandActionSet.Move);
+            new Vector2ActionInput(MirroredActionSet.Move, InputHandedness.MovementStick);
 
         public static readonly Vector2ActionInput MoveY =
-            new Vector2ActionInput(PerHandActionSet.Move, true);
+            new Vector2ActionInput(MirroredActionSet.Move, InputHandedness.MovementStick, true);
 
         public static readonly Vector2ActionInput RotateX =
-            new Vector2ActionInput(PerHandActionSet.Rotate);
+            new Vector2ActionInput(MirroredActionSet.Rotate, InputHandedness.RotationStick);
 
         public static readonly BooleanActionInput Recenter =
             new BooleanActionInput(PerHandActionSet.Recenter);
 
         public static readonly BooleanActionInput ToolPicker =
-            new BooleanActionInput(MirroredActionSet.ToolPicker, InputHandedness.SickDominant);
+            new BooleanActionInput(MirroredActionSet.ToolPicker, InputHandedness.RotationStick);
 
         public static readonly BooleanActionInput Teleport =
             new BooleanActionInput(PerHandActionSet.Teleport);

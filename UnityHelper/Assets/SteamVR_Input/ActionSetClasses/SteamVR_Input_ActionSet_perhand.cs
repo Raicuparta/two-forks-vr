@@ -57,22 +57,6 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Vector2 Move
-        {
-            get
-            {
-                return SteamVR_Actions.perhand_Move;
-            }
-        }
-        
-        public virtual SteamVR_Action_Vector2 Rotate
-        {
-            get
-            {
-                return SteamVR_Actions.perhand_Rotate;
-            }
-        }
-        
         public virtual SteamVR_Action_Boolean NextPage
         {
             get

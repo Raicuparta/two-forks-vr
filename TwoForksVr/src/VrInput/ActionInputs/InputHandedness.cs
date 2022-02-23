@@ -9,7 +9,7 @@
         NonDominant,
 
         // These are swapped with the SwapSticks setting.
-        SickDominant,
-        StickNonDominant
+        RotationStick,
+        MovementStick
     }
 }
