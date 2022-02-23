@@ -48,22 +48,6 @@
       "type": "boolean"
     },
     {
-      "name": "/actions/perhand/in/Grip",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/perhand/in/SnapTurnRight",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/perhand/in/SnapTurnLeft",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/perhand/in/Teleport",
-      "type": "boolean"
-    },
-    {
       "name": "/actions/perhand/in/StoreItem",
       "type": "boolean"
     },
@@ -98,6 +82,18 @@
     {
       "name": "/actions/mirrored/in/Rotate",
       "type": "vector2"
+    },
+    {
+      "name": "/actions/mirrored/in/SnapTurnLeft",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/mirrored/in/SnapTurnRight",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/mirrored/in/Teleport",
+      "type": "boolean"
     }
   ],
   "action_sets": [
@@ -181,10 +177,6 @@
       "/actions/perhand/in/UIUp": "UI Up",
       "/actions/perhand/in/UIDown": "UI Down",
       "/actions/perhand/in/Recenter": "Recenter",
-      "/actions/perhand/in/Grip": "Grip",
-      "/actions/perhand/in/SnapTurnRight": "Snap Turn Right",
-      "/actions/perhand/in/SnapTurnLeft": "Snap Turn Left",
-      "/actions/perhand/in/Teleport": "Teleport",
       "/actions/perhand/in/StoreItem": "Store Item",
       "/actions/perhand/in/LocomotionAction": "Climb / Jump",
       "/actions/mirrored/in/Radio": "Radio",
@@ -192,7 +184,10 @@
       "/actions/mirrored/in/ToolPicker": "Tool Picker",
       "/actions/mirrored/in/Jog": "Jog",
       "/actions/mirrored/in/Move": "Move",
-      "/actions/mirrored/in/Rotate": "Rotate"
+      "/actions/mirrored/in/Rotate": "Rotate",
+      "/actions/mirrored/in/SnapTurnLeft": "Snap Turn Left",
+      "/actions/mirrored/in/SnapTurnRight": "Snap Turn Right",
+      "/actions/mirrored/in/Teleport": "Teleport"
     }
   ]
 }

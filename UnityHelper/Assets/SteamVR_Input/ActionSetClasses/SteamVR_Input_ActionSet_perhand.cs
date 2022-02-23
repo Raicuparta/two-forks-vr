@@ -105,38 +105,6 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Boolean Grip
-        {
-            get
-            {
-                return SteamVR_Actions.perhand_Grip;
-            }
-        }
-        
-        public virtual SteamVR_Action_Boolean SnapTurnRight
-        {
-            get
-            {
-                return SteamVR_Actions.perhand_SnapTurnRight;
-            }
-        }
-        
-        public virtual SteamVR_Action_Boolean SnapTurnLeft
-        {
-            get
-            {
-                return SteamVR_Actions.perhand_SnapTurnLeft;
-            }
-        }
-        
-        public virtual SteamVR_Action_Boolean Teleport
-        {
-            get
-            {
-                return SteamVR_Actions.perhand_Teleport;
-            }
-        }
-        
         public virtual SteamVR_Action_Boolean StoreItem
         {
             get

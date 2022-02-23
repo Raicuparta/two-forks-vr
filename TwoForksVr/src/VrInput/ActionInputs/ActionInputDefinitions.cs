@@ -47,13 +47,13 @@ namespace TwoForksVr.VrInput.ActionInputs
             new BooleanActionInput(MirroredActionSet.ToolPicker, InputHandedness.RotationStick);
 
         public static readonly BooleanActionInput Teleport =
-            new BooleanActionInput(PerHandActionSet.Teleport);
+            new BooleanActionInput(MirroredActionSet.Teleport, InputHandedness.MovementStick);
 
         public static readonly BooleanActionInput SnapTurnLeft =
-            new BooleanActionInput(PerHandActionSet.SnapTurnLeft);
+            new BooleanActionInput(MirroredActionSet.SnapTurnLeft, InputHandedness.RotationStick);
 
         public static readonly BooleanActionInput SnapTurnRight =
-            new BooleanActionInput(PerHandActionSet.SnapTurnRight);
+            new BooleanActionInput(MirroredActionSet.SnapTurnRight, InputHandedness.RotationStick);
 
         public static readonly BooleanActionInput StoreItem =
             new BooleanActionInput(PerHandActionSet.StoreItem);
