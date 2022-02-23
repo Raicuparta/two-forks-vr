@@ -3,7 +3,6 @@ using TwoForksVr.LaserPointer;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using TwoForksVr.Tools;
-using TwoForksVr.UI.Patches;
 using UnityEngine;
 
 namespace TwoForksVr.Limbs
@@ -28,8 +27,6 @@ namespace TwoForksVr.Limbs
             instance.NonDominantHand = VrHand.Create(instanceTransform, true);
             instance.toolPicker = ToolPicker.Create(instance);
             instance.Laser = VrLaser.Create(instance.DominantHand.transform);
-
-            InventoryPatches.DominantHand = instance.DominantHand.transform;
 
             return instance;
         }

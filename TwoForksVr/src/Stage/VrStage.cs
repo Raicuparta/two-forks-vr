@@ -204,5 +204,12 @@ namespace TwoForksVr.Stage
             if (limbManager == null || limbManager.Laser == null) return null;
             return limbManager.Laser.transform;
         }
+
+        public Transform GetDominantHand()
+        {
+            if (limbManager == null) return null;
+
+            return limbManager.DominantHand.transform;
+        }
     }
 }
