@@ -23,18 +23,20 @@ namespace TwoForksVr.Settings
             var exitButton = instance.transform.Find("ExitButton").GetComponent<Button>();
             exitButton.onClick.AddListener(instance.Close);
 
-            var layoutGroup = instance.transform.Find("LayoutGroup");
+            var scrollView = instance.GetComponentInChildren<ScrollRect>().transform;
 
-            var toggleObject = layoutGroup.GetComponentInChildren<Toggle>(true).gameObject;
+            var content = scrollView.Find("Viewport/Content");
+
+            var toggleObject = scrollView.GetComponentInChildren<Toggle>(true).gameObject;
             toggleObject.SetActive(false);
 
-            var sectionObject = layoutGroup.Find("Section").gameObject;
+            var sectionObject = content.Find("Section").gameObject;
             sectionObject.SetActive(false);
 
             var categories = VrSettings.Config.GroupBy(entry => entry.Key.Section);
             categories.ForEach(category =>
             {
-                var sectionInstance = Instantiate(sectionObject, layoutGroup, false);
+                var sectionInstance = Instantiate(sectionObject, content, false);
                 sectionInstance.SetActive(true);
 
                 var title = sectionInstance.transform.Find("Title").GetComponent<Text>();
