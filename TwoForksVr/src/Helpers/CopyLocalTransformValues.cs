@@ -15,7 +15,7 @@ namespace TwoForksVr.Helpers
             }
 
             transform.localRotation = Target.localRotation;
-            transform.localRotation = Target.localRotation;
+            transform.localPosition = Target.localPosition;
             transform.localScale = Target.localScale;
         }
     }
