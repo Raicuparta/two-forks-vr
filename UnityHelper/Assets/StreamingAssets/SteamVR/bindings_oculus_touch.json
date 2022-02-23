@@ -4,6 +4,10 @@
    "app_key" : "system.generated.firewatch.exe",
    "bindings" : {
       "/actions/mirrored" : {
+         "chords" : [],
+         "haptics" : [],
+         "poses" : [],
+         "skeleton" : [],
          "sources" : [
             {
                "inputs" : {
@@ -40,6 +44,24 @@
                },
                "mode" : "button",
                "path" : "/user/hand/right/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/mirrored/in/toolpicker"
+                  }
+               },
+               "mode" : "joystick",
+               "path" : "/user/hand/left/input/joystick"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/mirrored/in/toolpicker"
+                  }
+               },
+               "mode" : "joystick",
+               "path" : "/user/hand/right/input/joystick"
             }
          ]
       },
@@ -95,18 +117,6 @@
                },
                "mode" : "joystick",
                "path" : "/user/hand/left/input/joystick"
-            },
-            {
-               "inputs" : {
-                  "click" : {
-                     "output" : "/actions/perhand/in/toolpicker"
-                  },
-                  "position" : {
-                     "output" : "/actions/perhand/in/rotate"
-                  }
-               },
-               "mode" : "joystick",
-               "path" : "/user/hand/right/input/joystick"
             },
             {
                "inputs" : {
@@ -230,6 +240,15 @@
                },
                "mode" : "button",
                "path" : "/user/hand/left/input/x"
+            },
+            {
+               "inputs" : {
+                  "position" : {
+                     "output" : "/actions/perhand/in/rotate"
+                  }
+               },
+               "mode" : "joystick",
+               "path" : "/user/hand/right/input/joystick"
             }
          ]
       }

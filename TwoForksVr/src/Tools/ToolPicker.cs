@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
+using TwoForksVr.Limbs;
 using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
-using Valve.VR;
 
 namespace TwoForksVr.Tools
 {
@@ -13,20 +13,18 @@ namespace TwoForksVr.Tools
 
         private readonly IActionInput input = ActionInputDefinitions.ToolPicker;
         private ToolPickerItem hoveredTool;
-        private Transform leftHand;
-        private Transform rightHand;
+        private VrLimbManager limbManager;
         private ToolPickerItem selectedTool;
         private List<ToolPickerItem> tools;
         private Transform toolsContainer;
         public bool IsOpen => toolsContainer && toolsContainer.gameObject.activeSelf;
 
-        public static ToolPicker Create(Transform parent, Transform leftHand, Transform rightHand)
+        public static ToolPicker Create(VrLimbManager limbManager)
         {
             var instance = Instantiate(VrAssetLoader.ToolPickerPrefab).AddComponent<ToolPicker>();
-            instance.transform.SetParent(parent, false);
+            instance.transform.SetParent(limbManager.transform, false);
             instance.toolsContainer = instance.transform.Find("Tools");
-            instance.rightHand = rightHand;
-            instance.leftHand = leftHand;
+            instance.limbManager = limbManager;
 
             instance.tools = new List<ToolPickerItem>();
             foreach (Transform child in instance.toolsContainer) instance.tools.Add(ToolPickerItem.Create(child));
@@ -41,10 +39,8 @@ namespace TwoForksVr.Tools
 
         private void Update()
         {
-            if (input.GetButtonValue(SteamVR_Input_Sources.RightHand)) UpdateSelectedTool(rightHand);
-            if (input.GetButtonValue(SteamVR_Input_Sources.LeftHand)) UpdateSelectedTool(leftHand);
-            if (input.GetButtonDown(SteamVR_Input_Sources.RightHand)) OpenToolPicker(rightHand);
-            if (input.GetButtonDown(SteamVR_Input_Sources.LeftHand)) OpenToolPicker(leftHand);
+            if (input.ButtonValue) UpdateSelectedTool();
+            if (input.ButtonDown) OpenToolPicker();
             if (input.ButtonUp) CloseToolPicker();
         }
 
@@ -85,12 +81,12 @@ namespace TwoForksVr.Tools
             selectedTool = null;
         }
 
-        private void OpenToolPicker(Transform hand)
+        private void OpenToolPicker()
         {
             if (toolsContainer.gameObject.activeSelf || !Camera.main) return;
 
             toolsContainer.gameObject.SetActive(true);
-            toolsContainer.position = hand.position;
+            toolsContainer.position = limbManager.GetRightHand().transform.position;
             toolsContainer.LookAt(Camera.main.transform);
             DeselectCurrentlySelectedTool();
             SetUpTools();
@@ -107,14 +103,14 @@ namespace TwoForksVr.Tools
             SelectCurrentlyHoveredTool();
         }
 
-        private void UpdateSelectedTool(Transform hand)
+        private void UpdateSelectedTool()
         {
             ToolPickerItem nextSelectedTool = null;
             var selectedToolDistance = Mathf.Infinity;
 
             foreach (var tool in tools)
             {
-                var distance = MathHelper.GetSquareDistance(tool.transform, hand);
+                var distance = MathHelper.GetSquareDistance(tool.transform, limbManager.GetRightHand().transform);
                 if (!(distance < minSquareDistance) || !(distance < selectedToolDistance)) continue;
                 nextSelectedTool = tool;
                 selectedToolDistance = distance;

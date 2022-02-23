@@ -44,7 +44,7 @@ namespace TwoForksVr.VrInput.ActionInputs
             new BooleanActionInput(PerHandActionSet.Recenter);
 
         public static readonly BooleanActionInput ToolPicker =
-            new BooleanActionInput(PerHandActionSet.ToolPicker);
+            new BooleanActionInput(MirroredActionSet.ToolPicker);
 
         public static readonly BooleanActionInput Teleport =
             new BooleanActionInput(PerHandActionSet.Teleport);
