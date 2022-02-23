@@ -24,7 +24,7 @@ namespace TwoForksVr.Tools.Patches
         [HarmonyPatch(typeof(vgCompass), nameof(vgCompass.Start))]
         private static void AddHandednessMirrorToCompass(vgCompass __instance)
         {
-            __instance.transform.parent.gameObject.AddComponent<VrHandednessXMirror>();
+            VrHandednessXMirror.Create(__instance.transform.parent);
         }
 
         [HarmonyPostfix]
@@ -35,6 +35,11 @@ namespace TwoForksVr.Tools.Patches
             // This doesn't work in VR, since the hands can move and rotate independently of the player body.
             // So we replace it for a VrTrackingDevice gameobject, which points in the correct direction.
             __instance.player = VrTrackingDevice.Create(__instance).gameObject;
+
+            SwapScaleFromHandedness.Create(__instance.transform, Vector3.one, new Vector3(-1f, 1f, 1f));
+            SwapPositionFromHandedness.Create(__instance.transform, Vector3.zero, Vector3.forward * -0.06f);
+            SwapRotationFromHandedness.Create(__instance.transform, Quaternion.identity,
+                Quaternion.Euler(Vector3.up * 180f));
         }
 
         [HarmonyPrefix]

@@ -8,6 +8,7 @@ namespace TwoForksVr.Tools
         {
             var instance = new GameObject("VrTrackingDeviceFakePlayerGameObject").AddComponent<VrTrackingDevice>();
             instance.transform.SetParent(trackingDeviceController.transform, false);
+
             return instance;
         }
 

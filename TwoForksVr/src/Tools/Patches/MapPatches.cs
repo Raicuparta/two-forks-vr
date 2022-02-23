@@ -21,7 +21,7 @@ namespace TwoForksVr.Tools.Patches
         [HarmonyPatch(typeof(vgMapManager), nameof(vgMapManager.Start))]
         private static void AddHandednessMirrorToMap(vgMapManager __instance)
         {
-            __instance.gameObject.AddComponent<VrHandednessXMirror>();
+            VrHandednessXMirror.Create(__instance.transform);
         }
     }
 }

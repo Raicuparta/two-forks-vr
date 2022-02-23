@@ -49,8 +49,7 @@ namespace TwoForksVr.UI.Patches
             FakeParenting.Create(objectStage.transform, dominantHand);
 
             var inventoryObjectParent = objectStage.transform.Find("InventoryObjectParent");
-            // inventoryObjectParent.localPosition = new Vector3(0.16f, -0.04f, 0f);
-            VrHandednessTransformModifier.Create(inventoryObjectParent,
+            SwapPositionFromHandedness.Create(inventoryObjectParent,
                 new Vector3(-0.16f, -0.04f, 0f),
                 new Vector3(0.14f, 0.06f, -0.08f));
             inventoryObjectParent.localEulerAngles = new Vector3(328.5668f, 166.9781f, 334.8478f);

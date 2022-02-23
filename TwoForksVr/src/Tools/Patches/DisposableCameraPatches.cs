@@ -36,7 +36,7 @@ namespace TwoForksVr.Tools.Patches
             remainingShotsText.transform.localRotation = Quaternion.identity;
             remainingShotsText.transform.localScale = Vector3.one * 0.0002f;
 
-            attachment.AddComponent<VrHandednessXMirror>();
+            VrHandednessXMirror.Create(attachment.transform);
         }
     }
 }
