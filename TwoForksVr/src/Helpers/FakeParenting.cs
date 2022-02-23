@@ -21,7 +21,8 @@ namespace TwoForksVr.Helpers
         public static FakeParenting Create(Transform transform, Transform target = null,
             UpdateType updateType = UpdateType.VeryLateUpdate)
         {
-            var instance = transform.gameObject.AddComponent<FakeParenting>();
+            var instance = transform.GetComponent<FakeParenting>();
+            if (!instance) instance = transform.gameObject.AddComponent<FakeParenting>();
             instance.target = target;
             instance.updateTypes = updateType;
             return instance;
