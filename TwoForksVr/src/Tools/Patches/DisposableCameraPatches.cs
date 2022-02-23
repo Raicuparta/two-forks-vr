@@ -1,5 +1,6 @@
 using HarmonyLib;
 using TwoForksVr.Helpers;
+using TwoForksVr.Limbs;
 using UnityEngine;
 
 namespace TwoForksVr.Tools.Patches
@@ -34,6 +35,8 @@ namespace TwoForksVr.Tools.Patches
             remainingShotsText.transform.localPosition = new Vector3(0.01f, 0.03f, -0.03f);
             remainingShotsText.transform.localRotation = Quaternion.identity;
             remainingShotsText.transform.localScale = Vector3.one * 0.0002f;
+
+            attachment.AddComponent<VrHandednessXMirror>();
         }
     }
 }
