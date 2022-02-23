@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using TwoForksVr.Limbs;
 
 namespace TwoForksVr.Tools.Patches
 {
@@ -13,7 +14,14 @@ namespace TwoForksVr.Tools.Patches
             // So I'm using AmplifyMotionObject, which is present in a bunch of objects in the game,
             // then filtering by the name.
             if (__instance.name != "MapInHand") return;
-            VrMap.Create(__instance.transform, "Left");
+            VrMap.Create(__instance.transform);
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(vgMapManager), nameof(vgMapManager.Start))]
+        private static void AddHandednessMirrorToMap(vgMapManager __instance)
+        {
+            __instance.gameObject.AddComponent<VrHandednessXMirror>();
         }
     }
 }
