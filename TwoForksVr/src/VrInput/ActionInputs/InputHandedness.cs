@@ -3,7 +3,13 @@
     public enum InputHandedness
     {
         Any,
+
+        // These are swapped with the LeftHandedMode setting.
         Dominant,
-        NonDominant
+        NonDominant,
+
+        // These are swapped with the SwapSticks setting.
+        SickDominant,
+        StickNonDominant
     }
 }

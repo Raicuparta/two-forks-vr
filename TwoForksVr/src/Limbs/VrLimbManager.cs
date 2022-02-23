@@ -58,9 +58,17 @@ namespace TwoForksVr.Limbs
 
         public VrHand GetRightHand()
         {
-            if (VrSettings.LeftHandedMode.Value)
-                return NonDominantHand;
-            return DominantHand;
+            return VrSettings.LeftHandedMode.Value ? NonDominantHand : DominantHand;
+        }
+
+        public VrHand GetLeftHand()
+        {
+            return VrSettings.LeftHandedMode.Value ? DominantHand : NonDominantHand;
+        }
+
+        public VrHand GetStickDominantHand()
+        {
+            return VrSettings.SwapSticks.Value ? GetLeftHand() : GetRightHand();
         }
 
         private void HandleLeftHandedModeSettingChanged(object sender, EventArgs e)

@@ -73,14 +73,6 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Boolean Jog
-        {
-            get
-            {
-                return SteamVR_Actions.perhand_Jog;
-            }
-        }
-        
         public virtual SteamVR_Action_Boolean NextPage
         {
             get

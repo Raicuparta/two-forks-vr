@@ -87,19 +87,6 @@
       ],
       "sources": [
         {
-          "path": "/user/hand/left/input/thumbstick",
-          "mode": "joystick",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/perhand/in/jog"
-            },
-            "position": {
-              "output": "/actions/perhand/in/move"
-            }
-          }
-        },
-        {
           "path": "/user/hand/right/input/thumbstick",
           "mode": "dpad",
           "parameters": {

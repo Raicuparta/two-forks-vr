@@ -19,12 +19,17 @@ namespace TwoForksVr.VrInput.ActionInputs
             get
             {
                 var isLeftHanded = VrSettings.LeftHandedMode.Value;
+                var isSwappedSticks = VrSettings.SwapSticks.Value;
                 switch (Handedness)
                 {
                     case InputHandedness.Dominant:
                         return isLeftHanded ? SteamVR_Input_Sources.LeftHand : SteamVR_Input_Sources.RightHand;
                     case InputHandedness.NonDominant:
                         return isLeftHanded ? SteamVR_Input_Sources.RightHand : SteamVR_Input_Sources.LeftHand;
+                    case InputHandedness.SickDominant:
+                        return isSwappedSticks ? SteamVR_Input_Sources.LeftHand : SteamVR_Input_Sources.RightHand;
+                    case InputHandedness.StickNonDominant:
+                        return isSwappedSticks ? SteamVR_Input_Sources.RightHand : SteamVR_Input_Sources.LeftHand;
                     case InputHandedness.Any:
                     default:
                         return SteamVR_Input_Sources.Any;
