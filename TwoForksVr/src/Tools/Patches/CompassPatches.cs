@@ -24,7 +24,7 @@ namespace TwoForksVr.Tools.Patches
         [HarmonyPatch(typeof(vgCompass), nameof(vgCompass.Start))]
         private static void AddHandednessMirrorToCompass(vgCompass __instance)
         {
-            __instance.gameObject.AddComponent<VrHandednessXMirror>();
+            __instance.transform.parent.gameObject.AddComponent<VrHandednessXMirror>();
         }
 
         [HarmonyPostfix]
