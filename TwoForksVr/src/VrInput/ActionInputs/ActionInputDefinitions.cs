@@ -17,7 +17,7 @@ namespace TwoForksVr.VrInput.ActionInputs
             new BooleanActionInput(MirroredActionSet.Interact, InputHandedness.Dominant);
 
         public static readonly BooleanActionInput Jog =
-            new BooleanActionInput(PerHandActionSet.Jog);
+            new BooleanActionInput(MirroredActionSet.Jog, InputHandedness.StickNonDominant);
 
         public static readonly BooleanActionInput UIUp =
             new BooleanActionInput(PerHandActionSet.UIUp);
@@ -44,7 +44,7 @@ namespace TwoForksVr.VrInput.ActionInputs
             new BooleanActionInput(PerHandActionSet.Recenter);
 
         public static readonly BooleanActionInput ToolPicker =
-            new BooleanActionInput(MirroredActionSet.ToolPicker);
+            new BooleanActionInput(MirroredActionSet.ToolPicker, InputHandedness.SickDominant);
 
         public static readonly BooleanActionInput Teleport =
             new BooleanActionInput(PerHandActionSet.Teleport);

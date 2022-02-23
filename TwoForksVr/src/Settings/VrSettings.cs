@@ -17,6 +17,7 @@ namespace TwoForksVr.Settings
         public static ConfigEntry<bool> Teleport { get; private set; }
         public static ConfigEntry<bool> FixedCameraDuringAnimations { get; private set; }
         public static ConfigEntry<bool> LeftHandedMode { get; private set; }
+        public static ConfigEntry<bool> SwapSticks { get; private set; }
 
         public static void SetUp(ConfigFile config)
         {
@@ -36,6 +37,8 @@ namespace TwoForksVr.Settings
                 "Enable ghost hands during some animations");
             LeftHandedMode = config.Bind(controlsCategory, "LeftHandedMode", true,
                 "Left handed mode (also mirrors body)");
+            SwapSticks = config.Bind(controlsCategory, "SwapSticks", true,
+                "Swap movement / rotation sticks");
         }
 
         private static void SetUpResolution()

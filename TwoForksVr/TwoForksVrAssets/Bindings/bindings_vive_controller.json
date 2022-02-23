@@ -87,19 +87,6 @@
       ],
       "sources": [
         {
-          "path": "/user/hand/left/input/trackpad",
-          "mode": "trackpad",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/perhand/in/jog"
-            },
-            "position": {
-              "output": "/actions/perhand/in/move"
-            }
-          }
-        },
-        {
           "path": "/user/hand/right/input/trackpad",
           "mode": "dpad",
           "parameters": {
