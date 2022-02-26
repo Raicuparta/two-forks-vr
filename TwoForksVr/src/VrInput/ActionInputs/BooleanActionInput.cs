@@ -4,10 +4,9 @@ namespace TwoForksVr.VrInput.ActionInputs
 {
     public class BooleanActionInput : ActionInput<SteamVR_Action_Boolean>
     {
-        public BooleanActionInput(SteamVR_Action_Boolean action, InputHandedness handedness = InputHandedness.Any) :
+        public BooleanActionInput(SteamVR_Action_Boolean action) :
             base(action)
         {
-            HandednessValue = handedness;
         }
 
         protected override float GetValue(SteamVR_Input_Sources source)

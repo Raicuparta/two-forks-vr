@@ -6,7 +6,6 @@ namespace TwoForksVr.VrInput.ActionInputs
     public abstract class ActionInput<TAction> : IActionInput where TAction : ISteamVR_Action_In
     {
         protected readonly TAction SpecificAction;
-        protected InputHandedness HandednessValue;
 
         protected ActionInput(TAction action)
         {
@@ -19,20 +18,15 @@ namespace TwoForksVr.VrInput.ActionInputs
             {
                 var isLeftHanded = VrSettings.LeftHandedMode.Value;
                 var isSwappedSticks = VrSettings.SwapSticks.Value;
-                switch (HandednessValue)
-                {
-                    case InputHandedness.Dominant:
-                        return isLeftHanded ? SteamVR_Input_Sources.LeftHand : SteamVR_Input_Sources.RightHand;
-                    case InputHandedness.NonDominant:
-                        return isLeftHanded ? SteamVR_Input_Sources.RightHand : SteamVR_Input_Sources.LeftHand;
-                    case InputHandedness.RotationStick:
-                        return isSwappedSticks ? SteamVR_Input_Sources.LeftHand : SteamVR_Input_Sources.RightHand;
-                    case InputHandedness.MovementStick:
-                        return isSwappedSticks ? SteamVR_Input_Sources.RightHand : SteamVR_Input_Sources.LeftHand;
-                    case InputHandedness.Any:
-                    default:
-                        return SteamVR_Input_Sources.Any;
-                }
+                if (SpecificAction.actionSet == SteamVR_Actions.DominantHand)
+                    return isLeftHanded ? SteamVR_Input_Sources.LeftHand : SteamVR_Input_Sources.RightHand;
+                if (SpecificAction.actionSet == SteamVR_Actions.NonDominantHand)
+                    return isLeftHanded ? SteamVR_Input_Sources.RightHand : SteamVR_Input_Sources.LeftHand;
+                if (SpecificAction.actionSet == SteamVR_Actions.RotationHand)
+                    return isSwappedSticks ? SteamVR_Input_Sources.LeftHand : SteamVR_Input_Sources.RightHand;
+                if (SpecificAction.actionSet == SteamVR_Actions.MovementHand)
+                    return isSwappedSticks ? SteamVR_Input_Sources.RightHand : SteamVR_Input_Sources.LeftHand;
+                return SteamVR_Input_Sources.Any;
             }
         }
 

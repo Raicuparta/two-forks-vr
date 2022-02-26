@@ -13,16 +13,16 @@ namespace TwoForksVr.VrInput.ActionInputs
         private static readonly SteamVR_Input_ActionSet_perhand perHand = SteamVR_Actions.perhand;
 
         public static readonly BooleanActionInput Cancel =
-            new BooleanActionInput(nonDominant.Cancel, InputHandedness.NonDominant);
+            new BooleanActionInput(nonDominant.Cancel);
 
         public static readonly BooleanActionInput Radio =
-            new BooleanActionInput(nonDominant.Radio, InputHandedness.NonDominant);
+            new BooleanActionInput(nonDominant.Radio);
 
         public static readonly BooleanActionInput Interact =
-            new BooleanActionInput(dominant.Interact, InputHandedness.Dominant);
+            new BooleanActionInput(dominant.Interact);
 
         public static readonly BooleanActionInput Jog =
-            new BooleanActionInput(movement.Jog, InputHandedness.MovementStick);
+            new BooleanActionInput(movement.Jog);
 
         public static readonly BooleanActionInput UIUp =
             new BooleanActionInput(perHand.UIUp);
@@ -37,33 +37,33 @@ namespace TwoForksVr.VrInput.ActionInputs
             new BooleanActionInput(perHand.PreviousPage);
 
         public static readonly Vector2ActionInput MoveX =
-            new Vector2ActionInput(movement.Move, InputHandedness.MovementStick);
+            new Vector2ActionInput(movement.Move);
 
         public static readonly Vector2ActionInput MoveY =
-            new Vector2ActionInput(movement.Move, InputHandedness.MovementStick, true);
+            new Vector2ActionInput(movement.Move, true);
 
         public static readonly Vector2ActionInput RotateX =
-            new Vector2ActionInput(rotation.Rotate, InputHandedness.RotationStick);
+            new Vector2ActionInput(rotation.Rotate);
 
         public static readonly BooleanActionInput Recenter =
             new BooleanActionInput(perHand.Recenter);
 
         public static readonly BooleanActionInput ToolPicker =
-            new BooleanActionInput(dominant.ToolPicker, InputHandedness.Dominant);
+            new BooleanActionInput(dominant.ToolPicker);
 
         public static readonly BooleanActionInput Teleport =
-            new BooleanActionInput(movement.Teleport, InputHandedness.MovementStick);
+            new BooleanActionInput(movement.Teleport);
 
         public static readonly BooleanActionInput SnapTurnLeft =
-            new BooleanActionInput(rotation.SnapTurnLeft, InputHandedness.RotationStick);
+            new BooleanActionInput(rotation.SnapTurnLeft);
 
         public static readonly BooleanActionInput SnapTurnRight =
-            new BooleanActionInput(rotation.SnapTurnRight, InputHandedness.RotationStick);
+            new BooleanActionInput(rotation.SnapTurnRight);
 
         public static readonly BooleanActionInput StoreItem =
-            new BooleanActionInput(dominant.StoreItem, InputHandedness.Dominant);
+            new BooleanActionInput(dominant.StoreItem);
 
         public static readonly BooleanActionInput LocomotionAction =
-            new BooleanActionInput(rotation.LocomotionAction, InputHandedness.RotationStick);
+            new BooleanActionInput(rotation.LocomotionAction);
     }
 }
