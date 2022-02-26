@@ -56,9 +56,9 @@ namespace TwoForksVr.VrInput.ActionInputs
             new BooleanActionInput(MirroredActionSet.SnapTurnRight, InputHandedness.RotationStick);
 
         public static readonly BooleanActionInput StoreItem =
-            new BooleanActionInput(PerHandActionSet.StoreItem);
+            new BooleanActionInput(MirroredActionSet.StoreItem, InputHandedness.Dominant);
 
         public static readonly BooleanActionInput LocomotionAction =
-            new BooleanActionInput(PerHandActionSet.LocomotionAction);
+            new BooleanActionInput(MirroredActionSet.LocomotionAction, InputHandedness.RotationStick);
     }
 }

@@ -48,14 +48,6 @@
       "type": "boolean"
     },
     {
-      "name": "/actions/perhand/in/StoreItem",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/perhand/in/LocomotionAction",
-      "type": "boolean"
-    },
-    {
       "name": "/actions/perhand/out/Haptic",
       "type": "vibration"
     },
@@ -93,6 +85,14 @@
     },
     {
       "name": "/actions/mirrored/in/Teleport",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/mirrored/in/LocomotionAction",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/mirrored/in/StoreItem",
       "type": "boolean"
     }
   ],
@@ -177,8 +177,6 @@
       "/actions/perhand/in/UIUp": "UI Up",
       "/actions/perhand/in/UIDown": "UI Down",
       "/actions/perhand/in/Recenter": "Recenter",
-      "/actions/perhand/in/StoreItem": "Store Item",
-      "/actions/perhand/in/LocomotionAction": "Climb / Jump",
       "/actions/mirrored/in/Radio": "Radio",
       "/actions/mirrored/in/Interact": "Interact",
       "/actions/mirrored/in/ToolPicker": "Tool Picker",
@@ -187,7 +185,9 @@
       "/actions/mirrored/in/Rotate": "Rotate",
       "/actions/mirrored/in/SnapTurnLeft": "Snap Turn Left",
       "/actions/mirrored/in/SnapTurnRight": "Snap Turn Right",
-      "/actions/mirrored/in/Teleport": "Teleport"
+      "/actions/mirrored/in/Teleport": "Teleport",
+      "/actions/mirrored/in/LocomotionAction": "Climb / Jump",
+      "/actions/mirrored/in/StoreItem": "Store Item"
     }
   ]
 }
