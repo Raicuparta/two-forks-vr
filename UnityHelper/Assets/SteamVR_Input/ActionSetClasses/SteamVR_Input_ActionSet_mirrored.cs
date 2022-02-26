@@ -104,5 +104,13 @@ namespace Valve.VR
                 return SteamVR_Actions.mirrored_StoreItem;
             }
         }
+        
+        public virtual SteamVR_Action_Boolean Cancel
+        {
+            get
+            {
+                return SteamVR_Actions.mirrored_Cancel;
+            }
+        }
     }
 }

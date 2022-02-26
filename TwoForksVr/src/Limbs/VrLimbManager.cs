@@ -25,7 +25,7 @@ namespace TwoForksVr.Limbs
 
             instance.DominantHand = VrHand.Create(instanceTransform);
             instance.NonDominantHand = VrHand.Create(instanceTransform, true);
-            instance.toolPicker = ToolPicker.Create(instance);
+            instance.toolPicker = ToolPicker.Create(instance, instance.DominantHand);
             instance.Laser = VrLaser.Create(instance.DominantHand.transform);
 
             return instance;
@@ -66,11 +66,6 @@ namespace TwoForksVr.Limbs
         private VrHand GetLeftHand()
         {
             return VrSettings.LeftHandedMode.Value ? DominantHand : NonDominantHand;
-        }
-
-        public VrHand GetRotationStickHand()
-        {
-            return VrSettings.SwapSticks.Value ? GetLeftHand() : GetRightHand();
         }
 
         public VrHand GetMovementStickHand()

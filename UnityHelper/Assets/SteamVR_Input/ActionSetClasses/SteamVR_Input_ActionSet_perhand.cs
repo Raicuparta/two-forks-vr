@@ -73,14 +73,6 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Boolean Cancel
-        {
-            get
-            {
-                return SteamVR_Actions.perhand_Cancel;
-            }
-        }
-        
         public virtual SteamVR_Action_Boolean UIUp
         {
             get

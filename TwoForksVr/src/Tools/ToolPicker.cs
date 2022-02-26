@@ -12,19 +12,19 @@ namespace TwoForksVr.Tools
         private const float minSquareDistance = 0.03f;
 
         private readonly IActionInput input = ActionInputDefinitions.ToolPicker;
+        private Transform hand;
         private ToolPickerItem hoveredTool;
-        private VrLimbManager limbManager;
         private ToolPickerItem selectedTool;
         private List<ToolPickerItem> tools;
         private Transform toolsContainer;
         public bool IsOpen => toolsContainer && toolsContainer.gameObject.activeSelf;
 
-        public static ToolPicker Create(VrLimbManager limbManager)
+        public static ToolPicker Create(VrLimbManager limbManager, VrHand dominantHand)
         {
             var instance = Instantiate(VrAssetLoader.ToolPickerPrefab).AddComponent<ToolPicker>();
             instance.transform.SetParent(limbManager.transform, false);
             instance.toolsContainer = instance.transform.Find("Tools");
-            instance.limbManager = limbManager;
+            instance.hand = dominantHand.transform;
 
             instance.tools = new List<ToolPickerItem>();
             foreach (Transform child in instance.toolsContainer) instance.tools.Add(ToolPickerItem.Create(child));
@@ -86,7 +86,7 @@ namespace TwoForksVr.Tools
             if (toolsContainer.gameObject.activeSelf || !Camera.main) return;
 
             toolsContainer.gameObject.SetActive(true);
-            toolsContainer.position = limbManager.GetRotationStickHand().transform.position;
+            toolsContainer.position = hand.position;
             toolsContainer.LookAt(Camera.main.transform);
             DeselectCurrentlySelectedTool();
             SetUpTools();
@@ -110,8 +110,7 @@ namespace TwoForksVr.Tools
 
             foreach (var tool in tools)
             {
-                var distance =
-                    MathHelper.GetSquareDistance(tool.transform, limbManager.GetRotationStickHand().transform);
+                var distance = MathHelper.GetSquareDistance(tool.transform, hand);
                 if (!(distance < minSquareDistance) || !(distance < selectedToolDistance)) continue;
                 nextSelectedTool = tool;
                 selectedToolDistance = distance;

@@ -188,6 +188,42 @@
                },
                "mode" : "button",
                "path" : "/user/hand/right/input/x"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/mirrored/in/toolpicker"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/y"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/mirrored/in/toolpicker"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/y"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/mirrored/in/cancel"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/y"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/mirrored/in/cancel"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/y"
             }
          ]
       },
@@ -252,24 +288,6 @@
                   "sub_mode" : "touch"
                },
                "path" : "/user/hand/right/input/joystick"
-            },
-            {
-               "inputs" : {
-                  "click" : {
-                     "output" : "/actions/perhand/in/cancel"
-                  }
-               },
-               "mode" : "button",
-               "path" : "/user/hand/right/input/b"
-            },
-            {
-               "inputs" : {
-                  "click" : {
-                     "output" : "/actions/perhand/in/cancel"
-                  }
-               },
-               "mode" : "button",
-               "path" : "/user/hand/left/input/y"
             }
          ]
       }
