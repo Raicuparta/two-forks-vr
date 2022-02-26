@@ -132,6 +132,42 @@
               "output": "/actions/mirrored/in/rotate"
             }
           }
+        },
+        {
+          "path": "/user/hand/left/input/joystick",
+          "mode": "dpad",
+          "parameters": {
+            "sub_mode": "touch"
+          },
+          "inputs": {
+            "east": {
+              "output": "/actions/mirrored/in/snapturnright"
+            },
+            "north": {
+              "output": "/actions/mirrored/in/teleport"
+            },
+            "west": {
+              "output": "/actions/mirrored/in/snapturnleft"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/right/input/joystick",
+          "mode": "dpad",
+          "parameters": {
+            "sub_mode": "touch"
+          },
+          "inputs": {
+            "east": {
+              "output": "/actions/mirrored/in/snapturnright"
+            },
+            "north": {
+              "output": "/actions/mirrored/in/teleport"
+            },
+            "west": {
+              "output": "/actions/mirrored/in/snapturnleft"
+            }
+          }
         }
       ],
       "skeleton": []
@@ -220,46 +256,6 @@
           "inputs": {
             "click": {
               "output": "/actions/perhand/in/cancel"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/trackpad",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/perhand/in/storeitem"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/trackpad",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/perhand/in/storeitem"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/trackpad",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/perhand/in/locomotionaction"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/trackpad",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/perhand/in/locomotionaction"
             }
           }
         }

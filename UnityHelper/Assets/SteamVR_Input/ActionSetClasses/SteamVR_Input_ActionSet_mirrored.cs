@@ -88,5 +88,21 @@ namespace Valve.VR
                 return SteamVR_Actions.mirrored_Teleport;
             }
         }
+        
+        public virtual SteamVR_Action_Boolean LocomotionAction
+        {
+            get
+            {
+                return SteamVR_Actions.mirrored_LocomotionAction;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean StoreItem
+        {
+            get
+            {
+                return SteamVR_Actions.mirrored_StoreItem;
+            }
+        }
     }
 }

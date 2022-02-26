@@ -125,6 +125,42 @@
               "output": "/actions/mirrored/in/rotate"
             }
           }
+        },
+        {
+          "path": "/user/hand/left/input/thumbstick",
+          "mode": "dpad",
+          "parameters": {
+            "sub_mode": "touch"
+          },
+          "inputs": {
+            "east": {
+              "output": "/actions/mirrored/in/snapturnright"
+            },
+            "north": {
+              "output": "/actions/mirrored/in/teleport"
+            },
+            "west": {
+              "output": "/actions/mirrored/in/snapturnleft"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/right/input/thumbstick",
+          "mode": "dpad",
+          "parameters": {
+            "sub_mode": "touch"
+          },
+          "inputs": {
+            "east": {
+              "output": "/actions/mirrored/in/snapturnright"
+            },
+            "north": {
+              "output": "/actions/mirrored/in/teleport"
+            },
+            "west": {
+              "output": "/actions/mirrored/in/snapturnleft"
+            }
+          }
         }
       ],
       "skeleton": []
@@ -188,16 +224,6 @@
           }
         },
         {
-          "path": "/user/hand/right/input/a",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/perhand/in/storeitem"
-            }
-          }
-        },
-        {
           "path": "/user/hand/right/input/b",
           "mode": "button",
           "parameters": {},
@@ -208,42 +234,12 @@
           }
         },
         {
-          "path": "/user/hand/left/input/a",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/perhand/in/storeitem"
-            }
-          }
-        },
-        {
           "path": "/user/hand/left/input/b",
           "mode": "button",
           "parameters": {},
           "inputs": {
             "click": {
               "output": "/actions/perhand/in/cancel"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/a",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/perhand/in/locomotionaction"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/a",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/perhand/in/locomotionaction"
             }
           }
         }
