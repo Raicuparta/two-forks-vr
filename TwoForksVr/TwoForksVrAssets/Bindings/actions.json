@@ -48,51 +48,51 @@
       "type": "vibration"
     },
     {
-      "name": "/actions/mirrored/in/Radio",
+      "name": "/actions/DominantHand/in/Interact",
       "type": "boolean"
     },
     {
-      "name": "/actions/mirrored/in/Interact",
+      "name": "/actions/DominantHand/in/ToolPicker",
       "type": "boolean"
     },
     {
-      "name": "/actions/mirrored/in/ToolPicker",
+      "name": "/actions/DominantHand/in/StoreItem",
       "type": "boolean"
     },
     {
-      "name": "/actions/mirrored/in/Jog",
+      "name": "/actions/NonDominantHand/in/Radio",
       "type": "boolean"
     },
     {
-      "name": "/actions/mirrored/in/Move",
+      "name": "/actions/NonDominantHand/in/Cancel",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/MovementHand/in/Move",
       "type": "vector2"
     },
     {
-      "name": "/actions/mirrored/in/Rotate",
+      "name": "/actions/MovementHand/in/Teleport",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/MovementHand/in/Jog",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/RotationHand/in/Rotate",
       "type": "vector2"
     },
     {
-      "name": "/actions/mirrored/in/SnapTurnLeft",
+      "name": "/actions/RotationHand/in/SnapTurnLeft",
       "type": "boolean"
     },
     {
-      "name": "/actions/mirrored/in/SnapTurnRight",
+      "name": "/actions/RotationHand/in/SnapTurnRight",
       "type": "boolean"
     },
     {
-      "name": "/actions/mirrored/in/Teleport",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/mirrored/in/LocomotionAction",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/mirrored/in/StoreItem",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/mirrored/in/Cancel",
+      "name": "/actions/RotationHand/in/LocomotionAction",
       "type": "boolean"
     }
   ],
@@ -102,7 +102,19 @@
       "usage": "leftright"
     },
     {
-      "name": "/actions/mirrored",
+      "name": "/actions/DominantHand",
+      "usage": "single"
+    },
+    {
+      "name": "/actions/NonDominantHand",
+      "usage": "single"
+    },
+    {
+      "name": "/actions/MovementHand",
+      "usage": "single"
+    },
+    {
+      "name": "/actions/RotationHand",
       "usage": "single"
     }
   ],
@@ -176,18 +188,18 @@
       "/actions/perhand/in/UIUp": "UI Up",
       "/actions/perhand/in/UIDown": "UI Down",
       "/actions/perhand/in/Recenter": "Recenter",
-      "/actions/mirrored/in/Radio": "Radio",
-      "/actions/mirrored/in/Interact": "Interact",
-      "/actions/mirrored/in/ToolPicker": "Tool Picker",
-      "/actions/mirrored/in/Jog": "Jog",
-      "/actions/mirrored/in/Move": "Move",
-      "/actions/mirrored/in/Rotate": "Rotate",
-      "/actions/mirrored/in/SnapTurnLeft": "Snap Turn Left",
-      "/actions/mirrored/in/SnapTurnRight": "Snap Turn Right",
-      "/actions/mirrored/in/Teleport": "Teleport",
-      "/actions/mirrored/in/LocomotionAction": "Climb / Jump",
-      "/actions/mirrored/in/StoreItem": "Store Item",
-      "/actions/mirrored/in/Cancel": "Cancel / Pause"
+      "/actions/DominantHand/in/Interact": "Interact",
+      "/actions/DominantHand/in/ToolPicker": "Tool Picker",
+      "/actions/DominantHand/in/StoreItem": "Store Item",
+      "/actions/NonDominantHand/in/Radio": "Radio",
+      "/actions/NonDominantHand/in/Cancel": "Cancel / Pause",
+      "/actions/MovementHand/in/Move": "Move",
+      "/actions/MovementHand/in/Teleport": "Teleport",
+      "/actions/MovementHand/in/Jog": "Jog",
+      "/actions/RotationHand/in/Rotate": "Rotate",
+      "/actions/RotationHand/in/SnapTurnLeft": "Snap Turn Left",
+      "/actions/RotationHand/in/SnapTurnRight": "Snap Turn Right",
+      "/actions/RotationHand/in/LocomotionAction": "Climb / Jump"
     }
   ]
 }

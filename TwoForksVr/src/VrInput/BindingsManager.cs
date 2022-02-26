@@ -10,7 +10,33 @@ namespace TwoForksVr.VrInput
 {
     public class BindingsManager : MonoBehaviour
     {
-        public Dictionary<string, IActionInput> ActionMap { get; private set; }
+        public readonly Dictionary<string, IActionInput> ActionMap = new Dictionary<string, IActionInput>
+        {
+            {VirtualKey.LocomotionAction, ActionInputDefinitions.LocomotionAction},
+            {VirtualKey.Use, ActionInputDefinitions.Interact},
+            {VirtualKey.Confirm, ActionInputDefinitions.Interact},
+            {VirtualKey.StoreObject, ActionInputDefinitions.StoreItem},
+            {VirtualKey.Cancel, ActionInputDefinitions.Cancel},
+            {VirtualKey.DialogUp, ActionInputDefinitions.UIUp},
+            {VirtualKey.DialogDown, ActionInputDefinitions.UIDown},
+            {VirtualKey.Jog, ActionInputDefinitions.Jog},
+            {VirtualKey.Pause, ActionInputDefinitions.Cancel},
+            {VirtualKey.NextMenu, ActionInputDefinitions.NextPage},
+            {VirtualKey.PreviousMenu, ActionInputDefinitions.PreviousPage},
+            {VirtualKey.Radio, ActionInputDefinitions.Radio},
+            {VirtualKey.MoveXAxis, ActionInputDefinitions.MoveX},
+            {VirtualKey.LookXAxisStick, ActionInputDefinitions.RotateX},
+            {VirtualKey.MoveYAxis, ActionInputDefinitions.MoveY},
+            {VirtualKey.MoveForwardKeyboard, ActionInputDefinitions.UIUp},
+            {VirtualKey.MoveBackwardKeyboard, ActionInputDefinitions.UIDown},
+            {VirtualKey.StrafeRightKeyboard, ActionInputDefinitions.NextPage},
+            {VirtualKey.StrafeLeftKeyboard, ActionInputDefinitions.PreviousPage},
+
+            // Unused for actually controlling stuff, but used for the input prompts.
+            {VirtualKey.ScrollUpDown, ActionInputDefinitions.UIUp},
+            {VirtualKey.ToolPicker, ActionInputDefinitions.ToolPicker},
+            {VirtualKey.Inventory, ActionInputDefinitions.Cancel}
+        };
 
         public static BindingsManager Create(VrStage stage)
         {
@@ -20,36 +46,7 @@ namespace TwoForksVr.VrInput
 
         private void Awake()
         {
-            SteamVR_Actions.mirrored.Activate();
-            SteamVR_Actions.perhand.Activate();
-
-            ActionMap = new Dictionary<string, IActionInput>
-            {
-                {VirtualKey.LocomotionAction, ActionInputDefinitions.LocomotionAction},
-                {VirtualKey.Use, ActionInputDefinitions.Interact},
-                {VirtualKey.Confirm, ActionInputDefinitions.Interact},
-                {VirtualKey.StoreObject, ActionInputDefinitions.StoreItem},
-                {VirtualKey.Cancel, ActionInputDefinitions.Cancel},
-                {VirtualKey.DialogUp, ActionInputDefinitions.UIUp},
-                {VirtualKey.DialogDown, ActionInputDefinitions.UIDown},
-                {VirtualKey.Jog, ActionInputDefinitions.Jog},
-                {VirtualKey.Pause, ActionInputDefinitions.Cancel},
-                {VirtualKey.NextMenu, ActionInputDefinitions.NextPage},
-                {VirtualKey.PreviousMenu, ActionInputDefinitions.PreviousPage},
-                {VirtualKey.Radio, ActionInputDefinitions.Radio},
-                {VirtualKey.MoveXAxis, ActionInputDefinitions.MoveX},
-                {VirtualKey.LookXAxisStick, ActionInputDefinitions.RotateX},
-                {VirtualKey.MoveYAxis, ActionInputDefinitions.MoveY},
-                {VirtualKey.MoveForwardKeyboard, ActionInputDefinitions.UIUp},
-                {VirtualKey.MoveBackwardKeyboard, ActionInputDefinitions.UIDown},
-                {VirtualKey.StrafeRightKeyboard, ActionInputDefinitions.NextPage},
-                {VirtualKey.StrafeLeftKeyboard, ActionInputDefinitions.PreviousPage},
-
-                // Unused for actually controlling stuff, but used for the input prompts.
-                {VirtualKey.ScrollUpDown, ActionInputDefinitions.UIUp},
-                {VirtualKey.ToolPicker, ActionInputDefinitions.ToolPicker},
-                {VirtualKey.Inventory, ActionInputDefinitions.Cancel}
-            };
+            ActivateSteamVrActionSets();
         }
 
         private void OnEnable()
@@ -62,6 +59,11 @@ namespace TwoForksVr.VrInput
         {
             SteamVR_Events.System(EVREventType.VREvent_Input_BindingsUpdated).Remove(HandleVrBindingsUpdated);
             VrSettings.Config.SettingChanged -= HandleSettingChanged;
+        }
+
+        private void ActivateSteamVrActionSets()
+        {
+            foreach (var actionSet in SteamVR_Input.actionSets) actionSet.Activate();
         }
 
         private static void HandleSettingChanged(object sender, SettingChangedEventArgs e)

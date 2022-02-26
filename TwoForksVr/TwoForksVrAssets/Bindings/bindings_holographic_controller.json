@@ -8,7 +8,7 @@
       "sources": [],
       "skeleton": []
     },
-    "/actions/mirrored": {
+    "/actions/DominantHand": {
       "chords": [],
       "poses": [],
       "haptics": [],
@@ -19,7 +19,7 @@
           "parameters": {},
           "inputs": {
             "click": {
-              "output": "/actions/mirrored/in/radio"
+              "output": "/actions/DominantHand/in/interact"
             }
           }
         },
@@ -29,17 +29,45 @@
           "parameters": {},
           "inputs": {
             "click": {
-              "output": "/actions/mirrored/in/radio"
+              "output": "/actions/DominantHand/in/interact"
             }
           }
         },
+        {
+          "path": "/user/hand/left/input/joystick",
+          "mode": "joystick",
+          "parameters": {},
+          "inputs": {
+            "click": {
+              "output": "/actions/DominantHand/in/toolpicker"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/right/input/joystick",
+          "mode": "joystick",
+          "parameters": {},
+          "inputs": {
+            "click": {
+              "output": "/actions/DominantHand/in/toolpicker"
+            }
+          }
+        }
+      ],
+      "skeleton": []
+    },
+    "/actions/NonDominantHand": {
+      "chords": [],
+      "poses": [],
+      "haptics": [],
+      "sources": [
         {
           "path": "/user/hand/left/input/trigger",
           "mode": "button",
           "parameters": {},
           "inputs": {
             "click": {
-              "output": "/actions/mirrored/in/interact"
+              "output": "/actions/NonDominantHand/in/radio"
             }
           }
         },
@@ -49,123 +77,7 @@
           "parameters": {},
           "inputs": {
             "click": {
-              "output": "/actions/mirrored/in/interact"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/joystick",
-          "mode": "joystick",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/mirrored/in/jog"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/joystick",
-          "mode": "joystick",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/mirrored/in/jog"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/joystick",
-          "mode": "joystick",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/mirrored/in/toolpicker"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/joystick",
-          "mode": "joystick",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/mirrored/in/toolpicker"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/joystick",
-          "mode": "joystick",
-          "parameters": {},
-          "inputs": {
-            "position": {
-              "output": "/actions/mirrored/in/move"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/joystick",
-          "mode": "joystick",
-          "parameters": {},
-          "inputs": {
-            "position": {
-              "output": "/actions/mirrored/in/move"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/joystick",
-          "mode": "joystick",
-          "parameters": {},
-          "inputs": {
-            "position": {
-              "output": "/actions/mirrored/in/rotate"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/joystick",
-          "mode": "joystick",
-          "parameters": {},
-          "inputs": {
-            "position": {
-              "output": "/actions/mirrored/in/rotate"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/joystick",
-          "mode": "dpad",
-          "parameters": {
-            "sub_mode": "touch"
-          },
-          "inputs": {
-            "east": {
-              "output": "/actions/mirrored/in/snapturnright"
-            },
-            "north": {
-              "output": "/actions/mirrored/in/teleport"
-            },
-            "west": {
-              "output": "/actions/mirrored/in/snapturnleft"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/joystick",
-          "mode": "dpad",
-          "parameters": {
-            "sub_mode": "touch"
-          },
-          "inputs": {
-            "east": {
-              "output": "/actions/mirrored/in/snapturnright"
-            },
-            "north": {
-              "output": "/actions/mirrored/in/teleport"
-            },
-            "west": {
-              "output": "/actions/mirrored/in/snapturnleft"
+              "output": "/actions/NonDominantHand/in/radio"
             }
           }
         }
