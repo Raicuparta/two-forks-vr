@@ -8,7 +8,7 @@ namespace TwoForksVr.VrInput.ActionInputs
         public static readonly SteamVR_Input_ActionSet_mirrored MirroredActionSet = SteamVR_Actions.mirrored;
 
         public static readonly BooleanActionInput Cancel =
-            new BooleanActionInput(PerHandActionSet.Cancel);
+            new BooleanActionInput(MirroredActionSet.Cancel, InputHandedness.NonDominant);
 
         public static readonly BooleanActionInput Radio =
             new BooleanActionInput(MirroredActionSet.Radio, InputHandedness.NonDominant);
@@ -44,7 +44,7 @@ namespace TwoForksVr.VrInput.ActionInputs
             new BooleanActionInput(PerHandActionSet.Recenter);
 
         public static readonly BooleanActionInput ToolPicker =
-            new BooleanActionInput(MirroredActionSet.ToolPicker, InputHandedness.RotationStick);
+            new BooleanActionInput(MirroredActionSet.ToolPicker, InputHandedness.Dominant);
 
         public static readonly BooleanActionInput Teleport =
             new BooleanActionInput(MirroredActionSet.Teleport, InputHandedness.MovementStick);

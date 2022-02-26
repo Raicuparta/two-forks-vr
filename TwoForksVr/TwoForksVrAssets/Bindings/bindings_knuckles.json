@@ -222,26 +222,6 @@
               "output": "/actions/perhand/in/previouspage"
             }
           }
-        },
-        {
-          "path": "/user/hand/right/input/b",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/perhand/in/cancel"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/b",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/perhand/in/cancel"
-            }
-          }
         }
       ],
       "skeleton": [
