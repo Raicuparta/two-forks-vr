@@ -12,7 +12,6 @@ namespace TwoForksVr.Settings
         public static ConfigFile Config { get; private set; }
         public static ConfigEntry<bool> SnapTurning { get; private set; }
         public static ConfigEntry<bool> ShowLegs { get; private set; }
-        public static ConfigEntry<bool> UseOriginalHandsWhileNavigationDisabled { get; private set; }
         public static ConfigEntry<bool> Teleport { get; private set; }
         public static ConfigEntry<bool> FixedCameraDuringAnimations { get; private set; }
         public static ConfigEntry<bool> LeftHandedMode { get; private set; }
@@ -31,9 +30,6 @@ namespace TwoForksVr.Settings
                 "Fixed camera during animations (experimental)");
             ShowLegs = config.Bind(playerBodyCategory, "ShowLegs", true,
                 "Show ghost legs at all times");
-            UseOriginalHandsWhileNavigationDisabled = config.Bind(playerBodyCategory,
-                "UseOriginalHandsWhileNavigationDisabled", true,
-                "Enable ghost hands during some animations");
             LeftHandedMode = config.Bind(controlsCategory, "LeftHandedMode", false,
                 "Left handed mode (might break some animations)");
             SwapSticks = config.Bind(controlsCategory, "SwapSticks", false,

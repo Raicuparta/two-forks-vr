@@ -50,8 +50,7 @@ namespace TwoForksVr.Limbs
 
         private void Update()
         {
-            if (!VrSettings.UseOriginalHandsWhileNavigationDisabled.Value || !navigationController ||
-                !handRootFakeParenting) return;
+            if (!navigationController || !handRootFakeParenting) return;
 
             handRootFakeParenting.enabled = navigationController.enabled;
         }

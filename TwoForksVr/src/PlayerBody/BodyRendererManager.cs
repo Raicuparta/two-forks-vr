@@ -107,8 +107,7 @@ namespace TwoForksVr.PlayerBody
 
         private bool ShouldShowArms()
         {
-            return VrSettings.UseOriginalHandsWhileNavigationDisabled.Value && !teleportController.IsTeleporting() &&
-                   !IsNavigationControllerEnabled();
+            return !teleportController.IsTeleporting() && !IsNavigationControllerEnabled();
         }
 
         private void SetUpMaterials()
