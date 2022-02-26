@@ -4,6 +4,8 @@ namespace TwoForksVr.VrInput.ActionInputs
 {
     public static class ActionInputDefinitions
     {
+        // TODO: would be a lot cleaner to just do a static import of the action sets,
+        // but if I don't do these declarations here I get steamvr errors. I think I need to initialize it sooner.
         private static readonly SteamVR_Input_ActionSet_NonDominantHand nonDominant = SteamVR_Actions.NonDominantHand;
         private static readonly SteamVR_Input_ActionSet_DominantHand dominant = SteamVR_Actions.DominantHand;
         private static readonly SteamVR_Input_ActionSet_MovementHand movement = SteamVR_Actions.MovementHand;
