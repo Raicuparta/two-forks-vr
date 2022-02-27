@@ -10,7 +10,7 @@ namespace TwoForksVr.VrInput.ActionInputs
         private static readonly SteamVR_Input_ActionSet_DominantHand dominant = SteamVR_Actions.DominantHand;
         private static readonly SteamVR_Input_ActionSet_MovementHand movement = SteamVR_Actions.MovementHand;
         private static readonly SteamVR_Input_ActionSet_RotationHand rotation = SteamVR_Actions.RotationHand;
-        private static readonly SteamVR_Input_ActionSet_perhand perHand = SteamVR_Actions.perhand;
+        private static readonly SteamVR_Input_ActionSet_default defaultActionSet = SteamVR_Actions._default;
 
         public static readonly BooleanActionInput Cancel =
             new BooleanActionInput(nonDominant.Cancel);

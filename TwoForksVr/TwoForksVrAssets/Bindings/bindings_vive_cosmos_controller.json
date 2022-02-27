@@ -10,27 +10,9 @@
     "/actions/perhand": {
       "chords": [],
       "poses": [],
-      "haptics": [
-        {
-          "output": "/actions/perhand/out/haptic",
-          "path": "/user/hand/left/output/haptic"
-        },
-        {
-          "output": "/actions/perhand/out/haptic",
-          "path": "/user/hand/right/output/haptic"
-        }
-      ],
+      "haptics": [],
       "sources": [],
-      "skeleton": [
-        {
-          "output": "/actions/perhand/in/skeletonlefthand",
-          "path": "/user/hand/left/input/skeleton/left"
-        },
-        {
-          "output": "/actions/perhand/in/skeletonrighthand",
-          "path": "/user/hand/right/input/skeleton/right"
-        }
-      ]
+      "skeleton": []
     },
     "/actions/platformer": {
       "chords": [],
