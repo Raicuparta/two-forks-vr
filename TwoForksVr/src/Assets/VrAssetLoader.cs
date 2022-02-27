@@ -12,10 +12,10 @@ namespace TwoForksVr.Assets
         public static Texture2D PlayerArmsTexture { get; private set; }
         public static Shader TMProShader { get; private set; }
         public static Shader HighlightShader { get; private set; }
+        public static Shader FadeShader { get; private set; }
         public static GameObject VrSettingsMenuPrefab { get; private set; }
         public static GameObject LeftHandPrefab { get; private set; }
         public static GameObject RightHandPrefab { get; private set; }
-        public static GameObject FadeOverlayPrefab { get; private set; }
         public static GameObject TeleportTargetPrefab { get; private set; }
 
         public static void LoadAssets()
@@ -29,10 +29,10 @@ namespace TwoForksVr.Assets
             var uiBundle = LoadBundle("ui");
             ToolPickerPrefab = uiBundle.LoadAsset<GameObject>("tool-picker");
             VrSettingsMenuPrefab = uiBundle.LoadAsset<GameObject>("vr-settings-menu");
-            FadeOverlayPrefab = uiBundle.LoadAsset<GameObject>("fade-overlay");
             TeleportTargetPrefab = uiBundle.LoadAsset<GameObject>("teleport-target");
             HighlightShader = TeleportTargetPrefab.GetComponentInChildren<Renderer>().material.shader;
             TMProShader = uiBundle.LoadAsset<Shader>("TMP_SDF-Mobile");
+            FadeShader = uiBundle.LoadAsset<Shader>("SteamVR_Fade");
         }
 
         private static AssetBundle LoadBundle(string assetName)

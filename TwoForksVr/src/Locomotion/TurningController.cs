@@ -11,6 +11,7 @@ namespace TwoForksVr.Locomotion
     {
         private const float smoothRotationSpeed = 150f; // TODO make this configurable.
         private const float snapRotationAngle = 60f; // TODO make this configurable.
+        private bool isSnapTurning;
         private VrLimbManager limbManager;
         private vgPlayerNavigationController navigationController;
         private VrStage stage;
@@ -45,14 +46,16 @@ namespace TwoForksVr.Locomotion
 
         private void UpdateSnapTurning()
         {
-            if (ActionInputDefinitions.SnapTurnLeft.ButtonDown)
+            if (!isSnapTurning && ActionInputDefinitions.SnapTurnLeft.ButtonDown)
             {
+                isSnapTurning = true;
                 stage.FadeToBlack();
                 Invoke(nameof(SnapTurnLeft), FadeOverlay.Duration);
             }
 
-            if (ActionInputDefinitions.SnapTurnRight.ButtonDown)
+            if (!isSnapTurning && ActionInputDefinitions.SnapTurnRight.ButtonDown)
             {
+                isSnapTurning = true;
                 stage.FadeToBlack();
                 Invoke(nameof(SnapTurnRight), FadeOverlay.Duration);
             }
@@ -84,6 +87,7 @@ namespace TwoForksVr.Locomotion
         private void EndSnap()
         {
             stage.FadeToClear();
+            isSnapTurning = false;
         }
     }
 }

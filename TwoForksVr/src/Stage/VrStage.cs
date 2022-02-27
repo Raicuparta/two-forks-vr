@@ -24,7 +24,8 @@ namespace TwoForksVr.Stage
         private BodyRendererManager bodyRendererManager;
 
         private VRCameraManager cameraManager;
-        private FadeOverlay fadeOverlay;
+
+        // private FadeOverlay fadeOverlay;
         private Camera fallbackCamera;
         private FakeParenting follow;
         private InteractiveUiTarget interactiveUiTarget;
@@ -60,7 +61,7 @@ namespace TwoForksVr.Stage
             instance.follow = FakeParenting.Create(stageParent.transform);
             instance.interactiveUiTarget = InteractiveUiTarget.Create(instance);
             instance.staticUiTarget = StaticUiTarget.Create(instance);
-            instance.fadeOverlay = FadeOverlay.Create(instance);
+            // instance.fadeOverlay = FadeOverlay.Create(instance);
             instance.teleportController = TeleportController.Create(instance, instance.limbManager);
             instance.turningController =
                 TurningController.Create(instance, instance.teleportController, instance.limbManager);
@@ -105,7 +106,7 @@ namespace TwoForksVr.Stage
             interactiveUiTarget.SetUp(nextCamera);
             staticUiTarget.SetUp(nextCamera);
             teleportController.SetUp(playerController);
-            fadeOverlay.SetUp(nextCamera);
+            FadeOverlay.Create(nextCamera);
             veryLateUpdateManager.SetUp(nextCamera);
             turningController.SetUp(playerController);
             roomScaleBodyTransform.SetUp(playerController);
@@ -146,14 +147,12 @@ namespace TwoForksVr.Stage
 
         public void FadeToBlack()
         {
-            if (!fadeOverlay) return;
-            fadeOverlay.FadeToBlack();
+            FadeOverlay.StartFade(Color.black, FadeOverlay.Duration);
         }
 
         public void FadeToClear()
         {
-            if (!fadeOverlay) return;
-            fadeOverlay.FadeToClear();
+            FadeOverlay.StartFade(Color.clear, FadeOverlay.Duration);
         }
 
         public void OpenVrSettings()

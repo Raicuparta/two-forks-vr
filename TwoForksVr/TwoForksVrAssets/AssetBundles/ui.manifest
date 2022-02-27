@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2536487924
+CRC: 3245577078
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e888523402c0b8265fc42bcc8a7f849d
+    Hash: 6fedaaba2bbf06047b7d17a8a8765814
   TypeTreeHash:
     serializedVersion: 2
     Hash: 847b612e36feea4ad10ef65dcfe5eff9
@@ -68,6 +68,7 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
+- Assets/SteamVR/Resources/SteamVR_Fade.shader
 - Assets/Bundles/UI/TMPro_Mobile.cginc
 - Assets/Bundles/UI/TMP_SDF-Mobile.shader
 - Assets/Bundles/UI/vr-settings-menu.prefab
@@ -75,6 +76,5 @@ Assets:
 - Assets/Bundles/UI/TMPro_Surface.cginc
 - Assets/Bundles/UI/teleport-target.prefab
 - Assets/Bundles/UI/TMPro.cginc
-- Assets/Bundles/UI/fade-overlay.prefab
 - Assets/Bundles/UI/TMPro_Properties.cginc
 Dependencies: []
