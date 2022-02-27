@@ -45,9 +45,6 @@ namespace TwoForksVr.VrInput.ActionInputs
         public static readonly Vector2ActionInput RotateX =
             new Vector2ActionInput(rotation.Rotate);
 
-        public static readonly BooleanActionInput Recenter =
-            new BooleanActionInput(perHand.Recenter);
-
         public static readonly BooleanActionInput ToolPicker =
             new BooleanActionInput(dominant.ToolPicker);
 

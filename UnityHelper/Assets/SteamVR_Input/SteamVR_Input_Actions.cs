@@ -35,8 +35,6 @@ namespace Valve.VR
         
         private static SteamVR_Action_Boolean p_perhand_UIDown;
         
-        private static SteamVR_Action_Boolean p_perhand_Recenter;
-        
         private static SteamVR_Action_Vibration p_perhand_Haptic;
         
         private static SteamVR_Action_Boolean p_dominantHand_Interact;
@@ -132,14 +130,6 @@ namespace Valve.VR
             get
             {
                 return SteamVR_Actions.p_perhand_UIDown.GetCopy <SteamVR_Action_Boolean>();
-            }
-        }
-        
-        public static SteamVR_Action_Boolean perhand_Recenter
-        {
-            get
-            {
-                return SteamVR_Actions.p_perhand_Recenter.GetCopy <SteamVR_Action_Boolean>();
             }
         }
         
@@ -260,7 +250,6 @@ namespace Valve.VR
                     SteamVR_Actions.perhand_PreviousPage,
                     SteamVR_Actions.perhand_UIUp,
                     SteamVR_Actions.perhand_UIDown,
-                    SteamVR_Actions.perhand_Recenter,
                     SteamVR_Actions.perhand_Haptic,
                     SteamVR_Actions.dominantHand_Interact,
                     SteamVR_Actions.dominantHand_ToolPicker,
@@ -285,7 +274,6 @@ namespace Valve.VR
                     SteamVR_Actions.perhand_PreviousPage,
                     SteamVR_Actions.perhand_UIUp,
                     SteamVR_Actions.perhand_UIDown,
-                    SteamVR_Actions.perhand_Recenter,
                     SteamVR_Actions.dominantHand_Interact,
                     SteamVR_Actions.dominantHand_ToolPicker,
                     SteamVR_Actions.dominantHand_StoreItem,
@@ -315,7 +303,6 @@ namespace Valve.VR
                     SteamVR_Actions.perhand_PreviousPage,
                     SteamVR_Actions.perhand_UIUp,
                     SteamVR_Actions.perhand_UIDown,
-                    SteamVR_Actions.perhand_Recenter,
                     SteamVR_Actions.dominantHand_Interact,
                     SteamVR_Actions.dominantHand_ToolPicker,
                     SteamVR_Actions.dominantHand_StoreItem,
@@ -343,7 +330,6 @@ namespace Valve.VR
                     SteamVR_Actions.perhand_PreviousPage,
                     SteamVR_Actions.perhand_UIUp,
                     SteamVR_Actions.perhand_UIDown,
-                    SteamVR_Actions.perhand_Recenter,
                     SteamVR_Actions.dominantHand_Interact,
                     SteamVR_Actions.dominantHand_ToolPicker,
                     SteamVR_Actions.dominantHand_StoreItem,
@@ -369,7 +355,6 @@ namespace Valve.VR
             SteamVR_Actions.p_perhand_PreviousPage = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/perhand/in/PreviousPage")));
             SteamVR_Actions.p_perhand_UIUp = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/perhand/in/UIUp")));
             SteamVR_Actions.p_perhand_UIDown = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/perhand/in/UIDown")));
-            SteamVR_Actions.p_perhand_Recenter = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/perhand/in/Recenter")));
             SteamVR_Actions.p_perhand_Haptic = ((SteamVR_Action_Vibration)(SteamVR_Action.Create <SteamVR_Action_Vibration>("/actions/perhand/out/Haptic")));
             SteamVR_Actions.p_dominantHand_Interact = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/DominantHand/in/Interact")));
             SteamVR_Actions.p_dominantHand_ToolPicker = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/DominantHand/in/ToolPicker")));

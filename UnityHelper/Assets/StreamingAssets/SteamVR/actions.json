@@ -40,10 +40,6 @@
       "type": "boolean"
     },
     {
-      "name": "/actions/perhand/in/Recenter",
-      "type": "boolean"
-    },
-    {
       "name": "/actions/perhand/out/Haptic",
       "type": "vibration"
     },
@@ -187,7 +183,6 @@
       "/actions/perhand/in/UiDown": "UiDown",
       "/actions/perhand/in/UIUp": "UI Up",
       "/actions/perhand/in/UIDown": "UI Down",
-      "/actions/perhand/in/Recenter": "Recenter",
       "/actions/DominantHand/in/Interact": "Interact",
       "/actions/DominantHand/in/ToolPicker": "Tool Picker",
       "/actions/DominantHand/in/StoreItem": "Store Item",
