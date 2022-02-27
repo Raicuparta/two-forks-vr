@@ -57,38 +57,6 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Boolean NextPage
-        {
-            get
-            {
-                return SteamVR_Actions.perhand_NextPage;
-            }
-        }
-        
-        public virtual SteamVR_Action_Boolean PreviousPage
-        {
-            get
-            {
-                return SteamVR_Actions.perhand_PreviousPage;
-            }
-        }
-        
-        public virtual SteamVR_Action_Boolean UIUp
-        {
-            get
-            {
-                return SteamVR_Actions.perhand_UIUp;
-            }
-        }
-        
-        public virtual SteamVR_Action_Boolean UIDown
-        {
-            get
-            {
-                return SteamVR_Actions.perhand_UIDown;
-            }
-        }
-        
         public virtual SteamVR_Action_Vibration Haptic
         {
             get
