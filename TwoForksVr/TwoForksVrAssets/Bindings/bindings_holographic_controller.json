@@ -294,38 +294,7 @@
           "path": "/user/hand/right/output/haptic"
         }
       ],
-      "sources": [
-        {
-          "path": "/user/hand/right/input/joystick",
-          "mode": "dpad",
-          "parameters": {
-            "sub_mode": "touch"
-          },
-          "inputs": {
-            "east": {
-              "output": "/actions/perhand/in/nextpage"
-            },
-            "west": {
-              "output": "/actions/perhand/in/previouspage"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/joystick",
-          "mode": "dpad",
-          "parameters": {
-            "sub_mode": "touch"
-          },
-          "inputs": {
-            "north": {
-              "output": "/actions/perhand/in/uiup"
-            },
-            "south": {
-              "output": "/actions/perhand/in/uidown"
-            }
-          }
-        }
-      ],
+      "sources": [],
       "skeleton": [
         {
           "output": "/actions/perhand/in/skeletonlefthand",

@@ -24,17 +24,17 @@ namespace TwoForksVr.VrInput.ActionInputs
         public static readonly BooleanActionInput Jog =
             new BooleanActionInput(movement.Jog);
 
-        public static readonly BooleanActionInput UIUp =
-            new BooleanActionInput(perHand.UIUp);
+        public static readonly BooleanActionInput UiUp =
+            new BooleanActionInput(rotation.UiUp);
 
-        public static readonly BooleanActionInput UIDown =
-            new BooleanActionInput(perHand.UIDown);
+        public static readonly BooleanActionInput UiDown =
+            new BooleanActionInput(rotation.UiDown);
 
         public static readonly BooleanActionInput NextPage =
-            new BooleanActionInput(perHand.NextPage);
+            new BooleanActionInput(rotation.NextPage);
 
         public static readonly BooleanActionInput PreviousPage =
-            new BooleanActionInput(perHand.PreviousPage);
+            new BooleanActionInput(rotation.PreviousPage);
 
         public static readonly Vector2ActionInput MoveX =
             new Vector2ActionInput(movement.Move);

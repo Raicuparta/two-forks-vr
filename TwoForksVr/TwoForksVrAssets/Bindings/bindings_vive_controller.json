@@ -273,29 +273,7 @@
           "path": "/user/hand/right/output/haptic"
         }
       ],
-      "sources": [
-        {
-          "path": "/user/hand/right/input/trackpad",
-          "mode": "dpad",
-          "parameters": {
-            "sub_mode": "touch"
-          },
-          "inputs": {
-            "east": {
-              "output": "/actions/perhand/in/nextpage"
-            },
-            "north": {
-              "output": "/actions/perhand/in/uiup"
-            },
-            "south": {
-              "output": "/actions/perhand/in/uidown"
-            },
-            "west": {
-              "output": "/actions/perhand/in/previouspage"
-            }
-          }
-        }
-      ],
+      "sources": [],
       "skeleton": [
         {
           "output": "/actions/perhand/in/skeletonlefthand",

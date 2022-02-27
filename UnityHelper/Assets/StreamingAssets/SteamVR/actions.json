@@ -24,22 +24,6 @@
       "type": "pose"
     },
     {
-      "name": "/actions/perhand/in/NextPage",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/perhand/in/PreviousPage",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/perhand/in/UIUp",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/perhand/in/UIDown",
-      "type": "boolean"
-    },
-    {
       "name": "/actions/perhand/out/Haptic",
       "type": "vibration"
     },
@@ -89,6 +73,22 @@
     },
     {
       "name": "/actions/RotationHand/in/LocomotionAction",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/RotationHand/in/UiUp",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/RotationHand/in/UiDown",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/RotationHand/in/PreviousPage",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/RotationHand/in/NextPage",
       "type": "boolean"
     }
   ],
@@ -177,12 +177,6 @@
       "/actions/perhand/out/Haptic": "Haptic",
       "/actions/perhand/in/PoseRightHand": "Pose (Right)",
       "/actions/perhand/in/PoseLeftHand": "Pose (Left)",
-      "/actions/perhand/in/NextPage": "Next Page",
-      "/actions/perhand/in/PreviousPage": "Previous Page",
-      "/actions/perhand/in/UiUp": "UI Up",
-      "/actions/perhand/in/UiDown": "UiDown",
-      "/actions/perhand/in/UIUp": "UI Up",
-      "/actions/perhand/in/UIDown": "UI Down",
       "/actions/DominantHand/in/Interact": "Interact",
       "/actions/DominantHand/in/ToolPicker": "Tool Picker",
       "/actions/DominantHand/in/StoreItem": "Store Item",
@@ -194,7 +188,13 @@
       "/actions/RotationHand/in/Rotate": "Rotate",
       "/actions/RotationHand/in/SnapTurnLeft": "Snap Turn Left",
       "/actions/RotationHand/in/SnapTurnRight": "Snap Turn Right",
-      "/actions/RotationHand/in/LocomotionAction": "Climb / Jump"
+      "/actions/RotationHand/in/LocomotionAction": "Climb / Jump",
+      "/actions/RotationHand/in/UIUp": "UI Up",
+      "/actions/RotationHand/in/UIDown": "UI Down",
+      "/actions/RotationHand/in/PreviousPage": "Previous Page",
+      "/actions/RotationHand/in/UiDown": "UI Down",
+      "/actions/RotationHand/in/UiUp": "UI Up",
+      "/actions/RotationHand/in/NextPage": "Next Page"
     }
   ]
 }

@@ -17,8 +17,8 @@ namespace TwoForksVr.VrInput
             {VirtualKey.Confirm, ActionInputDefinitions.Interact},
             {VirtualKey.StoreObject, ActionInputDefinitions.StoreItem},
             {VirtualKey.Cancel, ActionInputDefinitions.Cancel},
-            {VirtualKey.DialogUp, ActionInputDefinitions.UIUp},
-            {VirtualKey.DialogDown, ActionInputDefinitions.UIDown},
+            {VirtualKey.DialogUp, ActionInputDefinitions.UiUp},
+            {VirtualKey.DialogDown, ActionInputDefinitions.UiDown},
             {VirtualKey.Jog, ActionInputDefinitions.Jog},
             {VirtualKey.Pause, ActionInputDefinitions.Cancel},
             {VirtualKey.NextMenu, ActionInputDefinitions.NextPage},
@@ -27,13 +27,13 @@ namespace TwoForksVr.VrInput
             {VirtualKey.MoveXAxis, ActionInputDefinitions.MoveX},
             {VirtualKey.LookXAxisStick, ActionInputDefinitions.RotateX},
             {VirtualKey.MoveYAxis, ActionInputDefinitions.MoveY},
-            {VirtualKey.MoveForwardKeyboard, ActionInputDefinitions.UIUp},
-            {VirtualKey.MoveBackwardKeyboard, ActionInputDefinitions.UIDown},
+            {VirtualKey.MoveForwardKeyboard, ActionInputDefinitions.UiUp},
+            {VirtualKey.MoveBackwardKeyboard, ActionInputDefinitions.UiDown},
             {VirtualKey.StrafeRightKeyboard, ActionInputDefinitions.NextPage},
             {VirtualKey.StrafeLeftKeyboard, ActionInputDefinitions.PreviousPage},
 
             // Unused for actually controlling stuff, but used for the input prompts.
-            {VirtualKey.ScrollUpDown, ActionInputDefinitions.UIUp},
+            {VirtualKey.ScrollUpDown, ActionInputDefinitions.UiUp},
             {VirtualKey.ToolPicker, ActionInputDefinitions.ToolPicker},
             {VirtualKey.Inventory, ActionInputDefinitions.Cancel}
         };

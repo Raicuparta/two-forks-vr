@@ -48,5 +48,37 @@ namespace Valve.VR
                 return SteamVR_Actions.rotationHand_LocomotionAction;
             }
         }
+        
+        public virtual SteamVR_Action_Boolean UiUp
+        {
+            get
+            {
+                return SteamVR_Actions.rotationHand_UiUp;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean UiDown
+        {
+            get
+            {
+                return SteamVR_Actions.rotationHand_UiDown;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean PreviousPage
+        {
+            get
+            {
+                return SteamVR_Actions.rotationHand_PreviousPage;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean NextPage
+        {
+            get
+            {
+                return SteamVR_Actions.rotationHand_NextPage;
+            }
+        }
     }
 }

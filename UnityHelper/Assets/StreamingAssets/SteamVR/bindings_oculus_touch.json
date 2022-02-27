@@ -1,492 +1,482 @@
 {
-  "app_key": "system.generated.firewatch.exe",
-  "bindings": {
-    "/actions/DominantHand": {
-      "chords": [],
-      "poses": [],
-      "haptics": [],
-      "sources": [
-        {
-          "path": "/user/hand/left/input/trigger",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/DominantHand/in/interact"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/trigger",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/DominantHand/in/interact"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/joystick",
-          "mode": "joystick",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/DominantHand/in/toolpicker"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/joystick",
-          "mode": "joystick",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/DominantHand/in/toolpicker"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/x",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/DominantHand/in/storeitem"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/x",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/DominantHand/in/storeitem"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/y",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/DominantHand/in/toolpicker"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/y",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/DominantHand/in/toolpicker"
-            }
-          }
-        }
-      ],
-      "skeleton": []
-    },
-    "/actions/NonDominantHand": {
-      "chords": [],
-      "poses": [],
-      "haptics": [],
-      "sources": [
-        {
-          "path": "/user/hand/left/input/trigger",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/NonDominantHand/in/radio"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/trigger",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/NonDominantHand/in/radio"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/y",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/NonDominantHand/in/cancel"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/y",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/NonDominantHand/in/cancel"
-            }
-          }
-        }
-      ],
-      "skeleton": []
-    },
-    "/actions/dominanthand": {
-      "chords": [],
-      "poses": [],
-      "haptics": [],
-      "sources": [
-        {
-          "path": "/user/hand/left/input/y",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/dominanthand/in/toolpicker"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/y",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/dominanthand/in/toolpicker"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/trigger",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/dominanthand/in/interact"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/trigger",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/dominanthand/in/interact"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/x",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/dominanthand/in/storeitem"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/x",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/dominanthand/in/storeitem"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/a",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/dominanthand/in/storeitem"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/b",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/dominanthand/in/toolpicker"
-            }
-          }
-        }
-      ],
-      "skeleton": []
-    },
-    "/actions/movementhand": {
-      "chords": [],
-      "poses": [],
-      "haptics": [],
-      "sources": [
-        {
-          "path": "/user/hand/left/input/joystick",
-          "mode": "joystick",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/movementhand/in/jog"
+   "action_manifest_version" : 0,
+   "alias_info" : {},
+   "app_key" : "system.generated.firewatch.exe",
+   "bindings" : {
+      "/actions/DominantHand" : {
+         "chords" : [],
+         "haptics" : [],
+         "poses" : [],
+         "skeleton" : [],
+         "sources" : [
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/DominantHand/in/interact"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/trigger"
             },
-            "position": {
-              "output": "/actions/movementhand/in/move"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/joystick",
-          "mode": "joystick",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/movementhand/in/jog"
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/DominantHand/in/interact"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/trigger"
             },
-            "position": {
-              "output": "/actions/movementhand/in/move"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/joystick",
-          "mode": "dpad",
-          "parameters": {
-            "sub_mode": "touch"
-          },
-          "inputs": {
-            "north": {
-              "output": "/actions/movementhand/in/teleport"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/joystick",
-          "mode": "dpad",
-          "parameters": {
-            "sub_mode": "touch"
-          },
-          "inputs": {
-            "north": {
-              "output": "/actions/movementhand/in/teleport"
-            }
-          }
-        }
-      ],
-      "skeleton": []
-    },
-    "/actions/nondominanthand": {
-      "chords": [],
-      "poses": [],
-      "haptics": [],
-      "sources": [
-        {
-          "path": "/user/hand/left/input/trigger",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/nondominanthand/in/radio"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/trigger",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/nondominanthand/in/radio"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/y",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/nondominanthand/in/cancel"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/y",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/nondominanthand/in/cancel"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/b",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/nondominanthand/in/cancel"
-            }
-          }
-        }
-      ],
-      "skeleton": []
-    },
-    "/actions/perhand": {
-      "chords": [],
-      "poses": [
-        {
-          "output": "/actions/perhand/in/poserighthand",
-          "path": "/user/hand/right/pose/raw"
-        },
-        {
-          "output": "/actions/perhand/in/poselefthand",
-          "path": "/user/hand/left/pose/raw"
-        }
-      ],
-      "haptics": [
-        {
-          "output": "/actions/perhand/out/haptic",
-          "path": "/user/hand/left/output/haptic"
-        },
-        {
-          "output": "/actions/perhand/out/haptic",
-          "path": "/user/hand/right/output/haptic"
-        }
-      ],
-      "sources": [
-        {
-          "path": "/user/hand/right/input/joystick",
-          "mode": "dpad",
-          "parameters": {
-            "sub_mode": "touch"
-          },
-          "inputs": {
-            "east": {
-              "output": "/actions/perhand/in/nextpage"
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/DominantHand/in/toolpicker"
+                  }
+               },
+               "mode" : "joystick",
+               "path" : "/user/hand/left/input/joystick"
             },
-            "north": {
-              "output": "/actions/perhand/in/uiup"
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/DominantHand/in/toolpicker"
+                  }
+               },
+               "mode" : "joystick",
+               "path" : "/user/hand/right/input/joystick"
             },
-            "south": {
-              "output": "/actions/perhand/in/uidown"
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/DominantHand/in/storeitem"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/x"
             },
-            "west": {
-              "output": "/actions/perhand/in/previouspage"
-            }
-          }
-        }
-      ],
-      "skeleton": [
-        {
-          "output": "/actions/perhand/in/skeletonlefthand",
-          "path": "/user/hand/left/input/skeleton/left"
-        },
-        {
-          "output": "/actions/perhand/in/skeletonrighthand",
-          "path": "/user/hand/right/input/skeleton/right"
-        }
-      ]
-    },
-    "/actions/rotationhand": {
-      "chords": [],
-      "poses": [],
-      "haptics": [],
-      "sources": [
-        {
-          "path": "/user/hand/left/input/joystick",
-          "mode": "joystick",
-          "parameters": {},
-          "inputs": {
-            "position": {
-              "output": "/actions/rotationhand/in/rotate"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/joystick",
-          "mode": "joystick",
-          "parameters": {},
-          "inputs": {
-            "position": {
-              "output": "/actions/rotationhand/in/rotate"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/joystick",
-          "mode": "dpad",
-          "parameters": {
-            "sub_mode": "touch"
-          },
-          "inputs": {
-            "east": {
-              "output": "/actions/rotationhand/in/snapturnright"
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/DominantHand/in/storeitem"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/x"
             },
-            "west": {
-              "output": "/actions/rotationhand/in/snapturnleft"
-            }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/joystick",
-          "mode": "dpad",
-          "parameters": {
-            "sub_mode": "touch"
-          },
-          "inputs": {
-            "east": {
-              "output": "/actions/rotationhand/in/snapturnright"
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/DominantHand/in/toolpicker"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/y"
             },
-            "west": {
-              "output": "/actions/rotationhand/in/snapturnleft"
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/DominantHand/in/toolpicker"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/y"
             }
-          }
-        },
-        {
-          "path": "/user/hand/left/input/x",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/rotationhand/in/locomotionaction"
+         ]
+      },
+      "/actions/NonDominantHand" : {
+         "chords" : [],
+         "haptics" : [],
+         "poses" : [],
+         "skeleton" : [],
+         "sources" : [
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/NonDominantHand/in/radio"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/NonDominantHand/in/radio"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/NonDominantHand/in/cancel"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/y"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/NonDominantHand/in/cancel"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/y"
             }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/x",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/rotationhand/in/locomotionaction"
+         ]
+      },
+      "/actions/dominanthand" : {
+         "chords" : [],
+         "haptics" : [],
+         "poses" : [],
+         "skeleton" : [],
+         "sources" : [
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/dominanthand/in/toolpicker"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/y"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/dominanthand/in/toolpicker"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/y"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/dominanthand/in/interact"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/dominanthand/in/interact"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/dominanthand/in/storeitem"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/x"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/dominanthand/in/storeitem"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/x"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/dominanthand/in/storeitem"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/a"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/dominanthand/in/toolpicker"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/b"
             }
-          }
-        },
-        {
-          "path": "/user/hand/right/input/a",
-          "mode": "button",
-          "parameters": {},
-          "inputs": {
-            "click": {
-              "output": "/actions/rotationhand/in/locomotionaction"
+         ]
+      },
+      "/actions/movementhand" : {
+         "chords" : [],
+         "haptics" : [],
+         "poses" : [],
+         "skeleton" : [],
+         "sources" : [
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/movementhand/in/jog"
+                  },
+                  "position" : {
+                     "output" : "/actions/movementhand/in/move"
+                  }
+               },
+               "mode" : "joystick",
+               "path" : "/user/hand/left/input/joystick"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/movementhand/in/jog"
+                  },
+                  "position" : {
+                     "output" : "/actions/movementhand/in/move"
+                  }
+               },
+               "mode" : "joystick",
+               "path" : "/user/hand/right/input/joystick"
+            },
+            {
+               "inputs" : {
+                  "north" : {
+                     "output" : "/actions/movementhand/in/teleport"
+                  }
+               },
+               "mode" : "dpad",
+               "parameters" : {
+                  "sub_mode" : "touch"
+               },
+               "path" : "/user/hand/left/input/joystick"
+            },
+            {
+               "inputs" : {
+                  "north" : {
+                     "output" : "/actions/movementhand/in/teleport"
+                  }
+               },
+               "mode" : "dpad",
+               "parameters" : {
+                  "sub_mode" : "touch"
+               },
+               "path" : "/user/hand/right/input/joystick"
             }
-          }
-        }
-      ],
-      "skeleton": []
-    }
-  },
-  "controller_type": "oculus_touch",
-  "description": "",
-  "name": "Two Forks VR Oculus Bindings"
+         ]
+      },
+      "/actions/nondominanthand" : {
+         "chords" : [],
+         "haptics" : [],
+         "poses" : [],
+         "skeleton" : [],
+         "sources" : [
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/nondominanthand/in/radio"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/nondominanthand/in/radio"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/nondominanthand/in/cancel"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/y"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/nondominanthand/in/cancel"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/y"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/nondominanthand/in/cancel"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/b"
+            }
+         ]
+      },
+      "/actions/perhand" : {
+         "chords" : [],
+         "haptics" : [
+            {
+               "output" : "/actions/perhand/out/haptic",
+               "path" : "/user/hand/left/output/haptic"
+            },
+            {
+               "output" : "/actions/perhand/out/haptic",
+               "path" : "/user/hand/right/output/haptic"
+            }
+         ],
+         "poses" : [
+            {
+               "output" : "/actions/perhand/in/poserighthand",
+               "path" : "/user/hand/right/pose/raw"
+            },
+            {
+               "output" : "/actions/perhand/in/poselefthand",
+               "path" : "/user/hand/left/pose/raw"
+            }
+         ],
+         "skeleton" : [
+            {
+               "output" : "/actions/perhand/in/skeletonlefthand",
+               "path" : "/user/hand/left/input/skeleton/left"
+            },
+            {
+               "output" : "/actions/perhand/in/skeletonrighthand",
+               "path" : "/user/hand/right/input/skeleton/right"
+            }
+         ],
+         "sources" : []
+      },
+      "/actions/rotationhand" : {
+         "chords" : [],
+         "haptics" : [],
+         "poses" : [],
+         "skeleton" : [],
+         "sources" : [
+            {
+               "inputs" : {
+                  "position" : {
+                     "output" : "/actions/rotationhand/in/rotate"
+                  }
+               },
+               "mode" : "joystick",
+               "path" : "/user/hand/left/input/joystick"
+            },
+            {
+               "inputs" : {
+                  "east" : {
+                     "output" : "/actions/rotationhand/in/snapturnright"
+                  },
+                  "west" : {
+                     "output" : "/actions/rotationhand/in/snapturnleft"
+                  }
+               },
+               "mode" : "dpad",
+               "parameters" : {
+                  "sub_mode" : "touch"
+               },
+               "path" : "/user/hand/left/input/joystick"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/rotationhand/in/locomotionaction"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/x"
+            },
+            {
+               "inputs" : {
+                  "position" : {
+                     "output" : "/actions/rotationhand/in/rotate"
+                  }
+               },
+               "mode" : "joystick",
+               "path" : "/user/hand/right/input/joystick"
+            },
+            {
+               "inputs" : {
+                  "east" : {
+                     "output" : "/actions/rotationhand/in/snapturnright"
+                  },
+                  "west" : {
+                     "output" : "/actions/rotationhand/in/snapturnleft"
+                  }
+               },
+               "mode" : "dpad",
+               "path" : "/user/hand/right/input/joystick"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/rotationhand/in/locomotionaction"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/x"
+            },
+            {
+               "inputs" : {
+                  "east" : {
+                     "output" : "/actions/rotationhand/in/nextpage"
+                  },
+                  "north" : {
+                     "output" : "/actions/rotationhand/in/uiup"
+                  },
+                  "south" : {
+                     "output" : "/actions/rotationhand/in/uidown"
+                  },
+                  "west" : {
+                     "output" : "/actions/rotationhand/in/previouspage"
+                  }
+               },
+               "mode" : "dpad",
+               "parameters" : {
+                  "sub_mode" : "touch"
+               },
+               "path" : "/user/hand/left/input/joystick"
+            },
+            {
+               "inputs" : {
+                  "east" : {
+                     "output" : "/actions/rotationhand/in/nextpage"
+                  },
+                  "north" : {
+                     "output" : "/actions/rotationhand/in/uiup"
+                  },
+                  "south" : {
+                     "output" : "/actions/rotationhand/in/uidown"
+                  },
+                  "west" : {
+                     "output" : "/actions/rotationhand/in/previouspage"
+                  }
+               },
+               "mode" : "dpad",
+               "parameters" : {
+                  "sub_mode" : "touch"
+               },
+               "path" : "/user/hand/right/input/joystick"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/rotationhand/in/locomotionaction"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/a"
+            }
+         ]
+      }
+   },
+   "category" : "steamvr_input",
+   "controller_type" : "oculus_touch",
+   "description" : "",
+   "name" : "Two Forks VR Oculus Bindings",
+   "options" : {},
+   "simulated_actions" : []
 }
