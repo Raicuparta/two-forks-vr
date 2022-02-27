@@ -127,6 +127,39 @@
             }
          ]
       },
+      "/actions/default" : {
+         "haptics" : [
+            {
+               "output" : "/actions/default/out/haptic",
+               "path" : "/user/hand/left/output/haptic"
+            },
+            {
+               "output" : "/actions/default/out/haptic",
+               "path" : "/user/hand/right/output/haptic"
+            }
+         ],
+         "poses" : [
+            {
+               "output" : "/actions/default/in/poserighthand",
+               "path" : "/user/hand/right/pose/raw"
+            },
+            {
+               "output" : "/actions/default/in/poselefthand",
+               "path" : "/user/hand/left/pose/raw"
+            }
+         ],
+         "skeleton" : [
+            {
+               "output" : "/actions/default/in/skeletonlefthand",
+               "path" : "/user/hand/left/input/skeleton/left"
+            },
+            {
+               "output" : "/actions/default/in/skeletonrighthand",
+               "path" : "/user/hand/right/input/skeleton/right"
+            }
+         ],
+         "sources" : []
+      },
       "/actions/dominanthand" : {
          "chords" : [],
          "haptics" : [],
@@ -318,36 +351,9 @@
       },
       "/actions/perhand" : {
          "chords" : [],
-         "haptics" : [
-            {
-               "output" : "/actions/perhand/out/haptic",
-               "path" : "/user/hand/left/output/haptic"
-            },
-            {
-               "output" : "/actions/perhand/out/haptic",
-               "path" : "/user/hand/right/output/haptic"
-            }
-         ],
-         "poses" : [
-            {
-               "output" : "/actions/perhand/in/poserighthand",
-               "path" : "/user/hand/right/pose/raw"
-            },
-            {
-               "output" : "/actions/perhand/in/poselefthand",
-               "path" : "/user/hand/left/pose/raw"
-            }
-         ],
-         "skeleton" : [
-            {
-               "output" : "/actions/perhand/in/skeletonlefthand",
-               "path" : "/user/hand/left/input/skeleton/left"
-            },
-            {
-               "output" : "/actions/perhand/in/skeletonrighthand",
-               "path" : "/user/hand/right/input/skeleton/right"
-            }
-         ],
+         "haptics" : [],
+         "poses" : [],
+         "skeleton" : [],
          "sources" : []
       },
       "/actions/rotationhand" : {
