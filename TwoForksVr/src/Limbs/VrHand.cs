@@ -90,12 +90,12 @@ namespace TwoForksVr.Limbs
             if (isLeft)
             {
                 pose.inputSource = SteamVR_Input_Sources.LeftHand;
-                pose.poseAction = SteamVR_Actions.perhand_PoseLeftHand;
+                pose.poseAction = SteamVR_Actions.default_PoseLeftHand;
             }
             else
             {
                 pose.inputSource = SteamVR_Input_Sources.RightHand;
-                pose.poseAction = SteamVR_Actions.perhand_PoseRightHand;
+                pose.poseAction = SteamVR_Actions.default_PoseRightHand;
             }
         }
 
