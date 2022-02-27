@@ -69,7 +69,7 @@ namespace TwoForksVr.Settings.Patches
             __instance._LightShaftQuality = 0;
             __instance._SSAOQuality = 0;
             __instance._shadowQuality = 2;
-            __instance._detailDistance = 1;
+            __instance._detailDistance = 2;
         }
     }
 }
