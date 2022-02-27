@@ -50,12 +50,12 @@ namespace TwoForksVr.Limbs
 
         private void OnEnable()
         {
-            VrSettings.LeftHandedMode.SettingChanged += HandleLeftHandedModeSettingChanged;
+            VrSettings.Config.SettingChanged += HandleLeftHandedModeSettingChanged;
         }
 
         private void OnDisable()
         {
-            VrSettings.LeftHandedMode.SettingChanged -= HandleLeftHandedModeSettingChanged;
+            VrSettings.Config.SettingChanged -= HandleLeftHandedModeSettingChanged;
         }
 
         private VrHand GetRightHand()

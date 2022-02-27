@@ -54,12 +54,12 @@ namespace TwoForksVr.Locomotion
 
         private void OnEnable()
         {
-            VrSettings.SwapSticks.SettingChanged += SwapSticksOnSettingChanged;
+            VrSettings.Config.SettingChanged += SwapSticksOnSettingChanged;
         }
 
         private void OnDisable()
         {
-            VrSettings.SwapSticks.SettingChanged -= SwapSticksOnSettingChanged;
+            VrSettings.Config.SettingChanged -= SwapSticksOnSettingChanged;
         }
 
         private void SwapSticksOnSettingChanged(object sender, EventArgs e)
