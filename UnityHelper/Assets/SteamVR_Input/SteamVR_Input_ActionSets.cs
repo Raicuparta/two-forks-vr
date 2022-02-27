@@ -17,7 +17,7 @@ namespace Valve.VR
     public partial class SteamVR_Actions
     {
         
-        private static SteamVR_Input_ActionSet_perhand p_perhand;
+        private static SteamVR_Input_ActionSet_default p__default;
         
         private static SteamVR_Input_ActionSet_DominantHand p_DominantHand;
         
@@ -27,11 +27,11 @@ namespace Valve.VR
         
         private static SteamVR_Input_ActionSet_RotationHand p_RotationHand;
         
-        public static SteamVR_Input_ActionSet_perhand perhand
+        public static SteamVR_Input_ActionSet_default _default
         {
             get
             {
-                return SteamVR_Actions.p_perhand.GetCopy <SteamVR_Input_ActionSet_perhand>();
+                return SteamVR_Actions.p__default.GetCopy <SteamVR_Input_ActionSet_default>();
             }
         }
         
@@ -69,14 +69,14 @@ namespace Valve.VR
         
         private static void StartPreInitActionSets()
         {
-            SteamVR_Actions.p_perhand = ((SteamVR_Input_ActionSet_perhand)(SteamVR_ActionSet.Create <SteamVR_Input_ActionSet_perhand>("/actions/perhand")));
+            SteamVR_Actions.p__default = ((SteamVR_Input_ActionSet_default)(SteamVR_ActionSet.Create <SteamVR_Input_ActionSet_default>("/actions/default")));
             SteamVR_Actions.p_DominantHand = ((SteamVR_Input_ActionSet_DominantHand)(SteamVR_ActionSet.Create <SteamVR_Input_ActionSet_DominantHand>("/actions/DominantHand")));
             SteamVR_Actions.p_NonDominantHand = ((SteamVR_Input_ActionSet_NonDominantHand)(SteamVR_ActionSet.Create <SteamVR_Input_ActionSet_NonDominantHand>("/actions/NonDominantHand")));
             SteamVR_Actions.p_MovementHand = ((SteamVR_Input_ActionSet_MovementHand)(SteamVR_ActionSet.Create <SteamVR_Input_ActionSet_MovementHand>("/actions/MovementHand")));
             SteamVR_Actions.p_RotationHand = ((SteamVR_Input_ActionSet_RotationHand)(SteamVR_ActionSet.Create <SteamVR_Input_ActionSet_RotationHand>("/actions/RotationHand")));
             Valve.VR.SteamVR_Input.actionSets = new Valve.VR.SteamVR_ActionSet[]
             {
-                    SteamVR_Actions.perhand,
+                    SteamVR_Actions._default,
                     SteamVR_Actions.DominantHand,
                     SteamVR_Actions.NonDominantHand,
                     SteamVR_Actions.MovementHand,

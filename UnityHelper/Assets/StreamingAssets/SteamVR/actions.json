@@ -1,30 +1,30 @@
 {
   "actions": [
     {
-      "name": "/actions/perhand/in/PoseRightHand",
+      "name": "/actions/default/in/PoseRightHand",
       "type": "pose"
     },
     {
-      "name": "/actions/perhand/in/SkeletonLeftHand",
+      "name": "/actions/default/in/SkeletonLeftHand",
       "type": "skeleton",
       "skeleton": "/skeleton/hand/left"
     },
     {
-      "name": "/actions/perhand/in/SkeletonRightHand",
+      "name": "/actions/default/in/SkeletonRightHand",
       "type": "skeleton",
       "skeleton": "/skeleton/hand/right"
     },
     {
-      "name": "/actions/perhand/in/HeadsetOnHead",
+      "name": "/actions/default/in/HeadsetOnHead",
       "type": "boolean",
       "requirement": "optional"
     },
     {
-      "name": "/actions/perhand/in/PoseLeftHand",
+      "name": "/actions/default/in/PoseLeftHand",
       "type": "pose"
     },
     {
-      "name": "/actions/perhand/out/Haptic",
+      "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },
     {
@@ -94,7 +94,7 @@
   ],
   "action_sets": [
     {
-      "name": "/actions/perhand",
+      "name": "/actions/default",
       "usage": "leftright"
     },
     {
@@ -171,12 +171,6 @@
   "localization": [
     {
       "language_tag": "en_US",
-      "/actions/perhand/in/HeadsetOnHead": "Headset on head (proximity sensor)",
-      "/actions/perhand/in/SkeletonLeftHand": "Skeleton (Left)",
-      "/actions/perhand/in/SkeletonRightHand": "Skeleton (Right)",
-      "/actions/perhand/out/Haptic": "Haptic",
-      "/actions/perhand/in/PoseRightHand": "Pose (Right)",
-      "/actions/perhand/in/PoseLeftHand": "Pose (Left)",
       "/actions/DominantHand/in/Interact": "Interact",
       "/actions/DominantHand/in/ToolPicker": "Tool Picker",
       "/actions/DominantHand/in/StoreItem": "Store Item",
@@ -194,7 +188,13 @@
       "/actions/RotationHand/in/PreviousPage": "Previous Page",
       "/actions/RotationHand/in/UiDown": "UI Down",
       "/actions/RotationHand/in/UiUp": "UI Up",
-      "/actions/RotationHand/in/NextPage": "Next Page"
+      "/actions/RotationHand/in/NextPage": "Next Page",
+      "/actions/default/in/PoseRightHand": "Right Hand Pose",
+      "/actions/default/in/PoseLeftHand": "Left Hand Pose",
+      "/actions/default/in/SkeletonLeftHand": "Right Hand Skeleton",
+      "/actions/default/in/SkeletonRightHand": "Left Hand Skeleton",
+      "/actions/default/in/HeadsetOnHead": "Headset on Head",
+      "/actions/default/out/Haptic": "Haptic"
     }
   ]
 }

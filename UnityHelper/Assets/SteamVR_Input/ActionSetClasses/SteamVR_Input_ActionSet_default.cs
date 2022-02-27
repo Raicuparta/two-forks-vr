@@ -14,14 +14,14 @@ namespace Valve.VR
     using UnityEngine;
     
     
-    public class SteamVR_Input_ActionSet_perhand : Valve.VR.SteamVR_ActionSet
+    public class SteamVR_Input_ActionSet_default : Valve.VR.SteamVR_ActionSet
     {
         
         public virtual SteamVR_Action_Pose PoseRightHand
         {
             get
             {
-                return SteamVR_Actions.perhand_PoseRightHand;
+                return SteamVR_Actions.default_PoseRightHand;
             }
         }
         
@@ -29,7 +29,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.perhand_SkeletonLeftHand;
+                return SteamVR_Actions.default_SkeletonLeftHand;
             }
         }
         
@@ -37,7 +37,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.perhand_SkeletonRightHand;
+                return SteamVR_Actions.default_SkeletonRightHand;
             }
         }
         
@@ -45,7 +45,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.perhand_HeadsetOnHead;
+                return SteamVR_Actions.default_HeadsetOnHead;
             }
         }
         
@@ -53,7 +53,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.perhand_PoseLeftHand;
+                return SteamVR_Actions.default_PoseLeftHand;
             }
         }
         
@@ -61,7 +61,7 @@ namespace Valve.VR
         {
             get
             {
-                return SteamVR_Actions.perhand_Haptic;
+                return SteamVR_Actions.default_Haptic;
             }
         }
     }
