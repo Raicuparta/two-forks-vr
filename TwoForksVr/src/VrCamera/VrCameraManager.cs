@@ -1,6 +1,5 @@
 ﻿using TwoForksVr.Helpers;
 using TwoForksVr.Stage;
-using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
 using UnityEngine.XR;
 using UnityStandardAssets.ImageEffects;
@@ -42,11 +41,12 @@ namespace TwoForksVr.VrCamera
 
         private void Update()
         {
-            if (ActionInputDefinitions.Recenter.ButtonDown)
-            {
-                RecenterPosition(true);
-                RecenterRotation();
-            }
+            // TODO: trigger recenter on menu option.
+            // if (ActionInputDefinitions.Recenter.ButtonDown)
+            // {
+            //     RecenterPosition(true);
+            //     RecenterRotation();
+            // }
 
             UpdateCulling();
         }
