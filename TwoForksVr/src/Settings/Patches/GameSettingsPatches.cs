@@ -6,7 +6,7 @@ using UnityEngine;
 namespace TwoForksVr.Settings.Patches
 {
     [HarmonyPatch]
-    public class SettingsPatches
+    public class GameSettingsPatches
     {
         [HarmonyPrefix]
         [HarmonyPatch(typeof(vgSettingsManager), nameof(vgSettingsManager.headBob), MethodType.Setter)]

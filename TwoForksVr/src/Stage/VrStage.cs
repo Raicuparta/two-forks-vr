@@ -138,6 +138,12 @@ namespace TwoForksVr.Stage
             cameraManager.RecenterRotation();
         }
 
+        public void Recenter()
+        {
+            RecenterPosition(true);
+            RecenterRotation();
+        }
+
         public void FadeToBlack()
         {
             if (!fadeOverlay) return;
