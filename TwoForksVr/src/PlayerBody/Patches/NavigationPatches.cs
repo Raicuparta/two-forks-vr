@@ -30,10 +30,18 @@ namespace TwoForksVr.PlayerBody.Patches
             __instance.largestAllowedYawDelta = 0;
         }
 
+
+        // This is a workaround for a problem where Henry would some times walk off in a different direction
+        // when he's supposed to walk towards an interactive object. This problem is present in the base game,
+        // but it's easier to reproduce in VR.
         [HarmonyPostfix]
         [HarmonyPatch(typeof(vgPlayerMover), nameof(vgPlayerMover.StartMoveTo))]
         private static void MovePlayerToTargetInstantly(vgPlayerMover __instance, GameObject player)
         {
+            // This specific drop in a cave in late game would cause Henry to teleport beneath the floor level.
+            // So we're skipping the workaround for that one.
+            if (__instance.name == "HalfHeightDropEdge") return;
+
             if (player == null || player.tag != "Player") return;
 
             var goalLocation = __instance.GetGoalLocation();
