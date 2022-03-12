@@ -212,9 +212,13 @@ namespace TwoForksVr.Stage
 
         public Transform GetDominantHand()
         {
-            if (limbManager == null) return null;
+            return limbManager == null ? null : limbManager.DominantHand.transform;
+        }
 
-            return limbManager.DominantHand.transform;
+
+        public Transform GetMovementStickHand()
+        {
+            return limbManager == null ? null : limbManager.GetMovementStickHand().transform;
         }
     }
 }

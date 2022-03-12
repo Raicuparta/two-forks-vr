@@ -16,6 +16,7 @@ namespace TwoForksVr.Settings
         public static ConfigEntry<bool> FixedCameraDuringAnimations { get; private set; }
         public static ConfigEntry<bool> LeftHandedMode { get; private set; }
         public static ConfigEntry<bool> SwapSticks { get; private set; }
+        public static ConfigEntry<bool> ControllerBasedMovementDirection { get; private set; }
 
         public static void SetUp(ConfigFile config)
         {
@@ -30,6 +31,8 @@ namespace TwoForksVr.Settings
                 "Fixed camera during animations (experimental)");
             ShowLegs = config.Bind(playerBodyCategory, "ShowLegs", true,
                 "Show ghost legs at all times");
+            ControllerBasedMovementDirection = config.Bind(controlsCategory, "ControllerBasedMovementDirection", false,
+                "Controller-based movement direction");
             LeftHandedMode = config.Bind(controlsCategory, "LeftHandedMode", false,
                 "Left handed mode (might break some animations)");
             SwapSticks = config.Bind(controlsCategory, "SwapSticks", false,

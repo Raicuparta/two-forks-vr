@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using TwoForksVr.Locomotion;
 using UnityEngine;
 
 namespace TwoForksVr.PlayerBody.Patches
@@ -10,12 +11,7 @@ namespace TwoForksVr.PlayerBody.Patches
         [HarmonyPatch(typeof(vgPlayerNavigationController), nameof(vgPlayerNavigationController.Start))]
         private static void CreateBodyManager(vgPlayerNavigationController __instance)
         {
-            // Usually NavigationController uses player camera forward as a basis for movement direction.
-            // This dummy camera is used instead, so that movement direction can be independent of the camera rotation.
-            var dummyCamera = new GameObject("ForwardFacingDummyCamera").AddComponent<Camera>();
-            dummyCamera.transform.SetParent(__instance.transform.Find("henry"), false);
-            dummyCamera.enabled = false;
-            __instance.playerCamera = dummyCamera;
+            MovementDirection.Create(__instance, StageInstance);
         }
 
         [HarmonyPostfix]
