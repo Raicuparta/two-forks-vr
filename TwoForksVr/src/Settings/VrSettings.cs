@@ -24,19 +24,19 @@ namespace TwoForksVr.Settings
 
             Config = config;
             SnapTurning = config.Bind(comfortCategory, "SnapTurning", false,
-                "Snap turning");
+                "Snap turning|Enabled: snap turning. Disabled: smooth turning.");
             Teleport = config.Bind(comfortCategory, "Teleport", false,
-                "Fixed camera while moving (\"teleport\" locomotion)");
+                "Fixed camera while moving|\"Teleport\" locomotion. Camera stays still while player moves.");
             FixedCameraDuringAnimations = config.Bind(comfortCategory, "FixedCameraDuringAnimations", false,
-                "Fixed camera during animations (experimental)");
+                "Fixed camera during animations|Camera stays still during some larger animations.");
             ShowLegs = config.Bind(playerBodyCategory, "ShowLegs", true,
-                "Show ghost legs at all times");
+                "Show ghost legs at all times|Helpful for getting a better sense of where the player is standing.");
             ControllerBasedMovementDirection = config.Bind(controlsCategory, "ControllerBasedMovementDirection", false,
-                "Controller-based movement direction");
+                "Controller-based movement direction|Enabled: controller-based direction. Disabled: head-based direction.");
             LeftHandedMode = config.Bind(controlsCategory, "LeftHandedMode", false,
-                "Left handed mode (might break some animations)");
+                "Left handed mode|Swaps Henry's hands. Might break some animations.");
             SwapSticks = config.Bind(controlsCategory, "SwapSticks", false,
-                "Swap movement / rotation sticks");
+                "Swap movement / rotation sticks|Swaps controller sticks, independently of handedness.");
         }
 
         private static void SetUpResolution()

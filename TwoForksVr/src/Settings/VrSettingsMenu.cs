@@ -46,7 +46,18 @@ namespace TwoForksVr.Settings
                 {
                     var toggleInstance = Instantiate(toggleObject, sectionInstance.transform, false);
                     toggleInstance.SetActive(true);
-                    toggleInstance.GetComponentInChildren<Text>().text = configEntry.Value.Description.Description;
+
+                    var configEntryTextParts = configEntry.Value.Description.Description.Split('|');
+
+                    var label = toggleInstance.transform.Find("Label").GetComponent<Text>();
+                    label.text = configEntryTextParts[0];
+
+                    var description = toggleInstance.transform.Find("Description").GetComponent<Text>();
+                    if (configEntryTextParts.Length > 1)
+                        description.text = configEntryTextParts[1];
+                    else
+                        Destroy(description.gameObject);
+
                     var toggleInput = toggleInstance.GetComponentInChildren<Toggle>();
                     toggleInput.isOn = (bool) configEntry.Value.BoxedValue;
 
