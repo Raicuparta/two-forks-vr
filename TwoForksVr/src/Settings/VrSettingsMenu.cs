@@ -90,10 +90,12 @@ namespace TwoForksVr.Settings
             var valueInSettings = (int) configEntry.Value.BoxedValue;
             var enumValues = Enum.GetValues(configEntry.Value.SettingType);
 
+            var configEntryTextParts = configEntry.Value.Description.Description.Split('|');
+
             dropdownInput.options.Clear();
             foreach (var enumValue in enumValues)
                 dropdownInput.options.Add(
-                    new Dropdown.OptionData($"{configEntry.Value.Description.Description}: {(int) enumValue}"));
+                    new Dropdown.OptionData($"{configEntryTextParts[0]}: {(int) enumValue}"));
             dropdownInput.value = Array.IndexOf(Enum.GetValues(configEntry.Value.SettingType), valueInSettings);
 
             dropdownInput.onValueChanged.AddListener(value =>

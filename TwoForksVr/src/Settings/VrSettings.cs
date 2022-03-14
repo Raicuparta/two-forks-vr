@@ -46,9 +46,9 @@ namespace TwoForksVr.Settings
             SnapTurning = config.Bind(comfortCategory, "SnapTurning", false,
                 "Snap turning|Enabled: snap turning. Disabled: smooth turning.");
             SnapTurnAngle = config.Bind(comfortCategory, "SnapTurnAngle", SnapTurnAngleOption.Angle60,
-                "Snap turn angle");
+                "Snap turn angle|How much to turn when snap turning is enabled.");
             SmoothRotationSpeed = config.Bind(comfortCategory, "SmoothRotationSpeed", SmoothRotationSpeedOption.Default,
-                "Smooth rotation speed");
+                "Smooth rotation speed|How fast to turn when snap turning is disabled.");
             Teleport = config.Bind(comfortCategory, "Teleport", false,
                 "Fixed camera while moving|\"Teleport\" locomotion. Camera stays still while player moves.");
             FixedCameraDuringAnimations = config.Bind(comfortCategory, "FixedCameraDuringAnimations", false,
