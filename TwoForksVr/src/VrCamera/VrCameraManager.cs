@@ -41,13 +41,6 @@ namespace TwoForksVr.VrCamera
 
         private void Update()
         {
-            // TODO: trigger recenter on menu option.
-            // if (ActionInputDefinitions.Recenter.ButtonDown)
-            // {
-            //     RecenterPosition(true);
-            //     RecenterRotation();
-            // }
-
             UpdateCulling();
         }
 
