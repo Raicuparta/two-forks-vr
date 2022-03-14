@@ -82,12 +82,12 @@ namespace TwoForksVr.PlayerBody
 
         private void UpdateIsShowingArms()
         {
-            var shoudlShowArms = ShouldShowArms();
-            if (!isCountingTimeToShowArms && shoudlShowArms)
+            var shouldShowArms = ShouldShowArms();
+            if (!isCountingTimeToShowArms && shouldShowArms)
             {
                 isCountingTimeToShowArms = true;
             }
-            else if (isCountingTimeToShowArms && !shoudlShowArms)
+            else if (isCountingTimeToShowArms && !shouldShowArms)
             {
                 timeToShowArms = 0;
                 isCountingTimeToShowArms = false;
