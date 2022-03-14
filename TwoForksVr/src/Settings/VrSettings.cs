@@ -5,6 +5,15 @@ namespace TwoForksVr.Settings
 {
     public static class VrSettings
     {
+        public enum SmoothRotationSpeedOption
+        {
+            VerySlow = 1,
+            Slow = 2,
+            Default = 3,
+            Fast = 4,
+            VeryFast = 5
+        }
+
         public enum SnapTurnAngleOption
         {
             Angle23 = 23,
@@ -27,6 +36,7 @@ namespace TwoForksVr.Settings
         public static ConfigEntry<bool> SwapSticks { get; private set; }
         public static ConfigEntry<bool> ControllerBasedMovementDirection { get; private set; }
         public static ConfigEntry<SnapTurnAngleOption> SnapTurnAngle { get; private set; }
+        public static ConfigEntry<SmoothRotationSpeedOption> SmoothRotationSpeed { get; private set; }
 
         public static void SetUp(ConfigFile config)
         {
@@ -37,6 +47,8 @@ namespace TwoForksVr.Settings
                 "Snap turning|Enabled: snap turning. Disabled: smooth turning.");
             SnapTurnAngle = config.Bind(comfortCategory, "SnapTurnAngle", SnapTurnAngleOption.Angle60,
                 "Snap turn angle");
+            SmoothRotationSpeed = config.Bind(comfortCategory, "SmoothRotationSpeed", SmoothRotationSpeedOption.Default,
+                "Smooth rotation speed");
             Teleport = config.Bind(comfortCategory, "Teleport", false,
                 "Fixed camera while moving|\"Teleport\" locomotion. Camera stays still while player moves.");
             FixedCameraDuringAnimations = config.Bind(comfortCategory, "FixedCameraDuringAnimations", false,

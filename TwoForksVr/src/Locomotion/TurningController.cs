@@ -9,7 +9,7 @@ namespace TwoForksVr.Locomotion
 {
     public class TurningController : MonoBehaviour
     {
-        private const float smoothRotationSpeed = 150f; // TODO make this configurable.
+        private const float smoothRotationBaseSpeed = 50f; // TODO make this configurable.
         private bool isSnapTurning;
         private VrLimbManager limbManager;
         private vgPlayerNavigationController navigationController;
@@ -64,7 +64,9 @@ namespace TwoForksVr.Locomotion
         {
             navigationController.transform.Rotate(
                 Vector3.up,
-                ActionInputDefinitions.RotateX.AxisValue * smoothRotationSpeed * Time.unscaledDeltaTime);
+                ActionInputDefinitions.RotateX.AxisValue * smoothRotationBaseSpeed *
+                (int) VrSettings.SmoothRotationSpeed.Value *
+                Time.unscaledDeltaTime);
         }
 
         private void SnapTurnLeft()
