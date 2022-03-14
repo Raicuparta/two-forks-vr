@@ -87,7 +87,6 @@ namespace TwoForksVr.Settings
             SetSettingText(dropdownInstance, configEntry);
 
             var dropdownInput = dropdownInstance.GetComponentInChildren<Dropdown>();
-            var valueInSettings = (int) configEntry.Value.BoxedValue;
             var enumValues = Enum.GetValues(configEntry.Value.SettingType);
 
             var configEntryTextParts = configEntry.Value.Description.Description.Split('|');
@@ -96,11 +95,12 @@ namespace TwoForksVr.Settings
             foreach (var enumValue in enumValues)
                 dropdownInput.options.Add(
                     new Dropdown.OptionData($"{configEntryTextParts[0]}: {(int) enumValue}"));
-            dropdownInput.value = Array.IndexOf(Enum.GetValues(configEntry.Value.SettingType), valueInSettings);
 
-            dropdownInput.onValueChanged.AddListener(value =>
+            dropdownInput.value = Array.IndexOf(enumValues, configEntry.Value.BoxedValue);
+
+            dropdownInput.onValueChanged.AddListener(index =>
             {
-                configEntry.Value.BoxedValue = enumValues.GetValue(value);
+                configEntry.Value.BoxedValue = enumValues.GetValue(index);
             });
         }
 
