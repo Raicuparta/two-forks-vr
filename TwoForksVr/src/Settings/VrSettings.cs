@@ -5,6 +5,13 @@ namespace TwoForksVr.Settings
 {
     public static class VrSettings
     {
+        public enum SnapTurnAngleOption
+        {
+            Angle30 = 30,
+            Angle45 = 45,
+            Angle60 = 60
+        }
+
         private const string controlsCategory = "Controls";
         private const string comfortCategory = "Comfort";
         private const string playerBodyCategory = "Player Body";
@@ -17,6 +24,7 @@ namespace TwoForksVr.Settings
         public static ConfigEntry<bool> LeftHandedMode { get; private set; }
         public static ConfigEntry<bool> SwapSticks { get; private set; }
         public static ConfigEntry<bool> ControllerBasedMovementDirection { get; private set; }
+        public static ConfigEntry<SnapTurnAngleOption> SnapTurnAngle { get; private set; }
 
         public static void SetUp(ConfigFile config)
         {
@@ -25,6 +33,8 @@ namespace TwoForksVr.Settings
             Config = config;
             SnapTurning = config.Bind(comfortCategory, "SnapTurning", false,
                 "Snap turning|Enabled: snap turning. Disabled: smooth turning.");
+            SnapTurnAngle = config.Bind(comfortCategory, "SnapTurnAngle", SnapTurnAngleOption.Angle60,
+                "Snap turn angle");
             Teleport = config.Bind(comfortCategory, "Teleport", false,
                 "Fixed camera while moving|\"Teleport\" locomotion. Camera stays still while player moves.");
             FixedCameraDuringAnimations = config.Bind(comfortCategory, "FixedCameraDuringAnimations", false,

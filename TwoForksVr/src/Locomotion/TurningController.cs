@@ -10,7 +10,6 @@ namespace TwoForksVr.Locomotion
     public class TurningController : MonoBehaviour
     {
         private const float smoothRotationSpeed = 150f; // TODO make this configurable.
-        private const float snapRotationAngle = 60f; // TODO make this configurable.
         private bool isSnapTurning;
         private VrLimbManager limbManager;
         private vgPlayerNavigationController navigationController;
@@ -70,12 +69,12 @@ namespace TwoForksVr.Locomotion
 
         private void SnapTurnLeft()
         {
-            SnapTurn(-snapRotationAngle);
+            SnapTurn(-(int) VrSettings.SnapTurnAngle.Value);
         }
 
         private void SnapTurnRight()
         {
-            SnapTurn(snapRotationAngle);
+            SnapTurn((int) VrSettings.SnapTurnAngle.Value);
         }
 
         private void SnapTurn(float angle)
