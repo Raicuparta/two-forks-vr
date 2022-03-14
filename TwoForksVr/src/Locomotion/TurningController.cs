@@ -9,7 +9,7 @@ namespace TwoForksVr.Locomotion
 {
     public class TurningController : MonoBehaviour
     {
-        private const float smoothRotationBaseSpeed = 50f; // TODO make this configurable.
+        private const float smoothRotationBaseSpeed = 50f;
         private bool isSnapTurning;
         private VrLimbManager limbManager;
         private vgPlayerNavigationController navigationController;
