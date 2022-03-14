@@ -7,9 +7,11 @@ namespace TwoForksVr.Settings
     {
         public enum SnapTurnAngleOption
         {
+            Angle23 = 23,
             Angle30 = 30,
             Angle45 = 45,
-            Angle60 = 60
+            Angle60 = 60,
+            Angle90 = 90
         }
 
         private const string controlsCategory = "Controls";
