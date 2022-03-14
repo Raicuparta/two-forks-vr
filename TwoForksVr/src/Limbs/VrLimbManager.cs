@@ -37,8 +37,8 @@ namespace TwoForksVr.Limbs
             navigationController = playerController ? playerController.navController : null;
             var skeletonRoot = GetSkeletonRoot(playerTransform);
             var armsMaterial = GetArmsMaterial(playerTransform);
-            DominantHand.SetUp(skeletonRoot, armsMaterial, playerController);
-            NonDominantHand.SetUp(skeletonRoot, armsMaterial, playerController);
+            DominantHand.SetUp(skeletonRoot, armsMaterial);
+            NonDominantHand.SetUp(skeletonRoot, armsMaterial);
             Laser.SetUp(camera);
             UpdateHandedness();
         }
@@ -106,6 +106,18 @@ namespace TwoForksVr.Limbs
             henryTransform = playerTransform.Find("henry");
 
             return henryTransform.Find("henryroot");
+        }
+
+        public void StopTrackingOriginalHands()
+        {
+            NonDominantHand.StopTrackingOriginalHands();
+            DominantHand.StopTrackingOriginalHands();
+        }
+
+        public void StartTrackingOriginalHands()
+        {
+            NonDominantHand.StartTrackingOriginalHands();
+            DominantHand.StartTrackingOriginalHands();
         }
     }
 }

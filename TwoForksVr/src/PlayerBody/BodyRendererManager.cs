@@ -1,6 +1,7 @@
 ﻿using System;
 using TwoForksVr.Assets;
 using TwoForksVr.Helpers;
+using TwoForksVr.Limbs;
 using TwoForksVr.Locomotion;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
@@ -18,15 +19,18 @@ namespace TwoForksVr.PlayerBody
         private Shader cutoutShader;
         private bool isCountingTimeToShowArms;
         private bool isShowingFullBody;
+        private VrLimbManager limbManager;
         private vgPlayerNavigationController navigationController;
         private SkinnedMeshRenderer playerRenderer;
         private TeleportController teleportController;
         private float timeToShowArms;
 
-        public static BodyRendererManager Create(VrStage stage, TeleportController teleportController)
+        public static BodyRendererManager Create(VrStage stage, TeleportController teleportController,
+            VrLimbManager limbManager)
         {
             var instance = stage.gameObject.AddComponent<BodyRendererManager>();
             instance.teleportController = teleportController;
+            instance.limbManager = limbManager;
             return instance;
         }
 
@@ -78,6 +82,7 @@ namespace TwoForksVr.PlayerBody
 
             timeToShowArms = 0;
             SetArmsTexture();
+            limbManager.StopTrackingOriginalHands();
         }
 
         private void UpdateIsShowingArms()
@@ -92,6 +97,7 @@ namespace TwoForksVr.PlayerBody
                 timeToShowArms = 0;
                 isCountingTimeToShowArms = false;
                 SetArmsTexture();
+                limbManager.StartTrackingOriginalHands();
             }
         }
 

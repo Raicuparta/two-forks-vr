@@ -11,7 +11,6 @@ namespace TwoForksVr.Limbs
     {
         private FakeParenting handRootFakeParenting;
         private bool isDominant;
-        private vgPlayerNavigationController navigationController;
         private Transform rootBone;
 
         public static VrHand Create(Transform parent, bool isNonDominant = false)
@@ -27,7 +26,7 @@ namespace TwoForksVr.Limbs
             return instance;
         }
 
-        public void SetUp(Transform playerRootBone, Material armsMaterial, vgPlayerController playerController)
+        public void SetUp(Transform playerRootBone, Material armsMaterial)
         {
             // Need to deactive and reactivate the object to make SteamVR_Behaviour_Pose work properly.
             gameObject.SetActive(false);
@@ -38,20 +37,11 @@ namespace TwoForksVr.Limbs
                 material.CopyPropertiesFromMaterial(armsMaterial);
             }
 
-            if (playerController) navigationController = playerController.navController;
-
             rootBone = playerRootBone;
 
             SetUpHandedness();
 
             gameObject.SetActive(true);
-        }
-
-        private void Update()
-        {
-            if (!navigationController || !handRootFakeParenting) return;
-
-            handRootFakeParenting.enabled = navigationController.enabled;
         }
 
         private void OnEnable()
@@ -136,6 +126,20 @@ namespace TwoForksVr.Limbs
             var clonedArmBone = transform.Find("henry/henryroot/henryPelvis");
             if (!clonedArmBone) Logs.LogError("found no cloned arm bone");
             FollowAllChildrenRecursive(clonedArmBone, armBone, handName);
+        }
+
+        public void StopTrackingOriginalHands()
+        {
+            if (!handRootFakeParenting) return;
+
+            handRootFakeParenting.enabled = false;
+        }
+
+        public void StartTrackingOriginalHands()
+        {
+            if (!handRootFakeParenting) return;
+
+            handRootFakeParenting.enabled = true;
         }
     }
 }
