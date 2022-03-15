@@ -8,10 +8,7 @@ namespace TwoForksVr.Assets
     {
         private const string assetsDir = "/BepInEx/plugins/TwoForksVrAssets/AssetBundles/";
         public static GameObject ToolPickerPrefab { get; private set; }
-        public static Texture2D PlayerBodyTexture { get; private set; }
-        public static Texture2D PlayerArmsTexture { get; private set; }
         public static Shader TMProShader { get; private set; }
-        public static Shader HighlightShader { get; private set; }
         public static Shader FadeShader { get; private set; }
         public static GameObject VrSettingsMenuPrefab { get; private set; }
         public static GameObject LeftHandPrefab { get; private set; }
@@ -26,8 +23,6 @@ namespace TwoForksVr.Assets
             var bodyBundle = LoadBundle("body");
             LeftHandPrefab = bodyBundle.LoadAsset<GameObject>("left-hand");
             RightHandPrefab = bodyBundle.LoadAsset<GameObject>("right-hand");
-            PlayerBodyTexture = bodyBundle.LoadAsset<Texture2D>("body-texture");
-            PlayerArmsTexture = bodyBundle.LoadAsset<Texture2D>("arm-texture");
             HenryBodyMaterial = bodyBundle.LoadAsset<Material>("HenryBody");
             HenryArmsMaterial = bodyBundle.LoadAsset<Material>("HenryArmsNew");
             HenryBackpackMaterial = bodyBundle.LoadAsset<Material>("HenryBackpack");
@@ -36,7 +31,6 @@ namespace TwoForksVr.Assets
             ToolPickerPrefab = uiBundle.LoadAsset<GameObject>("tool-picker");
             VrSettingsMenuPrefab = uiBundle.LoadAsset<GameObject>("vr-settings-menu");
             TeleportTargetPrefab = uiBundle.LoadAsset<GameObject>("teleport-target");
-            HighlightShader = TeleportTargetPrefab.GetComponentInChildren<Renderer>().material.shader;
             TMProShader = uiBundle.LoadAsset<Shader>("TMP_SDF-Mobile");
             FadeShader = uiBundle.LoadAsset<Shader>("SteamVR_Fade");
         }
