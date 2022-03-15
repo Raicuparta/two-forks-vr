@@ -13,10 +13,15 @@ namespace TwoForksVr.VrCamera
             var gameObject = new GameObject("VrLoadingCamera");
             var instance = gameObject.AddComponent<VrLoadingCamera>();
             instance.loadingCamera = loadingCamera;
-            instance.SetUpVrCamera();
-            instance.SetUpOnlyLoadOnce();
-            instance.SetUpParentCanvas();
-            instance.DisableOriginalCamera();
+        }
+
+        private void Start()
+        {
+            SetUpVrCamera();
+            SetUpOnlyLoadOnce();
+            SetUpParentCanvas();
+            DisableOriginalCamera();
+            SetUpLoadingCanvas();
         }
 
         private void LateUpdate()
@@ -57,6 +62,19 @@ namespace TwoForksVr.VrCamera
             var parentCanvas = loadingCamera.transform.parent.parent.gameObject.AddComponent<Canvas>();
             parentCanvas.worldCamera = vrCamera;
             parentCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+        }
+
+        private void SetUpLoadingCanvas()
+        {
+            var canvas = loadingCamera.transform.parent.GetComponent<Canvas>();
+            canvas.transform.localPosition = Vector3.zero;
+            canvas.transform.localScale = Vector3.one * 0.5f;
+
+            // Move loading spinner from corner to center.
+            var loadSpinner = canvas.transform.Find("LoadSpinner/UI_LoadSpinner/");
+            var loadSpinnerPosition = loadSpinner.localPosition;
+            loadSpinner.localPosition = new Vector3(0, -150, loadSpinnerPosition.z);
+            loadSpinner.localScale = Vector3.one * 1.5f;
         }
     }
 }
