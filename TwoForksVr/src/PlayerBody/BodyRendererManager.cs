@@ -1,6 +1,5 @@
 ﻿using System;
 using TwoForksVr.Assets;
-using TwoForksVr.Helpers;
 using TwoForksVr.Limbs;
 using TwoForksVr.Locomotion;
 using TwoForksVr.Settings;
@@ -16,7 +15,6 @@ namespace TwoForksVr.PlayerBody
         private const float minimumNavigationDisabledTimeToShowArms = 0.3f;
         private Material armsMaterial;
         private Material bodyMaterial;
-        private Shader cutoutShader;
         private bool isCountingTimeToShowArms;
         private bool isShowingFullBody;
         private VrLimbManager limbManager;
@@ -42,12 +40,13 @@ namespace TwoForksVr.PlayerBody
             navigationController = playerController.navController;
 
             SetUpMaterials();
+
+            playerRenderer.shadowCastingMode = ShadowCastingMode.Off;
         }
 
         private void Awake()
         {
             VrSettings.Config.SettingChanged += HandleSettingsChanged;
-            cutoutShader = Shader.Find("Marmoset/Transparent/Cutout/Bumped Specular IBL");
         }
 
         private void Update()
@@ -71,7 +70,7 @@ namespace TwoForksVr.PlayerBody
                 isShowingFullBody = false;
             else
                 return;
-            SetBodyTexture();
+            SetColors();
         }
 
         private void UpdateArmsVisibility()
@@ -81,7 +80,7 @@ namespace TwoForksVr.PlayerBody
             if (timeToShowArms <= minimumNavigationDisabledTimeToShowArms) return;
 
             timeToShowArms = 0;
-            SetArmsTexture();
+            SetColors();
             limbManager.StopTrackingOriginalHands();
         }
 
@@ -96,7 +95,7 @@ namespace TwoForksVr.PlayerBody
             {
                 timeToShowArms = 0;
                 isCountingTimeToShowArms = false;
-                SetArmsTexture();
+                SetColors();
                 limbManager.StartTrackingOriginalHands();
             }
         }
@@ -120,52 +119,41 @@ namespace TwoForksVr.PlayerBody
         {
             playerRenderer.shadowCastingMode = ShadowCastingMode.TwoSided;
 
-            var materials = playerRenderer.materials;
+            playerRenderer.materials = new[]
+            {
+                VrAssetLoader.HenryBodyMaterial,
+                VrAssetLoader.HenryBackpackMaterial,
+                VrAssetLoader.HenryArmsMaterial
+            };
 
-            bodyMaterial = materials[0];
+            bodyMaterial = playerRenderer.materials[0];
+            armsMaterial = playerRenderer.materials[2];
 
-            var backpackMaterial = materials[1];
-            SetTexture(backpackMaterial);
-
-            armsMaterial = materials[2];
-
-            SetBodyTexture();
-            SetArmsTexture();
+            SetColors();
         }
 
-        private void SetTexture(Material material, Texture texture = null)
+        private void SetColors()
         {
-            if (!material) return;
-            material.shader = texture ? VrAssetLoader.HighlightShader : cutoutShader;
-            material.SetTexture(ShaderProperty.MainTexture, texture);
-            material.SetColor(ShaderProperty.Color, texture ? Color.white : Color.clear);
+            SetBodyColor();
+            SetArmsColor();
         }
 
         private void HandleSettingsChanged(object sender, EventArgs e)
         {
-            SetBodyTexture();
-            SetArmsTexture();
+            SetColors();
         }
 
-        private Texture2D GetBodyTexture()
+        private void SetBodyColor()
         {
-            if (isShowingFullBody) return VrAssetLoader.PlayerBodyTexture;
-            return VrSettings.ShowLegs.Value ? VrAssetLoader.PlayerBodyTexture : null;
+            if (!bodyMaterial) return;
+            if (isShowingFullBody) bodyMaterial.color = Color.white;
+            bodyMaterial.color = VrSettings.ShowLegs.Value ? Color.white : Color.clear;
         }
 
-        private Texture2D GetArmsTexture()
+        private void SetArmsColor()
         {
-            return isCountingTimeToShowArms ? VrAssetLoader.PlayerArmsTexture : null;
-        }
-
-        private void SetBodyTexture()
-        {
-            SetTexture(bodyMaterial, GetBodyTexture());
-        }
-
-        private void SetArmsTexture()
-        {
-            SetTexture(armsMaterial, GetArmsTexture());
+            if (!armsMaterial) return;
+            armsMaterial.color = isCountingTimeToShowArms ? Color.white : Color.clear;
         }
     }
 }

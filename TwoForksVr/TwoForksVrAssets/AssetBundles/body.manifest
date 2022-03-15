@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3647807069
+CRC: 1315907627
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: eb9c1a13cd6a8f9297c2e584574437cf
+    Hash: 0c54169a703cdd067b75334d340d6085
   TypeTreeHash:
     serializedVersion: 2
     Hash: a1807d8ecc5816ee3dc9e1344537e62f
@@ -33,7 +33,10 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/Bundles/Body/body-texture.png
+- Assets/Bundles/Body/HenryBackpack.mat
 - Assets/Bundles/Body/arm-texture.png
 - Assets/Bundles/Body/right-hand.prefab
+- Assets/Bundles/Body/HenryArmsNew.mat
+- Assets/Bundles/Body/HenryBody.mat
 - Assets/Bundles/Body/left-hand.prefab
 Dependencies: []
