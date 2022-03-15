@@ -1,6 +1,5 @@
 ﻿using System;
 using TwoForksVr.Assets;
-using TwoForksVr.Helpers;
 using TwoForksVr.Limbs;
 using TwoForksVr.Locomotion;
 using TwoForksVr.Settings;
@@ -120,25 +119,24 @@ namespace TwoForksVr.PlayerBody
         {
             playerRenderer.shadowCastingMode = ShadowCastingMode.TwoSided;
 
-            var materials = playerRenderer.materials;
+            playerRenderer.materials = new[]
+            {
+                VrAssetLoader.HenryBodyMaterial,
+                VrAssetLoader.HenryBackpackMaterial,
+                VrAssetLoader.HenryArmsMaterial
+            };
 
-            bodyMaterial = materials[0];
-
-            var backpackMaterial = materials[1];
-            SetTexture(backpackMaterial);
-
-            armsMaterial = materials[2];
+            bodyMaterial = playerRenderer.materials[0];
+            armsMaterial = playerRenderer.materials[2];
 
             SetBodyTexture();
             SetArmsTexture();
         }
 
-        private void SetTexture(Material material, Texture texture = null)
+        private void SetTexture(Material material, Color color)
         {
             if (!material) return;
-            material.shader = texture ? VrAssetLoader.HighlightShader : cutoutShader;
-            material.SetTexture(ShaderProperty.MainTexture, texture);
-            material.SetColor(ShaderProperty.Color, texture ? Color.white : Color.clear);
+            material.color = color;
         }
 
         private void HandleSettingsChanged(object sender, EventArgs e)
@@ -147,15 +145,15 @@ namespace TwoForksVr.PlayerBody
             SetArmsTexture();
         }
 
-        private Texture2D GetBodyTexture()
+        private Color GetBodyTexture()
         {
-            if (isShowingFullBody) return VrAssetLoader.PlayerBodyTexture;
-            return VrSettings.ShowLegs.Value ? VrAssetLoader.PlayerBodyTexture : null;
+            if (isShowingFullBody) return Color.white;
+            return VrSettings.ShowLegs.Value ? Color.white : Color.clear;
         }
 
-        private Texture2D GetArmsTexture()
+        private Color GetArmsTexture()
         {
-            return isCountingTimeToShowArms ? VrAssetLoader.PlayerArmsTexture : null;
+            return isCountingTimeToShowArms ? Color.white : Color.clear;
         }
 
         private void SetBodyTexture()

@@ -17,6 +17,9 @@ namespace TwoForksVr.Assets
         public static GameObject LeftHandPrefab { get; private set; }
         public static GameObject RightHandPrefab { get; private set; }
         public static GameObject TeleportTargetPrefab { get; private set; }
+        public static Material HenryBodyMaterial { get; private set; }
+        public static Material HenryArmsMaterial { get; private set; }
+        public static Material HenryBackpackMaterial { get; private set; }
 
         public static void LoadAssets()
         {
@@ -25,6 +28,9 @@ namespace TwoForksVr.Assets
             RightHandPrefab = bodyBundle.LoadAsset<GameObject>("right-hand");
             PlayerBodyTexture = bodyBundle.LoadAsset<Texture2D>("body-texture");
             PlayerArmsTexture = bodyBundle.LoadAsset<Texture2D>("arm-texture");
+            HenryBodyMaterial = bodyBundle.LoadAsset<Material>("HenryBody");
+            HenryArmsMaterial = bodyBundle.LoadAsset<Material>("HenryArmsNew");
+            HenryBackpackMaterial = bodyBundle.LoadAsset<Material>("HenryBackpack");
 
             var uiBundle = LoadBundle("ui");
             ToolPickerPrefab = uiBundle.LoadAsset<GameObject>("tool-picker");
