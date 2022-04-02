@@ -8,7 +8,7 @@ using Valve.VR;
 
 namespace TwoForksVr
 {
-    [BepInPlugin("raicuparta.twoforksvr", "Two Forks VR", "0.0.16")]
+    [BepInPlugin("raicuparta.twoforksvr", "Two Forks VR", "1.0.0")]
     public class TwoForksVrMod : BaseUnityPlugin
     {
         private void Awake()
