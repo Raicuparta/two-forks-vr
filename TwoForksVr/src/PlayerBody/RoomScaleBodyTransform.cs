@@ -113,8 +113,6 @@ public class RoomScaleBodyTransform : TwoForksVrBehavior
         // like resetting animations.
         navigationController.positionLastFrame = characterController.transform.position;
 
-        stage.transform.position -= groundedPositionDelta;
-
         stage.RecenterPosition();
     }
 
