@@ -1,66 +1,58 @@
-﻿using Valve.VR;
+﻿using static Valve.VR.SteamVR_Actions;
 
 namespace TwoForksVr.VrInput.ActionInputs
 {
     public static class ActionInputDefinitions
     {
-        // TODO: would be a lot cleaner to just do a static import of the action sets,
-        // but if I don't do these declarations here I get steamvr errors. I think I need to initialize it sooner.
-        private static readonly SteamVR_Input_ActionSet_NonDominantHand nonDominant = SteamVR_Actions.NonDominantHand;
-        private static readonly SteamVR_Input_ActionSet_DominantHand dominant = SteamVR_Actions.DominantHand;
-        private static readonly SteamVR_Input_ActionSet_MovementHand movement = SteamVR_Actions.MovementHand;
-        private static readonly SteamVR_Input_ActionSet_RotationHand rotation = SteamVR_Actions.RotationHand;
-        private static readonly SteamVR_Input_ActionSet_default defaultActionSet = SteamVR_Actions._default;
-
         public static readonly BooleanActionInput Cancel =
-            new BooleanActionInput(nonDominant.Cancel);
+            new BooleanActionInput(NonDominantHand.Cancel);
 
         public static readonly BooleanActionInput Radio =
-            new BooleanActionInput(nonDominant.Radio);
+            new BooleanActionInput(NonDominantHand.Radio);
 
         public static readonly BooleanActionInput Interact =
-            new BooleanActionInput(dominant.Interact);
+            new BooleanActionInput(DominantHand.Interact);
 
         public static readonly BooleanActionInput Jog =
-            new BooleanActionInput(movement.Jog);
+            new BooleanActionInput(MovementHand.Jog);
 
         public static readonly BooleanActionInput UiUp =
-            new BooleanActionInput(rotation.UiUp);
+            new BooleanActionInput(RotationHand.UiUp);
 
         public static readonly BooleanActionInput UiDown =
-            new BooleanActionInput(rotation.UiDown);
+            new BooleanActionInput(RotationHand.UiDown);
 
         public static readonly BooleanActionInput NextPage =
-            new BooleanActionInput(rotation.NextPage);
+            new BooleanActionInput(RotationHand.NextPage);
 
         public static readonly BooleanActionInput PreviousPage =
-            new BooleanActionInput(rotation.PreviousPage);
+            new BooleanActionInput(RotationHand.PreviousPage);
 
         public static readonly Vector2ActionInput MoveX =
-            new Vector2ActionInput(movement.Move);
+            new Vector2ActionInput(MovementHand.Move);
 
         public static readonly Vector2ActionInput MoveY =
-            new Vector2ActionInput(movement.Move, true);
+            new Vector2ActionInput(MovementHand.Move, true);
 
         public static readonly Vector2ActionInput RotateX =
-            new Vector2ActionInput(rotation.Rotate);
+            new Vector2ActionInput(RotationHand.Rotate);
 
         public static readonly BooleanActionInput ToolPicker =
-            new BooleanActionInput(dominant.ToolPicker);
+            new BooleanActionInput(DominantHand.ToolPicker);
 
         public static readonly BooleanActionInput Teleport =
-            new BooleanActionInput(movement.Teleport);
+            new BooleanActionInput(MovementHand.Teleport);
 
         public static readonly BooleanActionInput SnapTurnLeft =
-            new BooleanActionInput(rotation.SnapTurnLeft);
+            new BooleanActionInput(RotationHand.SnapTurnLeft);
 
         public static readonly BooleanActionInput SnapTurnRight =
-            new BooleanActionInput(rotation.SnapTurnRight);
+            new BooleanActionInput(RotationHand.SnapTurnRight);
 
         public static readonly BooleanActionInput StoreItem =
-            new BooleanActionInput(dominant.StoreItem);
+            new BooleanActionInput(DominantHand.StoreItem);
 
         public static readonly BooleanActionInput LocomotionAction =
-            new BooleanActionInput(rotation.LocomotionAction);
+            new BooleanActionInput(RotationHand.LocomotionAction);
     }
 }
