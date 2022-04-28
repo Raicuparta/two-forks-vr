@@ -98,6 +98,7 @@ public class RoomScaleBodyTransform : TwoForksVrBehavior
 
         prevCameraPosition = cameraPosition;
 
+        // TODO: Min movement threshold isn't workinf if player walks in real life, moving against a game wall.
         if (cameraPlayerDistance < minPositionOffset || !navigationController.onGround ||
             !navigationController.enabled) return;
 
