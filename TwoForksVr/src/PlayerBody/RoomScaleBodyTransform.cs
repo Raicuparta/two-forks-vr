@@ -89,24 +89,33 @@ public class RoomScaleBodyTransform : TwoForksVrBehavior
         var localPositionDelta = cameraPosition - prevCameraPosition;
         localPositionDelta.y = 0;
 
+        var cameraToPlayer = cameraTransform.position - characterController.transform.position;
+        cameraToPlayer.y = 0;
+        var cameraPlayerDistance = cameraToPlayer.sqrMagnitude;
+
         var worldPositionDelta = stage.transform.TransformVector(localPositionDelta);
 
-        if (worldPositionDelta.sqrMagnitude < minPositionOffset || !navigationController.onGround ||
-            !navigationController.enabled) return;
 
         prevCameraPosition = cameraPosition;
+
+        if (cameraPlayerDistance < minPositionOffset || !navigationController.onGround ||
+            !navigationController.enabled) return;
 
         if (worldPositionDelta.sqrMagnitude > maxPositionOffset) return;
 
         var groundedPositionDelta = Vector3.ProjectOnPlane(worldPositionDelta, navigationController.groundNormal);
 
+        var playerPositionBefore = characterController.transform.position;
+
         characterController.Move(groundedPositionDelta);
+
+        var playerPositionAfter = characterController.transform.position;
 
         // There's a chance this might break some other movement-related stuff,
         // like resetting animations.
-        navigationController.positionLastFrame = characterController.transform.position;
+        navigationController.positionLastFrame = playerPositionAfter;
 
-        stage.RecenterPosition();
+        stage.transform.position -= playerPositionAfter - playerPositionBefore;
     }
 
     private Vector3 GetCameraForward()
