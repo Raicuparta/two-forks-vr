@@ -1,15 +1,14 @@
 ﻿using HarmonyLib;
 
-namespace TwoForksVr.PlayerBody.Patches
+namespace TwoForksVr.PlayerBody.Patches;
+
+[HarmonyPatch]
+public class BodyPatches : TwoForksVrPatch
 {
-    [HarmonyPatch]
-    public class BodyPatches : TwoForksVrPatch
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.SetBackpackVisibility))]
+    private static bool PreventShowingBackpack()
     {
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(vgPlayerController), nameof(vgPlayerController.SetBackpackVisibility))]
-        private static bool PreventShowingBackpack()
-        {
-            return false;
-        }
+        return false;
     }
 }

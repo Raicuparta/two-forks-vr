@@ -1,30 +1,29 @@
 using UnityEngine;
 
-namespace TwoForksVr.Helpers
+namespace TwoForksVr.Helpers;
+
+public class CopyLocalTransformValues : TwoForksVrBehavior
 {
-    public class CopyLocalTransformValues : TwoForksVrBehavior
+    private Transform target;
+
+    public static void Create(GameObject gameObject, Transform target)
     {
-        private Transform target;
+        var instance = gameObject.GetComponent<CopyLocalTransformValues>();
+        if (!instance) instance = gameObject.AddComponent<CopyLocalTransformValues>();
 
-        public static void Create(GameObject gameObject, Transform target)
+        instance.target = target;
+    }
+
+    protected override void VeryLateUpdate()
+    {
+        if (!target)
         {
-            var instance = gameObject.GetComponent<CopyLocalTransformValues>();
-            if (!instance) instance = gameObject.AddComponent<CopyLocalTransformValues>();
-
-            instance.target = target;
+            Destroy(this);
+            return;
         }
 
-        protected override void VeryLateUpdate()
-        {
-            if (!target)
-            {
-                Destroy(this);
-                return;
-            }
-
-            transform.localRotation = target.localRotation;
-            transform.localPosition = target.localPosition;
-            transform.localScale = target.localScale;
-        }
+        transform.localRotation = target.localRotation;
+        transform.localPosition = target.localPosition;
+        transform.localScale = target.localScale;
     }
 }

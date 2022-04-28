@@ -5,94 +5,93 @@ using TwoForksVr.VrCamera;
 using TwoForksVr.VrInput.ActionInputs;
 using UnityEngine;
 
-namespace TwoForksVr.Locomotion
+namespace TwoForksVr.Locomotion;
+
+public class TurningController : MonoBehaviour
 {
-    public class TurningController : MonoBehaviour
+    private const float smoothRotationBaseSpeed = 50f;
+    private bool isSnapTurning;
+    private VrLimbManager limbManager;
+    private vgPlayerNavigationController navigationController;
+    private VrStage stage;
+    private TeleportController teleportController;
+
+    public static TurningController Create(VrStage stage, TeleportController teleportController,
+        VrLimbManager limbManager)
     {
-        private const float smoothRotationBaseSpeed = 50f;
-        private bool isSnapTurning;
-        private VrLimbManager limbManager;
-        private vgPlayerNavigationController navigationController;
-        private VrStage stage;
-        private TeleportController teleportController;
+        var instance = stage.gameObject.AddComponent<TurningController>();
+        instance.teleportController = teleportController;
+        instance.stage = stage;
+        instance.limbManager = limbManager;
+        return instance;
+    }
 
-        public static TurningController Create(VrStage stage, TeleportController teleportController,
-            VrLimbManager limbManager)
+    public void SetUp(vgPlayerController playerController)
+    {
+        navigationController =
+            playerController ? playerController.GetComponent<vgPlayerNavigationController>() : null;
+    }
+
+    private void Update()
+    {
+        if (!navigationController ||
+            !navigationController.enabled ||
+            teleportController.IsTeleporting() ||
+            limbManager.IsToolPickerOpen ||
+            vgPauseManager.Instance.isPaused ||
+            ActionInputDefinitions.Radio.ButtonValue) return;
+
+        if (VrSettings.SnapTurning.Value)
+            UpdateSnapTurning();
+        else
+            UpdateSmoothTurning();
+    }
+
+    private void UpdateSnapTurning()
+    {
+        if (!isSnapTurning && ActionInputDefinitions.SnapTurnLeft.ButtonDown)
         {
-            var instance = stage.gameObject.AddComponent<TurningController>();
-            instance.teleportController = teleportController;
-            instance.stage = stage;
-            instance.limbManager = limbManager;
-            return instance;
+            isSnapTurning = true;
+            stage.FadeToBlack();
+            Invoke(nameof(SnapTurnLeft), FadeOverlay.Duration);
         }
 
-        public void SetUp(vgPlayerController playerController)
+        if (!isSnapTurning && ActionInputDefinitions.SnapTurnRight.ButtonDown)
         {
-            navigationController =
-                playerController ? playerController.GetComponent<vgPlayerNavigationController>() : null;
+            isSnapTurning = true;
+            stage.FadeToBlack();
+            Invoke(nameof(SnapTurnRight), FadeOverlay.Duration);
         }
+    }
 
-        private void Update()
-        {
-            if (!navigationController ||
-                !navigationController.enabled ||
-                teleportController.IsTeleporting() ||
-                limbManager.IsToolPickerOpen ||
-                vgPauseManager.Instance.isPaused ||
-                ActionInputDefinitions.Radio.ButtonValue) return;
+    private void UpdateSmoothTurning()
+    {
+        navigationController.transform.Rotate(
+            Vector3.up,
+            ActionInputDefinitions.RotateX.AxisValue * smoothRotationBaseSpeed *
+            (int) VrSettings.SmoothRotationSpeed.Value *
+            Time.unscaledDeltaTime);
+    }
 
-            if (VrSettings.SnapTurning.Value)
-                UpdateSnapTurning();
-            else
-                UpdateSmoothTurning();
-        }
+    private void SnapTurnLeft()
+    {
+        SnapTurn(-(int) VrSettings.SnapTurnAngle.Value);
+    }
 
-        private void UpdateSnapTurning()
-        {
-            if (!isSnapTurning && ActionInputDefinitions.SnapTurnLeft.ButtonDown)
-            {
-                isSnapTurning = true;
-                stage.FadeToBlack();
-                Invoke(nameof(SnapTurnLeft), FadeOverlay.Duration);
-            }
+    private void SnapTurnRight()
+    {
+        SnapTurn((int) VrSettings.SnapTurnAngle.Value);
+    }
 
-            if (!isSnapTurning && ActionInputDefinitions.SnapTurnRight.ButtonDown)
-            {
-                isSnapTurning = true;
-                stage.FadeToBlack();
-                Invoke(nameof(SnapTurnRight), FadeOverlay.Duration);
-            }
-        }
+    private void SnapTurn(float angle)
+    {
+        navigationController.transform.Rotate(Vector3.up, angle);
+        Invoke(nameof(EndSnap), FadeOverlay.Duration);
+    }
 
-        private void UpdateSmoothTurning()
-        {
-            navigationController.transform.Rotate(
-                Vector3.up,
-                ActionInputDefinitions.RotateX.AxisValue * smoothRotationBaseSpeed *
-                (int) VrSettings.SmoothRotationSpeed.Value *
-                Time.unscaledDeltaTime);
-        }
-
-        private void SnapTurnLeft()
-        {
-            SnapTurn(-(int) VrSettings.SnapTurnAngle.Value);
-        }
-
-        private void SnapTurnRight()
-        {
-            SnapTurn((int) VrSettings.SnapTurnAngle.Value);
-        }
-
-        private void SnapTurn(float angle)
-        {
-            navigationController.transform.Rotate(Vector3.up, angle);
-            Invoke(nameof(EndSnap), FadeOverlay.Duration);
-        }
-
-        private void EndSnap()
-        {
-            stage.FadeToClear();
-            isSnapTurning = false;
-        }
+    private void EndSnap()
+    {
+        stage.FadeToClear();
+        isSnapTurning = false;
     }
 }
