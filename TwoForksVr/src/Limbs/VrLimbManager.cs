@@ -1,79 +1,122 @@
-﻿using TwoForksVr.LaserPointer;
+﻿using System;
+using TwoForksVr.LaserPointer;
+using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using TwoForksVr.Tools;
-using TwoForksVr.UI.Patches;
 using UnityEngine;
-using Valve.VR;
 
-namespace TwoForksVr.Limbs
+namespace TwoForksVr.Limbs;
+
+public class VrLimbManager : MonoBehaviour
 {
-    public class VrLimbManager : MonoBehaviour
+    public VrLaser Laser;
+    private Transform henryTransform;
+    private vgPlayerNavigationController navigationController;
+    private ToolPicker toolPicker;
+    public VrHand NonDominantHand { get; private set; }
+    public VrHand DominantHand { get; private set; }
+    public bool IsToolPickerOpen => toolPicker && toolPicker.IsOpen;
+
+    public static VrLimbManager Create(VrStage stage)
     {
-        public VrLaser Laser;
-        private ToolPicker toolPicker;
-        public VrHand LeftHand { get; private set; }
-        public VrHand RightHand { get; private set; }
-        public bool IsToolPickerOpen => toolPicker && toolPicker.IsOpen;
+        var instance = new GameObject("VrLimbManager").AddComponent<VrLimbManager>();
+        var instanceTransform = instance.transform;
+        instanceTransform.SetParent(stage.transform, false);
 
-        public static VrLimbManager Create(VrStage stage)
-        {
-            var instance = new GameObject("VrLimbManager").AddComponent<VrLimbManager>();
-            var instanceTransform = instance.transform;
-            instanceTransform.SetParent(stage.transform, false);
+        instance.DominantHand = VrHand.Create(instanceTransform);
+        instance.NonDominantHand = VrHand.Create(instanceTransform, true);
+        instance.toolPicker = ToolPicker.Create(instance, instance.DominantHand);
+        instance.Laser = VrLaser.Create(instance.DominantHand.transform);
 
-            instance.RightHand = VrHand.Create(instanceTransform);
-            instance.LeftHand = VrHand.Create(instanceTransform, true);
-            instance.toolPicker = ToolPicker.Create(
-                instanceTransform,
-                instance.LeftHand.transform,
-                instance.RightHand.transform
-            );
-            instance.Laser = VrLaser.Create(
-                instance.LeftHand.transform,
-                instance.RightHand.transform
-            );
+        return instance;
+    }
 
-            InventoryPatches.RightHand = instance.RightHand.transform;
+    public void SetUp(vgPlayerController playerController, Camera camera)
+    {
+        var playerTransform = playerController ? playerController.transform : null;
+        navigationController = playerController ? playerController.navController : null;
+        var skeletonRoot = GetSkeletonRoot(playerTransform);
+        var armsMaterial = GetArmsMaterial(playerTransform);
+        DominantHand.SetUp(skeletonRoot, armsMaterial);
+        NonDominantHand.SetUp(skeletonRoot, armsMaterial);
+        Laser.SetUp(camera);
+        UpdateHandedness();
+    }
 
-            return instance;
-        }
+    private void Update()
+    {
+        UpdateHandedness();
+    }
 
-        public void SetUp(Transform playerTransform, Camera camera)
-        {
-            var skeletonRoot = GetSkeletonRoot(playerTransform);
-            var armsMaterial = GetArmsMaterial(playerTransform);
-            RightHand.SetUp(skeletonRoot, armsMaterial);
-            LeftHand.SetUp(skeletonRoot, armsMaterial);
-            Laser.SetUp(camera);
+    private void OnEnable()
+    {
+        VrSettings.Config.SettingChanged += HandleLeftHandedModeSettingChanged;
+    }
 
-            VrFoot.Create(skeletonRoot);
-            VrFoot.Create(skeletonRoot, true);
-        }
+    private void OnDisable()
+    {
+        VrSettings.Config.SettingChanged -= HandleLeftHandedModeSettingChanged;
+    }
 
-        public void HighlightButton(params ISteamVR_Action_In_Source[] actions)
-        {
-            if (actions.Length == 0)
-            {
-                LeftHand.ButtonHighlight.HideAllButtonHints();
-                RightHand.ButtonHighlight.HideAllButtonHints();
-            }
-            else
-            {
-                LeftHand.ButtonHighlight.ShowButtonHint(actions);
-                RightHand.ButtonHighlight.ShowButtonHint(actions);
-            }
-        }
+    private VrHand GetRightHand()
+    {
+        return VrSettings.LeftHandedMode.Value ? NonDominantHand : DominantHand;
+    }
 
-        private static Material GetArmsMaterial(Transform playerTransform)
-        {
-            return !playerTransform
-                ? null
-                : playerTransform.Find("henry/body")?.GetComponent<SkinnedMeshRenderer>().materials[2];
-        }
+    private VrHand GetLeftHand()
+    {
+        return VrSettings.LeftHandedMode.Value ? DominantHand : NonDominantHand;
+    }
 
-        private static Transform GetSkeletonRoot(Transform playerTransform)
-        {
-            return playerTransform ? playerTransform.Find("henry/henryroot") : null;
-        }
+    public VrHand GetMovementStickHand()
+    {
+        return VrSettings.SwapSticks.Value ? GetRightHand() : GetLeftHand();
+    }
+
+    private void HandleLeftHandedModeSettingChanged(object sender, EventArgs e)
+    {
+        UpdateHandedness();
+    }
+
+    private static Material GetArmsMaterial(Transform playerTransform)
+    {
+        return !playerTransform
+            ? null
+            : playerTransform.Find("henry/body")?.GetComponent<SkinnedMeshRenderer>().materials[2];
+    }
+
+    private void UpdateHandedness()
+    {
+        if (!henryTransform || !navigationController) return;
+
+        var scale = new Vector3(VrSettings.LeftHandedMode.Value && navigationController.enabled ? -1 : 1, 1, 1);
+
+        henryTransform.localScale = scale;
+
+        var playerController = navigationController.playerController;
+
+        if (playerController && playerController.inventory && playerController.inventory.heldObject)
+            playerController.inventory.heldObject.transform.localScale = scale;
+    }
+
+    private Transform GetSkeletonRoot(Transform playerTransform)
+    {
+        if (playerTransform == null) return null;
+
+        henryTransform = playerTransform.Find("henry");
+
+        return henryTransform.Find("henryroot");
+    }
+
+    public void StopTrackingOriginalHands()
+    {
+        NonDominantHand.StopTrackingOriginalHands();
+        DominantHand.StopTrackingOriginalHands();
+    }
+
+    public void StartTrackingOriginalHands()
+    {
+        NonDominantHand.StartTrackingOriginalHands();
+        DominantHand.StartTrackingOriginalHands();
     }
 }

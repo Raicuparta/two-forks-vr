@@ -1,17 +1,28 @@
 ﻿using Valve.VR;
 
-namespace TwoForksVr.VrInput.ActionInputs
-{
-    public class EmptyActionInput : ActionInput<ISteamVR_Action_In>
-    {
-        public EmptyActionInput(string texturePath = null) : base(null)
-        {
-            TexturePath = texturePath;
-        }
+namespace TwoForksVr.VrInput.ActionInputs;
 
-        public override float Value => 0;
-        public string TexturePath { get; }
-        public override bool ValueUp => false;
-        public override bool ValueDown => false;
+public class EmptyActionInput : ActionInput<ISteamVR_Action_In>
+{
+    public EmptyActionInput(string texturePath = null) : base(null)
+    {
+        TexturePath = texturePath;
+    }
+
+    public string TexturePath { get; }
+
+    protected override float GetValue(SteamVR_Input_Sources source)
+    {
+        return 0;
+    }
+
+    protected override bool GetValueUp(SteamVR_Input_Sources source)
+    {
+        return false;
+    }
+
+    protected override bool GetValueDown(SteamVR_Input_Sources source)
+    {
+        return false;
     }
 }

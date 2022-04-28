@@ -2,41 +2,39 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TwoForksVr
+namespace TwoForksVr;
+
+public abstract class TwoForksVrBehavior : MonoBehaviour
 {
-    public abstract class TwoForksVrBehavior : MonoBehaviour
+    private static readonly Dictionary<Type, List<TwoForksVrBehavior>> typeInstanceMap = new();
+
+    protected virtual void Awake()
     {
-        private static readonly Dictionary<Type, List<TwoForksVrBehavior>> typeInstanceMap =
-            new Dictionary<Type, List<TwoForksVrBehavior>>();
+        if (typeInstanceMap.ContainsKey(GetType()))
+            typeInstanceMap[GetType()].Add(this);
+        else
+            typeInstanceMap[GetType()] = new List<TwoForksVrBehavior> {this};
+    }
 
-        protected virtual void Awake()
-        {
-            if (typeInstanceMap.ContainsKey(GetType()))
-                typeInstanceMap[GetType()].Add(this);
-            else
-                typeInstanceMap[GetType()] = new List<TwoForksVrBehavior> {this};
-        }
+    protected virtual void OnDestroy()
+    {
+        typeInstanceMap.TryGetValue(GetType(), out var instance);
 
-        protected virtual void OnDestroy()
-        {
-            typeInstanceMap.TryGetValue(GetType(), out var instance);
+        instance?.Remove(this);
+    }
 
-            instance?.Remove(this);
-        }
+    protected abstract void VeryLateUpdate();
 
-        protected abstract void VeryLateUpdate();
+    public static void InvokeVeryLateUpdate<TBehavior>() where TBehavior : TwoForksVrBehavior
+    {
+        typeInstanceMap.TryGetValue(typeof(TBehavior), out var instances);
+        if (instances == null) return;
+        foreach (var instance in instances) instance.InvokeVeryLateUpdateIfEnabled();
+    }
 
-        public static void InvokeVeryLateUpdate<TBehavior>() where TBehavior : TwoForksVrBehavior
-        {
-            typeInstanceMap.TryGetValue(typeof(TBehavior), out var instances);
-            if (instances == null) return;
-            foreach (var instance in instances) instance.InvokeVeryLateUpdateIfEnabled();
-        }
-
-        private void InvokeVeryLateUpdateIfEnabled()
-        {
-            if (!enabled) return;
-            VeryLateUpdate();
-        }
+    private void InvokeVeryLateUpdateIfEnabled()
+    {
+        if (!enabled) return;
+        VeryLateUpdate();
     }
 }

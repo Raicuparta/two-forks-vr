@@ -1,12 +1,11 @@
 using TwoForksVr.Helpers;
 
-namespace TwoForksVr.UI
+namespace TwoForksVr.UI;
+
+public class StaticUi : AttachedUi
 {
-    public class StaticUi : AttachedUi
+    private void Awake()
     {
-        private void Awake()
-        {
-            MaterialHelper.MakeGraphicChildrenDrawOnTop(gameObject);
-        }
+        MaterialHelper.MakeGraphicChildrenDrawOnTop(gameObject);
     }
 }

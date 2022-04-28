@@ -1,0 +1,16 @@
+Note: this version of Two Forks VR only works with the December 2021 (or later) update of Firewatch.
+If you have an older update, you need to use Two Forks VR 0.0.8 or earlier.
+
+Find the Firewatch directory.
+Example: "C:\Program Files (x86)\Steam\steamapps\common\Firewatch".
+Firewatch.exe is inside this directory.
+
+Extract the mod zip to anywhere (can be on your desktop or whatever, doesn't need to be in the game's directory).
+
+Then drag the Firewatch.exe file, and drop it on top of TwoForksVRInstaller.exe.
+
+You should see a command line window with some stuff happening.
+
+In the end it should say "Installed successfully, probably. Press any key to close this console.".
+
+You can now start the game via Firewatch.exe.

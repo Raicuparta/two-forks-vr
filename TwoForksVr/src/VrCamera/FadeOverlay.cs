@@ -1,67 +1,90 @@
 using TwoForksVr.Assets;
-using TwoForksVr.Helpers;
-using TwoForksVr.Stage;
 using UnityEngine;
-using UnityEngine.UI;
+using Valve.VR;
 
-namespace TwoForksVr.VrCamera
+namespace TwoForksVr.VrCamera;
+
+// TODO clean this up. This was adapted from SteamVR code and it has some unnecessary stuff.
+public class FadeOverlay : MonoBehaviour
 {
-    public class FadeOverlay : MonoBehaviour
+    public const float Duration = 0.1f;
+    private static Material fadeMaterial;
+    private static int fadeMaterialColorID = -1;
+
+    private Color currentColor = new(0, 0, 0, 0); // default starting color: black and fully transparent
+
+    // the delta-color is basically the "speed / second" at which the current color should change
+    private Color deltaColor = new(0, 0, 0, 0);
+
+    private Color targetColor = new(0, 0, 0, 0); // default target color: black and fully transparent
+
+    public static void Create(Camera camera)
     {
-        public const float Duration = 0.1f;
-        private float alphaLerpT;
-        private Canvas canvas;
-        private Image image;
-        private float targetAlpha;
+        camera.gameObject.AddComponent<FadeOverlay>();
+    }
 
-        public static FadeOverlay Create(VrStage vrStage)
+    private void OnEnable()
+    {
+        if (fadeMaterial == null)
         {
-            var gameObject = Instantiate(VrAssetLoader.FadeOverlayPrefab, vrStage.transform, false);
-            var fadeOverlay = gameObject.AddComponent<FadeOverlay>();
-            LayerHelper.SetLayer(fadeOverlay, GameLayer.Default);
-
-            fadeOverlay.canvas = gameObject.GetComponent<Canvas>();
-            fadeOverlay.canvas.enabled = false;
-            fadeOverlay.canvas.renderMode = RenderMode.ScreenSpaceCamera;
-
-            fadeOverlay.image = gameObject.GetComponentInChildren<Image>();
-            fadeOverlay.image.color = new Color(0, 0, 0, 0);
-
-            return fadeOverlay;
+            fadeMaterial = new Material(VrAssetLoader.FadeShader);
+            fadeMaterialColorID = Shader.PropertyToID("fadeColor");
         }
 
-        public void SetUp(Camera camera)
+        SteamVR_Events.Fade.Listen(OnStartFade);
+        SteamVR_Events.FadeReady.Send();
+    }
+
+    private void OnDisable()
+    {
+        SteamVR_Events.Fade.Remove(OnStartFade);
+    }
+
+    private void OnPostRender()
+    {
+        if (currentColor != targetColor)
         {
-            if (camera)
+            // if the difference between the current alpha and the desired alpha is smaller than delta-alpha * deltaTime, then we're pretty much done fading:
+            if (Mathf.Abs(currentColor.a - targetColor.a) < Mathf.Abs(deltaColor.a) * Time.deltaTime)
             {
-                canvas.worldCamera = camera;
-                canvas.enabled = true;
+                currentColor = targetColor;
+                deltaColor = new Color(0, 0, 0, 0);
             }
             else
             {
-                canvas.enabled = false;
+                currentColor += deltaColor * Time.deltaTime;
             }
         }
 
-        private void Update()
+        if (currentColor.a > 0 && fadeMaterial)
         {
-            if (Mathf.Abs(targetAlpha - image.color.a) < 0.01f) return;
-            alphaLerpT += Time.unscaledDeltaTime;
-            image.color = new Color(0, 0, 0, Mathf.Lerp(image.color.a, targetAlpha, alphaLerpT / Duration));
-        }
+            fadeMaterial.SetColor(fadeMaterialColorID, currentColor);
+            fadeMaterial.SetPass(0);
+            GL.Begin(GL.QUADS);
 
-        public void FadeToBlack()
-        {
-            image.color = new Color(0, 0, 0, 0);
-            alphaLerpT = 0;
-            targetAlpha = 1;
+            GL.Vertex3(-1, -1, 0);
+            GL.Vertex3(1, -1, 0);
+            GL.Vertex3(1, 1, 0);
+            GL.Vertex3(-1, 1, 0);
+            GL.End();
         }
+    }
 
-        public void FadeToClear()
+    public static void StartFade(Color newColor, float duration, bool fadeOverlay = false)
+    {
+        SteamVR_Events.Fade.Send(newColor, duration, fadeOverlay);
+    }
+
+    public void OnStartFade(Color newColor, float duration, bool fadeOverlay)
+    {
+        if (duration > 0.0f)
         {
-            image.color = new Color(0, 0, 0, 1);
-            alphaLerpT = 0;
-            targetAlpha = 0;
+            targetColor = newColor;
+            deltaColor = (targetColor - currentColor) / duration;
+        }
+        else
+        {
+            currentColor = newColor;
         }
     }
 }

@@ -2,7 +2,7 @@
   "source": "Unity",
   "applications": [
     {
-      "app_key": "steam.app.383870",
+      "app_key": "system.generated.firewatch.exe",
       "launch_type": "url",
       "url": "steam://launch/",
       "action_manifest_path": "C:\\Users\\rai\\Repos\\two-forks-vr\\UnityHelper\\Assets\\StreamingAssets\\SteamVR\\actions.json",

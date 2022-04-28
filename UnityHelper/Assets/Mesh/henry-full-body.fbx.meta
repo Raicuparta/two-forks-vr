@@ -174,7 +174,22 @@ ModelImporter:
     4300002: HenryWeddingRing 1
     9500000: //RootNode
     13700000: body
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HenryArmsNew
+    second: {fileID: 2100000, guid: 04454a3cf790c4743ac946df6860ce61, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HenryBackpack
+    second: {fileID: 2100000, guid: c8aa57964c6bd0044b816f720dce7329, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HenryBody
+    second: {fileID: 2100000, guid: 66e9fcee8d4814147b3f225711f5069d, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

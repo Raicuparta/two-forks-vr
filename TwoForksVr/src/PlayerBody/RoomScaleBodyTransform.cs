@@ -1,121 +1,137 @@
 using TwoForksVr.Helpers;
 using TwoForksVr.Locomotion;
+using TwoForksVr.Settings;
 using TwoForksVr.Stage;
 using UnityEngine;
 
-namespace TwoForksVr.PlayerBody
+namespace TwoForksVr.PlayerBody;
+
+public class RoomScaleBodyTransform : TwoForksVrBehavior
 {
-    public class RoomScaleBodyTransform : TwoForksVrBehavior
+    private const float minPositionOffset = 0.05f;
+    private const float maxPositionOffset = 1f;
+
+    private Transform cameraTransform;
+    private CharacterController characterController;
+    private vgPlayerNavigationController navigationController;
+    private Vector3 prevCameraPosition;
+    private Vector3 prevForward;
+    private bool previousNavigationControlerEnabled;
+    private VrStage stage;
+    private TeleportController teleportController;
+
+    public static RoomScaleBodyTransform Create(VrStage stage, TeleportController teleportController)
     {
-        private const float minPositionOffset = 0.05f;
-        private const float maxPositionOffset = 1f;
+        var instance = stage.gameObject.AddComponent<RoomScaleBodyTransform>();
+        instance.teleportController = teleportController;
+        instance.stage = stage;
+        return instance;
+    }
 
-        private Transform cameraTransform;
-        private CharacterController characterController;
-        private vgPlayerNavigationController navigationController;
-        private Vector3 prevCameraPosition;
-        private Vector3 prevForward;
-        private bool previousNavigationControlerEnabled;
-        private VrStage stage;
-        private TeleportController teleportController;
+    public void SetUp(vgPlayerController playerController)
+    {
+        if (!playerController) return;
+        cameraTransform = playerController.playerCamera.transform;
+        characterController = playerController.characterController;
+        navigationController = playerController.navController;
+        prevCameraPosition = cameraTransform.position;
+        prevForward = GetCameraForward();
+    }
 
-        public static RoomScaleBodyTransform Create(VrStage stage, TeleportController teleportController)
-        {
-            var instance = stage.gameObject.AddComponent<RoomScaleBodyTransform>();
-            instance.teleportController = teleportController;
-            instance.stage = stage;
-            return instance;
-        }
+    private void Update()
+    {
+        UpdateRecenterOnEnablingNavigationController();
+    }
 
-        public void SetUp(vgPlayerController playerController)
-        {
-            if (!playerController) return;
-            cameraTransform = playerController.playerCamera.transform;
-            characterController = playerController.characterController;
-            navigationController = playerController.navController;
-            prevCameraPosition = cameraTransform.position;
-            prevForward = GetCameraForward();
-        }
+    protected override void VeryLateUpdate()
+    {
+        if (ShouldSkipUpdate()) return;
+        UpdateRotation();
+        UpdateRoomScalePosition();
+    }
 
-        private void Update()
-        {
-            UpdateRecenterOnEnablingNavigationController();
-        }
+    // The navigation controller gets disabled while some larger animations are playing.
+    // Room scale body transform adjustments are paused while the navigation controller is disabled.
+    // So we recenter the position and rotation when the navigation controller is enabled again.
+    private void UpdateRecenterOnEnablingNavigationController()
+    {
+        if (!navigationController) return;
 
-        protected override void VeryLateUpdate()
-        {
-            if (ShouldSkipUpdate()) return;
-            UpdateRotation();
-            UpdateRoomScalePosition();
-        }
+        // Recentering immediately after animations didn't always work well for some animations,
+        // so instead I'm recentering with a small delay.
+        if (HasNavigatorStateChanged()) Invoke(nameof(Recenter), 0.1f);
 
-        // The navigation controller gets disabled while some larger animations are playing.
-        // Room scale body transform adjustments are paused while the navigation controller is disabled.
-        // So we recenter the position and rotation when the navigation controller is enabled again.
-        private void UpdateRecenterOnEnablingNavigationController()
-        {
-            if (!navigationController) return;
+        previousNavigationControlerEnabled = navigationController.enabled;
+    }
 
-            if (navigationController.enabled && !previousNavigationControlerEnabled)
-            {
-                stage.RecenterPosition(true);
-                stage.RecenterRotation();
-            }
+    private void Recenter()
+    {
+        stage.RecenterPosition(true);
+        stage.RecenterRotation();
+    }
 
-            previousNavigationControlerEnabled = navigationController.enabled;
-        }
+    private bool HasNavigatorStateChanged()
+    {
+        if (VrSettings.FixedCameraDuringAnimations.Value)
+            return navigationController.enabled != previousNavigationControlerEnabled;
+        return navigationController.enabled && !previousNavigationControlerEnabled;
+    }
 
-        private bool ShouldSkipUpdate()
-        {
-            return !characterController || teleportController && teleportController.IsTeleporting();
-        }
+    private bool ShouldSkipUpdate()
+    {
+        return !characterController || teleportController && teleportController.IsTeleporting();
+    }
 
-        private void UpdateRoomScalePosition()
-        {
-            var cameraPosition = cameraTransform.localPosition;
+    private void UpdateRoomScalePosition()
+    {
+        var cameraPosition = cameraTransform.localPosition;
 
-            var localPositionDelta = cameraPosition - prevCameraPosition;
-            localPositionDelta.y = 0;
+        var localPositionDelta = cameraPosition - prevCameraPosition;
+        localPositionDelta.y = 0;
 
-            var cameraToPlayer = cameraTransform.position - characterController.transform.position;
-            cameraToPlayer.y = 0;
-            var cameraPlayerDistance = cameraToPlayer.sqrMagnitude;
+        var cameraToPlayer = cameraTransform.position - characterController.transform.position;
+        cameraToPlayer.y = 0;
+        var cameraPlayerDistance = cameraToPlayer.sqrMagnitude;
 
-            var worldPositionDelta = stage.transform.TransformVector(localPositionDelta);
+        var worldPositionDelta = stage.transform.TransformVector(localPositionDelta);
 
-            prevCameraPosition = cameraPosition;
+        if (worldPositionDelta.sqrMagnitude < minPositionOffset || !navigationController.onGround ||
+            !navigationController.enabled) return;
 
-            if (cameraPlayerDistance < minPositionOffset || !navigationController.onGround ||
-                !navigationController.enabled) return;
-            
-            if (worldPositionDelta.sqrMagnitude > maxPositionOffset) return;
+        prevCameraPosition = cameraPosition;
 
-            var groundedPositionDelta = Vector3.ProjectOnPlane(worldPositionDelta, navigationController.groundNormal);
+        if (cameraPlayerDistance < minPositionOffset || !navigationController.onGround ||
+            !navigationController.enabled) return;
 
-            characterController.Move(groundedPositionDelta);
+        if (worldPositionDelta.sqrMagnitude > maxPositionOffset) return;
 
-            // There's a chance this might break some other movement-related stuff,
-            // like resetting animations.
-            navigationController.positionLastFrame = characterController.transform.position;
+        var groundedPositionDelta = Vector3.ProjectOnPlane(worldPositionDelta, navigationController.groundNormal);
 
-            stage.transform.position -= groundedPositionDelta;
-        }
+        characterController.Move(groundedPositionDelta);
 
-        private Vector3 GetCameraForward()
-        {
-            return cameraTransform.parent.InverseTransformDirection(MathHelper.GetProjectedForward(cameraTransform));
-        }
+        // There's a chance this might break some other movement-related stuff,
+        // like resetting animations.
+        navigationController.positionLastFrame = characterController.transform.position;
 
-        private void UpdateRotation()
-        {
-            if (!navigationController.onGround || !navigationController.enabled) return;
+        stage.transform.position -= groundedPositionDelta;
 
-            var cameraForward = GetCameraForward();
-            var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
-            prevForward = cameraForward;
-            characterController.transform.Rotate(Vector3.up, angleDelta);
+        stage.RecenterPosition();
+    }
 
-            stage.RecenterRotation();
-        }
+    private Vector3 GetCameraForward()
+    {
+        return cameraTransform.parent.InverseTransformDirection(MathHelper.GetProjectedForward(cameraTransform));
+    }
+
+    private void UpdateRotation()
+    {
+        if (!navigationController.onGround || !navigationController.enabled) return;
+
+        var cameraForward = GetCameraForward();
+        var angleDelta = MathHelper.SignedAngle(prevForward, cameraForward, Vector3.up);
+        prevForward = cameraForward;
+        characterController.transform.Rotate(Vector3.up, angleDelta);
+
+        stage.RecenterRotation();
     }
 }

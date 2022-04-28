@@ -2,43 +2,44 @@
 using TwoForksVr.Helpers;
 using UnityEngine;
 
-namespace TwoForksVr.Assets
+namespace TwoForksVr.Assets;
+
+public static class VrAssetLoader
 {
-    public static class VrAssetLoader
+    private const string assetsDir = "/BepInEx/plugins/TwoForksVrAssets/AssetBundles/";
+    public static GameObject ToolPickerPrefab { get; private set; }
+    public static Shader TMProShader { get; private set; }
+    public static Shader FadeShader { get; private set; }
+    public static GameObject VrSettingsMenuPrefab { get; private set; }
+    public static GameObject LeftHandPrefab { get; private set; }
+    public static GameObject RightHandPrefab { get; private set; }
+    public static GameObject TeleportTargetPrefab { get; private set; }
+    public static Material HenryBodyMaterial { get; private set; }
+    public static Material HenryArmsMaterial { get; private set; }
+    public static Material HenryBackpackMaterial { get; private set; }
+
+    public static void LoadAssets()
     {
-        private const string assetsDir = "/BepInEx/plugins/TwoForksVrAssets/AssetBundles/";
-        public static GameObject ToolPickerPrefab { get; private set; }
-        public static GameObject ShoeLid { get; private set; }
-        public static Texture2D BodyCutoutTexture { get; private set; }
-        public static Shader TMProShader { get; private set; }
-        public static GameObject VrSettingsMenuPrefab { get; private set; }
-        public static GameObject LeftHandPrefab { get; private set; }
-        public static GameObject RightHandPrefab { get; private set; }
-        public static GameObject FadeOverlayPrefab { get; private set; }
-        public static GameObject TeleportTargetPrefab { get; private set; }
+        var bodyBundle = LoadBundle("body");
+        LeftHandPrefab = bodyBundle.LoadAsset<GameObject>("left-hand");
+        RightHandPrefab = bodyBundle.LoadAsset<GameObject>("right-hand");
+        HenryBodyMaterial = bodyBundle.LoadAsset<Material>("HenryBody");
+        HenryArmsMaterial = bodyBundle.LoadAsset<Material>("HenryArmsNew");
+        HenryBackpackMaterial = bodyBundle.LoadAsset<Material>("HenryBackpack");
 
-        public static void LoadAssets()
-        {
-            var bodyBundle = LoadBundle("body");
-            ShoeLid = bodyBundle.LoadAsset<GameObject>("shoe-lid");
-            LeftHandPrefab = bodyBundle.LoadAsset<GameObject>("left-hand");
-            RightHandPrefab = bodyBundle.LoadAsset<GameObject>("right-hand");
-            BodyCutoutTexture = bodyBundle.LoadAsset<Texture2D>("body-cutout");
+        var uiBundle = LoadBundle("ui");
+        ToolPickerPrefab = uiBundle.LoadAsset<GameObject>("tool-picker");
+        VrSettingsMenuPrefab = uiBundle.LoadAsset<GameObject>("vr-settings-menu");
+        TeleportTargetPrefab = uiBundle.LoadAsset<GameObject>("teleport-target");
+        TMProShader = uiBundle.LoadAsset<Shader>("TMP_SDF-Mobile");
+        FadeShader = uiBundle.LoadAsset<Shader>("SteamVR_Fade");
+    }
 
-            var uiBundle = LoadBundle("ui");
-            ToolPickerPrefab = uiBundle.LoadAsset<GameObject>("tool-picker");
-            VrSettingsMenuPrefab = uiBundle.LoadAsset<GameObject>("vr-settings-menu");
-            FadeOverlayPrefab = uiBundle.LoadAsset<GameObject>("fade-overlay");
-            TeleportTargetPrefab = uiBundle.LoadAsset<GameObject>("teleport-target");
-            TMProShader = uiBundle.LoadAsset<Shader>("TMP_SDF-Mobile");
-        }
-
-        private static AssetBundle LoadBundle(string assetName)
-        {
-            var bundle = AssetBundle.LoadFromFile($"{Directory.GetCurrentDirectory()}{assetsDir}{assetName}");
-            if (bundle != null) return bundle;
-            Logs.LogError($"Failed to load AssetBundle {assetName}");
-            return null;
-        }
+    private static AssetBundle LoadBundle(string assetName)
+    {
+        var bundle = AssetBundle.LoadFromFile($"{Directory.GetCurrentDirectory()}{assetsDir}{assetName}");
+        if (bundle != null) return bundle;
+        Logs.WriteError($"Failed to load AssetBundle {assetName}");
+        return null;
     }
 }

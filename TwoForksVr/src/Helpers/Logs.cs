@@ -1,31 +1,30 @@
 ﻿using UnityEngine;
 
-namespace TwoForksVr.Helpers
+namespace TwoForksVr.Helpers;
+
+public static class Logs
 {
-    public static class Logs
+    // ReSharper disable Unity.PerformanceAnalysis
+    public static void WriteInfo(object data)
     {
-        // ReSharper disable Unity.PerformanceAnalysis
-        public static void LogInfo(object data)
-        {
 #if DEBUG
-            Debug.Log(data);
+        Debug.Log(data);
 #endif
-        }
+    }
 
-        // ReSharper disable Unity.PerformanceAnalysis
-        public static void LogWarning(object data)
-        {
+    // ReSharper disable Unity.PerformanceAnalysis
+    public static void WriteWarning(object data)
+    {
 #if DEBUG
-            Debug.LogWarning(data);
+        Debug.LogWarning(data);
 #endif
-        }
+    }
 
-        // ReSharper disable Unity.PerformanceAnalysis
-        public static void LogError(object data)
-        {
+    // ReSharper disable Unity.PerformanceAnalysis
+    public static void WriteError(object data)
+    {
 #if DEBUG
-            Debug.LogError(data);
+        Debug.LogError(data);
 #endif
-        }
     }
 }

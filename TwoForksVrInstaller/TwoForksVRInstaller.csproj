@@ -35,4 +35,10 @@
             <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
         </ProjectReference>
     </ItemGroup>
+    <ItemGroup>
+      <None Remove="README.txt" />
+      <Content Include="HOW TO INSTALL.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
 </Project>

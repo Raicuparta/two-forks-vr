@@ -1,11 +1,10 @@
-﻿namespace TwoForksVr.Tools
+﻿namespace TwoForksVr.Tools;
+
+public enum VrToolItem
 {
-    public enum VrToolItem
-    {
-        Map,
-        Compass,
-        Flashlight,
-        DisposableCamera,
-        Inventory
-    }
+    Map,
+    Compass,
+    Flashlight,
+    DisposableCamera,
+    Inventory
 }
