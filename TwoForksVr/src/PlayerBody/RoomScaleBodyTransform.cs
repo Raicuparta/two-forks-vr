@@ -8,7 +8,7 @@ namespace TwoForksVr.PlayerBody;
 
 public class RoomScaleBodyTransform : TwoForksVrBehavior
 {
-    private const float minPositionOffset = 0;
+    private const float minPositionOffset = 0.05f;
     private const float maxPositionOffset = 1f;
 
     private Transform cameraTransform;
