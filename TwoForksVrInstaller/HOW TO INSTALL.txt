@@ -1,5 +1,5 @@
-Note: this version of Two Forks VR only works with the December 2021 (or later) update of Firewatch.
-If you have an older update (like GOG), you need to use Two Forks VR 0.0.8 or earlier (which lacks a bunch of features).
+Note: this version of Two Forks VR only works Firewatch 1.1.2.
+Check the settings menu in the game to see which version you have.
 
 Find the Firewatch directory.
 Example: "C:\Program Files (x86)\Steam\steamapps\common\Firewatch".
