@@ -1,8 +1,8 @@
 # ![Two Forks VR](https://user-images.githubusercontent.com/3955124/167098096-e4894ce8-b2d0-4dda-90a0-0c236db72d76.png)
 
-Two Forks VR is a VR mod for [Firewatch](https://store.steampowered.com/app/383870/Firewatch/), witch full motion control support and comfort options.
+Two Forks VR is a VR mod for [Firewatch](https://store.steampowered.com/app/383870/Firewatch/), with full motion control support and comfort options.
 
-[![Support on Patreon](https://img.shields.io/badge/dynamic/json?style=flat-square&color=%23e85b46&label=Patreon&query=data.attributes.patron_count&suffix=%20patrons&url=https%3A%2F%2Fwww.patreon.com%2Fapi%2Fcampaigns%2F7004713&logo=patreon)](https://www.patreon.com/raivr) [![Donate with PayPal](https://img.shields.io/badge/PayPal-Donate-blue?style=flat-square&color=blue&logo=paypal)](https://paypal.me/raicuparta/5usd)
+[![Raicuparta's Youtube](https://img.shields.io/endpoint?color=red&label=Youtube&logoColor=red&style=flat-square&url=https%3A%2F%2Fyoutube-channel-badge-orpin.vercel.app%2Fapi%2Fsubscriber)](https://www.youtube.com/c/Raicuparta) [![Support on Patreon](https://img.shields.io/badge/dynamic/json?style=flat-square&color=%23e85b46&label=Patreon&query=data.attributes.patron_count&suffix=%20patrons&url=https%3A%2F%2Fwww.patreon.com%2Fapi%2Fcampaigns%2F7004713&logo=patreon)](https://www.patreon.com/raivr) [![Donate with PayPal](https://img.shields.io/badge/PayPal-Donate-blue?style=flat-square&color=blue&logo=paypal)](https://paypal.me/raicuparta/5usd)
 
 ## How to Install
 
@@ -33,7 +33,7 @@ As usual, the game isn't optimized for VR, so it's not always easy to get good p
 
 For reference, here are the defaults I set:
 
-`image todo`
+![Two Forks VR Graphics Settings](https://user-images.githubusercontent.com/3955124/167103353-097946eb-52e7-48ae-9215-920016fe0bb9.png)
 
 SSAO, Light Shafts, and Bloom, are all disabled by default, because the way these are implemented just looks a bit broken in VR, and they have a big effect on performance. I recommend keeping them off. You can lower shadow and world quality for further performance improvements.
 
