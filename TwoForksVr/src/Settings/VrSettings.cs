@@ -26,6 +26,7 @@ public static class VrSettings
     private const string controlsCategory = "Controls";
     private const string comfortCategory = "Comfort";
     private const string playerBodyCategory = "Player Body";
+    private const string othersCategory = "Others";
 
     public static ConfigFile Config { get; private set; }
     public static ConfigEntry<bool> SnapTurning { get; private set; }
@@ -37,6 +38,8 @@ public static class VrSettings
     public static ConfigEntry<bool> ControllerBasedMovementDirection { get; private set; }
     public static ConfigEntry<SnapTurnAngleOption> SnapTurnAngle { get; private set; }
     public static ConfigEntry<SmoothRotationSpeedOption> SmoothRotationSpeed { get; private set; }
+    public static ConfigEntry<bool> ShowVrHands { get; private set; }
+    public static ConfigEntry<bool> EnableLiv { get; private set; }
 
     public static void SetUp(ConfigFile config)
     {
@@ -55,12 +58,16 @@ public static class VrSettings
             "Fixed camera during animations|Camera stays still during some larger animations.");
         ShowLegs = config.Bind(playerBodyCategory, "ShowLegs", true,
             "Show ghost legs at all times|Helpful for getting a better sense of where the player is standing.");
+        ShowVrHands = config.Bind(playerBodyCategory, "ShowHands", true,
+            "Show tracked hands|Disabling this can be helpful to make LIV look better.");
         ControllerBasedMovementDirection = config.Bind(controlsCategory, "ControllerBasedMovementDirection", false,
             "Controller-based movement direction|Enabled: controller-based direction. Disabled: head-based direction.");
         LeftHandedMode = config.Bind(controlsCategory, "LeftHandedMode", false,
             "Left handed mode|Swaps Henry's hands. Might break some animations.");
         SwapSticks = config.Bind(controlsCategory, "SwapSticks", false,
             "Swap movement / rotation sticks|Swaps controller sticks, independently of handedness.");
+        EnableLiv = config.Bind(othersCategory, "EnableLiv", false,
+            "Enable LIV|Enables LIV integration, for mixed reality capture, custom 3D avatars, etc.");
     }
 
     private static void SetUpResolution()

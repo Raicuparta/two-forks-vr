@@ -45,16 +45,31 @@ public class VrLimbManager : MonoBehaviour
         SetUpLiv(camera);
         UpdateHandedness();
     }
-        private void SetUpLiv(Camera camera)
+    
+    private void SetUpLiv(Camera camera)
+    {
+        gameObject.SetActive(false);
+        var existingLiv = gameObject.GetComponent<LIV.SDK.Unity.LIV>();
+        if (existingLiv) Destroy(existingLiv);
+        liv = gameObject.AddComponent<LIV.SDK.Unity.LIV>();
+        liv.HMDCamera = camera;
+        liv.stage = transform;
+        liv.excludeBehaviours = new[]
         {
-            gameObject.SetActive(false);
-            var existingLiv = gameObject.GetComponent<LIV.SDK.Unity.LIV>();
-            if (existingLiv) Destroy(existingLiv);
-            liv = gameObject.AddComponent<LIV.SDK.Unity.LIV>();
-            liv.HMDCamera = camera;
-            liv.stage = transform;
-            gameObject.SetActive(true);
-        }
+            "GUILayer",
+            "Animation",
+            "AKAudioListener",
+            "Recorder",
+            "vgDeferredGlobalFog",
+            "vgStylisticFog",
+            "vgCameraModeEffectsController",
+            "vgFullscreenRenderTextureCamera",
+            "FadeOverlay"
+        };
+        gameObject.SetActive(true);
+        
+    }
+    
     private void Update()
     {
         UpdateHandedness();
@@ -63,7 +78,7 @@ public class VrLimbManager : MonoBehaviour
 
     private void UpdateLiv()
     {
-        if (!liv) return;
+        if (!liv || !liv.isActive) return;
         liv.spectatorLayerMask = liv.HMDCamera.cullingMask;
         var livCamera = liv.render.cameraInstance;
         livCamera.clearFlags = liv.HMDCamera.clearFlags;

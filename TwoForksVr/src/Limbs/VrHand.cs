@@ -12,6 +12,7 @@ public class VrHand : MonoBehaviour
     private FakeParenting handRootFakeParenting;
     private bool isDominant;
     private Transform rootBone;
+    private Renderer[] renderers;
 
     public static VrHand Create(Transform parent, bool isNonDominant = false)
     {
@@ -39,24 +40,44 @@ public class VrHand : MonoBehaviour
 
         rootBone = playerRootBone;
 
-        SetUpHandedness();
+        SetUpSettings();
 
         gameObject.SetActive(true);
     }
 
+    private void Awake()
+    {
+        renderers = GetComponentsInChildren<Renderer>();
+    }
+
     private void OnEnable()
     {
-        VrSettings.Config.SettingChanged += HandleLeftHandedModeSettingChanged;
+        VrSettings.Config.SettingChanged += HandleSettingChanged;
     }
 
     private void OnDisable()
     {
-        VrSettings.Config.SettingChanged -= HandleLeftHandedModeSettingChanged;
+        VrSettings.Config.SettingChanged -= HandleSettingChanged;
     }
 
-    private void HandleLeftHandedModeSettingChanged(object sender, EventArgs e)
+    private void HandleSettingChanged(object sender, EventArgs e)
+    {
+        SetUpSettings();
+    }
+
+    private void SetUpSettings()
     {
         SetUpHandedness();
+        SetUpHandVisibility();
+    }
+
+    private void SetUpHandVisibility()
+    {
+        if (renderers == null) return;
+        foreach (var renderer in renderers)
+        {
+            renderer.enabled = VrSettings.ShowVrHands.Value;
+        }
     }
 
     private void SetUpHandedness()
