@@ -53,20 +53,6 @@ public class VrLimbManager : MonoBehaviour
             liv = gameObject.AddComponent<LIV.SDK.Unity.LIV>();
             liv.HMDCamera = camera;
             liv.stage = transform;
-            // liv.spectatorLayerMask = camera.cullingMask;
-            liv.spectatorLayerMask = LayerHelper.GetMask(
-                GameLayer.Default,
-                GameLayer.Terrain,
-                GameLayer.Water,
-                GameLayer.DynamicObjects,
-                GameLayer.IgnoreRaycast,
-                GameLayer.MenuBackground,
-                GameLayer.PutBack,
-                GameLayer.RaycastOnly,
-                GameLayer.StopsPlayer,
-                GameLayer.PhysicsHackCollision,
-                GameLayer.RopeClimbCollision,
-                GameLayer.TransparentFX);
             gameObject.SetActive(true);
         }
     private void Update()
