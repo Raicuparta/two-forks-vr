@@ -19,7 +19,8 @@ public class CanvasToWorldSpacePatches : TwoForksVrPatch
     private static readonly string[] canvasesToIgnore =
     {
         "com.sinai.unityexplorer_Root", // UnityExplorer.
-        "com.sinai.unityexplorer.MouseInspector_Root" // UnityExplorer.
+        "com.sinai.unityexplorer.MouseInspector_Root", // UnityExplorer.
+        "ExplorerCanvas"
     };
 
     [HarmonyPrefix]

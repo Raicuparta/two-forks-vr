@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using TwoForksVr.Helpers;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ public static class VrAssetLoader
     public static Material HenryBodyMaterial { get; private set; }
     public static Material HenryArmsMaterial { get; private set; }
     public static Material HenryBackpackMaterial { get; private set; }
+    public static Dictionary<string, Shader> livShaders = new();
 
     public static void LoadAssets()
     {
@@ -33,6 +35,12 @@ public static class VrAssetLoader
         TeleportTargetPrefab = uiBundle.LoadAsset<GameObject>("teleport-target");
         TMProShader = uiBundle.LoadAsset<Shader>("TMP_SDF-Mobile");
         FadeShader = uiBundle.LoadAsset<Shader>("SteamVR_Fade");
+        
+        var shadersBundle = LoadBundle("liv-shaders");
+        foreach (var shader in shadersBundle.LoadAllAssets<Shader>())
+        {
+            livShaders[shader.name] = shader;
+        }
     }
 
     private static AssetBundle LoadBundle(string assetName)

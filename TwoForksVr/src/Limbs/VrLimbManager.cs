@@ -1,4 +1,5 @@
 ﻿using System;
+using TwoForksVr.Helpers;
 using TwoForksVr.LaserPointer;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
@@ -16,6 +17,7 @@ public class VrLimbManager : MonoBehaviour
     public VrHand NonDominantHand { get; private set; }
     public VrHand DominantHand { get; private set; }
     public bool IsToolPickerOpen => toolPicker && toolPicker.IsOpen;
+    private LIV.SDK.Unity.LIV liv;
 
     public static VrLimbManager Create(VrStage stage)
     {
@@ -40,12 +42,46 @@ public class VrLimbManager : MonoBehaviour
         DominantHand.SetUp(skeletonRoot, armsMaterial);
         NonDominantHand.SetUp(skeletonRoot, armsMaterial);
         Laser.SetUp(camera);
+        SetUpLiv(camera);
         UpdateHandedness();
     }
-
+        private void SetUpLiv(Camera camera)
+        {
+            gameObject.SetActive(false);
+            var existingLiv = gameObject.GetComponent<LIV.SDK.Unity.LIV>();
+            if (existingLiv) Destroy(existingLiv);
+            liv = gameObject.AddComponent<LIV.SDK.Unity.LIV>();
+            liv.HMDCamera = camera;
+            liv.stage = transform;
+            // liv.spectatorLayerMask = camera.cullingMask;
+            liv.spectatorLayerMask = LayerHelper.GetMask(
+                GameLayer.Default,
+                GameLayer.Terrain,
+                GameLayer.Water,
+                GameLayer.DynamicObjects,
+                GameLayer.IgnoreRaycast,
+                GameLayer.MenuBackground,
+                GameLayer.PutBack,
+                GameLayer.RaycastOnly,
+                GameLayer.StopsPlayer,
+                GameLayer.PhysicsHackCollision,
+                GameLayer.RopeClimbCollision,
+                GameLayer.TransparentFX);
+            gameObject.SetActive(true);
+        }
     private void Update()
     {
         UpdateHandedness();
+        UpdateLiv();
+    }
+
+    private void UpdateLiv()
+    {
+        if (!liv) return;
+        liv.spectatorLayerMask = liv.HMDCamera.cullingMask;
+        var livCamera = liv.render.cameraInstance;
+        livCamera.clearFlags = liv.HMDCamera.clearFlags;
+        livCamera.backgroundColor = liv.HMDCamera.backgroundColor;
     }
 
     private void OnEnable()
