@@ -26,7 +26,6 @@ public static class VrSettings
     private const string controlsCategory = "Controls";
     private const string comfortCategory = "Comfort";
     private const string playerBodyCategory = "Player Body";
-    private const string othersCategory = "Others";
 
     public static ConfigFile Config { get; private set; }
     public static ConfigEntry<bool> SnapTurning { get; private set; }
