@@ -1,0 +1,24 @@
+ManifestFileVersion: 0
+CRC: 2452944389
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 785613b7fd365b08bbdd8098ec281d14
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: cc7b69794a2bdada249e557ebbfded10
+HashAppended: 0
+ClassTypes:
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Shaders/LIV_ClipPlaneComplexDebug.shader
+- Assets/Shaders/LIV_ForceForwardRendering.shader
+- Assets/Shaders/LIV_ClipPlaneSimple.shader
+- Assets/Shaders/LIV_CombineAlpha.shader
+- Assets/Shaders/LIV_WriteOpaqueToAlpha.shader
+- Assets/Shaders/LIV_ClipPlaneSimpleDebug.shader
+- Assets/Shaders/LIV_ClipPlaneComplex.shader
+- Assets/Shaders/LIV_Write.shader
+- Assets/Shaders/LIV_Font.shader
+Dependencies: []

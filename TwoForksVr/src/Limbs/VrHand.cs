@@ -18,7 +18,7 @@ public class VrHand : MonoBehaviour
         var transform = Instantiate(isNonDominant ? VrAssetLoader.LeftHandPrefab : VrAssetLoader.RightHandPrefab,
             parent,
             false).transform;
-        LayerHelper.SetLayerRecursive(transform.gameObject, GameLayer.UI);
+        LayerHelper.SetLayerRecursive(transform.gameObject, GameLayer.VrHands);
         transform.name = $"{(isNonDominant ? "Dominand" : "NonDominant")}VrHand";
         var instance = transform.gameObject.AddComponent<VrHand>();
         instance.isDominant = isNonDominant;
@@ -39,22 +39,27 @@ public class VrHand : MonoBehaviour
 
         rootBone = playerRootBone;
 
-        SetUpHandedness();
+        SetUpSettings();
 
         gameObject.SetActive(true);
     }
 
     private void OnEnable()
     {
-        VrSettings.Config.SettingChanged += HandleLeftHandedModeSettingChanged;
+        VrSettings.Config.SettingChanged += HandleSettingChanged;
     }
 
     private void OnDisable()
     {
-        VrSettings.Config.SettingChanged -= HandleLeftHandedModeSettingChanged;
+        VrSettings.Config.SettingChanged -= HandleSettingChanged;
     }
 
-    private void HandleLeftHandedModeSettingChanged(object sender, EventArgs e)
+    private void HandleSettingChanged(object sender, EventArgs e)
+    {
+        SetUpSettings();
+    }
+
+    private void SetUpSettings()
     {
         SetUpHandedness();
     }
