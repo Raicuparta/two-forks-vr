@@ -83,6 +83,7 @@ public class VrLimbManager : MonoBehaviour
         var livCamera = liv.render.cameraInstance;
         livCamera.clearFlags = liv.HMDCamera.clearFlags;
         livCamera.backgroundColor = liv.HMDCamera.backgroundColor;
+        livCamera.stereoTargetEye = StereoTargetEyeMask.None;
     }
 
     private void OnEnable()

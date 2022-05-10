@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using HutongGames.PlayMaker.Actions;
 using UnityEngine;
 
 namespace TwoForksVr.VrCamera.Patches;
