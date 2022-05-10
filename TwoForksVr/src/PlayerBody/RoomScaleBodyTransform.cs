@@ -47,7 +47,11 @@ public class RoomScaleBodyTransform : TwoForksVrBehavior
     {
         if (ShouldSkipUpdate()) return;
         UpdateRotation();
-        UpdateRoomScalePosition();
+
+        if (VrSettings.RoomScaleBodyPosition.Value)
+        {
+            UpdateRoomScalePosition();
+        }
     }
 
     // The navigation controller gets disabled while some larger animations are playing.

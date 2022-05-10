@@ -30,6 +30,7 @@ public static class VrSettings
     public static ConfigFile Config { get; private set; }
     public static ConfigEntry<bool> SnapTurning { get; private set; }
     public static ConfigEntry<bool> ShowLegs { get; private set; }
+    public static ConfigEntry<bool> RoomScaleBodyPosition { get; private set; }
     public static ConfigEntry<bool> Teleport { get; private set; }
     public static ConfigEntry<bool> FixedCameraDuringAnimations { get; private set; }
     public static ConfigEntry<bool> LeftHandedMode { get; private set; }
@@ -55,6 +56,8 @@ public static class VrSettings
             "Fixed camera during animations|Camera stays still during some larger animations.");
         ShowLegs = config.Bind(playerBodyCategory, "ShowLegs", true,
             "Show ghost legs at all times|Helpful for getting a better sense of where the player is standing.");
+        RoomScaleBodyPosition = config.Bind(playerBodyCategory, "RoomScaleBodyPosition", true,
+            "Make player body follow headset position|Disabling prevents drifting, but you'll need to occasionally recenter manually in the pause menu.");
         ControllerBasedMovementDirection = config.Bind(controlsCategory, "ControllerBasedMovementDirection", false,
             "Controller-based movement direction|Enabled: controller-based direction. Disabled: head-based direction.");
         LeftHandedMode = config.Bind(controlsCategory, "LeftHandedMode", false,
