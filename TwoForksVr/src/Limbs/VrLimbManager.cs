@@ -17,7 +17,6 @@ public class VrLimbManager : MonoBehaviour
     public VrHand NonDominantHand { get; private set; }
     public VrHand DominantHand { get; private set; }
     public bool IsToolPickerOpen => toolPicker && toolPicker.IsOpen;
-    private LIV.SDK.Unity.LIV liv;
 
     public static VrLimbManager Create(VrStage stage)
     {
@@ -42,48 +41,12 @@ public class VrLimbManager : MonoBehaviour
         DominantHand.SetUp(skeletonRoot, armsMaterial);
         NonDominantHand.SetUp(skeletonRoot, armsMaterial);
         Laser.SetUp(camera);
-        SetUpLiv(camera);
         UpdateHandedness();
-    }
-    
-    private void SetUpLiv(Camera camera)
-    {
-        gameObject.SetActive(false);
-        var existingLiv = gameObject.GetComponent<LIV.SDK.Unity.LIV>();
-        if (existingLiv) Destroy(existingLiv);
-        liv = gameObject.AddComponent<LIV.SDK.Unity.LIV>();
-        liv.HMDCamera = camera;
-        liv.stage = transform;
-        liv.excludeBehaviours = new[]
-        {
-            "GUILayer",
-            "Animation",
-            "AkAudioListener",
-            "Recorder",
-            "vgDeferredGlobalFog",
-            "vgStylisticFog",
-            "vgCameraModeEffectsController",
-            "vgFullscreenRenderTextureCamera",
-            "FadeOverlay"
-        };
-        gameObject.SetActive(true);
-        
     }
     
     private void Update()
     {
         UpdateHandedness();
-        UpdateLiv();
-    }
-
-    private void UpdateLiv()
-    {
-        if (!liv || !liv.isActive) return;
-        liv.spectatorLayerMask = liv.HMDCamera.cullingMask & ~(1 << (int)GameLayer.VrHands) & ~(1 << (int)GameLayer.PlayerBody);
-        var livCamera = liv.render.cameraInstance;
-        livCamera.clearFlags = liv.HMDCamera.clearFlags;
-        livCamera.backgroundColor = liv.HMDCamera.backgroundColor;
-        livCamera.stereoTargetEye = StereoTargetEyeMask.None;
     }
 
     private void OnEnable()
