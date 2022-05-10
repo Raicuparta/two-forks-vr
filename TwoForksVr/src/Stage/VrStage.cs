@@ -3,6 +3,7 @@ using System.Linq;
 using TwoForksVr.Debugging;
 using TwoForksVr.Helpers;
 using TwoForksVr.Limbs;
+using TwoForksVr.Liv;
 using TwoForksVr.Locomotion;
 using TwoForksVr.PlayerBody;
 using TwoForksVr.Settings;
@@ -31,6 +32,7 @@ public class VrStage : MonoBehaviour
     private InteractiveUiTarget interactiveUiTarget;
     private IntroFix introFix;
     private VrLimbManager limbManager;
+    private LivManager livManager;
     private Camera mainCamera;
     private RoomScaleBodyTransform roomScaleBodyTransform;
     private StaticUiTarget staticUiTarget;
@@ -70,6 +72,7 @@ public class VrStage : MonoBehaviour
             BodyRendererManager.Create(instance, instance.teleportController, instance.limbManager);
         instance.vrSettingsMenu = VrSettingsMenu.Create(instance);
         instance.bindingsManager = BindingsManager.Create(instance);
+        instance.livManager = LivManager.Create(instance);
 
         instance.fallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
         instance.fallbackCamera.enabled = false;
@@ -111,6 +114,7 @@ public class VrStage : MonoBehaviour
         turningController.SetUp(playerController);
         roomScaleBodyTransform.SetUp(playerController);
         bodyRendererManager.SetUp(playerController);
+        livManager.SetUp(nextCamera);
     }
 
     private void Update()
