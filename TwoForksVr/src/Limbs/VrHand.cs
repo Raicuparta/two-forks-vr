@@ -12,7 +12,6 @@ public class VrHand : MonoBehaviour
     private FakeParenting handRootFakeParenting;
     private bool isDominant;
     private Transform rootBone;
-    private Renderer[] renderers;
 
     public static VrHand Create(Transform parent, bool isNonDominant = false)
     {
@@ -43,11 +42,6 @@ public class VrHand : MonoBehaviour
         SetUpSettings();
 
         gameObject.SetActive(true);
-    }
-
-    private void Awake()
-    {
-        renderers = GetComponentsInChildren<Renderer>();
     }
 
     private void OnEnable()
