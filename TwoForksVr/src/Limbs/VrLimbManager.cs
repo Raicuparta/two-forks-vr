@@ -79,7 +79,7 @@ public class VrLimbManager : MonoBehaviour
     private void UpdateLiv()
     {
         if (!liv || !liv.isActive) return;
-        liv.spectatorLayerMask = liv.HMDCamera.cullingMask;
+        liv.spectatorLayerMask = liv.HMDCamera.cullingMask & ~(1 << (int)GameLayer.VrHands);
         var livCamera = liv.render.cameraInstance;
         livCamera.clearFlags = liv.HMDCamera.clearFlags;
         livCamera.backgroundColor = liv.HMDCamera.backgroundColor;

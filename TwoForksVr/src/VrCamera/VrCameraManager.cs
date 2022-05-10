@@ -36,7 +36,11 @@ public class VRCameraManager : MonoBehaviour
 
     private void Start()
     {
-        pauseCameraCullingMask = LayerHelper.GetMask(GameLayer.UI, GameLayer.MenuBackground, GameLayer.PlayerBody);
+        pauseCameraCullingMask = LayerHelper.GetMask(
+            GameLayer.UI, 
+            GameLayer.MenuBackground, 
+            GameLayer.PlayerBody, 
+            GameLayer.VrHands);
     }
 
     private void Update()

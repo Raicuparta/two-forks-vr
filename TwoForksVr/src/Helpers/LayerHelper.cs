@@ -22,13 +22,12 @@ public enum GameLayer
     PutBack = 16,
 
     // Custom VR layers:
-    PlayerBody = 17
+    PlayerBody = 17,
+    VrHands = 18
 }
 
 public static class LayerHelper
 {
-    public static readonly int UiMask = GetMask(GameLayer.UI);
-
     public static int GetMask(GameLayer layer, int baseMask = 0)
     {
         return baseMask | (1 << (int) layer);

@@ -19,7 +19,7 @@ public class VrHand : MonoBehaviour
         var transform = Instantiate(isNonDominant ? VrAssetLoader.LeftHandPrefab : VrAssetLoader.RightHandPrefab,
             parent,
             false).transform;
-        LayerHelper.SetLayerRecursive(transform.gameObject, GameLayer.UI);
+        LayerHelper.SetLayerRecursive(transform.gameObject, GameLayer.VrHands);
         transform.name = $"{(isNonDominant ? "Dominand" : "NonDominant")}VrHand";
         var instance = transform.gameObject.AddComponent<VrHand>();
         instance.isDominant = isNonDominant;
@@ -68,16 +68,6 @@ public class VrHand : MonoBehaviour
     private void SetUpSettings()
     {
         SetUpHandedness();
-        SetUpHandVisibility();
-    }
-
-    private void SetUpHandVisibility()
-    {
-        if (renderers == null) return;
-        foreach (var renderer in renderers)
-        {
-            renderer.enabled = VrSettings.ShowVrHands.Value;
-        }
     }
 
     private void SetUpHandedness()
