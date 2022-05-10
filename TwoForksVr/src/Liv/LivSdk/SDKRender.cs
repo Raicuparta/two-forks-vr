@@ -404,19 +404,19 @@ namespace LIV.SDK.Unity
 
             _clipPlaneMesh = new Mesh();
             SDKUtils.CreateClipPlane(_clipPlaneMesh, 10, 10, true, 1000f);
-            _clipPlaneSimpleMaterial = new Material(VrAssetLoader.livShaders[SDKShaders.LIV_CLIP_PLANE_SIMPLE_SHADER]);
+            _clipPlaneSimpleMaterial = new Material(VrAssetLoader.LivShaders[SDKShaders.LIV_CLIP_PLANE_SIMPLE_SHADER]);
             _clipPlaneSimpleDebugMaterial =
-                new Material(VrAssetLoader.livShaders[SDKShaders.LIV_CLIP_PLANE_SIMPLE_DEBUG_SHADER]);
+                new Material(VrAssetLoader.LivShaders[SDKShaders.LIV_CLIP_PLANE_SIMPLE_DEBUG_SHADER]);
             _clipPlaneComplexMaterial =
-                new Material(VrAssetLoader.livShaders[SDKShaders.LIV_CLIP_PLANE_COMPLEX_SHADER]);
+                new Material(VrAssetLoader.LivShaders[SDKShaders.LIV_CLIP_PLANE_COMPLEX_SHADER]);
             _clipPlaneComplexDebugMaterial =
-                new Material(VrAssetLoader.livShaders[SDKShaders.LIV_CLIP_PLANE_COMPLEX_DEBUG_SHADER]);
+                new Material(VrAssetLoader.LivShaders[SDKShaders.LIV_CLIP_PLANE_COMPLEX_DEBUG_SHADER]);
             _writeOpaqueToAlphaMaterial =
-                new Material(VrAssetLoader.livShaders[SDKShaders.LIV_WRITE_OPAQUE_TO_ALPHA_SHADER]);
-            _combineAlphaMaterial = new Material(VrAssetLoader.livShaders[SDKShaders.LIV_COMBINE_ALPHA_SHADER]);
-            _writeMaterial = new Material(VrAssetLoader.livShaders[SDKShaders.LIV_WRITE_SHADER]);
+                new Material(VrAssetLoader.LivShaders[SDKShaders.LIV_WRITE_OPAQUE_TO_ALPHA_SHADER]);
+            _combineAlphaMaterial = new Material(VrAssetLoader.LivShaders[SDKShaders.LIV_COMBINE_ALPHA_SHADER]);
+            _writeMaterial = new Material(VrAssetLoader.LivShaders[SDKShaders.LIV_WRITE_SHADER]);
             _forceForwardRenderingMaterial =
-                new Material(VrAssetLoader.livShaders[SDKShaders.LIV_FORCE_FORWARD_RENDERING_SHADER]);
+                new Material(VrAssetLoader.LivShaders[SDKShaders.LIV_FORCE_FORWARD_RENDERING_SHADER]);
             _clipPlaneCommandBuffer = new CommandBuffer();
             _combineAlphaCommandBuffer = new CommandBuffer();
             _captureTextureCommandBuffer = new CommandBuffer();

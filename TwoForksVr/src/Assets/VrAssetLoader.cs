@@ -18,7 +18,7 @@ public static class VrAssetLoader
     public static Material HenryBodyMaterial { get; private set; }
     public static Material HenryArmsMaterial { get; private set; }
     public static Material HenryBackpackMaterial { get; private set; }
-    public static Dictionary<string, Shader> livShaders = new();
+    public static readonly Dictionary<string, Shader> LivShaders = new();
 
     public static void LoadAssets()
     {
@@ -39,7 +39,7 @@ public static class VrAssetLoader
         var shadersBundle = LoadBundle("liv-shaders");
         foreach (var shader in shadersBundle.LoadAllAssets<Shader>())
         {
-            livShaders[shader.name] = shader;
+            LivShaders[shader.name] = shader;
         }
     }
 
