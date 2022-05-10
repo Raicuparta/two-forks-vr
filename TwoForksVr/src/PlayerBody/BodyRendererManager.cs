@@ -1,5 +1,6 @@
 ﻿using System;
 using TwoForksVr.Assets;
+using TwoForksVr.Helpers;
 using TwoForksVr.Limbs;
 using TwoForksVr.Locomotion;
 using TwoForksVr.Settings;
@@ -36,6 +37,7 @@ public class BodyRendererManager : MonoBehaviour
     {
         if (!playerController) return;
         var playerBody = playerController.transform.Find("henry/body").gameObject;
+        LayerHelper.SetLayer(playerBody, GameLayer.PlayerBody);
         playerRenderer = playerBody.GetComponent<SkinnedMeshRenderer>();
         navigationController = playerController.navController;
 

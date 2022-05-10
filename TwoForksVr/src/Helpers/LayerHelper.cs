@@ -20,10 +20,13 @@ public enum GameLayer
     RopeClimbCollision = 14,
     PhysicsHackCollision = 15,
     PutBack = 16,
+    FullscreenScaledQuad = 17,
+    Collision64 = 18,
+    TempCast = 19,
 
     // Custom VR layers:
-    PlayerBody = 17,
-    VrHands = 18
+    PlayerBody = 30,
+    VrHands = 31
 }
 
 public static class LayerHelper

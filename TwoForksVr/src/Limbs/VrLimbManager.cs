@@ -58,7 +58,7 @@ public class VrLimbManager : MonoBehaviour
         {
             "GUILayer",
             "Animation",
-            "AKAudioListener",
+            "AkAudioListener",
             "Recorder",
             "vgDeferredGlobalFog",
             "vgStylisticFog",
@@ -79,7 +79,7 @@ public class VrLimbManager : MonoBehaviour
     private void UpdateLiv()
     {
         if (!liv || !liv.isActive) return;
-        liv.spectatorLayerMask = liv.HMDCamera.cullingMask & ~(1 << (int)GameLayer.VrHands);
+        liv.spectatorLayerMask = liv.HMDCamera.cullingMask & ~(1 << (int)GameLayer.VrHands) & ~(1 << (int)GameLayer.PlayerBody);
         var livCamera = liv.render.cameraInstance;
         livCamera.clearFlags = liv.HMDCamera.clearFlags;
         livCamera.backgroundColor = liv.HMDCamera.backgroundColor;
