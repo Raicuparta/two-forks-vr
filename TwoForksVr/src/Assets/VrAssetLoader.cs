@@ -8,6 +8,7 @@ namespace TwoForksVr.Assets;
 public static class VrAssetLoader
 {
     private const string assetsDir = "/BepInEx/plugins/TwoForksVrAssets/AssetBundles/";
+    public static readonly Dictionary<string, Shader> LivShaders = new();
     public static GameObject ToolPickerPrefab { get; private set; }
     public static Shader TMProShader { get; private set; }
     public static Shader FadeShader { get; private set; }
@@ -18,7 +19,6 @@ public static class VrAssetLoader
     public static Material HenryBodyMaterial { get; private set; }
     public static Material HenryArmsMaterial { get; private set; }
     public static Material HenryBackpackMaterial { get; private set; }
-    public static readonly Dictionary<string, Shader> LivShaders = new();
 
     public static void LoadAssets()
     {
@@ -35,12 +35,9 @@ public static class VrAssetLoader
         TeleportTargetPrefab = uiBundle.LoadAsset<GameObject>("teleport-target");
         TMProShader = uiBundle.LoadAsset<Shader>("TMP_SDF-Mobile");
         FadeShader = uiBundle.LoadAsset<Shader>("SteamVR_Fade");
-        
+
         var shadersBundle = LoadBundle("liv-shaders");
-        foreach (var shader in shadersBundle.LoadAllAssets<Shader>())
-        {
-            LivShaders[shader.name] = shader;
-        }
+        foreach (var shader in shadersBundle.LoadAllAssets<Shader>()) LivShaders[shader.name] = shader;
     }
 
     private static AssetBundle LoadBundle(string assetName)

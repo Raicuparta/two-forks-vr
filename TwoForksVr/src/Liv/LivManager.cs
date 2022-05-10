@@ -41,7 +41,8 @@ public class LivManager : MonoBehaviour
     private void Update()
     {
         if (!liv || !liv.isActive) return;
-        liv.spectatorLayerMask = liv.HMDCamera.cullingMask & ~(1 << (int)GameLayer.VrHands) & ~(1 << (int)GameLayer.PlayerBody);
+        liv.spectatorLayerMask = liv.HMDCamera.cullingMask & ~(1 << (int) GameLayer.VrHands) &
+                                 ~(1 << (int) GameLayer.PlayerBody);
         var livCamera = liv.render.cameraInstance;
         livCamera.clearFlags = liv.HMDCamera.clearFlags;
         livCamera.backgroundColor = liv.HMDCamera.backgroundColor;

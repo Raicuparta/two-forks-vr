@@ -9,19 +9,20 @@ namespace LIV.SDK.Unity
 {
     public partial class SDKRender : IDisposable
     {
-        // Renders captured texture
-        private CommandBuffer _applyTextureCommandBuffer;
         private readonly CameraEvent _applyTextureEvent = CameraEvent.AfterEverything;
-
-        private RenderTexture _backgroundRenderTexture;
-
-        // Captures texture before post-effects
-        private CommandBuffer _captureTextureCommandBuffer;
         private readonly CameraEvent _captureTextureEvent = CameraEvent.BeforeImageEffects;
 
         private readonly CameraEvent _clipPlaneCameraEvent = CameraEvent.AfterForwardOpaque;
 
         private readonly CameraEvent _clipPlaneCombineAlphaCameraEvent = CameraEvent.AfterEverything;
+
+        // Renders captured texture
+        private CommandBuffer _applyTextureCommandBuffer;
+
+        private RenderTexture _backgroundRenderTexture;
+
+        // Captures texture before post-effects
+        private CommandBuffer _captureTextureCommandBuffer;
 
         // Renders the clip plane in the foreground texture
         private CommandBuffer _clipPlaneCommandBuffer;
@@ -58,13 +59,13 @@ namespace LIV.SDK.Unity
 
         public SDKRender(LIV liv)
         {
-            _liv = liv;
+            this.liv = liv;
             CreateAssets();
         }
 
         private bool useDeferredRendering =>
-            _cameraInstance.actualRenderingPath == RenderingPath.DeferredLighting ||
-            _cameraInstance.actualRenderingPath == RenderingPath.DeferredShading;
+            cameraInstance.actualRenderingPath == RenderingPath.DeferredLighting ||
+            cameraInstance.actualRenderingPath == RenderingPath.DeferredShading;
 
         private bool interlacedRendering => SDKUtils.FeatureEnabled(inputFrame.features, FEATURES.INTERLACED_RENDER);
 
@@ -152,9 +153,9 @@ namespace LIV.SDK.Unity
         // Default render without any special changes
         private void RenderBackground()
         {
-            SDKUtils.SetCamera(_cameraInstance, _cameraInstance.transform, _inputFrame, localToWorldMatrix,
+            SDKUtils.SetCamera(cameraInstance, cameraInstance.transform, _inputFrame, localToWorldMatrix,
                 spectatorLayerMask);
-            _cameraInstance.targetTexture = _backgroundRenderTexture;
+            cameraInstance.targetTexture = _backgroundRenderTexture;
 
             RenderTexture tempRenderTexture = null;
 
@@ -170,24 +171,24 @@ namespace LIV.SDK.Unity
                 _captureTextureCommandBuffer.Blit(BuiltinRenderTextureType.CurrentActive, tempRenderTexture);
                 _applyTextureCommandBuffer.Blit(tempRenderTexture, BuiltinRenderTextureType.CurrentActive);
 
-                _cameraInstance.AddCommandBuffer(_captureTextureEvent, _captureTextureCommandBuffer);
-                _cameraInstance.AddCommandBuffer(_applyTextureEvent, _applyTextureCommandBuffer);
+                cameraInstance.AddCommandBuffer(_captureTextureEvent, _captureTextureCommandBuffer);
+                cameraInstance.AddCommandBuffer(_applyTextureEvent, _applyTextureCommandBuffer);
             }
 
             SDKShaders.StartRendering();
             SDKShaders.StartBackgroundRendering();
             InvokePreRenderBackground();
             SendTextureToBridge(_backgroundRenderTexture, TEXTURE_ID.BACKGROUND_COLOR_BUFFER_ID);
-            _cameraInstance.Render();
+            cameraInstance.Render();
             InvokePostRenderBackground();
-            _cameraInstance.targetTexture = null;
+            cameraInstance.targetTexture = null;
             SDKShaders.StopBackgroundRendering();
             SDKShaders.StopRendering();
 
             if (overridePostProcessing)
             {
-                _cameraInstance.RemoveCommandBuffer(_captureTextureEvent, _captureTextureCommandBuffer);
-                _cameraInstance.RemoveCommandBuffer(_applyTextureEvent, _applyTextureCommandBuffer);
+                cameraInstance.RemoveCommandBuffer(_captureTextureEvent, _captureTextureCommandBuffer);
+                cameraInstance.RemoveCommandBuffer(_applyTextureEvent, _applyTextureCommandBuffer);
 
                 _captureTextureCommandBuffer.Clear();
                 _applyTextureCommandBuffer.Clear();
@@ -207,25 +208,25 @@ namespace LIV.SDK.Unity
             var overridePostProcessing =
                 SDKUtils.FeatureEnabled(inputFrame.features, FEATURES.OVERRIDE_POST_PROCESSING);
             var fixPostEffectsAlpha = SDKUtils.FeatureEnabled(inputFrame.features, FEATURES.FIX_FOREGROUND_ALPHA) |
-                                      _liv.fixPostEffectsAlpha;
+                                      liv.fixPostEffectsAlpha;
 
             MonoBehaviour[] behaviours = null;
             bool[] wasBehaviourEnabled = null;
             if (disableStandardAssets)
-                SDKUtils.DisableStandardAssets(_cameraInstance, ref behaviours, ref wasBehaviourEnabled);
+                SDKUtils.DisableStandardAssets(cameraInstance, ref behaviours, ref wasBehaviourEnabled);
 
             // Capture camera defaults
-            var capturedClearFlags = _cameraInstance.clearFlags;
-            var capturedBgColor = _cameraInstance.backgroundColor;
+            var capturedClearFlags = cameraInstance.clearFlags;
+            var capturedBgColor = cameraInstance.backgroundColor;
             var capturedFogColor = RenderSettings.fogColor;
 
             // Make sure that fog does not corrupt alpha channel
             RenderSettings.fogColor = new Color(capturedFogColor.r, capturedFogColor.g, capturedFogColor.b, 0f);
-            SDKUtils.SetCamera(_cameraInstance, _cameraInstance.transform, _inputFrame, localToWorldMatrix,
+            SDKUtils.SetCamera(cameraInstance, cameraInstance.transform, _inputFrame, localToWorldMatrix,
                 spectatorLayerMask);
-            _cameraInstance.clearFlags = CameraClearFlags.Color;
-            _cameraInstance.backgroundColor = Color.clear;
-            _cameraInstance.targetTexture = _foregroundRenderTexture;
+            cameraInstance.clearFlags = CameraClearFlags.Color;
+            cameraInstance.backgroundColor = Color.clear;
+            cameraInstance.targetTexture = _foregroundRenderTexture;
 
             var capturedAlphaRenderTexture = RenderTexture.GetTemporary(_foregroundRenderTexture.width,
                 _foregroundRenderTexture.height, 0, _foregroundRenderTexture.format);
@@ -251,7 +252,7 @@ namespace LIV.SDK.Unity
 
             // Copy alpha in to texture
             _clipPlaneCommandBuffer.Blit(BuiltinRenderTextureType.CurrentActive, capturedAlphaRenderTexture);
-            _cameraInstance.AddCommandBuffer(_clipPlaneCameraEvent, _clipPlaneCommandBuffer);
+            cameraInstance.AddCommandBuffer(_clipPlaneCameraEvent, _clipPlaneCommandBuffer);
 
             // Fix alpha corruption by post processing
             RenderTexture tempRenderTexture = null;
@@ -263,20 +264,20 @@ namespace LIV.SDK.Unity
                 tempRenderTexture.name = "LIV.TemporaryRenderTexture";
 #endif
                 _captureTextureCommandBuffer.Blit(BuiltinRenderTextureType.CurrentActive, tempRenderTexture);
-                _cameraInstance.AddCommandBuffer(_captureTextureEvent, _captureTextureCommandBuffer);
+                cameraInstance.AddCommandBuffer(_captureTextureEvent, _captureTextureCommandBuffer);
 
                 _writeMaterial.SetInt(SDKShaders.LIV_COLOR_MASK,
                     overridePostProcessing ? (int) ColorWriteMask.All : (int) ColorWriteMask.Alpha);
                 _applyTextureCommandBuffer.Blit(tempRenderTexture, BuiltinRenderTextureType.CurrentActive,
                     _writeMaterial);
-                _cameraInstance.AddCommandBuffer(_applyTextureEvent, _applyTextureCommandBuffer);
+                cameraInstance.AddCommandBuffer(_applyTextureEvent, _applyTextureCommandBuffer);
             }
 
             // Combine captured alpha with result alpha
             _combineAlphaMaterial.SetInt(SDKShaders.LIV_COLOR_MASK, (int) ColorWriteMask.Alpha);
             _combineAlphaCommandBuffer.Blit(capturedAlphaRenderTexture, BuiltinRenderTextureType.CurrentActive,
                 _combineAlphaMaterial);
-            _cameraInstance.AddCommandBuffer(_clipPlaneCombineAlphaCameraEvent, _combineAlphaCommandBuffer);
+            cameraInstance.AddCommandBuffer(_clipPlaneCombineAlphaCameraEvent, _combineAlphaCommandBuffer);
 
             if (useDeferredRendering)
                 SDKUtils.ForceForwardRendering(cameraInstance, _clipPlaneMesh, _forceForwardRenderingMaterial);
@@ -285,16 +286,16 @@ namespace LIV.SDK.Unity
             SDKShaders.StartForegroundRendering();
             InvokePreRenderForeground();
             SendTextureToBridge(_foregroundRenderTexture, TEXTURE_ID.FOREGROUND_COLOR_BUFFER_ID);
-            _cameraInstance.Render();
+            cameraInstance.Render();
             InvokePostRenderForeground();
-            _cameraInstance.targetTexture = null;
+            cameraInstance.targetTexture = null;
             SDKShaders.StopForegroundRendering();
             SDKShaders.StopRendering();
 
             if (overridePostProcessing || fixPostEffectsAlpha)
             {
-                _cameraInstance.RemoveCommandBuffer(_captureTextureEvent, _captureTextureCommandBuffer);
-                _cameraInstance.RemoveCommandBuffer(_applyTextureEvent, _applyTextureCommandBuffer);
+                cameraInstance.RemoveCommandBuffer(_captureTextureEvent, _captureTextureCommandBuffer);
+                cameraInstance.RemoveCommandBuffer(_applyTextureEvent, _applyTextureCommandBuffer);
 
                 _captureTextureCommandBuffer.Clear();
                 _applyTextureCommandBuffer.Clear();
@@ -302,8 +303,8 @@ namespace LIV.SDK.Unity
                 RenderTexture.ReleaseTemporary(tempRenderTexture);
             }
 
-            _cameraInstance.RemoveCommandBuffer(_clipPlaneCameraEvent, _clipPlaneCommandBuffer);
-            _cameraInstance.RemoveCommandBuffer(_clipPlaneCombineAlphaCameraEvent, _combineAlphaCommandBuffer);
+            cameraInstance.RemoveCommandBuffer(_clipPlaneCameraEvent, _clipPlaneCommandBuffer);
+            cameraInstance.RemoveCommandBuffer(_clipPlaneCombineAlphaCameraEvent, _combineAlphaCommandBuffer);
 
             RenderTexture.ReleaseTemporary(capturedAlphaRenderTexture);
 
@@ -311,8 +312,8 @@ namespace LIV.SDK.Unity
             _combineAlphaCommandBuffer.Clear();
 
             // Revert camera defaults
-            _cameraInstance.clearFlags = capturedClearFlags;
-            _cameraInstance.backgroundColor = capturedBgColor;
+            cameraInstance.clearFlags = capturedClearFlags;
+            cameraInstance.backgroundColor = capturedBgColor;
             RenderSettings.fogColor = capturedFogColor;
 
             SDKUtils.RestoreStandardAssets(ref behaviours, ref wasBehaviourEnabled);
@@ -327,9 +328,9 @@ namespace LIV.SDK.Unity
             var renderComplexClipPlane = SDKUtils.FeatureEnabled(inputFrame.features, FEATURES.COMPLEX_CLIP_PLANE);
             var renderGroundClipPlane = SDKUtils.FeatureEnabled(inputFrame.features, FEATURES.GROUND_CLIP_PLANE);
 
-            SDKUtils.SetCamera(_cameraInstance, _cameraInstance.transform, _inputFrame, localToWorldMatrix,
+            SDKUtils.SetCamera(cameraInstance, cameraInstance.transform, _inputFrame, localToWorldMatrix,
                 spectatorLayerMask);
-            _cameraInstance.targetTexture = _optimizedRenderTexture;
+            cameraInstance.targetTexture = _optimizedRenderTexture;
 
             // Clear alpha channel
             _writeMaterial.SetInt(SDKShaders.LIV_COLOR_MASK, (int) ColorWriteMask.Alpha);
@@ -354,20 +355,20 @@ namespace LIV.SDK.Unity
                     GetGroundClipPlaneMaterial(debugClipPlane, ColorWriteMask.Alpha), 0, 0);
             }
 
-            _cameraInstance.AddCommandBuffer(CameraEvent.AfterEverything, _optimizedRenderingCommandBuffer);
+            cameraInstance.AddCommandBuffer(CameraEvent.AfterEverything, _optimizedRenderingCommandBuffer);
 
             // TODO: this is just proprietary
             SDKShaders.StartRendering();
             SDKShaders.StartBackgroundRendering();
             InvokePreRenderBackground();
             SendTextureToBridge(_optimizedRenderTexture, TEXTURE_ID.OPTIMIZED_COLOR_BUFFER_ID);
-            _cameraInstance.Render();
+            cameraInstance.Render();
             InvokePostRenderBackground();
-            _cameraInstance.targetTexture = null;
+            cameraInstance.targetTexture = null;
             SDKShaders.StopBackgroundRendering();
             SDKShaders.StopRendering();
 
-            _cameraInstance.RemoveCommandBuffer(CameraEvent.AfterEverything, _optimizedRenderingCommandBuffer);
+            cameraInstance.RemoveCommandBuffer(CameraEvent.AfterEverything, _optimizedRenderingCommandBuffer);
             _optimizedRenderingCommandBuffer.Clear();
         }
 
@@ -378,29 +379,29 @@ namespace LIV.SDK.Unity
             var cameraReferenceActive = cameraReference.gameObject.activeSelf;
             if (cameraReferenceActive) cameraReference.gameObject.SetActive(false);
 
-            var cloneGO = Object.Instantiate(cameraReference.gameObject, _liv.stage);
-            _cameraInstance = (Camera) cloneGO.GetComponent("Camera");
+            var cloneGO = Object.Instantiate(cameraReference.gameObject, liv.stage);
+            cameraInstance = (Camera) cloneGO.GetComponent("Camera");
 
-            SDKUtils.CleanCameraBehaviours(_cameraInstance, _liv.excludeBehaviours);
+            SDKUtils.CleanCameraBehaviours(cameraInstance, liv.excludeBehaviours);
 
             if (cameraReferenceActive != cameraReference.gameObject.activeSelf)
                 cameraReference.gameObject.SetActive(cameraReferenceActive);
             if (cameraReferenceEnabled != cameraReference.enabled) cameraReference.enabled = cameraReferenceEnabled;
 
-            _cameraInstance.name = "LIV Camera";
-            if (_cameraInstance.tag == "MainCamera") _cameraInstance.tag = "Untagged";
+            cameraInstance.name = "LIV Camera";
+            if (cameraInstance.tag == "MainCamera") cameraInstance.tag = "Untagged";
 
-            _cameraInstance.transform.localScale = Vector3.one;
-            _cameraInstance.rect = new Rect(0, 0, 1, 1);
-            _cameraInstance.depth = 0;
+            cameraInstance.transform.localScale = Vector3.one;
+            cameraInstance.rect = new Rect(0, 0, 1, 1);
+            cameraInstance.depth = 0;
 #if UNITY_5_4_OR_NEWER
             _cameraInstance.stereoTargetEye = StereoTargetEyeMask.None;
 #endif
 #if UNITY_5_6_OR_NEWER
             _cameraInstance.allowMSAA = false;
 #endif
-            _cameraInstance.enabled = false;
-            _cameraInstance.gameObject.SetActive(true);
+            cameraInstance.enabled = false;
+            cameraInstance.gameObject.SetActive(true);
 
             _clipPlaneMesh = new Mesh();
             SDKUtils.CreateClipPlane(_clipPlaneMesh, 10, 10, true, 1000f);
@@ -443,10 +444,10 @@ namespace LIV.SDK.Unity
 
         private void DestroyAssets()
         {
-            if (_cameraInstance != null)
+            if (cameraInstance != null)
             {
-                Object.Destroy(_cameraInstance.gameObject);
-                _cameraInstance = null;
+                Object.Destroy(cameraInstance.gameObject);
+                cameraInstance = null;
             }
 
             SDKUtils.DestroyObject(ref _clipPlaneMesh);

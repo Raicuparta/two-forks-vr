@@ -1,5 +1,4 @@
 ﻿using System;
-using TwoForksVr.Helpers;
 using TwoForksVr.LaserPointer;
 using TwoForksVr.Settings;
 using TwoForksVr.Stage;
@@ -43,7 +42,7 @@ public class VrLimbManager : MonoBehaviour
         Laser.SetUp(camera);
         UpdateHandedness();
     }
-    
+
     private void Update()
     {
         UpdateHandedness();

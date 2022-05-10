@@ -32,6 +32,7 @@ public class VrStage : MonoBehaviour
     private InteractiveUiTarget interactiveUiTarget;
     private IntroFix introFix;
     private VrLimbManager limbManager;
+    private LivManager livManager;
     private Camera mainCamera;
     private RoomScaleBodyTransform roomScaleBodyTransform;
     private StaticUiTarget staticUiTarget;
@@ -39,7 +40,6 @@ public class VrStage : MonoBehaviour
     private TurningController turningController;
     private VeryLateUpdateManager veryLateUpdateManager;
     private VrSettingsMenu vrSettingsMenu;
-    private LivManager livManager;
 
     public static void Create(Transform parent)
     {

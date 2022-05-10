@@ -45,7 +45,8 @@ namespace LIV.SDK.Unity
         private RenderTexture _complexClipPlaneRenderTexture = null;
 
         private UniversalAdditionalCameraData _universalAdditionalCameraData = null;
-        private RenderTargetIdentifier _cameraColorTextureIdentifier = new RenderTargetIdentifier("_CameraColorTexture");
+        private RenderTargetIdentifier _cameraColorTextureIdentifier =
+ new RenderTargetIdentifier("_CameraColorTexture");
 
         Material GetClipPlaneMaterial(bool debugClipPlane, bool complexClipPlane, ColorWriteMask colorWriteMask)
         {
@@ -144,10 +145,12 @@ namespace LIV.SDK.Unity
 
             RenderTexture tempRenderTexture = null;
 
-            bool overridePostProcessing = SDKUtils.FeatureEnabled(inputFrame.features, FEATURES.OVERRIDE_POST_PROCESSING);
+            bool overridePostProcessing =
+ SDKUtils.FeatureEnabled(inputFrame.features, FEATURES.OVERRIDE_POST_PROCESSING);
             if (overridePostProcessing)
             {
-                tempRenderTexture = RenderTexture.GetTemporary(_backgroundRenderTexture.width, _backgroundRenderTexture.height, 0, _backgroundRenderTexture.format);
+                tempRenderTexture =
+ RenderTexture.GetTemporary(_backgroundRenderTexture.width, _backgroundRenderTexture.height, 0, _backgroundRenderTexture.format);
 #if UNITY_EDITOR
                 tempRenderTexture.name = "LIV.TemporaryRenderTexture";
 #endif
@@ -187,8 +190,10 @@ namespace LIV.SDK.Unity
             bool debugClipPlane = SDKUtils.FeatureEnabled(inputFrame.features, FEATURES.DEBUG_CLIP_PLANE);
             bool renderComplexClipPlane = SDKUtils.FeatureEnabled(inputFrame.features, FEATURES.COMPLEX_CLIP_PLANE);
             bool renderGroundClipPlane = SDKUtils.FeatureEnabled(inputFrame.features, FEATURES.GROUND_CLIP_PLANE);
-            bool overridePostProcessing = SDKUtils.FeatureEnabled(inputFrame.features, FEATURES.OVERRIDE_POST_PROCESSING);
-            bool fixPostEffectsAlpha = SDKUtils.FeatureEnabled(inputFrame.features, FEATURES.FIX_FOREGROUND_ALPHA) | _liv.fixPostEffectsAlpha;
+            bool overridePostProcessing =
+ SDKUtils.FeatureEnabled(inputFrame.features, FEATURES.OVERRIDE_POST_PROCESSING);
+            bool fixPostEffectsAlpha =
+ SDKUtils.FeatureEnabled(inputFrame.features, FEATURES.FIX_FOREGROUND_ALPHA) | _liv.fixPostEffectsAlpha;
 
             MonoBehaviour[] behaviours = null;
             bool[] wasBehaviourEnabled = null;
@@ -206,7 +211,8 @@ namespace LIV.SDK.Unity
             _cameraInstance.backgroundColor = Color.clear;
             _cameraInstance.targetTexture = _foregroundRenderTexture;
 
-            RenderTexture capturedAlphaRenderTexture = RenderTexture.GetTemporary(_foregroundRenderTexture.width, _foregroundRenderTexture.height, 0, _foregroundRenderTexture.format);
+            RenderTexture capturedAlphaRenderTexture =
+ RenderTexture.GetTemporary(_foregroundRenderTexture.width, _foregroundRenderTexture.height, 0, _foregroundRenderTexture.format);
 #if UNITY_EDITOR
             capturedAlphaRenderTexture.name = "LIV.CapturedAlphaRenderTexture";
 #endif
@@ -222,7 +228,8 @@ namespace LIV.SDK.Unity
             // Render ground clip plane
             if (renderGroundClipPlane)
             {
-                Matrix4x4 groundClipPlaneTransform = localToWorldMatrix * (Matrix4x4)_inputFrame.groundClipPlane.transform;
+                Matrix4x4 groundClipPlaneTransform =
+ localToWorldMatrix * (Matrix4x4)_inputFrame.groundClipPlane.transform;
                 _clipPlanePass.commandBuffer.DrawMesh(_clipPlaneMesh, groundClipPlaneTransform,
                     GetGroundClipPlaneMaterial(debugClipPlane, ColorWriteMask.All), 0, 0);
             }
@@ -236,7 +243,8 @@ namespace LIV.SDK.Unity
             RenderTexture tempRenderTexture = null;
             if (overridePostProcessing || fixPostEffectsAlpha)
             {
-                tempRenderTexture = RenderTexture.GetTemporary(_foregroundRenderTexture.width, _foregroundRenderTexture.height, 0, _foregroundRenderTexture.format);
+                tempRenderTexture =
+ RenderTexture.GetTemporary(_foregroundRenderTexture.width, _foregroundRenderTexture.height, 0, _foregroundRenderTexture.format);
 #if UNITY_EDITOR
                 tempRenderTexture.name = "LIV.TemporaryRenderTexture";
 #endif
@@ -316,7 +324,8 @@ namespace LIV.SDK.Unity
             // Render ground clip plane            
             if (renderGroundClipPlane)
             {
-                Matrix4x4 groundClipPlaneTransform = localToWorldMatrix * (Matrix4x4)_inputFrame.groundClipPlane.transform;
+                Matrix4x4 groundClipPlaneTransform =
+ localToWorldMatrix * (Matrix4x4)_inputFrame.groundClipPlane.transform;
                 _optimizedRenderingPass.commandBuffer.DrawMesh(_clipPlaneMesh, groundClipPlaneTransform,
                     GetGroundClipPlaneMaterial(debugClipPlane, ColorWriteMask.Alpha), 0, 0);
             }
