@@ -27,6 +27,31 @@ Two Forks VR is a VR mod for [Firewatch](https://store.steampowered.com/app/3838
 - VR controllers. This isn't playable with a normal game controller, motion controls are required.
 - Steam and SteamVR installed (even if you're playing from GOG or Game Pass).
 
+## Xbox app / Game Pass version
+
+If you got the game from the PC Xbox app, or from your PC Xbox Game Pass Subscription, you'll need to follow some steps to make the game moddable. **You need to do this before installing Firewatch. If you've already installed Firewatch on the Xbox PC app, uninstall it before following these steps**.
+
+- **Important**! Be sure to have the most recent version of the Xbox app and the GamingServices installed.
+- Close the Xbox app (close it in the system tray too, to make sure it's gone completely).
+- Get the [Xbox Insider Hub app](https://www.microsoft.com/en-us/p/xbox-insider-hub/9pldpg46g47z).
+- Start the Xbox Insider Hub app.
+- Select "Previews", and then "Windows Gaming".
+- Click "Join" and wait for the process to finish.
+- At this point, you might need to let the Xbox app install some updates. Open Windows App Store and let it install all pending updates just to be sure.
+- Open the Xbox app.
+- Click on your user name on the top left, select "Settings".
+- Under the "General" tab, in the "Game install options" section, confirm that it is showing you a folder where games will be installed. Change it if you want.
+[Screenshot](https://user-images.githubusercontent.com/3955124/171329511-aa344df6-df1a-4c2e-a8cf-1a0e2427602c.png)
+- If you don't see this input field, then you probably don't have the insider version of the Xbox app (or they changed how this works again). Make sure the Xbox app is
+updated to the insider version and try again.
+- Install Firewatch.
+- Find Firewatch.exe in the folder specified in the Xbox app settings (in my case `C:/XboxGames/Firewatch/Content/Firewatch.exe`).
+- Right click the `TwoForksVR.exe` file you downloaded from the [release zip](https://github.com/Raicuparta/two-forks-vr/releases/latest), and select "Properties".
+- In the "Compatibility" tab, enable "Run this program as an administrator". [Screenshot](https://user-images.githubusercontent.com/3955124/171334868-1a185df4-1068-4faf-b99c-0e5a147beeca.png)
+- Drag Firewatch.exe and drop it on top of TwoForksVR.exe to install the mod.
+- Run the game from the Xbox app.
+
+
 ## Graphics and Performance
 
 As usual, the game isn't optimized for VR, so it's not always easy to get good performance. I have set sensible defaults for graphics settings that run well on my setup (RTX 2070 Super, tested with a Rift S and Quest 2), while still looking decent.
