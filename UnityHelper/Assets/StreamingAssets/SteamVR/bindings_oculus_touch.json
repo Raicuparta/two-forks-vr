@@ -414,6 +414,9 @@
                   }
                },
                "mode" : "dpad",
+               "parameters" : {
+                  "sub_mode" : "touch"
+               },
                "path" : "/user/hand/right/input/joystick"
             },
             {
