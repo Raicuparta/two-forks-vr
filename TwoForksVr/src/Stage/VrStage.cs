@@ -32,7 +32,6 @@ public class VrStage : MonoBehaviour
     private InteractiveUiTarget interactiveUiTarget;
     private IntroFix introFix;
     private VrLimbManager limbManager;
-    private LivManager livManager;
     private Camera mainCamera;
     private RoomScaleBodyTransform roomScaleBodyTransform;
     private StaticUiTarget staticUiTarget;
@@ -40,13 +39,16 @@ public class VrStage : MonoBehaviour
     private TurningController turningController;
     private VeryLateUpdateManager veryLateUpdateManager;
     private VrSettingsMenu vrSettingsMenu;
+    
+    // TODO: temporarily disabling LIV since it's causing problems.
+    // private LivManager livManager;
 
     public static void Create(Transform parent)
     {
         if (instance) return;
         var stageParent = new GameObject("VrStageParent")
         {
-            // Apparently Firewatch will destroy all DontDrestroyOnLoad objects between scenes,
+            // Apparently Firewatch will destroy all DontDestroyOnLoad objects between scenes,
             // unless they have the MAIN tag.
             tag = GameTag.Main,
             transform = {parent = parent}
@@ -72,7 +74,9 @@ public class VrStage : MonoBehaviour
             BodyRendererManager.Create(instance, instance.teleportController, instance.limbManager);
         instance.vrSettingsMenu = VrSettingsMenu.Create(instance);
         instance.bindingsManager = BindingsManager.Create(instance);
-        instance.livManager = LivManager.Create(instance);
+        
+        // TODO: temporarily disabling LIV since it's causing problems.
+        // instance.livManager = LivManager.Create(instance);
 
         instance.fallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
         instance.fallbackCamera.enabled = false;
@@ -114,7 +118,9 @@ public class VrStage : MonoBehaviour
         turningController.SetUp(playerController);
         roomScaleBodyTransform.SetUp(playerController);
         bodyRendererManager.SetUp(playerController);
-        livManager.SetUp(nextCamera);
+        
+        // TODO: temporarily disabling LIV since it's causing problems.
+        // livManager.SetUp(nextCamera);
     }
 
     private void Update()
