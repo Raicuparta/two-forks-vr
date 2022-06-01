@@ -40,8 +40,7 @@ public class VrStage : MonoBehaviour
     private VeryLateUpdateManager veryLateUpdateManager;
     private VrSettingsMenu vrSettingsMenu;
     
-    // TODO: temporarily disabling LIV since it's causing problems.
-    // private LivManager livManager;
+    private LivManager livManager;
 
     public static void Create(Transform parent)
     {
@@ -74,10 +73,7 @@ public class VrStage : MonoBehaviour
             BodyRendererManager.Create(instance, instance.teleportController, instance.limbManager);
         instance.vrSettingsMenu = VrSettingsMenu.Create(instance);
         instance.bindingsManager = BindingsManager.Create(instance);
-        
-        // TODO: temporarily disabling LIV since it's causing problems.
-        // instance.livManager = LivManager.Create(instance);
-
+        instance.livManager = LivManager.Create(instance);
         instance.fallbackCamera = new GameObject("VrFallbackCamera").AddComponent<Camera>();
         instance.fallbackCamera.enabled = false;
         instance.fallbackCamera.clearFlags = CameraClearFlags.Color;
@@ -118,9 +114,7 @@ public class VrStage : MonoBehaviour
         turningController.SetUp(playerController);
         roomScaleBodyTransform.SetUp(playerController);
         bodyRendererManager.SetUp(playerController);
-        
-        // TODO: temporarily disabling LIV since it's causing problems.
-        // livManager.SetUp(nextCamera);
+        livManager.SetUp(nextCamera);
     }
 
     private void Update()
