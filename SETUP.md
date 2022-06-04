@@ -1,6 +1,6 @@
 # Two Forks VR Development Setup
 
-:warning: These are instructions on how to set up Two Forks VR for mod development, not for installing / playing. If you just want to install Two Forks VR to play Firewatch in VR, follow the [instructions in the main readme](https://github.com/Raicuparta/nomai-vr#installation).
+:warning: These are instructions on how to set up Two Forks VR for mod development, not for installing / playing. If you just want to install Two Forks VR to play Firewatch in VR, follow the [instructions in the main readme](https://github.com/Raicuparta/two-forks-vr#readme).
 
 - Install Unity 2017.4.40f.
 - If you haven't already, [download and install the latest Two Forks VR release zip](https://github.com/Raicuparta/two-forks-vr/releases/latest). This is just to make sure you have the correct version of BepInEx installed in the game.
