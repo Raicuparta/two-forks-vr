@@ -8,7 +8,7 @@
 - Edit `TwoForksVR/DIrectory.build.props`:
   - `<GameDir>` should point to the directory where Firewatch is installed (the folder with Firewatch.exe inside).
   - `<UnityEditor>` should point to your Unity 2017.4.40f editor executable.
-- Open the project solution file `Two Forks VR.sln` in whatever IDE (Visual Studio or Rider should work).
+- Open the project solution file `Two Forks VR.sln` in Visual Studio (2022+) or Rider (2022+) or whatever else works (has to support C# 10).
 - Check the Nuget packages, some times you might need to restore them manually.
 - You should still have some broken references. We'll fix that now.
 - Select and build the `Release | x64` configuration (it's important that you select the release configuration for the first build). This will build the helper Unity project, which will provide you with the SteamVR dlls required for the mod project.
