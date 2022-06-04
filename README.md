@@ -40,17 +40,14 @@ If you got the game from the PC Xbox app, or from your PC Xbox Game Pass Subscri
 - At this point, you might need to let the Xbox app install some updates. Open Windows App Store and let it install all pending updates just to be sure.
 - Open the Xbox app.
 - Click on your user name on the top left, select "Settings".
-- Under the "General" tab, in the "Game install options" section, confirm that it is showing you a folder where games will be installed. Change it if you want.
-[Screenshot](https://user-images.githubusercontent.com/3955124/171329511-aa344df6-df1a-4c2e-a8cf-1a0e2427602c.png)
-- If you don't see this input field, then you probably don't have the insider version of the Xbox app (or they changed how this works again). Make sure the Xbox app is
-updated to the insider version and try again.
+- Under the "General" tab, in the "Game install options" section, confirm that it is showing you a folder where games will be installed. Change it if you want. [Screenshot](https://user-images.githubusercontent.com/3955124/171329511-aa344df6-df1a-4c2e-a8cf-1a0e2427602c.png)
+- If you don't see this input field, then you probably don't have the insider version of the Xbox app (or they changed how this works again). Make sure the Xbox app is updated to the insider version and try again.
 - Install Firewatch.
 - Find Firewatch.exe in the folder specified in the Xbox app settings (in my case `C:/XboxGames/Firewatch/Content/Firewatch.exe`).
 - Right click the `TwoForksVR.exe` file you downloaded from the [release zip](https://github.com/Raicuparta/two-forks-vr/releases/latest), and select "Properties".
 - In the "Compatibility" tab, enable "Run this program as an administrator". [Screenshot](https://user-images.githubusercontent.com/3955124/171334868-1a185df4-1068-4faf-b99c-0e5a147beeca.png)
 - Drag Firewatch.exe and drop it on top of TwoForksVR.exe to install the mod.
 - Run the game from the Xbox app.
-
 
 ## Graphics and Performance
 
@@ -75,3 +72,7 @@ Easiest way to uninstall is to use the "verify game files" option in whatever la
 If you find bugs or are otherwise facing problems with the mod, please [open an issue](https://github.com/Raicuparta/two-forks-vr/issues/new/choose).
 
 You can also find me on the [Flatscreen to VR Discord](https://discord.gg/gEEqTVFzvD). After you pick the Firewatch role, you'll find my channels there.
+
+## Development Setup
+
+See [Two Forks VR Development Setup](SETUP.md)
