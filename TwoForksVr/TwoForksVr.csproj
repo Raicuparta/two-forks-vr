@@ -10,36 +10,38 @@
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <Configurations>Release;Debug</Configurations>
         <Platforms>x64</Platforms>
-        <PreBuildEvent>
-            "$(MSBuildBinPath)\MSBuild.exe" "$(SolutionDir)\UnityHelper\SteamVR.csproj" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_40;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64"
-            "$(MSBuildBinPath)\MSBuild.exe" "$(SolutionDir)\UnityHelper\SteamVR_Actions.csproj" -p:DebugSymbols="false" -p:DebugType="None" -p:Optimize="true" -p:Configuration="Release" -p:DefineConstants="UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_40;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64"
-            xcopy /Y /S "$(SolutionDir)UnityHelper\Assets\StreamingAssets\SteamVR\*.json" "$(SolutionDir)TwoForksVr\TwoForksVrAssets\Bindings\*.json"
-        </PreBuildEvent>
         <LangVersion>default</LangVersion>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <DebugType>full</DebugType>
-        <OutputPath>C:\Program Files (x86)\GOG Galaxy\Games\Firewatch\BepInEx\plugins</OutputPath>
+        <OutputPath>$(GameDir)\BepInEx\plugins</OutputPath>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
         <DebugType>none</DebugType>
     </PropertyGroup>
+    <Target Name="PreBuild" BeforeTargets="ResolveReferences" Condition=" '$(Configuration)' == 'Release' ">
+        <Exec Command="&quot;$(UnityEditor)&quot; -batchmode -executeMethod BuildCommands.PerformBuild -nographics -projectPath &quot;$(SolutionDir)UnityHelper&quot;" />
+    </Target>
     <ItemGroup>
         <PackageReference Include="BepInEx.Core" Version="5.4.16" />
         <PackageReference Include="FirewatchGameLibs" Version="1.1.0" />
     </ItemGroup>
     <ItemGroup>
         <Reference Include="SteamVR">
-            <HintPath>..\UnityHelper\obj\Release\SteamVR.dll</HintPath>
+            <HintPath>..\UnityHelper\Build\UnityHelper_Data\Managed\SteamVR.dll</HintPath>
         </Reference>
         <Reference Include="SteamVR_Actions">
-            <HintPath>..\UnityHelper\obj\Release\SteamVR_Actions.dll</HintPath>
+            <HintPath>..\UnityHelper\Build\UnityHelper_Data\Managed\SteamVR_Actions.dll</HintPath>
         </Reference>
-        <Reference Include="SteamVR_Actions">
+        <Reference Include="Valve.Newtonsoft.Json">
             <HintPath>..\UnityHelper\Assets\SteamVR\Input\Plugins\JSON.NET\Valve.Newtonsoft.Json.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Content Include="..\UnityHelper\Assets\StreamingAssets\SteamVR\*.json" LinkBase="TwoForksVrAssets\Bindings">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="TwoForksVr.csproj.user" />
         <Content Include="TwoForksVrAssets\**">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
