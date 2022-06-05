@@ -59,13 +59,13 @@ namespace TwoForksVRInstaller
         private static void CopyFilesRecursively(string sourcePath, string targetPath)
         {
             //Now Create all of the directories
-            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+            foreach (var dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
             {
                 Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
             }
 
             //Copy all the files & Replaces any files with the same name
-            foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
+            foreach (var newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
             {
                 File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
             }
@@ -99,25 +99,25 @@ namespace TwoForksVRInstaller
             Console.WriteLine("Patching globalgamemanagers...");
             Console.WriteLine($"Using classData file from path '{classDataPath}'");
 
-            AssetsManager am = new AssetsManager();
+            var am = new AssetsManager();
             am.LoadClassPackage(classDataPath);
-            AssetsFileInstance ggm = am.LoadAssetsFile(gameManagersBackupPath, false);
-            AssetsFile ggmFile = ggm.file;
-            AssetsFileTable ggmTable = ggm.table;
+            var ggm = am.LoadAssetsFile(gameManagersBackupPath, false);
+            var ggmFile = ggm.file;
+            var ggmTable = ggm.table;
             am.LoadClassDatabaseFromPackage(ggmFile.typeTree.unityVersion);
 
-            List<AssetsReplacer> replacers = new List<AssetsReplacer>();
+            var replacers = new List<AssetsReplacer>();
 
-            AssetFileInfoEx buildSettings = ggmTable.GetAssetInfo(11);
-            AssetTypeValueField buildSettingsBase = am.GetATI(ggmFile, buildSettings).GetBaseField();
-            AssetTypeValueField enabledVRDevices = buildSettingsBase.Get("enabledVRDevices").Get("Array");
-            AssetTypeTemplateField stringTemplate = enabledVRDevices.templateField.children[1];
-            AssetTypeValueField[] vrDevicesList = new AssetTypeValueField[] { StringField("OpenVR", stringTemplate) };
+            var buildSettings = ggmTable.GetAssetInfo(11);
+            var buildSettingsBase = am.GetTypeInstance(ggmFile, buildSettings).GetBaseField();
+            var enabledVRDevices = buildSettingsBase.Get("enabledVRDevices").Get("Array");
+            var stringTemplate = enabledVRDevices.templateField.children[1];
+            var vrDevicesList = new[] { StringField("OpenVR", stringTemplate) };
             enabledVRDevices.SetChildrenList(vrDevicesList);
 
             replacers.Add(new AssetsReplacerFromMemory(0, buildSettings.index, (int)buildSettings.curFileType, 0xffff, buildSettingsBase.WriteToByteArray()));
 
-            using (AssetsFileWriter writer = new AssetsFileWriter(File.OpenWrite(gameManagersPath)))
+            using (var writer = new AssetsFileWriter(File.OpenWrite(gameManagersPath)))
             {
                 ggmFile.Write(writer, 0, replacers, 0);
             }
