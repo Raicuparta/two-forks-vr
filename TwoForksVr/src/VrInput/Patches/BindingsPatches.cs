@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using BepInEx;
 using HarmonyLib;
 using TwoForksVr.Settings;
 using UnityEngine;
@@ -73,7 +74,7 @@ public class BindingsPatches : TwoForksVrPatch
     [HarmonyPatch(typeof(SteamVR_Input), nameof(SteamVR_Input.GetActionsFileFolder))]
     private static bool GetActionsFileFromMod(ref string __result)
     {
-        __result = $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/TwoForksVrAssets/Bindings";
+        __result = Path.Combine(Paths.PluginPath, Path.Combine("TwoForksVrAssets", "Bindings"));
         return false;
     }
 

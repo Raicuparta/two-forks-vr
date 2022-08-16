@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using BepInEx;
 using TwoForksVr.Helpers;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace TwoForksVr.Assets;
 
 public static class VrAssetLoader
 {
-    private const string assetsDir = "/BepInEx/plugins/TwoForksVrAssets/AssetBundles/";
+    private const string assetsDir = "TwoForksVrAssets/AssetBundles/";
     public static readonly Dictionary<string, Shader> LivShaders = new();
     public static GameObject ToolPickerPrefab { get; private set; }
     public static Shader TMProShader { get; private set; }
@@ -42,7 +43,7 @@ public static class VrAssetLoader
 
     private static AssetBundle LoadBundle(string assetName)
     {
-        var bundle = AssetBundle.LoadFromFile($"{Directory.GetCurrentDirectory()}{assetsDir}{assetName}");
+        var bundle = AssetBundle.LoadFromFile(Path.Combine(Paths.PluginPath, Path.Combine(assetsDir, assetName)));
         if (bundle != null) return bundle;
         Logs.WriteError($"Failed to load AssetBundle {assetName}");
         return null;
