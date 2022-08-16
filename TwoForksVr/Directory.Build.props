@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <GameDir>C:\Program Files (x86)\GOG Galaxy\Games\Firewatch</GameDir>
+    <BepInExDir>C:\Users\rai\Repos\rai-vr-manager\src-tauri\target\debug\mod\BepInEx</BepInExDir>
     <UnityEditor>C:\Program Files\Unity\Hub\Editor\2017.4.40f1\Editor\Unity.exe</UnityEditor>
   </PropertyGroup>
 </Project>
