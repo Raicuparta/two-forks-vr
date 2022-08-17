@@ -20,7 +20,7 @@
         <DebugType>none</DebugType>
     </PropertyGroup>
     <Target Name="PreBuild" BeforeTargets="ResolveReferences" Condition=" '$(Configuration)' == 'Release' ">
-        <Exec Command="&quot;$(UnityEditor)&quot; -batchmode -executeMethod BuildCommands.PerformBuild -nographics -projectPath &quot;$(SolutionDir)UnityHelper&quot;" />
+        <Exec Command="start &quot;&quot; &quot;$(UnityEditor)&quot; -batchmode -executeMethod BuildCommands.PerformBuild -nographics -projectPath &quot;$(SolutionDir)UnityHelper&quot;" />
     </Target>
     <ItemGroup>
         <PackageReference Include="BepInEx.Core" Version="5.4.16" />
