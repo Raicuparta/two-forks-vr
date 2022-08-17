@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30413.136
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwoForksVr", "TwoForksVr\TwoForksVr.csproj", "{4FAEDEC8-3D86-4350-B42D-DAD4414E69D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwoForksVr", "TwoForksVr\TwoForksVr.csproj", "{4FAEDEC8-3D86-4350-B42D-DAD4414E69D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwoForksVrInstaller", "TwoForksVrInstaller\TwoForksVrInstaller.csproj", "{D0C4106B-A92C-4435-A93C-0A2500F5FCE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwoForksVrInstaller", "TwoForksVrInstaller\TwoForksVrInstaller.csproj", "{D0C4106B-A92C-4435-A93C-0A2500F5FCE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwoForksVrPatcher", "TwoForksVrPatcher\TwoForksVrPatcher.csproj", "{1CF5D773-2515-4684-879F-2645FDC8DB41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwoForksVrPatcher", "TwoForksVrPatcher\TwoForksVrPatcher.csproj", "{1CF5D773-2515-4684-879F-2645FDC8DB41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,16 +15,16 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4FAEDEC8-3D86-4350-B42D-DAD4414E69D1}.Release|x64.ActiveCfg = Release|x64
-		{4FAEDEC8-3D86-4350-B42D-DAD4414E69D1}.Release|x64.Build.0 = Release|x64
 		{4FAEDEC8-3D86-4350-B42D-DAD4414E69D1}.Debug|x64.ActiveCfg = Debug|x64
 		{4FAEDEC8-3D86-4350-B42D-DAD4414E69D1}.Debug|x64.Build.0 = Debug|x64
+		{4FAEDEC8-3D86-4350-B42D-DAD4414E69D1}.Release|x64.ActiveCfg = Release|x64
+		{4FAEDEC8-3D86-4350-B42D-DAD4414E69D1}.Release|x64.Build.0 = Release|x64
 		{D0C4106B-A92C-4435-A93C-0A2500F5FCE5}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{D0C4106B-A92C-4435-A93C-0A2500F5FCE5}.Debug|x64.Build.0 = Debug|Any CPU
 		{D0C4106B-A92C-4435-A93C-0A2500F5FCE5}.Release|x64.ActiveCfg = Release|Any CPU
 		{D0C4106B-A92C-4435-A93C-0A2500F5FCE5}.Release|x64.Build.0 = Release|Any CPU
-		{1CF5D773-2515-4684-879F-2645FDC8DB41}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{1CF5D773-2515-4684-879F-2645FDC8DB41}.Debug|x64.Build.0 = Debug|Any CPU
+		{1CF5D773-2515-4684-879F-2645FDC8DB41}.Debug|x64.ActiveCfg = Debug|x64
+		{1CF5D773-2515-4684-879F-2645FDC8DB41}.Debug|x64.Build.0 = Debug|x64
 		{1CF5D773-2515-4684-879F-2645FDC8DB41}.Release|x64.ActiveCfg = Release|Any CPU
 		{1CF5D773-2515-4684-879F-2645FDC8DB41}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
