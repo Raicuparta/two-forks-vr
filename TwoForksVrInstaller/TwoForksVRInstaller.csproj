@@ -17,11 +17,6 @@
         <DebugType>none</DebugType>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="AssetsTools.NET">
-            <HintPath>lib\AssetsTools.NET.dll</HintPath>
-        </Reference>
-    </ItemGroup>
-    <ItemGroup>
         <Content Include="ModFiles/**">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
@@ -40,5 +35,8 @@
       <Content Include="HOW TO INSTALL.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="AssetsTools.NET" Version="2.0.12" />
     </ItemGroup>
 </Project>
