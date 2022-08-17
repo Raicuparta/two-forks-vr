@@ -21,7 +21,7 @@
         <OutputPath>bin\Release\</OutputPath>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="AssetsTools.NET" Version="2.0.0" />
+      <PackageReference Include="AssetsTools.NET" Version="2.0.7" />
       <PackageReference Include="Mono.Cecil" Version="0.10.4" IncludeAssets="compile" />
     </ItemGroup>
     <ItemGroup>
