@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwoForksVr", "TwoForksVr\Tw
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwoForksVrInstaller", "TwoForksVrInstaller\TwoForksVrInstaller.csproj", "{D0C4106B-A92C-4435-A93C-0A2500F5FCE5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwoForksVrPatcher", "TwoForksVrPatcher\TwoForksVrPatcher.csproj", "{1CF5D773-2515-4684-879F-2645FDC8DB41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,10 @@ Global
 		{D0C4106B-A92C-4435-A93C-0A2500F5FCE5}.Debug|x64.Build.0 = Debug|Any CPU
 		{D0C4106B-A92C-4435-A93C-0A2500F5FCE5}.Release|x64.ActiveCfg = Release|Any CPU
 		{D0C4106B-A92C-4435-A93C-0A2500F5FCE5}.Release|x64.Build.0 = Release|Any CPU
+		{1CF5D773-2515-4684-879F-2645FDC8DB41}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1CF5D773-2515-4684-879F-2645FDC8DB41}.Debug|x64.Build.0 = Debug|Any CPU
+		{1CF5D773-2515-4684-879F-2645FDC8DB41}.Release|x64.ActiveCfg = Release|Any CPU
+		{1CF5D773-2515-4684-879F-2645FDC8DB41}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
