@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <ProjectGuid>{4FAEDEC8-3D86-4350-B42D-DAD4414E69D1}</ProjectGuid>
         <TargetFramework>net35</TargetFramework>
         <AssemblyTitle>TwoForksVr</AssemblyTitle>
         <Product>TwoForksVr</Product>
@@ -11,6 +10,7 @@
         <Configurations>Release;Debug</Configurations>
         <Platforms>x64</Platforms>
         <LangVersion>10</LangVersion>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <DebugType>full</DebugType>
