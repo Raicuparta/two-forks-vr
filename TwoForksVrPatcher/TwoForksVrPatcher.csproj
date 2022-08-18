@@ -11,14 +11,13 @@
         <Platforms>x64</Platforms>
         <LangVersion>10</LangVersion>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <OutputPath>$(BepInExDir)\patchers\TwoForksVrPatcher</OutputPath>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-        <DebugType>full</DebugType>
-        <OutputPath>$(BepInExDir)\patchers\TwoForksVrPatcher</OutputPath>
+        <DebugType>pdbonly</DebugType>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
         <DebugType>none</DebugType>
-        <OutputPath>bin\Release\</OutputPath>
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="AssetsTools.NET" Version="2.0.9" />
