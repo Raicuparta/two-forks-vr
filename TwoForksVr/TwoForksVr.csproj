@@ -45,5 +45,13 @@
         <Content Include="TwoForksVrAssets\**">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <Content Include="ModFiles\**" />
     </ItemGroup>
+    <Target Name="Copy mod files" AfterTargets="PostBuildEvent">
+        <ItemGroup>
+            <_Files Remove="@(_Files)" />
+            <_Files Include="ModFiles\**" />
+        </ItemGroup>
+        <Copy SourceFiles="@(_Files)" DestinationFiles="$(PublishDir)%(RecursiveDir)%(Filename)%(Extension)"  />
+    </Target>
 </Project>
