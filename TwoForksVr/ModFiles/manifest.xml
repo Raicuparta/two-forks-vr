@@ -4,4 +4,5 @@
     <modTitle>Two Forks VR</modTitle>
     <gameTitle>Firewatch</gameTitle>
     <gameExe>Firewatch.exe</gameExe>
+    <requireAdmin>True</requireAdmin>
 </manifest>
