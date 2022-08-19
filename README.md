@@ -9,10 +9,11 @@ Two Forks VR is a VR mod for [Firewatch](https://store.steampowered.com/app/3838
 
 ## How to Install
 
-- [Download the latest release zip](https://github.com/Raicuparta/two-forks-vr/releases/latest).
-- Extract it anywhere (doesn't have to be in the game directory).
-- Drag `Firewatch.exe` and drop it on top of `TwoForksVrInstaller.exe`.
-- Run the game as usual.
+[Get Two Forks VR on itch.io](https://raicuparta.itch.io/two-forks-vr). You can also use the [**itch.io app**](https://itch.io/app) to install the mod. This way you can get automatic updates.
+
+![image](https://user-images.githubusercontent.com/3955124/185611673-d3ab0573-49a8-4bf9-a84d-66beee4b5ead.png)
+
+Run `RaiManager.exe` (or click Open in the itch.io app) and follow the instructions in the installer.
 
 ## Requirements
 
