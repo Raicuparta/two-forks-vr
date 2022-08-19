@@ -69,7 +69,7 @@ Two Forks VR ships with [openvr_fsr](https://github.com/fholger/openvr_fsr). To 
 
 ## How to Uninstall
 
-Easiest way to uninstall is to use the "verify game files" option in whatever launcher
+Start the installer again (by starting RaiManager.exe or clicking Open in the itch.io app), and click the uninstall button.
 
 ## Support
 
