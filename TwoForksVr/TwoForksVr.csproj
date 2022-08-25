@@ -41,7 +41,6 @@
         <Content Include="..\UnityHelper\Assets\StreamingAssets\SteamVR\*.json" LinkBase="TwoForksVrAssets\Bindings">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <Content Include="Directory.Build.props" />
         <Content Include="TwoForksVrAssets\**">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>

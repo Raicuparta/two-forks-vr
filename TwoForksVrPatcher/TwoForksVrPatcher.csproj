@@ -27,6 +27,5 @@
       <Content Include="classdata.tpk">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <Content Include="Directory.Build.props" />
     </ItemGroup>
 </Project>
