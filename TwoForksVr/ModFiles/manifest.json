@@ -1,0 +1,25 @@
+{
+  "id": "two-forks-vr",
+  "modTitle": "Two Forks VR",
+  "gameTitle": "Firewatch",
+  "providers": [
+    {
+      "providerId": "steam",
+      "gameIdentifier": "Firewatch",
+      "requireAdmin": false,
+      "gameExe": "Firewatch.exe"
+    },
+    {
+      "providerId": "gog",
+      "gameIdentifier": "1459256379",
+      "requireAdmin": false,
+      "gameExe": "Firewatch.exe"
+    },
+    {
+      "providerId": "xbox",
+      "gameIdentifier": "Firewatch",
+      "requireAdmin": true,
+      "gameExe": "Firewatch.exe"
+    }
+  ]
+}
