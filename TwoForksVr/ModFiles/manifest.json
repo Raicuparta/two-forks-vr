@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/Raicuparta/rai-manager/master/manifest.schema.json",
   "id": "two-forks-vr",
   "modTitle": "Two Forks VR",
   "gameTitle": "Firewatch",
